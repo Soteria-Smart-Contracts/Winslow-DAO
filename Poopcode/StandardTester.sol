@@ -26,7 +26,7 @@ contract TheFakeDAO{
         EROSEXT(Proposal).Execute();
     }
 
-    function CheckErosApproval(address Proposal) external{
+    function CheckErosApproval(address Proposal) external returns(bool){
         
     }
 
