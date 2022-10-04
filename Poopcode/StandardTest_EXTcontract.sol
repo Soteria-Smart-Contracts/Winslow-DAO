@@ -5,5 +5,7 @@ contract ImExternal{
     string public Information;
     uint public Integer;
 
+    function Update
+
 
 }
