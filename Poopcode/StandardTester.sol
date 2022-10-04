@@ -23,7 +23,7 @@ contract TheFakeDAO{
     function ExecuteErosProposal(address Proposal) external OnlyOwner{
         require(ApprovedErosProposals[Proposal] == true, "Eros External Proposal Contract not approved");
 
-        EROSEXT()
+        EROSEXT(Proposal).Execute();
     }
 
 }
