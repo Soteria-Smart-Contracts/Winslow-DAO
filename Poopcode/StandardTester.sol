@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 
 contract TheFakeDAO{
-    address owner
+    address public owner;
 
     mapping(address => bool) public ErosProposals;
 
