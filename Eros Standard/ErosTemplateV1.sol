@@ -13,12 +13,7 @@ contract ErosProposal{
     }
 
 
-
-
-
-
-
-    //If the 
+    function Execute()
 
 
 }
