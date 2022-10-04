@@ -20,6 +20,9 @@ contract TheFakeDAO{
         ErosProposals[Proposal] = true;
     }
 
-    function ExecuteErosProposal(address Proposal)
+    function ExecuteErosProposal(address Proposal) external OnlyOwner{
+
+    }
 
 }
+
