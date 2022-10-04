@@ -11,6 +11,6 @@ contract TheFakeDAO{
         owner = msg.sender;
     }
 
-    
+    function ApproveErosContract
 
 }
