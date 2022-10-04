@@ -33,7 +33,7 @@ contract ErosProposal{
 
 interface EROSDAO{
     function CheckErosApproval(address) external view returns(bool);
-    function ErosProposalExecuted(address) external; //This function in the DAO must require that the msg.sender is the same as 
+    function ErosProposalExecuted(address) external; //This function in the DAO must require that the msg.sender is the same as the input
 }
 
 interface ExtCon{
