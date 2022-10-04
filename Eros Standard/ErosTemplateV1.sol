@@ -29,6 +29,6 @@ interface EROSDAO{
     function CheckErosApproval(address) public view returns(bool);
 }
 
-interface ExContract{
+interface ExtCon{
     function CheckErosApproval(address) public view returns(bool);
 }
