@@ -25,5 +25,5 @@ contract ErosProposal{
 }
 
 interface EROSDAO{
-    function CheckE
+    function CheckErosApproval(address)
 }
