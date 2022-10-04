@@ -26,3 +26,7 @@ contract TheFakeDAO{
 
 }
 
+interface EROSEXT(
+    
+)
+
