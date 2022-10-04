@@ -23,3 +23,5 @@ contract ErosProposal{
 
 
 }
+
+interface EROSDAO
