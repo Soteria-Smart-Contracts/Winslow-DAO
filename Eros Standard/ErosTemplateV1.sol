@@ -11,8 +11,8 @@ contract ErosProposal{
     address public ExternalContract = 0x0000000000000000000000000000000000000000;
     //Additional variables can be added here
 
-    modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract
-        require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(address(this)), "The caller is either not the DAO or not approved by the DAO");
+    modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract 
+        require(msg.sender == DAO);
         _;
     }
 
