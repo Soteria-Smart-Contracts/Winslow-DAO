@@ -18,9 +18,11 @@ contract ErosProposal{
     }
 
 
-    function Execute() public OnlyDAO {
+    function Execute() public OnlyDAO returns(bool success){
         Executed = true;
         //External or internal code to execute
+
+        
     }
 
     //Additional functions can go here that can only be executed by the Execute() function, therefore must be internal
