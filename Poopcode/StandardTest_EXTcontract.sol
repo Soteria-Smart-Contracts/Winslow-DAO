@@ -10,8 +10,8 @@ contract ImExternal{
         _;
     }
 
-    function UpdateString() external OnlyDAO{
-        
+    function UpdateString(address input) external OnlyDAO{
+        Information 
     } 
 
 
