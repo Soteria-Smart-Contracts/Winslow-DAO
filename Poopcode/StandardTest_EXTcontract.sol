@@ -14,5 +14,9 @@ contract ImExternal{
         Information = input;
     } 
 
+    function Increment() external OnlyDAO{
+        Information = input;
+    } 
+
 
 }
