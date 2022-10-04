@@ -21,7 +21,7 @@ contract ErosProposal{
         Executed = true; //Updates first to avoid recursive calling
         //External or internal code to execute
 
-        ExtCon(ExternalContract).Update("")
+        ExtCon(ExternalContract).Update("This value was updated by the DAO!");
 
         //External or internal code to execute
         return(success);
