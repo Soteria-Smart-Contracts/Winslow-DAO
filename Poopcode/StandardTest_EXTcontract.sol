@@ -2,6 +2,7 @@
 pragma solidity ^0.8.17;
 
 contract ImExternal{
+    address public DAO;
     string public Information;
     uint public Integer;
 
@@ -17,6 +18,12 @@ contract ImExternal{
     function Increment() external OnlyDAO{
         Integer++;
     } 
+
+    interface EROSDAO{
+    function CheckErosApproval(address) external view returns(bool);
+    function ErosProposalExecuted(address) external; //This function in the DAO must require that the msg.sender is the same as the input
+}
+
 
 
 }
