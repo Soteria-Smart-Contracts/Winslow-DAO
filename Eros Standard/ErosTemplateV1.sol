@@ -14,7 +14,7 @@ contract ErosProposal{
     }
 
     modifier OnlyDAO{
-        require(msg.sender == DAO  || CheckErosApproval(address(this)));
+        require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(address(this)));
     }
 
 
