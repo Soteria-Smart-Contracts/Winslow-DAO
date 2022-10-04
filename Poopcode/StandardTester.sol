@@ -7,4 +7,6 @@ contract TheFakeDAO{
 
     mapping(address => bool) public ErosProposals;
 
+    constructor
+
 }
