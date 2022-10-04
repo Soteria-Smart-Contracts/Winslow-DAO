@@ -27,6 +27,6 @@ contract TheFakeDAO{
 }
 
 interface EROSEXT(
-    
+    function Execute
 )
 
