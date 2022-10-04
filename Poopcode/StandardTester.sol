@@ -26,6 +26,8 @@ contract TheFakeDAO{
         EROSEXT(Proposal).Execute();
     }
 
+    function 
+
 }
 
 interface EROSEXT{
