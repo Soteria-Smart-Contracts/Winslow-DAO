@@ -12,7 +12,9 @@ contract ErosProposal{
         ErosRepeatable = Repeatable;
     }
 
-    modifier OnlyDAO
+    modifier OnlyDAO{
+        require();
+    }
 
 
     function Execute() public {
