@@ -23,7 +23,7 @@ contract ErosProposal{
         //External or internal code to execute
     }
 
-    //Additional functions can go here that can only be executed by the Execute()
+    //Additional functions can go here that can only be executed by the Execute() function, therefore must be internal
 
 
 }
