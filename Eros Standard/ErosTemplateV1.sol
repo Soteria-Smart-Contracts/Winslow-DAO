@@ -37,5 +37,5 @@ interface EROSDAO{
 }
 
 interface ExtCon{
-    function Update(string calldata) view external returns(bool);
+    function Update(string calldata) external view returns(bool);
 }
