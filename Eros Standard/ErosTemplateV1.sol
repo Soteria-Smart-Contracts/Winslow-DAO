@@ -18,7 +18,7 @@ contract ErosProposal{
 
 
 
-    //
+    //If the 
 
 
 }
