@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
 contract TheFakeDAO{
     address public owner;
 
-    mapping(address => bool) public ErosProposals;
+    mapping(address => bool) public ApprovedErosProposals;
 
     modifier OnlyOwner{
         require(msg.sender == owner);
@@ -17,11 +17,11 @@ contract TheFakeDAO{
     }
 
     function ApproveErosContract(address Proposal) external OnlyOwner{
-        ErosProposals[Proposal] = true;
+        ApprovedErosProposals[Proposal] = true;
     }
 
     function ExecuteErosProposal(address Proposal) external OnlyOwner{
-        require(ErosProposals[Proposal] == true, "Eros External Proposal Contract not approved")
+        require(ApprovedErosProposals[Proposal] == true, "Eros External Proposal Contract not approved")
     }
 
 }
