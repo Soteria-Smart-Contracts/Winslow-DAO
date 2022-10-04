@@ -22,6 +22,7 @@ contract ErosProposal{
         Executed = true;
         //External or internal code to execute
 
+        
 
         //External or internal code to execute
         return(success)
