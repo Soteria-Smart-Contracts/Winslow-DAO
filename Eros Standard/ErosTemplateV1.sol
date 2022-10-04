@@ -18,10 +18,10 @@ contract ErosProposal{
 
 
     function Execute() public OnlyDAO returns(bool success){
-        Executed = true; //Updates first to avoid recus
+        Executed = true; //Updates first to avoid recursive calling
         //External or internal code to execute
 
-
+        
 
         //External or internal code to execute
         return(success);
