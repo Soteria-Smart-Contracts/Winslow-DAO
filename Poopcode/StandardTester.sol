@@ -20,6 +20,6 @@ contract TheFakeDAO{
         ErosProposals[Proposal] = true;
     }
 
-    function ExecuteEr
+    function ExecuteErosProposal(address Proposal)
 
 }
