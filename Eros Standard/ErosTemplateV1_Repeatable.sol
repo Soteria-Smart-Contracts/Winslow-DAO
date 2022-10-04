@@ -13,7 +13,7 @@ contract ErosProposal{
     //Additional variables can be added here
 
     constructor{
-        
+        Deployer = msg.sender;
     }
 
     modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract
