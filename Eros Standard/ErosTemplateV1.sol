@@ -28,3 +28,7 @@ contract ErosProposal{
 interface EROSDAO{
     function CheckErosApproval(address) public view returns(bool);
 }
+
+interface EROSDAO{
+    function CheckErosApproval(address) public view returns(bool);
+}
