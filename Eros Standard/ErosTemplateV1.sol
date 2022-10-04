@@ -13,7 +13,7 @@ contract ErosProposal{
     }
 
     modifier OnlyDAO{
-        require(msg.sender == );
+        require(msg.sender == DAO  || );
     }
 
 
