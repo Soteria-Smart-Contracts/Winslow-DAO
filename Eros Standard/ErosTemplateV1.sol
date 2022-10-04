@@ -18,7 +18,7 @@ contract ErosProposal{
     }
 
 
-    function Execute() public {
+    function Execute() public OnlyDAO {
         Executed = true;
         //External or internal code to execute
     }
