@@ -7,7 +7,9 @@ contract TheFakeDAO{
 
     mapping(address => bool) public ErosProposals;
 
-    modifier Owner
+    modifier OnlyOwner{
+        
+    }
 
     constructor(){
         owner = msg.sender;
