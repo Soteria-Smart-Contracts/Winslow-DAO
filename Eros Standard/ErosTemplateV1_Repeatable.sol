@@ -4,7 +4,6 @@ pragma solidity ^0.8.17;
 
 contract ErosProposal{
     address public DAO = 0x0000000000000000000000000000000000000000;
-    address public Deployer;
     uint256 public Executions;
     bool public ErosRepeatable = true; // Defines if the execute fuction is designed to be called multiple times in the future
 
@@ -12,9 +11,6 @@ contract ErosProposal{
     address public ExternalContract = 0x0000000000000000000000000000000000000000;
     //Additional variables can be added here
 
-    constructor(){
-        Deployer = msg.sender;
-    }
 
     modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract
         require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(address(this)), "The caller is either not the DAO or not approved by the DAO");
