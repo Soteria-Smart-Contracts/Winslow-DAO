@@ -29,7 +29,7 @@ contract ErosProposal{
     }
 
     //Additional functions can go here that can only be executed by the Execute() function
-    //therefore must be internal, public functions may present vulenrabilities to external contracts
+    //therefore those functions must be internal, public functions may present vulenrabilities to external contracts
 
 }
 
