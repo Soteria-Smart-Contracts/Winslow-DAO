@@ -12,9 +12,11 @@ contract ErosProposal{
         ErosRepeatable = Repeatable;
     }
 
+    modifier
 
-    function Execute(){
-        
+
+    function Execute() public {
+
     }
 
 
