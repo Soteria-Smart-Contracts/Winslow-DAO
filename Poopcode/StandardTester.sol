@@ -9,7 +9,7 @@ contract TheFakeDAO{
 
     modifier OnlyOwner{
         require(msg.sender == owner);
-        
+        _;
     }
 
     constructor(){
