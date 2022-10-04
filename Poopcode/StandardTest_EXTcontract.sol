@@ -10,12 +10,12 @@ contract ImExternal{
         _;
     }
 
-    function UpdateString(string input) external OnlyDAO{
+    function Update(string input) external OnlyDAO{
         Information = input;
     } 
 
     function Increment() external OnlyDAO{
-        Information = input;
+        Integer++;
     } 
 
 
