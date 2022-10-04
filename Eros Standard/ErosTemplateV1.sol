@@ -13,7 +13,9 @@ contract ErosProposal{
     }
 
 
-    function Execute()
+    function Execute(){
+        
+    }
 
 
 }
