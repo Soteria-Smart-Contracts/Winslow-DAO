@@ -20,7 +20,7 @@ contract ErosProposal{
 
     function Execute() public {
         Executed = true;
-        //
+        //External or internal code to execute
     }
 
 
