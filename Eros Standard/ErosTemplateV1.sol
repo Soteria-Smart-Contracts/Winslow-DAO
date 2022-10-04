@@ -19,7 +19,7 @@ contract ErosProposal{
 
 
     function Execute() public {
-
+        Executed = true;
     }
 
 
