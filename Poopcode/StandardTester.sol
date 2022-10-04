@@ -27,7 +27,7 @@ contract TheFakeDAO{
     }
 
     function CheckErosApproval(address Proposal) external returns(bool){
-        if()
+        if(ApprovedErosProposals[Proposal] = true)
     }
 
 }
