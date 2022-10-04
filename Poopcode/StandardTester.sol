@@ -21,7 +21,7 @@ contract TheFakeDAO{
     }
 
     function ExecuteErosProposal(address Proposal) external OnlyOwner{
-        require(ErosProposals[Proposal] == true)
+        require(ErosProposals[Proposal] == true, "Eros External Proposal Contract")
     }
 
 }
