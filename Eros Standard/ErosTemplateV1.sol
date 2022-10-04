@@ -3,8 +3,8 @@ pragma solidity ^0.8.17;
 
 
 contract ErosProposal{
-    address public DAO;
-    uint8 public 
+    address public DAO = ;
+    uint8 public ErosType
     //Additional variables can be added here
 
 
