@@ -19,7 +19,7 @@ contract ErosProposal{
 
     function Execute() public OnlyDAO returns(bool success){
         Executed = true; //Updates first to avoid recursive calling
-        
+
         //External or internal code to execute
         ExtCon(ExternalContract).Update("This value was updated by the DAO!");
         //External or internal code to execute
@@ -28,7 +28,6 @@ contract ErosProposal{
     }
 
     //Additional functions can go here that can only be executed by the Execute() function, therefore must be internal
-
 
 }
 
