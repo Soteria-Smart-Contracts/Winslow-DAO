@@ -4,5 +4,5 @@ pragma solidity ^0.8.17;
 
 contract TheFakeDAO{
 
-    mapping(address) ErosProposals
+    mapping(address => bool) ErosProposals
 }
