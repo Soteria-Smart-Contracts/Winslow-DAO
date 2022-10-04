@@ -33,7 +33,7 @@ contract ErosProposal{
 }
 
 interface EROSDAO{
-    function CheckErosApproval(address) public view returns(bool);
+    function CheckErosApproval(address) external view returns(bool);
 }
 
 interface ExtCon{
