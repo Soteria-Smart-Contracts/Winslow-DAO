@@ -11,7 +11,7 @@ contract ImExternal{
         _;
     }
 
-    function Update(string input) external OnlyDAO{
+    function Update(string calldata input) external OnlyDAO{
         Information = input;
     } 
 
