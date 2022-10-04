@@ -8,8 +8,8 @@ contract ErosProposal{
 
     //Additional variables can be added here
 
-    constructor{
-        
+    constructor(bool Repeatable){
+
     }
 
 
