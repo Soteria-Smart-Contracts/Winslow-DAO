@@ -23,7 +23,7 @@ contract ErosProposal{
         EROSDAO(DAO).ErosProposalExecuted(address(this));
 
         //External or internal code to execute
-        ExtCon(ExternalContract).Increment("This value was updated by the DAO!");
+        ExtCon(ExternalContract).Increment();
         //External or internal code to execute
 
         return(success);
