@@ -10,7 +10,9 @@ contract ImExternal{
         _;
     }
 
-    function UpdateString() public 
+    function UpdateString() external OnlyDAO{
+        
+    } 
 
 
 }
