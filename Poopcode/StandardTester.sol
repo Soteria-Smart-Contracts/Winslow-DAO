@@ -26,7 +26,7 @@ contract TheFakeDAO{
 
 }
 
-interface EROSEXT(
+interface EROSEXT{
     function Execute() external 
-)
+}
 
