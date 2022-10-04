@@ -18,7 +18,7 @@ contract ErosProposal{
 
 
     function Execute() public OnlyDAO returns(bool success){
-        Executions = Executions; //Updates first to avoid recursive calling
+        Executions++; //Updates first to avoid recursive calling
         EROSDAO(DAO).ErosProposalExecuted(address(this));
 
         //External or internal code to execute
