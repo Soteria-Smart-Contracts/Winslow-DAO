@@ -8,7 +8,7 @@ contract ErosProposal{
     bool public ErosRepeatable = false; // Defines if the execute fuction is designed to be called multiple times in the future
 
     //Additional variables can be added here
-    address public ExternalContract = 
+    address public ExternalContract = 0x0000000000000000000000000000000000000000;
     //Additional variables can be added here
 
     constructor(bool Repeatable){
