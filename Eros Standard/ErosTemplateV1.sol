@@ -9,7 +9,7 @@ contract ErosProposal{
     //Additional variables can be added here
 
     constructor(bool Repeatable){
-        ErosRepeatable = 
+        ErosRepeatable = Repeatable;
     }
 
 
