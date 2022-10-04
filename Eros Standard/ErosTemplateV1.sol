@@ -22,7 +22,9 @@ contract ErosProposal{
         Executed = true;
         //External or internal code to execute
 
-        
+
+        //External or internal code to execute
+        return(success)
     }
 
     //Additional functions can go here that can only be executed by the Execute() function, therefore must be internal
