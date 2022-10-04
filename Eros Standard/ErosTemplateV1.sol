@@ -24,4 +24,6 @@ contract ErosProposal{
 
 }
 
-interface EROSDAO
+interface EROSDAO{
+    function 
+}
