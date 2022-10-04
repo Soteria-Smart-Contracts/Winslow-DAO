@@ -16,6 +16,10 @@ contract ErosProposal{
         require(msg.sender == DAO  || );
     }
 
+    modifier Executes{
+        require(msg.sender == DAO  || );
+    }
+
 
     function Execute() public {
 
