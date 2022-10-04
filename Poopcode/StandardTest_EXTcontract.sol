@@ -2,5 +2,7 @@
 pragma solidity ^0.8.17;
 
 contract ImExternal{
-    string public 
+    string public Information;
+
+    
 }
