@@ -12,7 +12,7 @@ contract ErosProposal{
     //Additional variables can be added here
 
     modifier OnlyDAO{
-        require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(address(this)), "");
+        require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(address(this)), "The caller is either not the DAO or not approved by the DAO");
         _;
     }
 
