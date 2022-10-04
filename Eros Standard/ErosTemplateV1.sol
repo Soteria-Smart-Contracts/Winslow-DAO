@@ -37,5 +37,5 @@ interface EROSDAO{
 }
 
 interface ExtCon{
-    function Update(string) public view returns(bool);
+    function Update( string) public view returns(bool);
 }
