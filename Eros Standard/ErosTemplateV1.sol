@@ -8,6 +8,8 @@ contract ErosProposal{
     bool public ErosRepeatable = false; // Defines if the execute fuction is designed to be called multiple times in the future
 
     //Additional variables can be added here
+    
+    //Additional variables can be added here
 
     constructor(bool Repeatable){
         ErosRepeatable = Repeatable;
@@ -22,7 +24,7 @@ contract ErosProposal{
         Executed = true;
         //External or internal code to execute
 
-        
+
 
         //External or internal code to execute
         return(success)
