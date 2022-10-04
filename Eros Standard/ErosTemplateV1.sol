@@ -37,6 +37,6 @@ interface EROSDAO{
 }
 
 interface ExtCon{
-    function CheckImplementation()
+    function ErosImplemented() external 
     function Update(string calldata) external view returns(bool);
 }
