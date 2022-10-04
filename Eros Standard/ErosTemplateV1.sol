@@ -11,10 +11,6 @@ contract ErosProposal{
     address public ExternalContract = 0x0000000000000000000000000000000000000000;
     //Additional variables can be added here
 
-    constructor(bool Repeatable){
-        ErosRepeatable = Repeatable;
-    }
-
     modifier OnlyDAO{
         require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(address(this)));
     }
