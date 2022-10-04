@@ -16,6 +16,8 @@ contract TheFakeDAO{
         owner = msg.sender;
     }
 
-    function ApproveErosContract(address Proposal) 
+    function ApproveErosContract(address Proposal) external OnlyOwner{
+        
+    }
 
 }
