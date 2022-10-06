@@ -7,7 +7,7 @@ contract HarmoniaDAO_V1{
 
 
     constructor(address TreasuryAddress){
-        
+        Treasury = TreasuryAddress;
     }
 
 
