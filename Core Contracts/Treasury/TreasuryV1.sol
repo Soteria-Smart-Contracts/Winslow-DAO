@@ -8,7 +8,7 @@ contract HarmoniaDAO_V1_Treasury{
     Token[] public RegisteredAssets;
 
     //Events
-    event 
+    event EtherF
     //Events
 
     struct Token{
