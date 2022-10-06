@@ -24,7 +24,7 @@ contract HarmoniaDAO_V1_Treasury{
     }
 
     function UpdateERC20Balance(uint256 AssetID) internal{
-        RegisteredAssets
+        RegisteredAssets[AssetID].DAObalance = 
     }
 
 
