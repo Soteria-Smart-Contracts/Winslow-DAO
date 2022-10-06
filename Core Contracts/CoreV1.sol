@@ -10,7 +10,9 @@ contract HarmoniaDAO_V1_Core{
         Treasury = TreasuryAddress;
     }
 
-    function SetTreasury()
+    function SetTreasury(){
+        
+    }
 
 
     receive() external payable{
