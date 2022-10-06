@@ -10,7 +10,7 @@ contract ErosProposal{
     address TokenAddress = 0x0000000000000000000000000000000000000000;
 
     //Events
-    event 
+    event Executed
     //Events
 
     //Additional variables can be added here
