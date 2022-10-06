@@ -12,10 +12,10 @@ contract HarmoniaDAO_V1{
 
 
     receive() external payable{
-        //send ether to treasury
+        //send ether to treasury then update balance there
     }
 
     fallback() external payable{
-        //send ether to treasury
+        //send ether to treasury then update balance there
     }
 }
