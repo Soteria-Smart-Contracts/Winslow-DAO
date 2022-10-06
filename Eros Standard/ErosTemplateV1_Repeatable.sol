@@ -32,6 +32,7 @@ contract ErosProposal{
         ExtCon(ExternalContract).Increment();
         //External or internal code to execute
 
+        EtherLeft
         if(address(this).balance > 0){}
         return(success);
     }
