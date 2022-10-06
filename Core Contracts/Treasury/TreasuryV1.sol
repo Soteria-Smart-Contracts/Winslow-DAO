@@ -13,7 +13,7 @@ contract HarmoniaDAO_V1_Treasury{
         uint256 DAObalance;
     }
 
-    constructor(address DAOcontract, ClassicDAO){
+    constructor(address DAOcontract, address CLDcontract, ){
         DAO = DAOcontract;
 
     }
