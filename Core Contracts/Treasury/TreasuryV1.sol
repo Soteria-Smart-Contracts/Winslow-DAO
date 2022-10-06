@@ -20,7 +20,7 @@ contract HarmoniaDAO_V1_Treasury{
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
         CLD = Token(0, CLDcontract, 0);
-        RegisteredAssets.push
+        RegisteredAssets.push(CLD);
     }
 
 
