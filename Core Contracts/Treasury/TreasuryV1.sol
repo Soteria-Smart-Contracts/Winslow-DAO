@@ -7,6 +7,8 @@ contract HarmoniaDAO_V1_Treasury{
     Token public ClassicDAO;
     Token[] public RegisteredAssets;
 
+    //Events
+
     struct Token{
         uint16 AssetID;
         address TokenAddress;
