@@ -26,10 +26,11 @@ contract ErosProposal{
         //External or internal code to execute
         ExtCon(ExternalContract).Update("This value was updated by the DAO!");
         //External or internal code to execute
-
+            
         if(address(this).balance > 0){
             payable(DAO).transfer(address(this).balance);
         }
+
         return(success);
     }
 
