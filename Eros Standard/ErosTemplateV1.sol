@@ -6,6 +6,7 @@ contract ErosProposal{
     address public DAO = 0x0000000000000000000000000000000000000000;
     bool public Executed;
     bool public ErosRepeatable = false; // Defines if the execute fuction is designed to be called multiple times in the future
+    uint256 
 
     //Additional variables can be added here
     address public ExternalContract = 0x0000000000000000000000000000000000000000;
