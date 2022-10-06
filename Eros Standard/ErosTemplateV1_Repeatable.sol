@@ -36,7 +36,7 @@ contract ErosProposal{
 
         return(success);
     }
-    //The contract must 
+    //The contract will return any ether unused in the transaction back to the DAO on execution
 
 
     //Additional functions can go here that can only be executed by the Execute() function
