@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 
 contract ErosProposal{
-    address public DAO = payable(0x0000000000000000000000000000000000000000);
+    address public DAO = 0x0000000000000000000000000000000000000000;
     bool public Executed;
     uint256 RequestEther = 1 ether;
     uint256 RequestTokens = 0;
@@ -28,7 +28,7 @@ contract ErosProposal{
         //External or internal code to execute
 
         if(address(this).balance > 0){
-            DAO.transfer(address(this).balance);
+            payable(DAO.transfer(address(this).balance);
         }
         return(success);
     }
