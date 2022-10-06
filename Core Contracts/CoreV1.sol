@@ -6,10 +6,10 @@ contract HarmoniaDAO_V1{
 
 
     receive() external payable{
-
+        //update the balance
     }
 
     fallback() external payable{
-        
+//update the balance
     }
 }
