@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 
 contract ErosProposal{
-    address public DAO = 0x0000000000000000000000000000000000000000;
+    address payable public DAO = 0x0000000000000000000000000000000000000000;
     uint256 public Executions;
     bool public ErosRepeatable = true; // Defines if the execute fuction is designed to be called multiple times in the future
 
