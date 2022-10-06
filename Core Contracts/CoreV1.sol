@@ -16,6 +16,6 @@ contract HarmoniaDAO_V1{
     }
 
     fallback() external payable{
-        //update the balance
+        //send ether to treasury
     }
 }
