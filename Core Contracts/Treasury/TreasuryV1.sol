@@ -27,6 +27,20 @@ contract HarmoniaDAO_V1_Treasury{
 
 
 
+
+
+
+
+    receive() external payable{
+        emit FallbackToTreasury(address(this).balance);
+        payable(Treasury).transfer(address(this).balance);
+    }
+
+    fallback() external payable{
+        emit FallbackToTreasury(address(this).balance);
+        payable(Treasury).transfer(address(this).balance);
+    }
+
 }
 
 interface ERC20 {
