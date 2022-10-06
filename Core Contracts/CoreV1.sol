@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
 contract HarmoniaDAO_V1_Core{
     address public Treasury;
 
-    event 
+    event FallbackToTreasury
 
     function SetTreasury(address TreasuryAddress) external{
         Treasury = TreasuryAddress;
