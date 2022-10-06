@@ -50,3 +50,4 @@ interface ExtCon{ //Interface name can be different, ensure it is updated correc
     function ErosImplemented() external view returns(bool);
     function Update(string calldata) external;
 }
+
