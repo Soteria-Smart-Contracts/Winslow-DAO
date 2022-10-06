@@ -19,7 +19,7 @@ contract HarmoniaDAO_V1_Treasury{
 
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
-        CLD = Token(0, CLDcontract, ERC20.balanceOf(owner);)
+        CLD = Token(0, CLDcontract, 0);
     }
 
 
