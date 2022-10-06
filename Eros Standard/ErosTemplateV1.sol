@@ -9,6 +9,10 @@ contract ErosProposal{
     uint256 RequestTokens = 0;
     address TokenAddress = 0x0000000000000000000000000000000000000000;
 
+    //Events
+    event 
+    //Events
+
     //Additional variables can be added here
     address public ExternalContract = 0x0000000000000000000000000000000000000000;
     //Additional variables can be added here
