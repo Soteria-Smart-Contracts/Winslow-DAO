@@ -10,10 +10,6 @@ contract HarmoniaDAO_V1_Core{
         Treasury = TreasuryAddress;
     }
 
-    function SendEtherToTreasury(uint256 amount){
-        
-    }
-
 
     receive() external payable{
         //send ether to treasury then update balance there
