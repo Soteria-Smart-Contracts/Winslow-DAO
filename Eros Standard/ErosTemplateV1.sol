@@ -10,7 +10,7 @@ contract ErosProposal{
     address TokenAddress = 0x0000000000000000000000000000000000000000;
 
     //Events
-    event Executed(uint256 time);
+    event ContractExecuted(uint256 time);
     //Events
 
     //Additional variables can be added here
@@ -38,7 +38,7 @@ contract ErosProposal{
         if((TokenAddress != address(0)) && (ERC20(TokenAddress).balanceOf(address(this)) < 0)){
             ERC20(TokenAddress).transfer(DAO, ERC20(TokenAddress).balanceOf(address(this)));
         }
-        emit Executed(block.timestamp);
+        emit ContractExecuted(block.timestamp);
         return(success);
     }
 
