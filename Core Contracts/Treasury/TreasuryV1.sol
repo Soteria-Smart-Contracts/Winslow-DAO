@@ -7,7 +7,7 @@ contract HarmoniaDAO_V1_Treasury{
     address[] public RegisteredAssets;
 
     struct Token{
-        DAOid;
+        uint16 DAOid;
     }
 
     constructor(address DAOcontract){
