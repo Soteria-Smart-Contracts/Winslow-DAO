@@ -7,7 +7,7 @@ contract ErosProposal{
     uint256 public Executions;
     bool public ErosRepeatable = true; // Defines if the execute fuction is designed to be called multiple times in the future
     uint256 RequestEther = 1 ether; //The amount of ether the contract would like to receive on execution
-    uint256 RequestTokens = 0; //The amount of ether the contract would like to receive on execution
+    uint256 RequestTokens = 0; //The amount of tokens the contract would like to receive on execution
     address TokenAddress = 0x0000000000000000000000000000000000000000;
 
     //Additional variables can be added here
