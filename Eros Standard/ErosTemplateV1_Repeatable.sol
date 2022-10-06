@@ -33,9 +33,11 @@ contract ErosProposal{
         //External or internal code to execute
 
 
-        
+
         return(success);
     }
+    //The contract must 
+
 
     //Additional functions can go here that can only be executed by the Execute() function
     //therefore those functions must be internal as making them public may present vulenrabilities to external contracts
