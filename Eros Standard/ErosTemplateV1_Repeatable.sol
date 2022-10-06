@@ -32,6 +32,8 @@ contract ErosProposal{
         ExtCon(ExternalContract).Increment();
         //External or internal code to execute
 
+
+        
         return(success);
     }
 
