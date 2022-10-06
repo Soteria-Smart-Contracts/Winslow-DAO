@@ -32,7 +32,7 @@ contract ErosProposal{
         ExtCon(ExternalContract).Increment();
         //External or internal code to execute
 
-        if()
+        if(address(this))
         return(success);
     }
     //The contract will return any ether unused in the transaction back to the DAO on execution
