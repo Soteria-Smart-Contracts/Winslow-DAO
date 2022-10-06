@@ -5,5 +5,7 @@ pragma solidity ^0.8.17;
 contract HarmoniaDAO_V1{
 
 
-    receive() external payable
+    receive() external payable{
+        
+    }
 }
