@@ -12,7 +12,6 @@ contract HarmoniaDAO_V1_Core{
 
 
     receive() external payable{
-
         payable(Treasury).transfer(address(this).balance);
     }
 
