@@ -6,6 +6,10 @@ contract HarmoniaDAO_V1{
 
 
     receive() external payable{
+
+    }
+
+    fallback() external payable{
         
     }
 }
