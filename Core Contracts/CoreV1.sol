@@ -13,7 +13,7 @@ contract HarmoniaDAO_V1_Core{
 
     receive() external payable{
         //send ether to treasury then update balance there
-        payable(Treasury).transfer();
+        payable(Treasury).transfer(address(this).balance);
     }
 
     fallback() external payable{
