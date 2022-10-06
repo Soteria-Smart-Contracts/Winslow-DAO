@@ -6,7 +6,7 @@ contract HarmoniaDAO_V1_Core{
     address public Treasury;
 
 
-    function SetTreasury(address TreasuryAddress){
+    function SetTreasury(address TreasuryAddress) external{
         Treasury = TreasuryAddress;
     }
 
