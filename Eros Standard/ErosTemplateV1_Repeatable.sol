@@ -8,7 +8,7 @@ contract ErosProposal{
     bool public ErosRepeatable = true; // Defines if the execute fuction is designed to be called multiple times in the future
 
     //These Variables are NOT optional, and the execution will fail if they do not exist. If there is no request for ether or tokens, leave the 
-    uint256 RequestEther = 1 ether; //The amount of ether the contract would like to receive on execution
+    uint256 RequestEther = 0; //The amount of ether the contract would like to receive on execution
     uint256 RequestTokens = 0; //The amount of tokens the contract would like to receive on execution
     address TokenAddress = 0x0000000000000000000000000000000000000000; //The address of the ERC20 token in which the contract may ask to receive
 
