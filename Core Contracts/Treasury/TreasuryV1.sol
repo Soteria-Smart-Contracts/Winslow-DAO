@@ -8,6 +8,7 @@ contract HarmoniaDAO_V1_Treasury{
 
     struct Token{
         uint16 DAOid;
+        address TokenAddress;
     }
 
     constructor(address DAOcontract){
