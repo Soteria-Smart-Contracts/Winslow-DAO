@@ -33,7 +33,7 @@ contract ErosProposal{
         //External or internal code to execute
 
         if(address(this).balance > 0){
-            DAO.transfer
+            DAO.transfer(address(this).balance)
         }
         return(success);
     }
