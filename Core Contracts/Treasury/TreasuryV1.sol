@@ -6,6 +6,10 @@ contract HarmoniaDAO_V1_Treasury{
     uint256 public RegisteredAssetLimit = 5;
     address[] public RegisteredAssets
 
+    struct Token{
+
+    }
+
     constructor(address DAOcontract){
         DAO = DAOcontract;
     }
