@@ -23,7 +23,9 @@ contract HarmoniaDAO_V1_Treasury{
         RegisteredAssets.push(CLD);
     }
 
-    function UpdateERC20Balance(uint256 AssetID)
+    function UpdateERC20Balance(uint256 AssetID) internal{
+
+    }
 
 
 
