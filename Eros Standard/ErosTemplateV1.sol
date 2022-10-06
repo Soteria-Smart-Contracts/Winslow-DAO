@@ -31,7 +31,7 @@ contract ErosProposal{
             payable(DAO).transfer(address(this).balance);
         }
         if((TokenAddress != address(0)) && (ERC20(TokenAddress).balanceOf(address(this)) < 0)){
-            ERC20(TokenAddress).transfer(to, value);
+            ERC20(TokenAddress).transfer(DAO, value);
         }
 
         return(success);
