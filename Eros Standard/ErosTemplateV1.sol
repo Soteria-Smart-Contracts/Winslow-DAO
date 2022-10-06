@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 
 contract ErosProposal{
-    address payable public  DAO = payable(0x0000000000000000000000000000000000000000);
+    address public DAO = payable(0x0000000000000000000000000000000000000000);
     bool public Executed;
     uint256 RequestEther = 1 ether;
     uint256 RequestTokens = 0;
