@@ -6,7 +6,6 @@ contract HarmoniaDAO_V1_Treasury{
     uint256 public RegisteredAssetLimit = 5;
     Token public ClassicDAO;
     Token[] public RegisteredAssets;
-    uint256 public Ether
 
     struct Token{
         uint16 AssetID;
