@@ -6,7 +6,9 @@ contract HarmoniaDAO_V1{
     address public Treasury;
 
 
-    constructor()
+    constructor(address TreasuryAddress){
+        
+    }
 
 
     receive() external payable{
