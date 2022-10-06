@@ -42,7 +42,7 @@ interface EROSDAO{
     function ErosProposalExecuted(address) external; //This function in the DAO must require that the msg.sender is the same as the input
 }
 
-interface ExtCon{ //Interface name can be different, ensure 
+interface ExtCon{ //Interface name can be different, ensure it is updated correctly with the external functions to be used in execution
     function ErosImplemented() external view returns(bool);
     function Update(string calldata) external;
 }
