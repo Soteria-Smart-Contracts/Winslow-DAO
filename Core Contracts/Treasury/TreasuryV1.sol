@@ -36,7 +36,7 @@ contract HarmoniaDAO_V1_Treasury{
 
 
     receive() external payable{
-        
+        emit EtherReceivedFromFallback(uint256 amount);
     }
 
     fallback() external payable{
