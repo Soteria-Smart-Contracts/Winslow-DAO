@@ -42,8 +42,8 @@ contract HarmoniaDAO_V1_Treasury{
 
 
 
-    function TransferETH(uint256 amount) public OnlyDAO{
-        
+    function TransferETH(uint256 amount, address receiver) public OnlyDAO{
+        uint256 
     }
 
 
