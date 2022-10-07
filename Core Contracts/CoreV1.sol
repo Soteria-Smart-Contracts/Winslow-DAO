@@ -7,6 +7,12 @@ contract HarmoniaDAO_V1_Core{
 
     event FallbackToTreasury(uint256 amount);
 
+    modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract 
+        require(msg.sender == DAO);
+        _;
+    }
+
+
     function SetTreasury(address TreasuryAddress) external{
         Treasury = TreasuryAddress;
     }
