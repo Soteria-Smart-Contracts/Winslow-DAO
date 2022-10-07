@@ -8,7 +8,7 @@ contract HarmoniaDAO_V1_Treasury{
     Token[] public RegisteredAssets;
 
     //Events
-    
+
     //Events
 
     struct Token{
@@ -37,7 +37,7 @@ contract HarmoniaDAO_V1_Treasury{
 
 
 
-
+    function TransferETH
 
 
     receive() external payable{
