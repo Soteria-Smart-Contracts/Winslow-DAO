@@ -7,6 +7,11 @@ contract HarmoniaDAO_V1_Treasury{
     Token public CLD;
     Token[] public RegisteredAssets;
 
+    modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract 
+        require(msg.sender == DAO);
+        _;
+    }
+
     //Events
 
     //Events
@@ -37,7 +42,9 @@ contract HarmoniaDAO_V1_Treasury{
 
 
 
-    function TransferETH(uint256 amount) public OnlyDAO
+    function TransferETH(uint256 amount) public OnlyDAO{
+
+    }
 
 
     receive() external payable{
