@@ -37,7 +37,7 @@ contract HarmoniaDAO_V1_Treasury{
 
 
 
-    function TransferETH(uint256 amount) 
+    function TransferETH(uint256 amount) public OnlyDAO
 
 
     receive() external payable{
