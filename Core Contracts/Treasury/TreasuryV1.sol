@@ -47,7 +47,6 @@ contract HarmoniaDAOTreasury{
         
         Token memory NewToken = Token(tokenAddress, 0);
         RegisteredAssets[slot] =  NewToken;
-
         // TO DO addtoken event
     }
 
