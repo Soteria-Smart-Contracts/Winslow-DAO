@@ -32,7 +32,6 @@ contract HarmoniaDAOTreasury{
     function ChangeRegisteredAssetLimit(uint amount) internal{
         RegisteredAssetLimit = amount;
         // TO DO NewAssetLimit event
-
     }
 
     function ReceiveRegisteredAsset(address from, uint AssetId, uint amount) internal {
