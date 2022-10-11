@@ -29,7 +29,7 @@ contract HarmoniaDAOTreasury{
         RegisteredAssets.push(CLD);
     }
 
-    function ChangeRegisteredAssetLimit(uint amount) internal OnlyDAO {
+    function ChangeRegisteredAssetLimit(uint amount) internal{
         RegisteredAssetLimit = amount;
         // TO DO NewAssetLimit event
 
