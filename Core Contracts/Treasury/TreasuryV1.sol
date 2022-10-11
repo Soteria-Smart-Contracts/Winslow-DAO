@@ -45,7 +45,7 @@ contract HarmoniaDAOTreasury{
         checkForDuplicate(tokenAddress);
         require(slot <= RegisteredAssetLimit);
         
-        Token calldata NewToken = Token(tokenAddress, 0);
+        Token memory NewToken = Token(tokenAddress, 0);
         RegisteredAssets[slot] =  NewToken;
 
         // TO DO addtoken event
