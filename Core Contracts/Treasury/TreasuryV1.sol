@@ -41,7 +41,7 @@ contract HarmoniaDAOTreasury{
         // TO DO assetreceived event
     }
 
-    function RegisterAsset(address tokenAddress, uint256 amount) internal {
+    function RegisterAsset(address tokenAddress, uint256 amount, uint256 slot) internal {
         checkForDuplicate(tokenAddress);
         if (amount > 0) {
             ERC20(tokenAddress).transferFrom(msg.sender, address(this), amount);
