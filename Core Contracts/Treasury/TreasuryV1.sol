@@ -35,7 +35,7 @@ contract HarmoniaDAOTreasury{
 
     }
 
-    function ReceiveRegisteredAsset (uint AssetId, uint amount) external {
+    function ReceiveRegisteredAsset(uint AssetId, uint amount) internal {
         ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(msg.sender, address(this), amount);
         UpdateERC20Balance(AssetId);
         // TO DO assetreceived event
