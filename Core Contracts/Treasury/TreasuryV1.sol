@@ -39,7 +39,6 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(from, address(this), amount);
         UpdateERC20Balance(AssetId);
         // TO DO assetreceived event
-
     }
 
     function AddToken(address tokenAddress, uint256 amount) external OnlyDAO {
