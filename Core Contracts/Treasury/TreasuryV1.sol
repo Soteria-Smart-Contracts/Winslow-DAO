@@ -1,9 +1,10 @@
 //SPDX-License-Identifier:UNLICENSE
 pragma solidity ^0.8.17;
 
-contract HarmoniaDAO_V1_Treasury{
+contract HarmoniaDAOTreasury{
+    string public Version = "V1";
     address public DAO;
-    uint256 public RegisteredAssetLimit = 5;
+    uint256 public RegisteredAssetLimit;
     Token public CLD;
     Token[] public RegisteredAssets;
 
@@ -17,33 +18,64 @@ contract HarmoniaDAO_V1_Treasury{
     //Events
 
     struct Token{
-        uint16 AssetID;
         address TokenAddress;
         uint256 DAObalance;
     }
 
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
-        CLD = Token(0, CLDcontract, 0);
+        CLD = Token(CLDcontract, 0);
+        RegisteredAssetLimit = 5;
         RegisteredAssets.push(CLD);
+    }
+
+    function ChangeRegisteredAssetLimit(uint amount) external OnlyDAO {
+        RegisteredAssetLimit = amount;
+        // TO DO NewAssetLimit event
+
+    }
+
+    function ReceiveRegisteredAsset (uint AssetId, uint amount) external {
+        ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(msg.sender, address(this), amount);
+        UpdateERC20Balance(AssetId);
+        // TO DO assetreceived event
+
+    }
+
+    function AddToken(address tokenAddress, uint256 amount) external OnlyDAO {
+        checkForDuplicate(tokenAddress);
+        if (amount > 0) {
+            ERC20(tokenAddress).transferFrom(msg.sender, address(this), amount);
+            Token(tokenAddress, amount);
+        } else {
+        Token(tokenAddress, amount);
+        }
+
+        // TO DO addtoken event
     }
 
     function UpdateERC20Balance(uint256 AssetID) internal {
         RegisteredAssets[AssetID].DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
     }
 
+    function checkForDuplicate(address _Token) internal view {
+        uint256 length = RegisteredAssets.length;
+        for (uint256 _pid = 0; _pid < length; _pid++) {
+            require(RegisteredAssets[_pid].TokenAddress != _Token, "AddToken: This asset is already registered!");
+        }
+
+    }
 
 
 
 
 
 
-
-
-
-
-    function TransferETH(uint256 amount, address receiver) public OnlyDAO{
-        
+    function TransferETH(uint256 amount, address payable receiver) public OnlyDAO{
+        // TO DO verify how to use this to send data to a contract
+        //(bool sent, bytes memory data) = receiver.call{gas :10000, value: msg.value}("func_signature(uint256 args)");
+        bool sent = receiver.send(amount);
+        require(sent, "TransferETH: Ether not sent!");
     }
 
 
