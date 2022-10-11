@@ -46,7 +46,7 @@ contract HarmoniaDAOTreasury{
         require(slot <= RegisteredAssetLimit);
         
         NewToken = Token(tokenAddress, 0)
-        RegisteredAssets
+        RegisteredAssets[slot] =  NewToken;
 
         // TO DO addtoken event
     }
