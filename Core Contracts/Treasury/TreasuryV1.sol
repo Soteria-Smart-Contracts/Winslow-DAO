@@ -45,7 +45,7 @@ contract HarmoniaDAOTreasury{
         checkForDuplicate(tokenAddress);
         require(slot <= RegisteredAssetLimit);
         
-        Token(tokenAddress, amount);
+        Token(tokenAddress, );
 
         // TO DO addtoken event
     }
