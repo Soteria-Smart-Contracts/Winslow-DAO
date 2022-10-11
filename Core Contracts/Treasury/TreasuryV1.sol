@@ -41,7 +41,7 @@ contract HarmoniaDAOTreasury{
         // TO DO assetreceived event
     }
 
-    function RegisterAsset(address tokenAddress, uint256 amount, uint256 slot) internal {
+    function RegisterAsset(address tokenAddress, uint256 slot) internal {
         checkForDuplicate(tokenAddress);
         require(slot <= RegisteredAssetLimit);
         if (amount > 0) {
