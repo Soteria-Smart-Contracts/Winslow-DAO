@@ -7,6 +7,7 @@ contract HarmoniaDAOTreasury{
     uint256 public RegisteredAssetLimit;
     Token public CLD;
     Token[] public RegisteredAssets;
+    
 
     modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract 
         require(msg.sender == DAO);
