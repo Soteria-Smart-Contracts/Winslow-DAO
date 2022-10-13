@@ -15,7 +15,7 @@ contract HarmoniaDAOTreasury{
     }
 
     //Events
-    event AssetLimitChange(uint256 NewLimit, address Caller, )
+    event AssetLimitChange(uint256 NewLimit);
     //Events
 
     struct Token{
