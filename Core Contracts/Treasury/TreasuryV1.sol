@@ -44,6 +44,7 @@ contract HarmoniaDAOTreasury{
     function RegisterAsset(address tokenAddress, uint256 slot) internal { //make callable from eros
         checkForDuplicate(tokenAddress);
         require(slot <= RegisteredAssetLimit);
+        require(condition);
         
         Token memory NewToken = Token(tokenAddress, 0);
         RegisteredAssets[slot] =  NewToken;
