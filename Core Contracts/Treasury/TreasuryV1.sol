@@ -17,6 +17,7 @@ contract HarmoniaDAOTreasury{
     }
 
     //Events
+
     event AssetLimitChange(uint256 NewLimit);
     //Events
 
@@ -50,7 +51,7 @@ contract HarmoniaDAOTreasury{
         
         RegisteredAssets[slot] =  Token(tokenAddress, ERC20(tokenAddress).balanceOf(address(this)));
         AssetRegistryMap[tokenAddress] = true;
-        
+
         // TO DO addtoken event
     }
 
