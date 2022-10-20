@@ -8,7 +8,7 @@ contract HarmoniaDAOTreasury{
     Token public CLD;
     Token[] public RegisteredAssets;
 
-    mapping(address => ) public 
+    mapping(address => uint256) public 
 
 
     modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract 
