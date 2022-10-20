@@ -45,7 +45,7 @@ contract HarmoniaDAOTreasury{
 
     function RegisterAsset(address tokenAddress, uint256 slot) external OnlyDAO { //make callable from eros
         require(slot <= RegisteredAssetLimit && slot != 0);
-        require(AssetRegistryMap[tokenAddress] == false || ERC20(Regi).balanceOf(address(this)) == 0);
+        require(AssetRegistryMap[tokenAddress] == false || ERC20(RegisteredAssets[slot]).balanceOf(address(this)) == 0);
         
         RegisteredAssets[slot] =  Token(tokenAddress, ERC20(tokenAddress).balanceOf(address(this)));
         // TO DO addtoken event
