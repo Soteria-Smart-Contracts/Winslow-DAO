@@ -17,7 +17,7 @@ contract HarmoniaDAOTreasury{
     }
 
     //Events
-    event AssetRegistered(address NewToken, uint256 )
+    event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
     //Events
 
