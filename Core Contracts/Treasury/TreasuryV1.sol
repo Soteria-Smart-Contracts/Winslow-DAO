@@ -52,7 +52,7 @@ contract HarmoniaDAOTreasury{
         RegisteredAssets[slot] =  Token(tokenAddress, ERC20(tokenAddress).balanceOf(address(this)));
         AssetRegistryMap[tokenAddress] = true;
 
-        // TO DO addtoken event
+        
     }
 
     function UpdateERC20Balance(uint256 AssetID) internal {
