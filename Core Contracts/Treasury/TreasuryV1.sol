@@ -55,17 +55,6 @@ contract HarmoniaDAOTreasury{
         RegisteredAssets[AssetID].DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
     }
 
-    function checkForDuplicate(address _Token) internal view {
-        uint256 length = RegisteredAssets.length;
-        for (uint256 _pid = 0; _pid < length; _pid++) {
-            require(RegisteredAssets[_pid].TokenAddress != _Token, "AddToken: This asset is already registered!");
-        }
-
-    }
-
-
-
-
 
 
     function TransferETH(uint256 amount, address payable receiver) public OnlyDAO{
