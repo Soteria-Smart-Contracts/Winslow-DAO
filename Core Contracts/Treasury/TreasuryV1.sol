@@ -47,7 +47,7 @@ contract HarmoniaDAOTreasury{
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false || ERC20(tokenAddress).balanceOf(address(this)) == 0);
         
-        RegisteredAssets[slot] =  Token(tokenAddress, 0);
+        RegisteredAssets[slot] =  Token(tokenAddress, ERC20(tokenAddress).balanceOf(address(this)));
         // TO DO addtoken event
     }
 
