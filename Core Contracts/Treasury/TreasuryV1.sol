@@ -34,10 +34,6 @@ contract HarmoniaDAOTreasury{
         RegisteredAssets.push(CLD);
     }
 
-    function ChangeRegisteredAssetLimit(uint amount) external OnlyDAO{
-        RegisteredAssetLimit = amount;
-        // TO DO NewAssetLimit event
-    }
 
     function ReceiveRegisteredAsset(address from, uint AssetId, uint amount) public {
         ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(from, address(this), amount);
@@ -68,6 +64,7 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[AssetID])
     }
 
+    
 
 
     receive() external payable{
