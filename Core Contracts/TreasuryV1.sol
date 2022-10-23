@@ -27,7 +27,7 @@ contract HarmoniaDAOTreasury{
         _;
     }
 
-    //How could someone exploit this b
+    //How could someone exploit this by using an un-updated erc20 balance?
 
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
