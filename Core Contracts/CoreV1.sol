@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 
 contract HarmoniaDAO_V1_Core{
     string public Version = "V1";
-    address public Treasury;
+    address public Treasury = address(0);
     
 
     event FallbackToTreasury(uint256 amount);
