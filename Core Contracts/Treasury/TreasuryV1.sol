@@ -98,3 +98,5 @@ interface ERC20 {
 interface EROSDAO{
     function CheckErosApproval(address) external view returns(bool);
 }
+
+//I Need a way for proposals within 
