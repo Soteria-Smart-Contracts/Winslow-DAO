@@ -18,11 +18,12 @@ contract HarmoniaDAOTreasury{
 
     //Modifier declarations
     modifier OnlyDAO{ 
-        require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO");
+        require(msg.sender == DAO);
         _;
     }
 
     modifier OnlyEros{
+        EROSDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO";
 
     }
 
