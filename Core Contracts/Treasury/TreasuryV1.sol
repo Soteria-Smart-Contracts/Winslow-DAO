@@ -27,9 +27,9 @@ contract HarmoniaDAOTreasury{
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
     event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
-    event EtherSent(uint256 Amount, address Receiver, address TxOrigin)
+    event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
     event ERC20BalanceUpdate(uint256 NewAmount, address TxOrigin);
-    event ERC20Sent(uint256 Amount, address Receive, address TxOrigin)
+    event ERC20Sent(uint256 Amount, address Receive, address TxOrigin);
     //Code executed on deployment
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
@@ -65,7 +65,6 @@ contract HarmoniaDAOTreasury{
     function UpdateERC20Balance(uint256 AssetID) internal {
         RegisteredAssets[AssetID].DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
     }
-
 
     //Setting modification functions
     function ChangeRegisteredAssetLimit(uint amount) external OnlyDAO{
