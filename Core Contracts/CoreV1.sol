@@ -27,7 +27,7 @@ contract HarmoniaDAO_V1_Core{
         TreasurySetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialTreasurySet = true;
 
-        emit NewTreasurySet(TreasuryAddress)
+        emit NewTreasurySet(TreasuryAddress);
     }
 
     
