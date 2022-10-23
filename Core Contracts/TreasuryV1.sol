@@ -58,6 +58,8 @@ contract HarmoniaDAOTreasury{
 
     function TransferETH(uint256 amount, address payable receiver) external OnlyEros{
        receiver.transfer(amount);
+
+       emit EtherSent(amount, Receiver, TxOrigin);
     }
 
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyEros{
