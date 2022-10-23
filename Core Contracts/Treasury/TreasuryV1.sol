@@ -62,10 +62,7 @@ contract HarmoniaDAOTreasury{
 
 
     function TransferETH(uint256 amount, address payable receiver) public OnlyDAO{
-        // TO DO verify how to use this to send data to a contract
-        //(bool sent, bytes memory data) = receiver.call{gas :10000, value: msg.value}("func_signature(uint256 args)");
-        bool sent = receiver.send(amount);
-        require(sent, "TransferETH: Ether not sent!");
+       TransferETH(amount, receiver);
     }
 
 
