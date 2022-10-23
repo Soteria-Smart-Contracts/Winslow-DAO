@@ -40,12 +40,6 @@ contract HarmoniaDAOTreasury{
 
 
     //DAO and Eros Proposal only access functions
-    function ReceiveRegisteredAsset(address from, uint AssetId, uint amount) public {
-        ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(from, address(this), amount);
-        UpdateERC20Balance(AssetId);
-        // TO DO assetreceived event
-    }
-
     function RegisterAsset(address tokenAddress, uint256 slot) external OnlyDAO { //make callable from eros
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
