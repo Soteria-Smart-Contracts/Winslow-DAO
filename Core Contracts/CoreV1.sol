@@ -6,7 +6,7 @@ contract HarmoniaDAO_V1_Core{
     string public Version = "V1";
     address public Treasury = address(0);
     address public TreasurySetter;
-    
+    bool public IntialTreasurySet = false=
     
 
     event FallbackToTreasury(uint256 amount);
