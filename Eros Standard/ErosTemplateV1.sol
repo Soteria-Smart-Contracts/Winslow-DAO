@@ -5,8 +5,8 @@ pragma solidity ^0.8.17;
 contract ErosProposal{
     address public DAO = 0x0000000000000000000000000000000000000000;
     bool public Executed;
-    uint256 RequestEther = 0 ether;
-    uint256 RequestTokens = 0;
+    uint256 public RequestEther = 0 ether;
+    uint256 public RequestTokens = 0;
     address TokenAddress = 0x0000000000000000000000000000000000000000;
 
     //Events
