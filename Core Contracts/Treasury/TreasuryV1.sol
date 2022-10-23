@@ -22,9 +22,12 @@ contract HarmoniaDAOTreasury{
         _;
     }
 
+
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
+
+
 
     //Code executed on deployment
     constructor(address DAOcontract, address CLDcontract){
