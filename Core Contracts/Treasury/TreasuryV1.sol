@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 contract HarmoniaDAOTreasury{
-    //Variable and typ
+    //Variable, struct and type declarations
     string public Version = "V1";
     address public DAO;
     uint256 public RegisteredAssetLimit;
@@ -11,7 +11,7 @@ contract HarmoniaDAOTreasury{
 
     mapping(address => bool) public AssetRegistryMap;
 
-    struct Token{
+    struct Token{ 
         address TokenAddress;
         uint256 DAObalance;
     }
