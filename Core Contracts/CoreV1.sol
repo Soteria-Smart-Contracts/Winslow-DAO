@@ -10,7 +10,7 @@ contract HarmoniaDAO_V1_Core{
 
 
     event FallbackToTreasury(uint256 amount);
-    event NewTreasurySet(address NewTreasury)
+    event NewTreasurySet(address NewTreasury);
 
 
     constructor(){
@@ -26,6 +26,8 @@ contract HarmoniaDAO_V1_Core{
         Treasury = TreasuryAddress;
         TreasurySetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialTreasurySet = true;
+
+        emit NewTreasurySet
     }
 
     
