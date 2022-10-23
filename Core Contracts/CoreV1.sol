@@ -46,4 +46,4 @@ contract HarmoniaDAO_V1_Core{
 
 }
 
-inter
+interface Treasury
