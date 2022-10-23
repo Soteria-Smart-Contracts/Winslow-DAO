@@ -20,7 +20,7 @@ contract HarmoniaDAOTreasury{
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
     //Events
-
+    
     struct Token{
         address TokenAddress;
         uint256 DAObalance;
