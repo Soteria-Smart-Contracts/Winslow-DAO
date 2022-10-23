@@ -29,6 +29,7 @@ contract HarmoniaDAOTreasury{
 
 
 
+
     //Code executed on deployment
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
@@ -38,6 +39,7 @@ contract HarmoniaDAOTreasury{
     }
 
 
+    //
     function ReceiveRegisteredAsset(address from, uint AssetId, uint amount) public {
         ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(from, address(this), amount);
         UpdateERC20Balance(AssetId);
