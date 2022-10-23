@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 
 contract HarmoniaDAO_V1_Core{
+    string public Version
     address public Treasury;
     
 
