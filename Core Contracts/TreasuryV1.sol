@@ -54,9 +54,9 @@ contract HarmoniaDAOTreasury{
         emit ERC20BalanceUpdate(NewBalance, AssetID, tx.origin);
     }
 
+    //
 
     //DAO and Eros Proposal only access functions
-
     function TransferETH(uint256 amount, address payable receiver) external OnlyEros{
        receiver.transfer(amount);
 
