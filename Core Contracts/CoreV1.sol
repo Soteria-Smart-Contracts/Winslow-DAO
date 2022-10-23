@@ -10,6 +10,7 @@ contract HarmoniaDAO_V1_Core{
 
 
     event FallbackToTreasury(uint256 amount);
+    event 
 
 
     constructor(){
@@ -20,7 +21,7 @@ contract HarmoniaDAO_V1_Core{
     //One Time Functions
     function SetInitialTreasury(address TreasuryAddress) external{
         require(msg.sender == TreasurySetter);
-        require(condition);
+        require(InitialTreasurySet == false);
 
         Treasury = TreasuryAddress;
         TreasurySetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
