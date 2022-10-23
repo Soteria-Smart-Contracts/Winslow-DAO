@@ -16,13 +16,13 @@ contract HarmoniaDAOTreasury{
         uint256 DAObalance;
     }
 
-
+    //Modifier declarations
     modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract 
         require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO");
         _;
     }
 
-    //Events
+    //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
     //Events
