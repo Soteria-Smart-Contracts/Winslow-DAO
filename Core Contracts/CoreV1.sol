@@ -46,6 +46,6 @@ contract HarmoniaDAO_V1_Core{
 
 }
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
-interface Treasury{//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future,
+interface DAOTreasury{//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future,
 
 }
