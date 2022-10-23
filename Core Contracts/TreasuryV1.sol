@@ -27,6 +27,7 @@ contract HarmoniaDAOTreasury{
         _;
     }
 
+    //How could someone exploit this b
 
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
