@@ -93,6 +93,7 @@ contract HarmoniaDAOTreasury{
 
     //Fallback Functions
     receive() external payable{
+        emit
     }
 
     fallback() external payable{
