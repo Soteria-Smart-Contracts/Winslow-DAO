@@ -59,8 +59,6 @@ contract HarmoniaDAOTreasury{
         RegisteredAssets[AssetID].DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
     }
 
-
-
     function TransferETH(uint256 amount, address payable receiver) public OnlyDAO{
        receiver.transfer(amount);
     }
