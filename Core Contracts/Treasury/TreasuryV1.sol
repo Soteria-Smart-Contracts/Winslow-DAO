@@ -46,11 +46,11 @@ contract HarmoniaDAOTreasury{
 
     //DAO and Eros Proposal only access functions
 
-    function TransferETH(uint256 amount, address payable receiver) external OnlyDAO{
+    function TransferETH(uint256 amount, address payable receiver) external OnlyEros{
        receiver.transfer(amount);
     }
 
-    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO{
+    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyEros{
         ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
         UpdateERC20Balance(AssetID);
     }
