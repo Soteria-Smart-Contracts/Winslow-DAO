@@ -62,7 +62,9 @@ contract HarmoniaDAOTreasury{
 
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyEros{
         ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
-        UpdateERC20Balance(AssetID);
+        uint256 NewBalance = UpdateERC20Balance(AssetID);
+
+         emit ERC20BalanceUpdate(NewBalance, AssetId, tx.origin);
     }
 
     //Asset Registry management
