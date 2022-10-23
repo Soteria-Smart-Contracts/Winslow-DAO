@@ -13,7 +13,6 @@ contract HarmoniaDAO_V1_Core{
 
     function SetTreasury(address TreasuryAddress) external{
         Treasury = TreasuryAddress;
-        
     }
 
     
