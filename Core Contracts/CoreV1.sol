@@ -10,7 +10,7 @@ contract HarmoniaDAO_V1_Core{
 
 
     event FallbackToTreasury(uint256 amount);
-    event 
+    event NewTreasurySet(address NewTreasury)
 
 
     constructor(){
