@@ -44,7 +44,12 @@ contract HarmoniaDAOTreasury{
     }
 
     //Public callable functions
-    
+    function ReceiveRegisteredAsset (uint AssetId, uint amount) external {
+        ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(msg.sender, address(this), amount);
+        UpdateERC20Balance(AssetId);
+       
+        emit AssetReceived(AssetId, amount);
+    }
 
 
     //DAO and Eros Proposal only access functions
