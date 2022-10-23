@@ -11,7 +11,9 @@ contract HarmoniaDAO_V1_Core{
     event FallbackToTreasury(uint256 amount);
 
 
-    constructor()
+    constructor(){
+        
+    }
 
     
     //One Time Functions
