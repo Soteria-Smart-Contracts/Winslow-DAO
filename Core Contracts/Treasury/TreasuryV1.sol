@@ -49,6 +49,8 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
         UpdateERC20Balance(AssetID);
     }
+
+    //
     function RegisterAsset(address tokenAddress, uint256 slot) external OnlyDAO { //make callable from eros
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
