@@ -25,7 +25,7 @@ contract HarmoniaDAOTreasury{
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
-    //Events
+    
 
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
