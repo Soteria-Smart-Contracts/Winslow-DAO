@@ -99,4 +99,4 @@ interface EROSDAO{
     function CheckErosApproval(address) external view returns(bool);
 }
 
-//I Need a way for proposals within 
+//I Need a way for proposals within the DAO that change DAO numbers like asset limits to be done withought EROS
