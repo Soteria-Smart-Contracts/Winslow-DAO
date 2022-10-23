@@ -64,7 +64,11 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[AssetID])
     }
 
-    //Setting modifing 
+    //Setting modification functions
+    function ChangeRegisteredAssetLimit(uint amount) external OnlyDAO{
+        RegisteredAssetLimit = amount;
+        // TO DO NewAssetLimit event
+    }
 
 
     receive() external payable{
