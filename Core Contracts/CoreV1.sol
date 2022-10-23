@@ -46,6 +46,6 @@ contract HarmoniaDAO_V1_Core{
 
 }
 
-interface Treasury{ //Only for the first treasury, 
+interface Treasury{ //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future,
 
 }
