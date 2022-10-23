@@ -24,7 +24,7 @@ contract HarmoniaDAOTreasury{
 
     modifier OnlyEros{
         EROSDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO";
-
+        _;
     }
 
 
