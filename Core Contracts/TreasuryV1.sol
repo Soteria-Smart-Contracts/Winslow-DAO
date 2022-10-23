@@ -48,7 +48,7 @@ contract HarmoniaDAOTreasury{
     //Public callable functions
     function ReceiveRegisteredAsset (uint AssetId, uint amount) external {
         ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(msg.sender, address(this), amount);
-        UpdateERC20Balance(AssetId);
+        NewBalance = UpdateERC20Balance(AssetId);
        
         emit ERC20BalanceUpdate(RegisteredAssets, TxOrigin);(AssetId, amount);
     }
