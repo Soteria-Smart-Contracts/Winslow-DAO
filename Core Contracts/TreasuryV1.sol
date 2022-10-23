@@ -33,7 +33,7 @@ contract HarmoniaDAOTreasury{
     event AssetLimitChange(uint256 NewLimit);
     event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
-    event ERC20BalanceUpdate(uint256 NewAmount, uintaddress TxOrigin);
+    event ERC20BalanceUpdate(uint256 NewAmount, uint8 AssetID, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receive, address TxOrigin);
 
 
