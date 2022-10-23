@@ -53,7 +53,7 @@ contract HarmoniaDAOTreasury{
        
         emit ERC20BalanceUpdate(NewBalance, AssetID, tx.origin);
     }
-
+ 
     //CLD Claim
 
     //DAO and Eros Proposal only access functions
