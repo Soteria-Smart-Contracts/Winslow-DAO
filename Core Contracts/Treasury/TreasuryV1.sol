@@ -62,7 +62,7 @@ contract HarmoniaDAOTreasury{
 
 
     function TransferETH(uint256 amount, address payable receiver) public OnlyDAO{
-       receiver
+       receiver.transfer(amount);
     }
 
 
