@@ -8,10 +8,12 @@ contract HarmoniaDAO_V1_Core{
     
 
     event FallbackToTreasury(uint256 amount);
+
     
 
     function SetTreasury(address TreasuryAddress) external{
         Treasury = TreasuryAddress;
+        
     }
 
     
