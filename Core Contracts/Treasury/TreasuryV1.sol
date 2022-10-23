@@ -26,7 +26,7 @@ contract HarmoniaDAOTreasury{
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
-    event EtherReceived(uint256 amount, address TxOrigin, address Sender);
+    event EtherReceived(uint256 amount, address Sender,address TxOrigin);
 
 
 
