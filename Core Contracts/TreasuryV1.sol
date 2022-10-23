@@ -93,7 +93,7 @@ contract HarmoniaDAOTreasury{
 
     //Fallback Functions
     receive() external payable{
-        emit EtherReceived(msg.value, Sender, TxOrigin);
+        emit EtherReceived(msg.value, Sender, TxOrigin); //Does msg.value work for this?
     }
 
     fallback() external payable{
