@@ -46,4 +46,6 @@ contract HarmoniaDAO_V1_Core{
 
 }
 
-interface Treasury
+interface Treasury{ //Only for the first treasury, 
+
+}
