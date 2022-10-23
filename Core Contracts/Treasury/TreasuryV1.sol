@@ -39,7 +39,7 @@ contract HarmoniaDAOTreasury{
     }
 
 
-    //
+    //DAO and Eros Proposal only access functions
     function ReceiveRegisteredAsset(address from, uint AssetId, uint amount) public {
         ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(from, address(this), amount);
         UpdateERC20Balance(AssetId);
