@@ -10,6 +10,11 @@ contract HarmoniaDAOTreasury{
 
     mapping(address => bool) public AssetRegistryMap;
 
+    struct Token{
+        address TokenAddress;
+        uint256 DAObalance;
+    }
+
 
     modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract 
         require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO");
@@ -20,11 +25,6 @@ contract HarmoniaDAOTreasury{
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
     //Events
-    
-    struct Token{
-        address TokenAddress;
-        uint256 DAObalance;
-    }
 
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
