@@ -36,7 +36,7 @@ contract HarmoniaDAOTreasury{
     event ERC20BalanceUpdate(uint256 NewAmount, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receive, address TxOrigin);
 
-    
+
     //Code executed on deployment
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
@@ -50,7 +50,7 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(msg.sender, address(this), amount);
         UpdateERC20Balance(AssetId);
        
-        emit AssetReceived(AssetId, amount);
+        emit ERC20BalanceUpdate(NewAmount, TxOrigin);(AssetId, amount);
     }
 
 
