@@ -86,3 +86,7 @@ interface ERC20 {
   function transferFrom(address from, address to, uint256 value) external returns (bool); 
   function totalSupply() external view returns (uint);
 } 
+
+interface EROSDAO{
+    function CheckErosApproval(address) external view returns(bool);
+}
