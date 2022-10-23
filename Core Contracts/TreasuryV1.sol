@@ -43,6 +43,9 @@ contract HarmoniaDAOTreasury{
         RegisteredAssets.push(CLD);
     }
 
+    //Public callable functions
+    
+
 
     //DAO and Eros Proposal only access functions
 
