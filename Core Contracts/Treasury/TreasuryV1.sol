@@ -63,7 +63,7 @@ contract HarmoniaDAOTreasury{
        receiver.transfer(amount);
     }
 
-    function TransferERC20(uint256 amount, address receiver)
+    function TransferERC20(uint256 amount, address receiver) 
 
 
 
