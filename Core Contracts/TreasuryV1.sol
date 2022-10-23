@@ -50,7 +50,7 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[AssetId].TokenAddress).transferFrom(msg.sender, address(this), amount);
         uint256 NewBalance = UpdateERC20Balance(AssetId);
        
-        emit ERC20BalanceUpdate(NewBalance, AssetId)
+        emit ERC20BalanceUpdate(NewBalance, AssetId, tx.origin)
     }
 
 
