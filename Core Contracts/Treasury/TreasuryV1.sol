@@ -29,7 +29,7 @@ contract HarmoniaDAOTreasury{
     event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin)
     event ERC20BalanceUpdate(uint256 NewAmount, address TxOrigin);
-    event ERC20Sent(uint256 Amount, )
+    event ERC20Sent(uint256 Amount, address Receive, )
     //Code executed on deployment
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
