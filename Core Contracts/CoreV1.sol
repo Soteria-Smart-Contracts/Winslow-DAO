@@ -19,7 +19,8 @@ contract HarmoniaDAO_V1_Core{
     
     //One Time Functions
     function SetInitialTreasury(address TreasuryAddress) external{
-        require(msg.sender = TreasurySetter);
+        require(msg.sender == TreasurySetter);
+        require(condition);
 
         Treasury = TreasuryAddress;
         TreasurySetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
