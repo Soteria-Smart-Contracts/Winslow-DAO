@@ -64,7 +64,7 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[AssetID])
     }
 
-    //modifing 
+    //Setting modifing 
 
 
     receive() external payable{
