@@ -63,8 +63,8 @@ contract HarmoniaDAOTreasury{
        receiver.transfer(amount);
     }
 
-    //Transfer assets
-    
+    function TransferERC20
+
 
 
     receive() external payable{
