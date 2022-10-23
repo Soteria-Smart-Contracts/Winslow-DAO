@@ -17,9 +17,13 @@ contract HarmoniaDAOTreasury{
     }
 
     //Modifier declarations
-    modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract 
+    modifier OnlyDAO{ 
         require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO");
         _;
+    }
+
+    modifier OnlyEros{
+
     }
 
 
