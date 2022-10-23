@@ -60,7 +60,7 @@ contract HarmoniaDAOTreasury{
     }
 
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO{
-        ERC20(RegisteredAssets[AssetID]).transfer(to, value);
+        ERC20(RegisteredAssets[AssetID]).transfer(receiver, amount);
     }
 
     //Setting modification functions
