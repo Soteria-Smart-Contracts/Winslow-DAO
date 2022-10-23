@@ -7,6 +7,7 @@ contract HarmoniaDAO_V1_Core{
     address public Treasury = address(0);
     address public TreasurySetter;
     
+    
 
     event FallbackToTreasury(uint256 amount);
 
