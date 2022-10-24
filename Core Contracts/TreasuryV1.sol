@@ -126,7 +126,7 @@ contract HarmoniaDAOTreasury{
 
     //Public viewing functions 
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
-        
+        return(((CLDamount * ((address(this).balance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer);)
     }
 
     //Fallback Functions
