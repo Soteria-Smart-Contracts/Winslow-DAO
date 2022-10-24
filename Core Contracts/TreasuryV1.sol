@@ -125,7 +125,7 @@ contract HarmoniaDAOTreasury{
     }
 
     //Public viewing functions 
-    function Check(type name) {
+    function CheckAsset(type name) {
         
     }
 
