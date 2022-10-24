@@ -57,7 +57,7 @@ contract HarmoniaDAOTreasury{
         //Thank you for calling this function and keeping the treasury up to date
 
         AssetIndex = 0;
-        while(AssetIndex < )
+        while(AssetIndex < Regi)
 
         return(success);
     }
