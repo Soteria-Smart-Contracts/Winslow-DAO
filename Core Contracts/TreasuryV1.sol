@@ -56,7 +56,7 @@ contract HarmoniaDAOTreasury{
  
     //CLD Claim
     function ClaimAssets(uint256 CLDamount) public returns(bool success){
-        ERC20(CLD)
+        ERC20(CLD).transferFrom(msg.sender, to, value);
     }
 
     //DAO and Eros Proposal only access functions
