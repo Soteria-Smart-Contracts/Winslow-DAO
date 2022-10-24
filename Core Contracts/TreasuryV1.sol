@@ -122,7 +122,7 @@ contract HarmoniaDAOTreasury{
     }
 
     //Public viewing functions 
-    function GetBackingValueEther
+    function GetBackingValueEther(uint256 )
 
     //Fallback Functions
     receive() external payable{
