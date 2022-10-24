@@ -76,7 +76,7 @@ contract HarmoniaDAOTreasury{
             }
             CurrentID++;
         }
-        EtherToSend
+        EtherToSend = 
 
         return(success);
     }
