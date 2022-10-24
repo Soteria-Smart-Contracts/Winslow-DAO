@@ -1,4 +1,4 @@
 100000 CLD in treasury
 TX is for 4000 CLD
 
-1000Asset1
+Asset1 6500
