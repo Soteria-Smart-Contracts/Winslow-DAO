@@ -35,6 +35,7 @@ contract HarmoniaDAOTreasury{
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
     event ERC20BalanceUpdate(uint256 NewAmount, uint8 AssetID, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receive, address TxOrigin);
+    event CLD
 
 
     //Code executed on deployment
@@ -59,7 +60,7 @@ contract HarmoniaDAOTreasury{
 
     function AssetClaim(uint256 CLDamount, address From, address To) public returns(bool success){
         require(ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
-        
+
     }
 
 
