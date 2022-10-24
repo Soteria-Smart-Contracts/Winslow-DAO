@@ -55,7 +55,9 @@ contract HarmoniaDAOTreasury{
     }
  
     //CLD Claim
-    function ClaimAssets(uint256 CLDamount) public returns(bool success)
+    function ClaimAssets(uint256 CLDamount) public returns(bool success){
+        
+    }
 
     //DAO and Eros Proposal only access functions
     function TransferETH(uint256 amount, address payable receiver) external OnlyEros{
