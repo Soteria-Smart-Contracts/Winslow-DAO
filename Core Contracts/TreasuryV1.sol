@@ -60,9 +60,9 @@ contract HarmoniaDAOTreasury{
     }
 
     function AssetClaim(uint256 CLDamount, address From, address To) public returns(bool success){
-        ERC20(CLD).transferFrom(msg.sender, to, value);
+        ERC20(CLD).transferFrom(From, address(this), value);
     }
-    
+
 
     //DAO and Eros Proposal only access functions
     function TransferETH(uint256 amount, address payable receiver) external OnlyEros{
