@@ -131,7 +131,9 @@ contract HarmoniaDAOTreasury{
         return(((CLDamount * ((address(this).balance * DecimalReplacer) / Supply)) / DecimalReplacer));
     }
 
-    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID)
+    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking){
+        
+    }
 
     //Fallback Functions
     receive() external payable{
