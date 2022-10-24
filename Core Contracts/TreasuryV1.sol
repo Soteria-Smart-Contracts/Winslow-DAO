@@ -55,7 +55,7 @@ contract HarmoniaDAOTreasury{
     }
  
     //CLD Claim
-    function UserAssetClaim()
+    function UserAssetClaim(uint256 CLDamount)
 
 
     function AssetClaim(uint256 CLDamount) public returns(bool success){
