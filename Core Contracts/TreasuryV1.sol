@@ -125,7 +125,7 @@ contract HarmoniaDAOTreasury{
     }
 
     //Public viewing functions 
-    function IsRegistered(address TokenAddress){
+    function IsRegistered(address TokenAddress) public view returns(bool){
         return(AssetRegistryMap[TokenAddress]);
     }
         
