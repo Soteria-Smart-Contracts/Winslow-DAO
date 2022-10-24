@@ -4,7 +4,6 @@ pragma solidity ^0.8.17;
 contract HarmoniaDAOTreasury{
     //Variable, struct and type declarations
     string public Version = "V1";
-    address public DAO;
     uint256 public RegisteredAssetLimit;
     Token public CLD;
     Token[] public RegisteredAssets;
