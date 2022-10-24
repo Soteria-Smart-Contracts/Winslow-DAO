@@ -56,8 +56,8 @@ contract HarmoniaDAOTreasury{
     function UpdateAllAssets() public returns(bool success){
         //Thank you for calling this function and keeping the treasury up to date
 
-        AssetIndex = 0;
-        while(AssetIndex < Regi)
+        uint8 AssetIndex = 0;
+        while(AssetIndex )
 
         return(success);
     }
