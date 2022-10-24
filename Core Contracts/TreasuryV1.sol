@@ -40,9 +40,8 @@ contract HarmoniaDAOTreasury{
     //Code executed on deployment
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
-        CLD = Token(CLDcontract, 0);
         RegisteredAssetLimit = 5;
-        RegisteredAssets.push(CLD);
+        RegisteredAssets.push(Token(CLDcontract, 0));
     }
 
     //Public callable functions
