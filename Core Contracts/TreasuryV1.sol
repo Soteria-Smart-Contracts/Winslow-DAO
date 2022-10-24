@@ -61,7 +61,7 @@ contract HarmoniaDAOTreasury{
     function AssetClaim(uint256 CLDamount, address From, address To) public returns(bool success){
         require(ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
 
-        for(i)
+        Asset
 
         UpdateERC20Balance(0); //Does not allow for Re-Entry because assets are transfered beforehand, this just updates the CLD balance in the contract
         return(success);
