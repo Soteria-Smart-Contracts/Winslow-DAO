@@ -53,7 +53,9 @@ contract HarmoniaDAOTreasury{
         emit ERC20BalanceUpdate(NewBalance, AssetID, tx.origin);
     }
 
-    fucntion UpdateAllAssets() public
+    function UpdateAllAssets() public returns(bool success){
+        return(success)
+    }
  
     //CLD Claim
     function UserAssetClaim(uint256 CLDamount) public returns(bool success){
