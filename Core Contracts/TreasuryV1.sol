@@ -52,6 +52,8 @@ contract HarmoniaDAOTreasury{
        
         emit ERC20BalanceUpdate(NewBalance, AssetID, tx.origin);
     }
+
+    
  
     //CLD Claim
     function UserAssetClaim(uint256 CLDamount) public returns(bool success){
@@ -105,6 +107,7 @@ contract HarmoniaDAOTreasury{
 
         return(RegisteredAssets[AssetID].DAObalance);
     }
+
 
     //Setting modification functions
     function ChangeRegisteredAssetLimit(uint NewLimit) external OnlyDAO{
