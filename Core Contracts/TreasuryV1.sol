@@ -85,7 +85,7 @@ contract HarmoniaDAOTreasury{
     function UpdateERC20Balance(uint256 AssetID) internal returns(uint256 NewBalance){
         RegisteredAssets[AssetID].DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
 
-        return(New)
+        return(RegisteredAssets[AssetID].DAObalance);
     }
 
     //Setting modification functions
