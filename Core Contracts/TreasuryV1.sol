@@ -4,8 +4,8 @@ pragma solidity ^0.8.17;
 contract HarmoniaDAOTreasury{
     //Variable, struct and type declarations
     string public Version = "V1";
+    address public DAO;
     uint256 public RegisteredAssetLimit;
-    Token public CLD;
     Token[] public RegisteredAssets;
 
     mapping(address => bool) public AssetRegistryMap;
@@ -59,7 +59,7 @@ contract HarmoniaDAOTreasury{
     }
 
     function AssetClaim(uint256 CLDamount, address From, address To) public returns(bool success){
-        require(ERC20(RegisteredAssets[0]).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
+        require(ERC20(CLD.TokenAddress).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
     }
 
 
