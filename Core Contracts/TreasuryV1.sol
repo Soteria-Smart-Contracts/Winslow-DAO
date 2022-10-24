@@ -59,7 +59,7 @@ contract HarmoniaDAOTreasury{
     }
 
     function AssetClaim(uint256 CLDamount, address From, address To) public returns(bool success){
-        uint256 PreBalance
+        uint256 SupplyPreTransfer = 
         require(ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
 
         uint8 CurrentID = 1;
