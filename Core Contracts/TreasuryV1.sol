@@ -121,6 +121,8 @@ contract HarmoniaDAOTreasury{
         emit AssetLimitChange(NewLimit);
     }
 
+    //Public viewing functions 
+
     //Fallback Functions
     receive() external payable{
         emit EtherReceived(msg.value, msg.sender, tx.origin); //Does msg.value work for this?
