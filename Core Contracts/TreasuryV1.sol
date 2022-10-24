@@ -66,6 +66,7 @@ contract HarmoniaDAOTreasury{
         uint8 CurrentID = 1;
         while(CurrentID < RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
             if(RegisteredAssets[CurrentID].TokenAddress != address(0)){ 
+                AssetBalance = UpdateERC20Balance(AssetID);
                 uint256 ToSend = (CLDamount * (SupplyPreTransfer)
             }
         }
