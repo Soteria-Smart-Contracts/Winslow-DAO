@@ -70,6 +70,7 @@ contract HarmoniaDAOTreasury{
                 uint256 DecimalReplacer = (10^10);
                 uint256 ToSend = ((CLDamount * ((AssetBalance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer);
                 ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
+                UpdateERC20Balance(CurrentID);
                 CurrentID++;
             }
         }
