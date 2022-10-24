@@ -55,8 +55,9 @@ contract HarmoniaDAOTreasury{
     }
  
     //CLD Claim
+    function UserAssetClaim()
 
-    
+
     function AssetClaim(uint256 CLDamount) public returns(bool success){
         ERC20(CLD).transferFrom(msg.sender, to, value);
     }
