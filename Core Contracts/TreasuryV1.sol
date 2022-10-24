@@ -35,7 +35,7 @@ contract HarmoniaDAOTreasury{
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
     event ERC20BalanceUpdate(uint256 NewAmount, uint8 AssetID, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receive, address TxOrigin);
-    event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address Ms)
+    event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address )
 
 
     //Code executed on deployment
