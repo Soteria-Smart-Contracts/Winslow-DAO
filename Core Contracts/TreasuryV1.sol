@@ -56,6 +56,8 @@ contract HarmoniaDAOTreasury{
     function UpdateAllAssets() public returns(bool success){
         //Thank you for calling this function and keeping the treasury up to date
 
+        
+
         return(success);
     }
  
