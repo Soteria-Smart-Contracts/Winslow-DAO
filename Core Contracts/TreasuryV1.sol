@@ -60,7 +60,6 @@ contract HarmoniaDAOTreasury{
 
     function AssetClaim(uint256 CLDamount, address From, address To) public returns(bool success){
         uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance); //Supply within the DAO does not count as backed
-        uint256 TX
         require(ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
 
         uint8 CurrentID = 1;
