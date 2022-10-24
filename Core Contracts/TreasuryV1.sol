@@ -90,7 +90,7 @@ contract HarmoniaDAOTreasury{
     function ChangeRegisteredAssetLimit(uint NewLimit) external OnlyDAO{
         RegisteredAssetLimit = NewLimit;
         
-        AssetLimitChange(NewLimit);
+        emit AssetLimitChange(NewLimit);
     }
 
     //Fallback Functions
