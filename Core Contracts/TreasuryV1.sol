@@ -127,7 +127,7 @@ contract HarmoniaDAOTreasury{
     //Public viewing functions 
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
         uint256 DecimalReplacer = (10 ^ 10);
-        Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance);
+        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance);
         return(((CLDamount * ((address(this).balance * DecimalReplacer) / Supply)) / DecimalReplacer));
     }
 
