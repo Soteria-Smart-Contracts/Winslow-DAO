@@ -54,7 +54,8 @@ contract HarmoniaDAOTreasury{
     }
 
     function UpdateAllAssets() public returns(bool success){
-        return(success)
+        //Thanks for calling this function 
+        return(success);
     }
  
     //CLD Claim
