@@ -65,10 +65,10 @@ contract HarmoniaDAOTreasury{
         UpdateERC20Balance(0);
 
         uint8 CurrentID = 1;
+        uint256 DecimalReplacer = (10^10);
         while(CurrentID <= RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
             if(RegisteredAssets[CurrentID].TokenAddress != address(0)){ 
                 uint256 AssetBalance = UpdateERC20Balance(CurrentID);
-                uint256 DecimalReplacer = (10^10);
                 uint256 ToSend = ((CLDamount * ((AssetBalance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer);
                 ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
                 emit ERC20Sent(ToSend, To, tx.origin);
