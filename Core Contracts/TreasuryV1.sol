@@ -63,7 +63,7 @@ contract HarmoniaDAOTreasury{
         require(ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
 
         uint8 CurrentID = 1;
-        while(CurrentID < RegisteredAssetLimit){
+        while(CurrentID < RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure 
             if(RegisteredAssets[CurrentID].TokenAddress != address(0)){ 
                 uint256 CutOfTotal = 
             }
