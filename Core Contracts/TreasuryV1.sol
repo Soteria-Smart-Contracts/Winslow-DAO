@@ -62,6 +62,7 @@ contract HarmoniaDAOTreasury{
         require(ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
 
 
+        UpdateERC20Balance(0); //Does not allow for 
         return(success);
     }
 
