@@ -34,7 +34,7 @@ contract HarmoniaDAOTreasury{
     event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
     event ERC20BalanceUpdate(uint256 NewAmount, uint8 AssetID, address TxOrigin);
-    event ERC20Sent(uint256 Amount, address Receive, address TxOrigin);
+    event ERC20Sent(uint256 Amount, address Receiver, address TxOrigin);
     event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
 
 
@@ -71,7 +71,7 @@ contract HarmoniaDAOTreasury{
                 uint256 DecimalReplacer = (10^10);
                 uint256 ToSend = ((CLDamount * ((AssetBalance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer);
                 ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
-                emit ERC20Sent(Amount, Receive, TxOrigin);
+                emit ERC20Sent(ToSend, Receive, TxOrigin);
                 UpdateERC20Balance(CurrentID);
             }
             CurrentID++;
