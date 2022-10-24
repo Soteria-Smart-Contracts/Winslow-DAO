@@ -59,7 +59,7 @@ contract HarmoniaDAOTreasury{
 
     }
 
-    function ToAssetClaim(uint256 CLDamount, address From, address To)
+    function AssetClaim
 
 
     function AssetClaim(uint256 CLDamount) public returns(bool success){
