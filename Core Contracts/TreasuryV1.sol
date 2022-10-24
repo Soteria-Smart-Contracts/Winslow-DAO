@@ -76,7 +76,7 @@ contract HarmoniaDAOTreasury{
             }
             CurrentID++;
         }
-        
+
         uint256 EtherToSend = ((CLDamount * ((address(this).balance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer);
         To.transfer(EtherToSend);
 
@@ -125,7 +125,7 @@ contract HarmoniaDAOTreasury{
     }
 
     //Public viewing functions 
- //   function GetBackingValueEther(uint256 CLDamount)
+    function GetBackingValueEther(uint256 CLDamount)
 
     //Fallback Functions
     receive() external payable{
