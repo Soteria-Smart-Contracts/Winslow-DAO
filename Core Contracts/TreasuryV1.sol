@@ -64,7 +64,7 @@ contract HarmoniaDAOTreasury{
         uint8 CurrentID = 1;
         while(CurrentID < RegisteredAssetLimit){
             if(RegisteredAssets[CurrentID].TokenAddress != address(0)){
-                
+                uint256 
             }
         }
 
