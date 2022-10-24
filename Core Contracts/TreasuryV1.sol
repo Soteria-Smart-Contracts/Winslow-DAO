@@ -63,7 +63,7 @@ contract HarmoniaDAOTreasury{
 
         uint8 CurrentID = 1;
         while(CurrentID < RegisteredAssetLimit){
-            if(RegisteredAssets)
+            if(RegisteredAssets[CurrentID].tokenAddress !)
         }
 
         UpdateERC20Balance(0); //Does not allow for Re-Entry because assets are transfered beforehand, this just updates the CLD balance in the contract
