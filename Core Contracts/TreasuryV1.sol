@@ -134,7 +134,7 @@ contract HarmoniaDAOTreasury{
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking){
         uint256 DecimalReplacer = (10 ^ 10);
         uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance);
-        return(((CLDamount * ((RegisteredAssets[0] * DecimalReplacer) / Supply)) / DecimalReplacer));
+        return(((CLDamount * ((RegisteredAssets[0]. * DecimalReplacer) / Supply)) / DecimalReplacer));
     }
 
     //Fallback Functions
