@@ -60,7 +60,7 @@ contract HarmoniaDAOTreasury{
     }
 
     function AssetClaim(uint256 CLDamount, address From, address To) public returns(bool success){
-        require(ERC20(CLD).transferFrom(From, address(this), CLDamount), "");
+        require(ERC20(CLD).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
     }
 
 
