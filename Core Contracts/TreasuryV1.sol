@@ -76,7 +76,7 @@ contract HarmoniaDAOTreasury{
             }
             CurrentID++;
         }
-        EtherToSend = ((CLDamount * ((AssetBalance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer)
+        EtherToSend = ((CLDamount * ((balance(address(this)) * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer)
 
         return(success);
     }
