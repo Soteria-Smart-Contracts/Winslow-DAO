@@ -56,7 +56,7 @@ contract HarmoniaDAOTreasury{
  
     //CLD Claim
     function UserAssetClaim(uint256 CLDamount) public returns(bool success){
-
+        
     }
 
     function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success){
@@ -128,7 +128,7 @@ contract HarmoniaDAOTreasury{
     function IsRegistered(address TokenAddress) public view returns(bool){
         return(AssetRegistryMap[TokenAddress]);
     }
-    
+
 
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
         uint256 DecimalReplacer = (10 ^ 10);
