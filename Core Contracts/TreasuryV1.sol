@@ -128,8 +128,7 @@ contract HarmoniaDAOTreasury{
     function IsRegistered(address TokenAddress) public view returns(bool){
         return(AssetRegistryMap[TokenAddress]);
     }
-        
-    }
+    
 
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
         uint256 DecimalReplacer = (10 ^ 10);
