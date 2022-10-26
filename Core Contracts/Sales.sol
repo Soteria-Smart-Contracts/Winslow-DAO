@@ -1,20 +1,106 @@
 //SPDX-License-Identifier:UNLICENSE
 pragma solidity ^0.8.17;
 
+// TO DO OnlyDAO modifiers and functions
 contract CLDDao_Auction {
+    address DAO;
+    address payable Treasury;
+    address CLD;
+    uint256 MinimunFee = 100000000 gwei;
+    uint256 StartTime;
+    uint256 EndTime;
+    uint256 ETCCollected;
+    uint256 CurrentETCBalance;
+    uint256 TokenAmoun;
+    uint256 CurrentTokenBalance;
+    /*
+    modifier OnlyDAO{
+        require(msg.sender == DAO);
+        _;
+    }
+    */
+    event ETCDeposited(uint256 AmountReceived, address Buyer);
+    event ETCDWithdrawed(uint256 AmountWithdrawed);
+    event CLDWithdrawed(uint256 AmountWithdrawed, address Buyer);
 
-    constructor(uint256 StartTime, uint256 EndTime, uint256 Amount) {}
-    
-    function returnOne() public pure returns(uint8 number) {
-        number = 1;
-        return number;
+    mapping(address => uint256) DepositedETC;
+
+    constructor(uint256 _StartTime, uint256 _EndTime, uint256 _Amount, address _DAO) {
+        StartTime = _StartTime;
+        EndTime = _EndTime;
+        TokenAmoun = _Amount;
+        DAO = _DAO;
+    }
+
+    /* TO DO Functions needed:
+    * depositETC [Done, needs tests]
+    * RetireFromAuction [Done, needs tests]
+    * withdrawCLD
+    * withdrawETC [Done, needs tests]
+    */
+
+    function DepositETC() external payable returns (bool) {
+        require(block.timestamp < EndTime, "CLDAuction.DepositETC: The sale is over");
+        require(msg.value > MinimunFee, "CLDAuction.DepositETC: Deposit amount not high enough");
+
+        ETCCollected += msg.value;
+        DepositedETC[msg.sender] += msg.value;
+
+        emit ETCDeposited(msg.value, msg.sender);
+        return true;
+    }
+
+    // We should take a fee for this, DAO decided
+    function RetireFromAuction(uint256 amount, address payable receiver) external {
+        require(
+            amount < DepositedETC[msg.sender], 
+            "CLDAuction.RetireFromAuction: You can't withdraw this many ETC"
+        );
+        require(
+            block.timestamp < EndTime, 
+            "CLDAuction.returnCounter: The sale is over, you can only withdraw your CLD"
+        );
+        DepositedETC[msg.sender] -= amount;
+        receiver.transfer(amount);
+    }
+
+    //TO DO OnlyDAO
+    function WithdrawETC() public returns (bool) {
+        require(block.timestamp > EndTime, "CLDAuction.WithdrawETC: The sale is not over yet");
+        uint256 _ETCAmount = address(this).balance;
+        Treasury.transfer(_ETCAmount);
+
+        emit ETCDWithdrawed(_ETCAmount);
+        return true;
+    }
+
+    function WithdrawCLD() public returns (uint256) {
+        require(block.timestamp > EndTime, "CLDAuction.WithdrawCLD: The sale is not over yet");
+        require(DepositedETC[msg.sender] > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
+   
+        uint256 CLDToSend = (DepositedETC[msg.sender] / CurrentETCBalance) / 100000;
+        DepositedETC[msg.sender] = 0;
+
+       
+        // ERC20(CLD).transfer(msg.sender, CLDToSend);
+
+        return CLDToSend;
+   
+    }
+
+    function CheckParticipant() public view returns (uint256) {
+        return DepositedETC[msg.sender];
     }
 
 }
 
+// TO DO This contract needs to ask the DAO to send CLD tokens from the Treasury
+// to the Auction contract
 contract CLDDao_Auction_Factory {
     address public DAO;
     Auction[] public auctionList;
+
+    event NewAuction(address Addr, uint256 startDate, uint256 endDate, uint256 _AmountToAuction);
 
     struct Auction{
         address auctionAddress;
@@ -22,31 +108,37 @@ contract CLDDao_Auction_Factory {
         uint256 endDate;
         uint256 amountAuctioned;
     }
-    
-    modifier OnlyDAO{ 
+    /*
+    modifier OnlyDAO{
         require(msg.sender == DAO);
         _;
     }
-
+   
     constructor(address DAOAddress) {
         DAO = DAOAddress;
     }
+    */
 
-    function newCLDAuction(uint256 _EndTime, uint256 _Amount) external OnlyDAO {
+    function newCLDAuction(uint256 _EndTime, uint256 _Amount) 
+    external 
+    //TO DO OnlyDAO
+    {
         (CLDDao_Auction newInstance, 
         uint256 _startDate, 
         uint256 _endDate, 
         uint256 _amount ) = _newCLDAuction(_EndTime, _Amount);
-        
+       
         auctionList.push(
             Auction({auctionAddress: address(newInstance),
             startDate: _startDate,
             endDate: _endDate,
-            amountAuctioned: _amount 
-            }));
+            amountAuctioned: _amount
+        }));
+
+        emit NewAuction(address(newInstance), _startDate, _endDate, _amount);
     }
-    
-    function _newCLDAuction(uint256 _EndTime, uint256 _Amount) 
+   
+    function _newCLDAuction(uint256 _EndTime, uint256 _AmountToAuction) 
     internal 
     returns (
         CLDDao_Auction NewAuctionAddress, 
@@ -57,11 +149,33 @@ contract CLDDao_Auction_Factory {
     {
         uint256 _startDate = block.timestamp;
         uint256 _endDate = _startDate + _EndTime;
-        NewAuctionAddress = new CLDDao_Auction(_startDate, _endDate, _Amount);
-        return (NewAuctionAddress, _startDate, _endDate, _Amount);
+        NewAuctionAddress = new CLDDao_Auction(_startDate, _endDate, _AmountToAuction, DAO);
+        return (NewAuctionAddress, _startDate, _endDate, _AmountToAuction);
     }
 
+    /*
     function setDAOAddress(address NewDAOAddress) external OnlyDAO {
         DAO = NewDAOAddress;
     }
+    */
+
+    function SeeAuctionData(uint AuctionID) public view returns (address, uint, uint, uint) {
+        return (
+        auctionList[AuctionID].auctionAddress,
+        auctionList[AuctionID].startDate,
+        auctionList[AuctionID].endDate,
+        auctionList[AuctionID].amountAuctioned
+        );
+    }
+}
+
+interface ERC20 {
+  function balanceOf(address owner) external view returns (uint256);
+  function allowance(address owner, address spender) external view returns (uint256);
+  function approve(address spender, uint value) external returns (bool);
+  function Mint(address _MintTo, uint256 _MintAmount) external;
+  function transfer(address to, uint value) external returns (bool);
+  function transferFrom(address from, address to, uint256 value) external returns (bool); 
+  function totalSupply() external view returns (uint);
+  function CheckMinter(address AddytoCheck) external view returns(uint);
 }
