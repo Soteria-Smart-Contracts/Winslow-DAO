@@ -56,7 +56,7 @@ contract HarmoniaDAOTreasury{
  
     //CLD Claim
     function UserAssetClaim(uint256 CLDamount) public returns(bool success){
-        
+
     }
 
     function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success){
@@ -91,7 +91,7 @@ contract HarmoniaDAOTreasury{
         emit EtherSent(amount, receiver, tx.origin);
     }
 
-    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO{ //Only DAO for moving fyi
+    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO{ 
         ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
         uint256 NewBalance = UpdateERC20Balance(AssetID);
 
@@ -99,7 +99,7 @@ contract HarmoniaDAOTreasury{
     }
 
     //Asset Registry management
-    function RegisterAsset(address tokenAddress, uint256 slot) external OnlyEros { //make callable from eros
+    function RegisterAsset(address tokenAddress, uint256 slot) external OnlyEros { 
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
         require(RegisteredAssets[slot].TokenAddress == address(0) || ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0); //How can I check if a slot is populated?
