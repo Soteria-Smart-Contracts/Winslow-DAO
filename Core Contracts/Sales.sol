@@ -19,11 +19,20 @@ contract CLDDao_Auction {
         _;
     }
     */
+    struct Participant {
+        bool Participated;
+        address PartAddr;
+        uint256 DepositedETC;
+        uint256 PooledTokenShare;
+    } 
+
+    Participant[] public ParticipantList;
+    mapping (address => Participant) public participantInfo;
+    
     event ETCDeposited(uint256 AmountReceived, address Buyer);
     event ETCDWithdrawed(uint256 AmountWithdrawed);
     event CLDWithdrawed(uint256 AmountWithdrawed, address Buyer);
 
-    mapping(address => uint256) DepositedETC;
 
     constructor(uint256 _StartTime, uint256 _EndTime, uint256 _Amount, address _DAO) {
         StartTime = _StartTime;
@@ -44,7 +53,19 @@ contract CLDDao_Auction {
         require(msg.value > MinimunFee, "CLDAuction.DepositETC: Deposit amount not high enough");
 
         ETCCollected += msg.value;
-        DepositedETC[msg.sender] += msg.value;
+        if (participantInfo[msg.sender].Participated) {
+            participantInfo[msg.sender].DepositedETC += msg.value;
+        } else {
+            ParticipantList.push(
+                Participant({
+                Participated: true,
+                PartAddr: msg.sender,
+                DepositedETC: msg.value,
+                PooledTokenShare: 0
+            }));
+        }
+        CurrentETCBalance += msg.value;
+        UpdatePooledTokenShare(msg.sender);
 
         emit ETCDeposited(msg.value, msg.sender);
         return true;
@@ -53,20 +74,21 @@ contract CLDDao_Auction {
     // We should take a fee for this, DAO decided
     function RetireFromAuction(uint256 amount, address payable receiver) external {
         require(
-            amount < DepositedETC[msg.sender], 
+            amount < participantInfo[msg.sender].DepositedETC, 
             "CLDAuction.RetireFromAuction: You can't withdraw this many ETC"
         );
         require(
             block.timestamp < EndTime, 
             "CLDAuction.returnCounter: The sale is over, you can only withdraw your CLD"
         );
-        DepositedETC[msg.sender] -= amount;
+        participantInfo[msg.sender].DepositedETC -= amount;
         receiver.transfer(amount);
     }
 
     //TO DO OnlyDAO
     function WithdrawETC() public returns (bool) {
         require(block.timestamp > EndTime, "CLDAuction.WithdrawETC: The sale is not over yet");
+
         uint256 _ETCAmount = address(this).balance;
         Treasury.transfer(_ETCAmount);
 
@@ -74,12 +96,15 @@ contract CLDDao_Auction {
         return true;
     }
 
-    function WithdrawCLD() public returns (uint256) {
+    function WithdrawCLD(address PartAddr) public returns (uint256) {
         require(block.timestamp > EndTime, "CLDAuction.WithdrawCLD: The sale is not over yet");
-        require(DepositedETC[msg.sender] > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
-   
-        uint256 CLDToSend = (DepositedETC[msg.sender] / CurrentETCBalance) / 100000;
-        DepositedETC[msg.sender] = 0;
+        require(participantInfo[msg.sender].DepositedETC > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
+        require(
+            msg.sender == participantInfo[PartAddr].PartAddr, 
+            "CLDAuction.WithdrawETC: You can't withdraw what's not yours"
+        );
+        uint256 CLDToSend = 0;
+        participantInfo[msg.sender].DepositedETC = 0;
 
        
         // ERC20(CLD).transfer(msg.sender, CLDToSend);
@@ -88,8 +113,22 @@ contract CLDDao_Auction {
    
     }
 
-    function CheckParticipant() public view returns (uint256) {
-        return DepositedETC[msg.sender];
+    function CheckParticipant(address PartAddr) public view returns (uint256, uint256) {
+        return (
+            participantInfo[PartAddr].DepositedETC, 
+            participantInfo[PartAddr].PooledTokenShare
+        );
+    }
+
+    function UpdatePooledTokenShare(address PartAddr) internal {
+        uint256 _TokenShare = (participantInfo[PartAddr].DepositedETC / CurrentETCBalance) / 100000;
+        participantInfo[PartAddr].PooledTokenShare = _TokenShare;
+    }
+
+    function MassUpdatePooledTokenShare() internal {
+         for (uint256 i = 0; i < ParticipantList.length; ++i) {
+            UpdatePooledTokenShare(ParticipantList[i].PartAddr);
+        }
     }
 
 }
@@ -129,7 +168,8 @@ contract CLDDao_Auction_Factory {
         uint256 _amount ) = _newCLDAuction(_EndTime, _Amount);
        
         auctionList.push(
-            Auction({auctionAddress: address(newInstance),
+            Auction({
+            auctionAddress: address(newInstance),
             startDate: _startDate,
             endDate: _endDate,
             amountAuctioned: _amount
