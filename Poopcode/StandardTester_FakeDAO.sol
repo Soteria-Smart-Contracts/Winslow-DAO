@@ -30,9 +30,20 @@ contract FakeDAO{
         return(ApprovedErosProposals[Proposal]);
     }
 
+    function RegisterTreasuryAsset(address NewAsset, uint8 slot) external OnlyOwner{
+
+    }
+
 }
 
 interface EROSEXT{
     function Execute() external;
+}
+
+interface TreasuryV1 {
+    function RegisterAsset(address tokenAddress, uint256 slot) external;
+    function ChangeRegisteredAssetLimit(uint NewLimit) external;
+    function TransferETH(uint256 amount, address payable receiver) external;
+    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
 }
 
