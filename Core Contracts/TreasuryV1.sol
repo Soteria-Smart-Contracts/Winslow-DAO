@@ -67,7 +67,7 @@ contract HarmoniaDAOTreasury{
         UpdateERC20Balance(0);
 
         uint8 CurrentID = 1;
-        uint256 DecimalReplacer = (10^10);
+        uint256 DecimalReplacer = (10**10);
         while(CurrentID <= RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
             if(RegisteredAssets[CurrentID].TokenAddress != address(0)){ 
                 uint256 AssetBalance = UpdateERC20Balance(CurrentID);
@@ -133,13 +133,13 @@ contract HarmoniaDAOTreasury{
 
 
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
-        uint256 DecimalReplacer = (10 ^ 10);
+        uint256 DecimalReplacer = (10**10);
         uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance);
         return(((CLDamount * ((address(this).balance * DecimalReplacer) / Supply)) / DecimalReplacer));
     }
 
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking){
-        uint256 DecimalReplacer = (10 ^ 10);
+        uint256 DecimalReplacer = (10**10);
         uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance);
         return(((CLDamount * ((RegisteredAssets[AssetID].DAObalance * DecimalReplacer) / Supply)) / DecimalReplacer));
     }
@@ -167,5 +167,3 @@ interface ERC20 {
 interface EROSDAO{
     function CheckErosApproval(address) external view returns(bool);
 }
-
-//I Need a way for proposals within the DAO that change DAO numbers like asset limits to be done withought EROS
