@@ -26,7 +26,6 @@ contract CLDDao_Auction {
         uint256 PooledTokenShare;
     } 
 
-    Participant[] public ParticipantList;
     mapping (address => Participant) public participantInfo;
     
     event ETCDeposited(uint256 AmountReceived, address Buyer);
@@ -56,13 +55,9 @@ contract CLDDao_Auction {
         if (participantInfo[msg.sender].Participated) {
             participantInfo[msg.sender].DepositedETC += msg.value;
         } else {
-            ParticipantList.push(
-                Participant({
-                Participated: true,
-                PartAddr: msg.sender,
-                DepositedETC: msg.value,
-                PooledTokenShare: 0
-            }));
+            participantInfo[msg.sender].Participated = true;
+            participantInfo[msg.sender].PartAddr = msg.sender;
+            participantInfo[msg.sender].DepositedETC += msg.value;
         }
         CurrentETCBalance += msg.value;
         UpdatePooledTokenShare(msg.sender);
@@ -103,6 +98,7 @@ contract CLDDao_Auction {
             msg.sender == participantInfo[PartAddr].PartAddr, 
             "CLDAuction.WithdrawETC: You can't withdraw what's not yours"
         );
+        UpdatePooledTokenShare(PartAddr);
         uint256 CLDToSend = 0;
         participantInfo[msg.sender].DepositedETC = 0;
 
@@ -123,12 +119,6 @@ contract CLDDao_Auction {
     function UpdatePooledTokenShare(address PartAddr) internal {
         uint256 _TokenShare = (participantInfo[PartAddr].DepositedETC / CurrentETCBalance) / 100000;
         participantInfo[PartAddr].PooledTokenShare = _TokenShare;
-    }
-
-    function MassUpdatePooledTokenShare() internal {
-         for (uint256 i = 0; i < ParticipantList.length; ++i) {
-            UpdatePooledTokenShare(ParticipantList[i].PartAddr);
-        }
     }
 
 }
