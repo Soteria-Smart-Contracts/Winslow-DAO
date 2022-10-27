@@ -3,16 +3,16 @@ pragma solidity ^0.8.17;
 
 // TO DO OnlyDAO modifiers and functions
 contract CLDDao_Auction {
-    address DAO;
-    address payable Treasury;
-    address CLD;
-    uint256 MinimunFee = 100000000 gwei;
-    uint256 StartTime;
-    uint256 EndTime;
-    uint256 ETCCollected;
-    uint256 CurrentETCBalance;
-    uint256 TokenAmoun;
-    uint256 CurrentTokenBalance;
+    address public DAO;
+    address payable public Treasury;
+    address public CLD;
+    uint256 public MinimunFee = 100000000 gwei;
+    uint256 public StartTime;
+    uint256 public EndTime;
+    uint256 public ETCCollected;
+    uint256 public CurrentETCBalance;
+    uint256 public TokenAmoun;
+    uint256 public CurrentTokenBalance;
     /*
     modifier OnlyDAO{
         require(msg.sender == DAO);
@@ -26,6 +26,7 @@ contract CLDDao_Auction {
         uint256 PooledTokenShare;
     } 
 
+    address[] public ParticipantsList;
     mapping (address => Participant) public participantInfo;
     
     event ETCDeposited(uint256 AmountReceived, address Buyer);
@@ -52,15 +53,16 @@ contract CLDDao_Auction {
         require(msg.value > MinimunFee, "CLDAuction.DepositETC: Deposit amount not high enough");
 
         ETCCollected += msg.value;
+        CurrentETCBalance += msg.value;
         if (participantInfo[msg.sender].Participated) {
             participantInfo[msg.sender].DepositedETC += msg.value;
         } else {
             participantInfo[msg.sender].Participated = true;
             participantInfo[msg.sender].PartAddr = msg.sender;
             participantInfo[msg.sender].DepositedETC += msg.value;
+            ParticipantsList.push(msg.sender);
         }
-        CurrentETCBalance += msg.value;
-        UpdatePooledTokenShare(msg.sender);
+        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(msg.sender);
 
         emit ETCDeposited(msg.value, msg.sender);
         return true;
@@ -116,9 +118,16 @@ contract CLDDao_Auction {
         );
     }
 
-    function UpdatePooledTokenShare(address PartAddr) internal {
-        uint256 _TokenShare = (participantInfo[PartAddr].DepositedETC / CurrentETCBalance) / 100000;
-        participantInfo[PartAddr].PooledTokenShare = _TokenShare;
+    function MassUpdatePooledTokenShare() public {
+        for (uint256 id = 0; id < ParticipantsList.length; ++id) {
+            UpdatePooledTokenShare(ParticipantsList[id]);
+        }    
+    }
+
+    function UpdatePooledTokenShare(address PartAddr) internal returns (uint256) {
+        uint256 _TokenShare = (participantInfo[PartAddr].DepositedETC / CurrentETCBalance) * 10000;
+        // participantInfo[PartAddr].PooledTokenShare = _TokenShare;
+        return _TokenShare;
     }
 
 }
