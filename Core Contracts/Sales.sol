@@ -11,7 +11,7 @@ contract CLDDao_Auction {
     uint256 public EndTime;
     uint256 public ETCCollected;
     uint256 public CurrentETCBalance;
-    uint256 public TokenAmoun;
+    uint256 public TokenAmount;
     uint256 public CurrentTokenBalance;
     /*
     modifier OnlyDAO{
@@ -32,12 +32,13 @@ contract CLDDao_Auction {
     event ETCDeposited(uint256 AmountReceived, address Buyer);
     event ETCDWithdrawed(uint256 AmountWithdrawed);
     event CLDWithdrawed(uint256 AmountWithdrawed, address Buyer);
+    event UpdatedPooledTokenShare();
 
 
     constructor(uint256 _StartTime, uint256 _EndTime, uint256 _Amount, address _DAO) {
         StartTime = _StartTime;
         EndTime = _EndTime;
-        TokenAmoun = _Amount;
+        TokenAmount = _Amount;
         DAO = _DAO;
     }
 
@@ -100,8 +101,8 @@ contract CLDDao_Auction {
             msg.sender == participantInfo[PartAddr].PartAddr, 
             "CLDAuction.WithdrawETC: You can't withdraw what's not yours"
         );
-        UpdatePooledTokenShare(PartAddr);
-        uint256 CLDToSend = 0;
+        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(msg.sender);
+        uint256 CLDToSend = (TokenAmount * participantInfo[msg.sender].PooledTokenShare) / 10000;
         participantInfo[msg.sender].DepositedETC = 0;
 
        
@@ -120,13 +121,13 @@ contract CLDDao_Auction {
 
     function MassUpdatePooledTokenShare() public {
         for (uint256 id = 0; id < ParticipantsList.length; ++id) {
-            UpdatePooledTokenShare(ParticipantsList[id]);
+            participantInfo[ParticipantsList[id]].PooledTokenShare = UpdatePooledTokenShare(ParticipantsList[id]);
         }    
+        emit UpdatedPooledTokenShare();
     }
 
-    function UpdatePooledTokenShare(address PartAddr) internal returns (uint256) {
-        uint256 _TokenShare = (participantInfo[PartAddr].DepositedETC / CurrentETCBalance) * 10000;
-        // participantInfo[PartAddr].PooledTokenShare = _TokenShare;
+    function UpdatePooledTokenShare(address PartAddr) internal view returns (uint256) {
+        uint256 _TokenShare = (( participantInfo[PartAddr].DepositedETC * 10000) / CurrentETCBalance) ;
         return _TokenShare;
     }
 
