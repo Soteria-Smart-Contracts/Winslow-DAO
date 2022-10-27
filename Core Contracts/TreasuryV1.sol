@@ -57,6 +57,8 @@ contract HarmoniaDAOTreasury{
     //CLD Claim
     function UserAssetClaim(uint256 CLDamount) public returns(bool success){
         AssetClaim(CLDamount, msg.sender, payable(msg.sender));
+
+        return(success);
     }
 
     function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success){
