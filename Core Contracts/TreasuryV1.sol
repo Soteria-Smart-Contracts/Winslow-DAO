@@ -95,10 +95,13 @@ contract HarmoniaDAOTreasury{
     }
 
     //Asset Registry management
-    function RegisterAsset(address tokenAddress, uint256 slot) external OnlyDAO { 
+    function RegisterAsset(address tokenAddress, uint8 slot) external OnlyDAO { 
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
-        require(RegisteredAssets[slot].TokenAddress == address(0) || ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0); //How can I check if a slot is populated?
+        if(SlotFilled[slot] = true){
+            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0);
+            AssetRegistryMap[RegisteredAssets[slot].TokenAddress] = false;
+        }
         
         RegisteredAssets[slot] =  Token(tokenAddress);
         AssetRegistryMap[tokenAddress] = true;
