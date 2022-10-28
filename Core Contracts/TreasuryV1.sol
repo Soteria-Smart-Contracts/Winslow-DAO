@@ -9,10 +9,10 @@ contract HarmoniaDAOTreasury{
     Token[] public RegisteredAssets;
 
     mapping(address => bool) public AssetRegistryMap;
+    mapping(uint8 => bool) public SlotFilled;
 
     struct Token{ 
         address TokenAddress;
-        uint256 DAObalance;
     }
 
     //Modifier declarations
@@ -33,7 +33,6 @@ contract HarmoniaDAOTreasury{
     event AssetLimitChange(uint256 NewLimit);
     event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
-    event ERC20BalanceUpdate(uint256 NewAmount, uint8 AssetID, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receiver, address TxOrigin);
     event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
 
@@ -42,15 +41,14 @@ contract HarmoniaDAOTreasury{
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
         RegisteredAssetLimit = 5;
-        RegisteredAssets.push(Token(CLDcontract, 0));
+        RegisteredAssets.push(Token(CLDcontract));
+        AssetRegistryMap[CLDcontract] = true;
+        SlotFilled[0] = true;
     }
 
     //Public callable functions
     function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external {
         ERC20(RegisteredAssets[AssetID].TokenAddress).transferFrom(msg.sender, address(this), amount);
-        uint256 NewBalance = UpdateERC20Balance(AssetID);
-       
-        emit ERC20BalanceUpdate(NewBalance, AssetID, tx.origin);
     }
 
  
@@ -62,24 +60,21 @@ contract HarmoniaDAOTreasury{
     }
 
     function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success){
-        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance); //Supply within the DAO does not count as backed
-        require(ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount), "Unable to transfer CLD to treasury, ensure allowance is given");
-        UpdateERC20Balance(0);
+        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this))); //Supply within the DAO does not count as backed
+        ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount);
 
         uint8 CurrentID = 1;
         uint256 DecimalReplacer = (10**10);
         while(CurrentID <= RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
-            if(RegisteredAssets[CurrentID].TokenAddress != address(0)){ 
-                uint256 AssetBalance = UpdateERC20Balance(CurrentID);
-                uint256 ToSend = ((CLDamount * ((AssetBalance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer);
+            if(SlotFilled[CurrentID] == true){
+                uint256 ToSend = GetBackingValueAsset(CLDamount, CurrentID);
                 ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
                 emit ERC20Sent(ToSend, To, tx.origin);
-                UpdateERC20Balance(CurrentID);
             }
             CurrentID++;
         }
 
-        uint256 EtherToSend = ((CLDamount * ((address(this).balance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer);
+        uint256 EtherToSend = ((CLDamount * ((address(this).balance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer); //this is where the problem was
         To.transfer(EtherToSend);
 
         return(success);
@@ -95,9 +90,8 @@ contract HarmoniaDAOTreasury{
 
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO{ 
         ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
-        uint256 NewBalance = UpdateERC20Balance(AssetID);
 
-        emit ERC20BalanceUpdate(NewBalance, AssetID, tx.origin);
+        emit ERC20Sent(amount, receiver, tx.origin);
     }
 
     //Asset Registry management
@@ -106,16 +100,10 @@ contract HarmoniaDAOTreasury{
         require(AssetRegistryMap[tokenAddress] == false);
         require(RegisteredAssets[slot].TokenAddress == address(0) || ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0); //How can I check if a slot is populated?
         
-        RegisteredAssets[slot] =  Token(tokenAddress, ERC20(tokenAddress).balanceOf(address(this)));
+        RegisteredAssets[slot] =  Token(tokenAddress);
         AssetRegistryMap[tokenAddress] = true;
 
-        emit AssetRegistered(RegisteredAssets[slot].TokenAddress, RegisteredAssets[slot].DAObalance);
-    }
-
-    function UpdateERC20Balance(uint256 AssetID) internal returns(uint256 NewBalance){
-        RegisteredAssets[AssetID].DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
-
-        return(RegisteredAssets[AssetID].DAObalance);
+        emit AssetRegistered(RegisteredAssets[slot].TokenAddress, ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)));
     }
 
 
@@ -134,14 +122,17 @@ contract HarmoniaDAOTreasury{
 
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
         uint256 DecimalReplacer = (10**10);
-        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance);
+        uint256 DAObalance = ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this));
+        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - DAObalance);
         return(((CLDamount * ((address(this).balance * DecimalReplacer) / Supply)) / DecimalReplacer));
     }
 
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking){
+        require(AssetID > 0 && AssetID <= RegisteredAssetLimit, "Asset Cannot be CLD or a nonexistant slot");
         uint256 DecimalReplacer = (10**10);
-        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - RegisteredAssets[0].DAObalance);
-        return(((CLDamount * ((RegisteredAssets[AssetID].DAObalance * DecimalReplacer) / Supply)) / DecimalReplacer));
+        uint256 DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
+        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - DAObalance);
+        return(((CLDamount * ((DAObalance * DecimalReplacer) / Supply)) / DecimalReplacer));
     }
 
     //Fallback Functions
