@@ -35,12 +35,13 @@ contract CLDDao_Auction {
     event UpdatedPooledTokenShare();
 
 
-    constructor(uint256 _StartTime, uint256 _EndTime, uint256 _Amount, uint256 _FeeInGwei, address _DAO) {
+    constructor(uint256 _StartTime, uint256 _EndTime, uint256 _Amount, uint256 _FeeInGwei, address _DAO, address _CLD) {
         StartTime = _StartTime;
         EndTime = _EndTime;
         TokenAmount = _Amount;
         MinimunFee= _FeeInGwei;
         DAO = _DAO;
+        CLD = _CLD;
     }
 
     /* TO DO Functions needed:
@@ -104,7 +105,7 @@ contract CLDDao_Auction {
         return true;
     }
 
-    function WithdrawCLD(address PartAddr) public returns (uint256) {
+    function WithdrawCLD(address PartAddr) public {
         require(block.timestamp > EndTime, "CLDAuction.WithdrawCLD: The sale is not over yet");
         require(participantInfo[msg.sender].DepositedETC > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
         require(
@@ -114,11 +115,9 @@ contract CLDDao_Auction {
         participantInfo[PartAddr].PooledTokenShare = SeeUpdatePooledTokenShare(PartAddr);
         uint256 CLDToSend = (TokenAmount * participantInfo[PartAddr].PooledTokenShare) / 10000;
         participantInfo[PartAddr].DepositedETC = 0;
-        TokenAmount -= CLDToSend;
-        // ERC20(CLD).transfer(PartAddr, CLDToSend);
+        //TokenAmount -= CLDToSend;
+        ERC20(CLD).transfer(PartAddr, CLDToSend);
         emit CLDWithdrawed(CLDToSend, PartAddr);
-
-        return CLDToSend;
     }
 
     function CheckParticipant(address PartAddr) public view returns (uint256, uint256) {
@@ -146,6 +145,7 @@ contract CLDDao_Auction {
 // to the Auction contract
 contract CLDDao_Auction_Factory {
     address public DAO;
+    address public CLD;
     Auction[] public auctionList;
 
     event NewAuction(address Addr, uint256 startDate, uint256 endDate, uint256 _AmountToAuction);
@@ -161,11 +161,12 @@ contract CLDDao_Auction_Factory {
         require(msg.sender == DAO);
         _;
     }
-   
-    constructor(address DAOAddress) {
-        DAO = DAOAddress;
+   */
+    constructor(address _DAO, address _CLD) {
+        DAO = _DAO;
+        CLD = _CLD;
     }
-    */
+    
 
     function newCLDAuction(uint256 _EndTime, uint256 _Amount, uint256 _FeeInGwei) 
     external 
@@ -198,7 +199,7 @@ contract CLDDao_Auction_Factory {
     {
         uint256 _startDate = block.timestamp;
         uint256 _endDate = _startDate + _EndTime;
-        NewAuctionAddress = new CLDDao_Auction(_startDate, _endDate, _AmountToAuction, _FeeInGwei, DAO);
+        NewAuctionAddress = new CLDDao_Auction(_startDate, _endDate, _AmountToAuction, _FeeInGwei, DAO, CLD);
         return (NewAuctionAddress, _startDate, _endDate, _AmountToAuction);
     }
 
@@ -223,7 +224,7 @@ interface ERC20 {
   function allowance(address owner, address spender) external view returns (uint256);
   function approve(address spender, uint value) external returns (bool);
   function Mint(address _MintTo, uint256 _MintAmount) external;
-  function transfer(address to, uint value) external returns (bool);
+  function transfer(address to, uint value) external;
   function transferFrom(address from, address to, uint256 value) external returns (bool); 
   function totalSupply() external view returns (uint);
   function CheckMinter(address AddytoCheck) external view returns(uint);
