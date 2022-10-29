@@ -2,7 +2,7 @@
 pragma solidity ^0.8.4;
 
 
-contract ClassicDAO {
+contract HTA1 {
     uint256 public TokenCap;
     uint256 public totalSupply;
     string public name;
@@ -27,7 +27,7 @@ contract ClassicDAO {
     totalSupply = 0;
     name = _name;
     symbol = _symbol;
-    decimals = 18;
+    decimals = 0;
     Mint(msg.sender, _TokenCap);
     }
     
