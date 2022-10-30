@@ -105,7 +105,7 @@ contract CLDDao_Auction {
         uint256 penalty = (Amount * RetireeFee) / 10000;
         PartAddr.transfer(Amount - penalty);
         ETCDeductedFromRetirees += penalty;
-        ETCCollected -= penalty;
+        ETCCollected -= (Amount - penalty);
 
         emit ParticipantRetired(Amount - penalty);
     }
@@ -118,14 +118,13 @@ contract CLDDao_Auction {
     //TO DO OnlyDAO ???
     function WithdrawETC() public returns (bool) {
         require(block.timestamp > EndTime, "CLDAuction.WithdrawETC: The sale is not over yet");
+        require(address(this).balance > 0, "CLDAuction.WithdrawETC: No ether on this contract");
 
         Treasury.transfer(ETCCollected);
-        ETCCollected = 0;
         // TO DO this needs testing
         uint256 valueForEachDev = ETCDeductedFromRetirees / DevTeam.length;
         for (uint256 id = 0; id < DevTeam.length; ++id) {
             payable(DevTeam[id]).transfer(valueForEachDev);
-            ETCDeductedFromRetirees -= valueForEachDev;
         }  
 
         emit ETCDWithdrawed(ETCCollected);
