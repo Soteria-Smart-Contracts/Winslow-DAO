@@ -6,7 +6,7 @@ contract CLDDao_Auction {
     address public DAO;
     address payable public Treasury;
     address public CLD;
-    address[] public DevTeam;
+    address payable[] public DevTeam;
     uint256 public MinimunFee;
     uint256 public RetireeFee;
     uint256 public StartTime;
@@ -46,7 +46,7 @@ contract CLDDao_Auction {
         address _DAO,
         address payable _Treasury,
         address _CLD, 
-        address[] memory _Devs
+        address payable[] memory _Devs
     ) 
     {
         require(
@@ -63,10 +63,6 @@ contract CLDDao_Auction {
         CLD = _CLD;
         DevTeam = _Devs;
     }
-
-    /* TO DO Functions needed:
-    * RetireFromAuction [needs to handle fees for retirees]
-    */
 
     function DepositETC() external payable returns (bool) {
         require(block.timestamp < EndTime, "CLDAuction.DepositETC: The sale is over");
@@ -87,31 +83,26 @@ contract CLDDao_Auction {
         return true;
     }
 
-    function RetireFromAuction(uint256 Amount, address payable PartAddr) external {
+    function RetireFromAuction(uint256 Amount) external {
         require(
-            msg.sender == participantInfo[PartAddr].PartAddr, 
-            "CLDAuction.RetireFromAuction: You can't withdraw what's not yours"
-        );
-        require(
-            Amount < participantInfo[PartAddr].DepositedETC, 
+            Amount <= participantInfo[msg.sender].DepositedETC, 
             "CLDAuction.RetireFromAuction: You can't withdraw this many ETC"
         );
         require(
             block.timestamp < EndTime, 
             "CLDAuction.RetireFromAuction: The sale is over, you can only withdraw your CLD"
         );
-        // TO DO this needs testing
-        participantInfo[PartAddr].DepositedETC -= Amount;
+        participantInfo[msg.sender].DepositedETC -= Amount;
         uint256 penalty = (Amount * RetireeFee) / 10000;
-        PartAddr.transfer(Amount - penalty);
+        payable(msg.sender).transfer(Amount - penalty);
         ETCDeductedFromRetirees += penalty;
-        ETCCollected -= (Amount - penalty);
+        ETCCollected -= (Amount);
 
         emit ParticipantRetired(Amount - penalty);
     }
 
     // To Do OnlyDao
-    function AddDev(address DevAddr) external {
+    function AddDev(address payable DevAddr) external {
         DevTeam.push(DevAddr);
     }
 
@@ -124,7 +115,7 @@ contract CLDDao_Auction {
         // TO DO this needs testing
         uint256 valueForEachDev = ETCDeductedFromRetirees / DevTeam.length;
         for (uint256 id = 0; id < DevTeam.length; ++id) {
-            payable(DevTeam[id]).transfer(valueForEachDev);
+            DevTeam[id].transfer(valueForEachDev);
         }  
 
         emit ETCDWithdrawed(ETCCollected);
@@ -138,7 +129,6 @@ contract CLDDao_Auction {
         );
         require(block.timestamp > EndTime, "CLDAuction.WithdrawCLD: The sale is not over yet");
         require(participantInfo[msg.sender].DepositedETC > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
-        // TO DO this needs testing when theres RETIREES
         participantInfo[PartAddr].PooledTokenShare = SeeUpdatePooledTokenShare(PartAddr);
         uint256 CLDToSend = (TokenAmount * participantInfo[PartAddr].PooledTokenShare) / 10000;
         participantInfo[PartAddr].DepositedETC = 0;
@@ -172,7 +162,7 @@ contract CLDDao_Auction_Factory {
     address public CLD;
     Auction[] public auctionList;
 
-    event NewAuction(address Addr, uint256 startDate, uint256 endDate, uint256 _AmountToAuction, address[] DevTeam);
+    event NewAuction(address Addr, uint256 startDate, uint256 endDate, uint256 _AmountToAuction, address payable[] DevTeam);
 
     struct Auction{
         address auctionAddress;
@@ -198,7 +188,7 @@ contract CLDDao_Auction_Factory {
         uint256 _Amount, 
         uint256 _MinimunFeeInGwei, 
         uint256 _RetireeFeeInBP, 
-        address[] memory _DevTeam
+        address payable[] memory _DevTeam
     )
     external 
     //TO DO OnlyDAO
@@ -227,7 +217,7 @@ contract CLDDao_Auction_Factory {
         uint256 _AmountToAuction,
         uint256 _MinimunFeeInGwei,
         uint256 _RetireeFeeInBP,
-        address[] memory _DevTeam
+        address payable[] memory _DevTeam
     )
     internal 
     returns (
