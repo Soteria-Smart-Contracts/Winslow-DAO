@@ -38,11 +38,11 @@ contract HarmoniaDAOTreasury{
 
 
     //Code executed on deployment
-    constructor(){ //address DAOcontract, address CLDcontract
-        DAO = 0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce;
+    constructor(address DAOcontract, address CLDcontract){
+        DAO = DAOcontract;
         RegisteredAssetLimit = 5;
-        RegisteredAssets[0] = (Token(0x0cC7f43A7FBBa594b57C9676ccc2ade02eb62D29, true));
-        AssetRegistryMap[0x0cC7f43A7FBBa594b57C9676ccc2ade02eb62D29] = true;
+        RegisteredAssets[0] = (Token(CLDcontract, true));
+        AssetRegistryMap[CLDcontract] = true;
     }
 
     //Public callable functions
