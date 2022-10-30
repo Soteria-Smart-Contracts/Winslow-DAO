@@ -43,7 +43,8 @@ contract CLDDao_Auction {
         uint256 _Amount, 
         uint256 _MinimunFeeInGwei,
         uint256 _RetireeFeeInBP,  // BP = Basis points (100 (1%) to 10000 (100%))
-        address _DAO, 
+        address _DAO,
+        address payable _Treasury,
         address _CLD, 
         address[] memory _Devs
     ) 
@@ -58,6 +59,7 @@ contract CLDDao_Auction {
         MinimunFee = _MinimunFeeInGwei;
         RetireeFee = _RetireeFeeInBP;
         DAO = _DAO;
+        Treasury = _Treasury;
         CLD = _CLD;
         DevTeam = _Devs;
     }
@@ -85,7 +87,6 @@ contract CLDDao_Auction {
         return true;
     }
 
-    // We should take a fee for this, DAO decided
     function RetireFromAuction(uint256 Amount, address payable PartAddr) external {
         require(
             msg.sender == participantInfo[PartAddr].PartAddr, 
@@ -99,9 +100,8 @@ contract CLDDao_Auction {
             block.timestamp < EndTime, 
             "CLDAuction.RetireFromAuction: The sale is over, you can only withdraw your CLD"
         );
-
+        // TO DO this needs testing
         participantInfo[PartAddr].DepositedETC -= Amount;
-        // TO DO make that 400 a global variable
         uint256 penalty = (Amount * RetireeFee) / 10000;
         PartAddr.transfer(Amount - penalty);
         ETCDeductedFromRetirees += penalty;
@@ -115,12 +115,13 @@ contract CLDDao_Auction {
         DevTeam.push(DevAddr);
     }
 
-    //TO DO OnlyDAO
+    //TO DO OnlyDAO ???
     function WithdrawETC() public returns (bool) {
         require(block.timestamp > EndTime, "CLDAuction.WithdrawETC: The sale is not over yet");
 
         Treasury.transfer(ETCCollected);
-
+        ETCCollected = 0;
+        // TO DO this needs testing
         uint256 valueForEachDev = ETCDeductedFromRetirees / DevTeam.length;
         for (uint256 id = 0; id < DevTeam.length; ++id) {
             payable(DevTeam[id]).transfer(valueForEachDev);
@@ -138,7 +139,7 @@ contract CLDDao_Auction {
         );
         require(block.timestamp > EndTime, "CLDAuction.WithdrawCLD: The sale is not over yet");
         require(participantInfo[msg.sender].DepositedETC > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
-
+        // TO DO this needs testing when theres RETIREES
         participantInfo[PartAddr].PooledTokenShare = SeeUpdatePooledTokenShare(PartAddr);
         uint256 CLDToSend = (TokenAmount * participantInfo[PartAddr].PooledTokenShare) / 10000;
         participantInfo[PartAddr].DepositedETC = 0;
@@ -168,6 +169,7 @@ contract CLDDao_Auction {
 // to the Auction contract
 contract CLDDao_Auction_Factory {
     address public DAO;
+    address payable public Treasury;
     address public CLD;
     Auction[] public auctionList;
 
@@ -185,8 +187,9 @@ contract CLDDao_Auction_Factory {
         _;
     }
    */
-    constructor(address _DAO, address _CLD) {
+    constructor(address _DAO, address _CLD, address payable _Treasury) {
         DAO = _DAO;
+        Treasury= _Treasury;
         CLD = _CLD;
     }
     
@@ -244,6 +247,7 @@ contract CLDDao_Auction_Factory {
             _MinimunFeeInGwei,
             _RetireeFeeInBP,
             DAO,
+            Treasury,
             CLD,
             _DevTeam
         );
