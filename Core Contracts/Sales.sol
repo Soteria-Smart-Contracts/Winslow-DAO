@@ -35,7 +35,6 @@ contract CLDDao_Auction {
     event ParticipantRetired(uint256 AmountRetired);
     event ETCDWithdrawed(uint256 AmountWithdrawed);
     event CLDWithdrawed(uint256 AmountWithdrawed, address PartAddr);
-    event UpdatedPooledTokenShare();
 
     constructor(
         uint256 _StartTime, 
@@ -77,7 +76,7 @@ contract CLDDao_Auction {
             participantInfo[msg.sender].DepositedETC += msg.value;
             ParticipantsList.push(msg.sender);
         }
-        participantInfo[msg.sender].PooledTokenShare = SeeUpdatePooledTokenShare(msg.sender);
+        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(msg.sender);
 
         emit ETCDeposited(msg.value, msg.sender);
         return true;
@@ -129,27 +128,21 @@ contract CLDDao_Auction {
         );
         require(block.timestamp > EndTime, "CLDAuction.WithdrawCLD: The sale is not over yet");
         require(participantInfo[msg.sender].DepositedETC > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
-        participantInfo[PartAddr].PooledTokenShare = SeeUpdatePooledTokenShare(PartAddr);
+        participantInfo[PartAddr].PooledTokenShare = UpdatePooledTokenShare(PartAddr);
         uint256 CLDToSend = (TokenAmount * participantInfo[PartAddr].PooledTokenShare) / 10000;
         participantInfo[PartAddr].DepositedETC = 0;
         ERC20(CLD).transfer(PartAddr, CLDToSend);
         emit CLDWithdrawed(CLDToSend, PartAddr);
     }
     // To do DEBUG ONLY???
-    function CheckParticipant(address PartAddr) public view returns (uint256, uint256) {
-        return (participantInfo[PartAddr].DepositedETC, participantInfo[PartAddr].PooledTokenShare);
+    function CheckParticipant(address PartAddr) public view returns (uint256, uint256, uint256) {
+        uint256 _TokenShare = ((participantInfo[PartAddr].DepositedETC * 10000) / address(this).balance);
+        return (participantInfo[PartAddr].DepositedETC, participantInfo[PartAddr].PooledTokenShare, _TokenShare);
     }
     
-    function SeeUpdatePooledTokenShare(address PartAddr) public view returns (uint256) {
+    function UpdatePooledTokenShare(address PartAddr) internal view returns (uint256) {
         uint256 _TokenShare = ((participantInfo[PartAddr].DepositedETC * 10000) / address(this).balance);
         return _TokenShare;
-    }
-
-    function MassUpdatePooledTokenShare() public {
-        for (uint256 id = 0; id < ParticipantsList.length; ++id) {
-            participantInfo[ParticipantsList[id]].PooledTokenShare = SeeUpdatePooledTokenShare(ParticipantsList[id]);
-        }    
-        emit UpdatedPooledTokenShare();
     }
 
 }
