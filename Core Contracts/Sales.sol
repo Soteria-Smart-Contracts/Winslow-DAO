@@ -16,8 +16,8 @@ contract CLDDao_Auction {
     uint256 public TokenAmount;
     uint256 public CurrentTokenBalance;
 
-    modifier OnlyDAO{
-        require(msg.sender == DAO, "This can only be done by the DAO");
+    modifier OnlyDAO() {
+        require(msg.sender == DAO, 'This can only be done by the DAO');
         _;
     }
 
@@ -26,12 +26,12 @@ contract CLDDao_Auction {
         address PartAddr;
         uint256 DepositedETC;
         uint256 PooledTokenShare;
-    } 
+    }
 
     address[] public ParticipantsList;
-    mapping (address => Participant) public participantInfo;
-    mapping (address => bool) public isDev;
-    
+    mapping(address => Participant) public participantInfo;
+    mapping(address => bool) public isDev;
+
     event ETCDeposited(uint256 AmountReceived, address PartAddr);
     event ParticipantRetired(uint256 AmountRetired);
     event ETCDWithdrawed(uint256 AmountWithdrawed);
@@ -39,20 +39,19 @@ contract CLDDao_Auction {
     event NewDevAdded(address payable NewDevAddr);
 
     constructor(
-        uint256 _StartTime, 
-        uint256 _EndTime, 
-        uint256 _Amount, 
+        uint256 _StartTime,
+        uint256 _EndTime,
+        uint256 _Amount,
         uint256 _MinimunFeeInGwei,
-        uint256 _RetireeFeeInBP,  // BP = Basis points (100 (1%) to 10000 (100%))
+        uint256 _RetireeFeeInBP, // BP = Basis points (100 (1%) to 10000 (100%))
         address _DAO,
         address payable _Treasury,
-        address _CLD, 
+        address _CLD,
         address payable[] memory _Devs
-    ) 
-    {
+    ) {
         require( // Fees goes from 0,10% to 100% in BP
-            _RetireeFeeInBP >= 10 && _RetireeFeeInBP <= 10000, 
-            "CLDAuction._RetireeFeeInBP: Needs to be at least 0,1 or 100 in Basis Points"
+            _RetireeFeeInBP >= 10 && _RetireeFeeInBP <= 10000,
+            'CLDAuction._RetireeFeeInBP: Needs to be at least 0,1 or 100 in Basis Points'
         );
         StartTime = _StartTime;
         EndTime = _EndTime;
@@ -67,12 +66,18 @@ contract CLDDao_Auction {
         for (uint256 id = 0; id < DevTeam.length; ++id) {
             isDev[DevTeam[id]] = true;
             emit NewDevAdded(DevTeam[id]);
-        }  
+        }
     }
 
     function DepositETC() external payable returns (bool) {
-        require(block.timestamp < EndTime, "CLDAuction.DepositETC: The sale is over");
-        require(msg.value > MinimunFee, "CLDAuction.DepositETC: Deposit amount not high enough");
+        require(
+            block.timestamp < EndTime,
+            'CLDAuction.DepositETC: The sale is over'
+        );
+        require(
+            msg.value > MinimunFee,
+            'CLDAuction.DepositETC: Deposit amount not high enough'
+        );
 
         ETCCollected += msg.value;
         if (participantInfo[msg.sender].Participated) {
@@ -83,7 +88,9 @@ contract CLDDao_Auction {
             participantInfo[msg.sender].DepositedETC += msg.value;
             ParticipantsList.push(msg.sender);
         }
-        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(msg.sender);
+        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(
+            msg.sender
+        );
 
         emit ETCDeposited(msg.value, msg.sender);
         return true;
@@ -91,12 +98,12 @@ contract CLDDao_Auction {
 
     function RetireFromAuction(uint256 Amount) external {
         require(
-            Amount <= participantInfo[msg.sender].DepositedETC, 
+            Amount <= participantInfo[msg.sender].DepositedETC,
             "CLDAuction.RetireFromAuction: You can't withdraw this many ETC"
         );
         require(
-            block.timestamp < EndTime, 
-            "CLDAuction.RetireFromAuction: The sale is over, you can only withdraw your CLD"
+            block.timestamp < EndTime,
+            'CLDAuction.RetireFromAuction: The sale is over, you can only withdraw your CLD'
         );
         participantInfo[msg.sender].DepositedETC -= Amount;
         uint256 penalty = (Amount * RetireeFee) / 10000;
@@ -113,48 +120,84 @@ contract CLDDao_Auction {
         }
     }
 
-    function AddDev(address payable DevAddr) OnlyDAO public {
-        require(!isDev[DevAddr], "CLDAuction.AddDev: This user is already set as a dev");
+    function AddDev(address payable DevAddr) public OnlyDAO {
+        require(
+            !isDev[DevAddr],
+            'CLDAuction.AddDev: This user is already set as a dev'
+        );
         DevTeam.push(DevAddr);
         emit NewDevAdded(DevAddr);
     }
 
     //TO DO OnlyDAO ???
     function WithdrawETC() public returns (bool) {
-        require(block.timestamp > EndTime, "CLDAuction.WithdrawETC: The sale is not over yet");
-        require(address(this).balance > 0, "CLDAuction.WithdrawETC: No ether on this contract");
+        require(
+            block.timestamp > EndTime,
+            'CLDAuction.WithdrawETC: The sale is not over yet'
+        );
+        require(
+            address(this).balance > 0,
+            'CLDAuction.WithdrawETC: No ether on this contract'
+        );
 
         Treasury.transfer(ETCCollected);
         // TO DO this needs testing
         uint256 valueForEachDev = ETCDeductedFromRetirees / DevTeam.length;
         for (uint256 id = 0; id < DevTeam.length; ++id) {
             DevTeam[id].transfer(valueForEachDev);
-        }  
+        }
 
         emit ETCDWithdrawed(ETCCollected);
         return true;
     }
 
     function WithdrawCLD() public {
-        require(block.timestamp > EndTime, "CLDAuction.WithdrawCLD: The sale is not over yet");
-        require(participantInfo[msg.sender].DepositedETC > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
-        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(msg.sender);
-        uint256 CLDToSend = (TokenAmount * participantInfo[msg.sender].PooledTokenShare) / 10000;
+        require(
+            block.timestamp > EndTime,
+            'CLDAuction.WithdrawCLD: The sale is not over yet'
+        );
+        require(
+            participantInfo[msg.sender].DepositedETC > 0,
+            "CLDAuction.WithdrawCLD: You didn't buy any CLD"
+        );
+        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(
+            msg.sender
+        );
+        uint256 CLDToSend = (TokenAmount *
+            participantInfo[msg.sender].PooledTokenShare) / 10000;
         participantInfo[msg.sender].DepositedETC = 0;
         ERC20(CLD).transfer(msg.sender, CLDToSend);
         emit CLDWithdrawed(CLDToSend, msg.sender);
     }
+
     // To do DEBUG ONLY???
-    function CheckParticipant(address PartAddr) public view returns (uint256, uint256, uint256) {
-        uint256 _TokenShare = ((participantInfo[PartAddr].DepositedETC * 10000) / address(this).balance);
-        return (participantInfo[PartAddr].DepositedETC, participantInfo[PartAddr].PooledTokenShare, _TokenShare);
-    }
-    
-    function UpdatePooledTokenShare(address PartAddr) internal view returns (uint256) {
-        uint256 _TokenShare = ((participantInfo[PartAddr].DepositedETC * 10000) / address(this).balance);
-        return _TokenShare;
+    function CheckParticipant(address PartAddr)
+        public
+        view
+        returns (
+            uint256,
+            uint256,
+            uint256
+        )
+    {
+        uint256 _TokenShare = ((participantInfo[PartAddr].DepositedETC *
+            10000) / address(this).balance);
+        return (
+            participantInfo[PartAddr].DepositedETC,
+            participantInfo[PartAddr].PooledTokenShare,
+            _TokenShare
+        );
     }
 
+    function UpdatePooledTokenShare(address PartAddr)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 _TokenShare = ((participantInfo[PartAddr].DepositedETC *
+            10000) / address(this).balance);
+        return _TokenShare;
+    }
 }
 
 // TO DO This contract needs to ask the DAO to send CLD tokens from the Treasury
@@ -165,37 +208,43 @@ contract CLDDao_Auction_Factory {
     address public CLD;
     Auction[] public auctionList;
 
-    event NewAuction(address Addr, uint256 startDate, uint256 endDate, uint256 _AmountToAuction, address payable[] DevTeam);
+    event NewAuction(
+        address Addr,
+        uint256 startDate,
+        uint256 endDate,
+        uint256 _AmountToAuction,
+        address payable[] DevTeam
+    );
 
-    struct Auction{
+    struct Auction {
         address auctionAddress;
         uint256 startDate;
         uint256 endDate;
         uint256 amountAuctioned;
     }
-    
-    modifier OnlyDAO{
-        require(msg.sender == DAO, "This can only be done by the DAO");
+
+    modifier OnlyDAO() {
+        require(msg.sender == DAO, 'This can only be done by the DAO');
         _;
     }
-   
-    constructor(address _DAO, address _CLD, address payable _Treasury) {
+
+    constructor(
+        address _DAO,
+        address _CLD,
+        address payable _Treasury
+    ) {
         DAO = _DAO;
-        Treasury= _Treasury;
+        Treasury = _Treasury;
         CLD = _CLD;
     }
-    
 
     function newCLDAuction(
-        uint256 _EndTime, 
-        uint256 _AmountToAuction, 
-        uint256 _MinimunFeeInGwei, 
-        uint256 _RetireeFeeInBP, 
+        uint256 _EndTime,
+        uint256 _AmountToAuction,
+        uint256 _MinimunFeeInGwei,
+        uint256 _RetireeFeeInBP,
         address payable[] memory _DevTeam
-    )
-    external 
-    OnlyDAO
-    {
+    ) external OnlyDAO {
         uint256 _startDate = block.timestamp;
         uint256 _endDate = _startDate + _EndTime;
         CLDDao_Auction newInstance = new CLDDao_Auction(
@@ -212,36 +261,66 @@ contract CLDDao_Auction_Factory {
 
         auctionList.push(
             Auction({
-            auctionAddress: address(newInstance),
-            startDate: _startDate,
-            endDate: _endDate,
-            amountAuctioned: _AmountToAuction
-        }));
+                auctionAddress: address(newInstance),
+                startDate: _startDate,
+                endDate: _endDate,
+                amountAuctioned: _AmountToAuction
+            })
+        );
 
-        emit NewAuction(address(newInstance), _startDate, _endDate, _AmountToAuction, _DevTeam);
+        emit NewAuction(
+            address(newInstance),
+            _startDate,
+            _endDate,
+            _AmountToAuction,
+            _DevTeam
+        );
     }
 
     function setDAOAddress(address NewDAOAddress) external OnlyDAO {
         DAO = NewDAOAddress;
     }
 
-    function SeeAuctionData(uint AuctionID) public view returns (address, uint, uint, uint) {
+    function SeeAuctionData(uint256 AuctionID)
+        public
+        view
+        returns (
+            address,
+            uint256,
+            uint256,
+            uint256
+        )
+    {
         return (
-        auctionList[AuctionID].auctionAddress,
-        auctionList[AuctionID].startDate,
-        auctionList[AuctionID].endDate,
-        auctionList[AuctionID].amountAuctioned
+            auctionList[AuctionID].auctionAddress,
+            auctionList[AuctionID].startDate,
+            auctionList[AuctionID].endDate,
+            auctionList[AuctionID].amountAuctioned
         );
     }
 }
 
 interface ERC20 {
-  function balanceOf(address owner) external view returns (uint256);
-  function allowance(address owner, address spender) external view returns (uint256);
-  function approve(address spender, uint value) external returns (bool);
-  function Mint(address _MintTo, uint256 _MintAmount) external;
-  function transfer(address to, uint value) external;
-  function transferFrom(address from, address to, uint256 value) external returns (bool); 
-  function totalSupply() external view returns (uint);
-  function CheckMinter(address AddytoCheck) external view returns(uint);
+    function balanceOf(address owner) external view returns (uint256);
+
+    function allowance(address owner, address spender)
+        external
+        view
+        returns (uint256);
+
+    function approve(address spender, uint256 value) external returns (bool);
+
+    function Mint(address _MintTo, uint256 _MintAmount) external;
+
+    function transfer(address to, uint256 value) external;
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 value
+    ) external returns (bool);
+
+    function totalSupply() external view returns (uint256);
+
+    function CheckMinter(address AddytoCheck) external view returns (uint256);
 }

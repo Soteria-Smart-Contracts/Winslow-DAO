@@ -1,28 +1,31 @@
 //SPDX-License-Identifier:UNLICENSE
 pragma solidity ^0.8.17;
 
-contract HarmoniaDAOTreasury{
+contract HarmoniaDAOTreasury {
     //Variable, struct and type declarations
-    string public Version = "V1";
+    string public Version = 'V1';
     address public DAO;
     uint256 public RegisteredAssetLimit;
 
     mapping(address => bool) public AssetRegistryMap;
     mapping(uint8 => Token) public RegisteredAssets;
 
-    struct Token{ 
+    struct Token {
         address TokenAddress;
         bool Filled;
     }
 
     //Modifier declarations
-    modifier OnlyDAO{ 
+    modifier OnlyDAO() {
         require(msg.sender == DAO);
         _;
     }
 
-    modifier OnlyEros{
-        require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO");
+    modifier OnlyEros() {
+        require(
+            msg.sender == DAO || EROSDAO(DAO).CheckErosApproval(msg.sender),
+            'The caller is either not the DAO or not approved by the DAO'
+        );
         _;
     }
 
@@ -34,11 +37,16 @@ contract HarmoniaDAOTreasury{
     event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receiver, address TxOrigin);
-    event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
-
+    event AssetsClaimedWithCLD(
+        uint256 CLDin,
+        uint256 EtherOut,
+        address From,
+        address OutTo,
+        address TxOrigin
+    );
 
     //Code executed on deployment
-    constructor(address DAOcontract, address CLDcontract){
+    constructor(address DAOcontract, address CLDcontract) {
         DAO = DAOcontract;
         RegisteredAssetLimit = 5;
         RegisteredAssets[0] = (Token(CLDcontract, true));
@@ -46,121 +54,188 @@ contract HarmoniaDAOTreasury{
     }
 
     //Public callable functions
-    function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external {
-        ERC20(RegisteredAssets[AssetID].TokenAddress).transferFrom(msg.sender, address(this), amount);
+    function ReceiveRegisteredAsset(uint8 AssetID, uint256 amount) external {
+        ERC20(RegisteredAssets[AssetID].TokenAddress).transferFrom(
+            msg.sender,
+            address(this),
+            amount
+        );
     }
 
- 
     //CLD Claim
-    function UserAssetClaim(uint256 CLDamount) public returns(bool success){
+    function UserAssetClaim(uint256 CLDamount) public returns (bool success) {
         AssetClaim(CLDamount, msg.sender, payable(msg.sender));
 
-        return(success);
+        return (success);
     }
 
-    function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success){
-        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this))); //Supply within the DAO does not count as backed
-        ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount);
+    function AssetClaim(
+        uint256 CLDamount,
+        address From,
+        address payable To
+    ) public returns (bool success) {
+        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress)
+            .totalSupply() -
+            ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this))); //Supply within the DAO does not count as backed
+        ERC20(RegisteredAssets[0].TokenAddress).transferFrom(
+            From,
+            address(this),
+            CLDamount
+        );
 
         uint8 CurrentID = 1;
         uint256 DecimalReplacer = (10**10);
-        while(CurrentID <= RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
-            if(RegisteredAssets[CurrentID].Filled == true){
+        while (CurrentID <= RegisteredAssetLimit) {
+            //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
+            if (RegisteredAssets[CurrentID].Filled == true) {
                 uint256 ToSend = GetBackingValueAsset(CLDamount, CurrentID);
-                ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
+                ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(
+                    To,
+                    ToSend
+                );
                 emit ERC20Sent(ToSend, To, tx.origin);
             }
             CurrentID++;
         }
 
-        uint256 EtherToSend = ((CLDamount * ((address(this).balance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer); //this is where the problem was
+        uint256 EtherToSend = ((CLDamount *
+            ((address(this).balance * DecimalReplacer) / SupplyPreTransfer)) /
+            DecimalReplacer); //this is where the problem was
         To.transfer(EtherToSend);
 
-        return(success);
+        return (success);
     }
 
-
     //DAO and Eros Proposal only access functions
-    function TransferETH(uint256 amount, address payable receiver) external OnlyDAO{ //Only DAO for moving fyi
+    function TransferETH(uint256 amount, address payable receiver)
+        external
+        OnlyDAO
+    {
+        //Only DAO for moving fyi
         receiver.transfer(amount);
 
         emit EtherSent(amount, receiver, tx.origin);
     }
 
-    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO{ 
-        ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
+    function TransferERC20(
+        uint8 AssetID,
+        uint256 amount,
+        address receiver
+    ) external OnlyDAO {
+        ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(
+            receiver,
+            amount
+        );
 
         emit ERC20Sent(amount, receiver, tx.origin);
     }
 
     //Asset Registry management
-    function RegisterAsset(address tokenAddress, uint8 slot) external OnlyDAO { 
+    function RegisterAsset(address tokenAddress, uint8 slot) external OnlyDAO {
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
-        if(RegisteredAssets[slot].Filled == true){
-            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0); //Could be used to prevent tx by sending some amount?
+        if (RegisteredAssets[slot].Filled == true) {
+            require(
+                ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(
+                    address(this)
+                ) == 0
+            ); //Could be used to prevent tx by sending some amount?
             AssetRegistryMap[RegisteredAssets[slot].TokenAddress] = false;
         }
-        if(tokenAddress == address(0)){
-           RegisteredAssets[slot] = Token(address(0), false); 
-        }
-        else{
-        RegisteredAssets[slot] =  Token(tokenAddress, true); 
-        AssetRegistryMap[tokenAddress] = true;
+        if (tokenAddress == address(0)) {
+            RegisteredAssets[slot] = Token(address(0), false);
+        } else {
+            RegisteredAssets[slot] = Token(tokenAddress, true);
+            AssetRegistryMap[tokenAddress] = true;
         }
 
-        emit AssetRegistered(RegisteredAssets[slot].TokenAddress, ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)));
+        emit AssetRegistered(
+            RegisteredAssets[slot].TokenAddress,
+            ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this))
+        );
     }
 
-
     //Setting modification functions
-    function ChangeRegisteredAssetLimit(uint NewLimit) external OnlyDAO{
+    function ChangeRegisteredAssetLimit(uint256 NewLimit) external OnlyDAO {
         RegisteredAssetLimit = NewLimit;
-        
+
         emit AssetLimitChange(NewLimit);
     }
 
-    //Public viewing functions 
-    function IsRegistered(address TokenAddress) public view returns(bool){
-        return(AssetRegistryMap[TokenAddress]);
+    //Public viewing functions
+    function IsRegistered(address TokenAddress) public view returns (bool) {
+        return (AssetRegistryMap[TokenAddress]);
     }
 
-
-    function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
+    function GetBackingValueEther(uint256 CLDamount)
+        public
+        view
+        returns (uint256 EtherBacking)
+    {
         uint256 DecimalReplacer = (10**10);
-        uint256 DAObalance = ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this));
-        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - DAObalance);
-        return(((CLDamount * ((address(this).balance * DecimalReplacer) / Supply)) / DecimalReplacer));
+        uint256 DAObalance = ERC20(RegisteredAssets[0].TokenAddress).balanceOf(
+            address(this)
+        );
+        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress)
+            .totalSupply() - DAObalance);
+        return (
+            ((CLDamount *
+                ((address(this).balance * DecimalReplacer) / Supply)) /
+                DecimalReplacer)
+        );
     }
 
-    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking){
-        require(AssetID > 0 && AssetID <= RegisteredAssetLimit, "Asset Cannot be CLD or a nonexistant slot");
+    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID)
+        public
+        view
+        returns (uint256 AssetBacking)
+    {
+        require(
+            AssetID > 0 && AssetID <= RegisteredAssetLimit,
+            'Asset Cannot be CLD or a nonexistant slot'
+        );
         uint256 DecimalReplacer = (10**10);
-        uint256 DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
-        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - DAObalance);
-        return(((CLDamount * ((DAObalance * DecimalReplacer) / Supply)) / DecimalReplacer));
+        uint256 DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress)
+            .balanceOf(address(this));
+        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress)
+            .totalSupply() - DAObalance);
+        return (
+            ((CLDamount * ((DAObalance * DecimalReplacer) / Supply)) /
+                DecimalReplacer)
+        );
     }
 
     //Fallback Functions
-    receive() external payable{
+    receive() external payable {
         emit EtherReceived(msg.value, msg.sender, tx.origin); //Does msg.value work for this?
     }
 
-    fallback() external payable{
+    fallback() external payable {
         emit EtherReceived(msg.value, msg.sender, tx.origin); //Does msg.value work for this?
     }
-
 }
 
 interface ERC20 {
-  function balanceOf(address owner) external view returns (uint256);
-  function allowance(address owner, address spender) external view returns (uint256);
-  function approve(address spender, uint value) external returns (bool);
-  function transfer(address to, uint value) external returns (bool);
-  function transferFrom(address from, address to, uint256 value) external returns (bool); 
-  function totalSupply() external view returns (uint);
-} 
+    function balanceOf(address owner) external view returns (uint256);
 
-interface EROSDAO{
-    function CheckErosApproval(address) external view returns(bool);
+    function allowance(address owner, address spender)
+        external
+        view
+        returns (uint256);
+
+    function approve(address spender, uint256 value) external returns (bool);
+
+    function transfer(address to, uint256 value) external returns (bool);
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 value
+    ) external returns (bool);
+
+    function totalSupply() external view returns (uint256);
+}
+
+interface EROSDAO {
+    function CheckErosApproval(address) external view returns (bool);
 }
