@@ -6,13 +6,13 @@ contract HarmoniaDAOTreasury{
     string public Version = "V1";
     address public DAO;
     uint256 public RegisteredAssetLimit;
-    Token[] public RegisteredAssets;
 
     mapping(address => bool) public AssetRegistryMap;
-    mapping(uint8 => bool) public SlotFilled;
+    mapping(uint8 => Token) public RegisteredAssets;
 
     struct Token{ 
         address TokenAddress;
+        bool Filled;
     }
 
     //Modifier declarations
@@ -41,9 +41,8 @@ contract HarmoniaDAOTreasury{
     constructor(address DAOcontract, address CLDcontract){
         DAO = DAOcontract;
         RegisteredAssetLimit = 5;
-        RegisteredAssets.push(Token(CLDcontract));
+        RegisteredAssets[0] = (Token(CLDcontract, true));
         AssetRegistryMap[CLDcontract] = true;
-        SlotFilled[0] = true;
     }
 
     //Public callable functions
@@ -66,7 +65,7 @@ contract HarmoniaDAOTreasury{
         uint8 CurrentID = 1;
         uint256 DecimalReplacer = (10**10);
         while(CurrentID <= RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
-            if(SlotFilled[CurrentID] == true){
+            if(RegisteredAssets[CurrentID].Filled == true){
                 uint256 ToSend = GetBackingValueAsset(CLDamount, CurrentID);
                 ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
                 emit ERC20Sent(ToSend, To, tx.origin);
@@ -98,13 +97,17 @@ contract HarmoniaDAOTreasury{
     function RegisterAsset(address tokenAddress, uint8 slot) external OnlyDAO { 
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
-        if(SlotFilled[slot] = true){
-            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0);
+        if(RegisteredAssets[slot].Filled == true){
+            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0); //Could be used to prevent tx by sending some amount?
             AssetRegistryMap[RegisteredAssets[slot].TokenAddress] = false;
         }
-        
-        RegisteredAssets[slot] =  Token(tokenAddress);
+        if(tokenAddress == address(0)){
+           RegisteredAssets[slot] = Token(address(0), false); 
+        }
+        else{
+        RegisteredAssets[slot] =  Token(tokenAddress, true); 
         AssetRegistryMap[tokenAddress] = true;
+        }
 
         emit AssetRegistered(RegisteredAssets[slot].TokenAddress, ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)));
     }
