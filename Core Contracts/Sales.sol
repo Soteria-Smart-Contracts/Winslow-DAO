@@ -15,12 +15,12 @@ contract CLDDao_Auction {
     uint256 public ETCDeductedFromRetirees;
     uint256 public TokenAmount;
     uint256 public CurrentTokenBalance;
-    /*
+
     modifier OnlyDAO{
         require(msg.sender == DAO, "This can only be done by the DAO");
         _;
     }
-    */
+
     struct Participant {
         bool Participated;
         address PartAddr;
@@ -30,11 +30,13 @@ contract CLDDao_Auction {
 
     address[] public ParticipantsList;
     mapping (address => Participant) public participantInfo;
+    mapping (address => bool) public isDev;
     
     event ETCDeposited(uint256 AmountReceived, address PartAddr);
     event ParticipantRetired(uint256 AmountRetired);
     event ETCDWithdrawed(uint256 AmountWithdrawed);
     event CLDWithdrawed(uint256 AmountWithdrawed, address PartAddr);
+    event NewDevAdded(address payable NewDevAddr);
 
     constructor(
         uint256 _StartTime, 
@@ -61,6 +63,11 @@ contract CLDDao_Auction {
         Treasury = _Treasury;
         CLD = _CLD;
         DevTeam = _Devs;
+
+        for (uint256 id = 0; id < DevTeam.length; ++id) {
+            isDev[DevTeam[id]] = true;
+            emit NewDevAdded(DevTeam[id]);
+        }  
     }
 
     function DepositETC() external payable returns (bool) {
@@ -101,8 +108,10 @@ contract CLDDao_Auction {
     }
 
     // To Do OnlyDao
-    function AddDev(address payable DevAddr) external {
+    function AddDev(address payable DevAddr) OnlyDAO external {
+        require(!isDev[DevAddr], "CLDAuction.AddDev: This user is already set as a dev");
         DevTeam.push(DevAddr);
+        emit NewDevAdded(DevAddr);
     }
 
     //TO DO OnlyDAO ???
@@ -121,18 +130,14 @@ contract CLDDao_Auction {
         return true;
     }
 
-    function WithdrawCLD(address PartAddr) public {
-        require(
-            msg.sender == participantInfo[PartAddr].PartAddr, 
-            "CLDAuction.WithdrawETC: You can't withdraw what's not yours"
-        );
+    function WithdrawCLD() public {
         require(block.timestamp > EndTime, "CLDAuction.WithdrawCLD: The sale is not over yet");
         require(participantInfo[msg.sender].DepositedETC > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD");
-        participantInfo[PartAddr].PooledTokenShare = UpdatePooledTokenShare(PartAddr);
-        uint256 CLDToSend = (TokenAmount * participantInfo[PartAddr].PooledTokenShare) / 10000;
-        participantInfo[PartAddr].DepositedETC = 0;
-        ERC20(CLD).transfer(PartAddr, CLDToSend);
-        emit CLDWithdrawed(CLDToSend, PartAddr);
+        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(msg.sender);
+        uint256 CLDToSend = (TokenAmount * participantInfo[msg.sender].PooledTokenShare) / 10000;
+        participantInfo[msg.sender].DepositedETC = 0;
+        ERC20(CLD).transfer(msg.sender, CLDToSend);
+        emit CLDWithdrawed(CLDToSend, msg.sender);
     }
     // To do DEBUG ONLY???
     function CheckParticipant(address PartAddr) public view returns (uint256, uint256, uint256) {
@@ -163,12 +168,12 @@ contract CLDDao_Auction_Factory {
         uint256 endDate;
         uint256 amountAuctioned;
     }
-    /*
+    
     modifier OnlyDAO{
         require(msg.sender == DAO, "This can only be done by the DAO");
         _;
     }
-   */
+   
     constructor(address _DAO, address _CLD, address payable _Treasury) {
         DAO = _DAO;
         Treasury= _Treasury;
@@ -184,7 +189,7 @@ contract CLDDao_Auction_Factory {
         address payable[] memory _DevTeam
     )
     external 
-    //TO DO OnlyDAO
+    OnlyDAO    
     {
         (
         CLDDao_Auction newInstance, 
@@ -236,11 +241,9 @@ contract CLDDao_Auction_Factory {
         return (NewAuctionAddress, _startDate, _endDate, _AmountToAuction);
     }
 
-    /*
     function setDAOAddress(address NewDAOAddress) external OnlyDAO {
         DAO = NewDAOAddress;
     }
-    */
 
     function SeeAuctionData(uint AuctionID) public view returns (address, uint, uint, uint) {
         return (

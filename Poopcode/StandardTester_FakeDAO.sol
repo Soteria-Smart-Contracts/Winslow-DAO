@@ -5,6 +5,7 @@ pragma solidity ^0.8.17;
 contract FakeDAO{
     address public owner;
     address public treasury;
+    address public auctionFactory;
 
     mapping(address => bool) public ApprovedErosProposals;
 
@@ -51,9 +52,33 @@ contract FakeDAO{
         TreasuryV1(treasury).ChangeRegisteredAssetLimit(NewLimit);
     }
 
+    function SetAuctionFactory(address NewAucFactory) external OnlyOwner{
+        auctionFactory = NewAucFactory;
+    }
+
+    function NewTokenAuction(
+        uint256 _EndTime, 
+        uint256 _Amount, 
+        uint256 _MinimunFeeInGwei, 
+        uint256 _RetireeFeeInBP, 
+        address payable[] memory _DevTeam
+    ) external OnlyOwner{
+        AuctionFactory(auctionFactory).newCLDAuction(
+            _EndTime,
+            _Amount,
+            _MinimunFeeInGwei,
+            _RetireeFeeInBP,
+            _DevTeam
+        );
+    }
+
+    function AddAucInstanceDevAddress(address AuctInstance, address payable NewDevAddr) external OnlyOwner{
+        AuctionInstance(AuctInstance).AddDev(NewDevAddr);
+    }
+
 }
 
-interface EROSEXT{
+interface EROSEXT {
     function Execute() external;
 }
 
@@ -64,3 +89,17 @@ interface TreasuryV1 {
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
 }
 
+interface AuctionFactory {
+    function newCLDAuction(
+        uint256 _EndTime, 
+        uint256 _Amount, 
+        uint256 _MinimunFeeInGwei, 
+        uint256 _RetireeFeeInBP, 
+        address payable[] memory _DevTeam
+    )
+    external;
+}
+
+interface AuctionInstance {
+    function AddDev(address payable DevAddr) external;
+}
