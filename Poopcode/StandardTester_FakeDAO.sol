@@ -17,7 +17,7 @@ contract FakeDAO{
     constructor(){
         owner = msg.sender;
     }
-
+    // Eros related fuctions
     function ApproveErosContract(address Proposal) external OnlyOwner{
         ApprovedErosProposals[Proposal] = true;
     }
@@ -32,6 +32,7 @@ contract FakeDAO{
         return(ApprovedErosProposals[Proposal]);
     }
 
+    // Treasury related functions
     function SetTreasury(address NewTreasury) external OnlyOwner{
         treasury = NewTreasury;
     }
@@ -52,6 +53,7 @@ contract FakeDAO{
         TreasuryV1(treasury).ChangeRegisteredAssetLimit(NewLimit);
     }
 
+    // Auction related contracts
     function SetAuctionFactory(address NewAucFactory) external OnlyOwner{
         auctionFactory = NewAucFactory;
     }
@@ -76,6 +78,15 @@ contract FakeDAO{
         AuctionInstance(AuctInstance).AddDev(NewDevAddr);
     }
 
+    function AddAucInstanceDevAddresses(
+        address AuctInstance, 
+        address payable[] memory NewDevAddrs
+        ) 
+        external 
+        OnlyOwner
+    {
+            AuctionInstance(AuctInstance).AddDevs(NewDevAddrs);
+    }
 }
 
 interface EROSEXT {
@@ -102,4 +113,5 @@ interface AuctionFactory {
 
 interface AuctionInstance {
     function AddDev(address payable DevAddr) external;
+    function AddDevs(address payable[] memory DevAddrs) external;
 }

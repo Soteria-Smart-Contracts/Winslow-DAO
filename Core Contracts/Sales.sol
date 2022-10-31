@@ -50,8 +50,8 @@ contract CLDDao_Auction {
         address payable[] memory _Devs
     ) 
     {
-        require(
-            _RetireeFeeInBP > 10 && _RetireeFeeInBP < 10000,
+        require( // Fees goes from 0,10% to 100% in BP
+            _RetireeFeeInBP >= 10 && _RetireeFeeInBP <= 10000, 
             "CLDAuction._RetireeFeeInBP: Needs to be at least 0,1 or 100 in Basis Points"
         );
         StartTime = _StartTime;
@@ -102,13 +102,18 @@ contract CLDDao_Auction {
         uint256 penalty = (Amount * RetireeFee) / 10000;
         payable(msg.sender).transfer(Amount - penalty);
         ETCDeductedFromRetirees += penalty;
-        ETCCollected -= (Amount);
+        ETCCollected -= Amount;
 
         emit ParticipantRetired(Amount - penalty);
     }
 
-    // To Do OnlyDao
-    function AddDev(address payable DevAddr) OnlyDAO external {
+    function AddDevs(address payable[] memory DevAddrs) external {
+        for (uint256 id = 0; id < DevAddrs.length; ++id) {
+            AddDev(DevAddrs[id]);
+        }
+    }
+
+    function AddDev(address payable DevAddr) OnlyDAO public {
         require(!isDev[DevAddr], "CLDAuction.AddDev: This user is already set as a dev");
         DevTeam.push(DevAddr);
         emit NewDevAdded(DevAddr);
@@ -183,51 +188,17 @@ contract CLDDao_Auction_Factory {
 
     function newCLDAuction(
         uint256 _EndTime, 
-        uint256 _Amount, 
+        uint256 _AmountToAuction, 
         uint256 _MinimunFeeInGwei, 
         uint256 _RetireeFeeInBP, 
         address payable[] memory _DevTeam
     )
     external 
-    OnlyDAO    
-    {
-        (
-        CLDDao_Auction newInstance, 
-        uint256 _startDate, 
-        uint256 _endDate, 
-        uint256 _amount 
-        ) = _newCLDAuction(_EndTime, _Amount, _MinimunFeeInGwei, _RetireeFeeInBP, _DevTeam);
-       
-        auctionList.push(
-            Auction({
-            auctionAddress: address(newInstance),
-            startDate: _startDate,
-            endDate: _endDate,
-            amountAuctioned: _amount
-        }));
-
-        emit NewAuction(address(newInstance), _startDate, _endDate, _amount, _DevTeam);
-    }
-   
-    function _newCLDAuction
-    (
-        uint256 _EndTime,
-        uint256 _AmountToAuction,
-        uint256 _MinimunFeeInGwei,
-        uint256 _RetireeFeeInBP,
-        address payable[] memory _DevTeam
-    )
-    internal 
-    returns (
-        CLDDao_Auction NewAuctionAddress, 
-        uint256 startDate,
-        uint256 endDate,
-        uint256 amount
-    ) 
+    OnlyDAO
     {
         uint256 _startDate = block.timestamp;
         uint256 _endDate = _startDate + _EndTime;
-        NewAuctionAddress = new CLDDao_Auction(
+        CLDDao_Auction newInstance = new CLDDao_Auction(
             _startDate,
             _endDate,
             _AmountToAuction,
@@ -238,7 +209,16 @@ contract CLDDao_Auction_Factory {
             CLD,
             _DevTeam
         );
-        return (NewAuctionAddress, _startDate, _endDate, _AmountToAuction);
+
+        auctionList.push(
+            Auction({
+            auctionAddress: address(newInstance),
+            startDate: _startDate,
+            endDate: _endDate,
+            amountAuctioned: _AmountToAuction
+        }));
+
+        emit NewAuction(address(newInstance), _startDate, _endDate, _AmountToAuction, _DevTeam);
     }
 
     function setDAOAddress(address NewDAOAddress) external OnlyDAO {
