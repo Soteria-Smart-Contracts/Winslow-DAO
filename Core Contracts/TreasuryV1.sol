@@ -17,7 +17,7 @@ contract HarmoniaDAOTreasury{
 
     //Modifier declarations
     modifier OnlyDAO{ 
-        require(msg.sender == DAO);
+        require(msg.sender == DAO, 'This can only be done by the DAO');
         _;
     }
 
