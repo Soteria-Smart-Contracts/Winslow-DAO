@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 //Just a testing contract, nothing to see here!
 contract FakeDAO{
-    address public owner;
+    address public owner; // this should be the voting addr
     address public treasury;
     address public auctionFactory;
 
@@ -32,11 +32,26 @@ contract FakeDAO{
         return(ApprovedErosProposals[Proposal]);
     }
 
-    // Treasury related functions
-    function SetTreasury(address NewTreasury) external OnlyOwner{
-        treasury = NewTreasury;
+    // FakeDAO admin functions
+
+    function SetVotingAddress(address payable NewAddr) external OnlyOwner {
+        owner = NewAddr;
     }
 
+    function SetTreasury(address NewTreasuryAddr) external OnlyOwner{
+        treasury = NewTreasuryAddr;
+    }
+
+    // Voting related functions
+    function NewVotingTax(uint256 amount, string calldata taxToSet) external OnlyOwner {
+        VotingSystem(owner).setTaxAmount(amount, taxToSet);
+    }
+
+    function NewDAOInVoting(address payable NewAddr) external OnlyOwner {
+        VotingSystem(owner).ChangeDAO(NewAddr);
+    }
+
+    // Treasury related functions
     function RegisterTreasuryAsset(address tokenAddress, uint8 slot) external OnlyOwner{
         TreasuryV1(treasury).RegisterAsset(tokenAddress, slot);
     }
@@ -51,6 +66,10 @@ contract FakeDAO{
 
     function NewTreasuryAssetLimit(uint8 NewLimit) external OnlyOwner{
         TreasuryV1(treasury).ChangeRegisteredAssetLimit(NewLimit);
+    }
+
+    function NewDAOInTreasury(address payable NewDAO) external OnlyOwner{
+        TreasuryV1(treasury).ChangeDAO(NewDAO);
     }
 
     // Auction related contracts
@@ -93,11 +112,17 @@ interface EROSEXT {
     function Execute() external;
 }
 
+interface VotingSystem {
+    function setTaxAmount(uint amount, string calldata taxToSet) external;      
+    function ChangeDAO(address NewAddr) external;      
+}
+
 interface TreasuryV1 {
     function RegisterAsset(address tokenAddress, uint8 slot) external;
     function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
     function TransferETH(uint256 amount, address payable receiver) external;
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
+    function ChangeDAO(address payable NewAddr) external;
 }
 
 interface AuctionFactory {

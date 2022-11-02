@@ -49,16 +49,13 @@ contract HarmoniaDAO_V1_Core{
     }
 }
 */
-contract VotingSystem {
-    //using Arrays for uint256[];
-
+contract VotingSystemV1 {
     // Proposal executioner's bonus, proposal incentive burn percentage 
-    address internal cld;
-    uint public execusCut;
-    uint public burnCut;
-    uint public memberHolding;
-    address payable public DAOExecutioner;
-    bool hasDAOExecutioner = false;
+    FakeDAO public DAO;
+    address public CLD;
+    uint public ExecusCut;
+    uint public BurnCut;
+    uint public MemberHolding;
 
     event ProposalCreated(address proposer, string proposalName, uint voteStart, uint voteEnd);
     event ProposalPassed(address executor, uint proposalId, uint amountBurned, uint executShare);
@@ -66,135 +63,97 @@ contract VotingSystem {
     event CastedVote(uint proposalId, string option, uint votesCasted);
     event ProposalIncentivized(address donator, uint proposalId, uint amountDonated);
     event IncentiveWithdrawed(uint remainingIncentive);
-    event NewDAOExecutionerAddress(address NewAddress);
+    event NewDAOAddress(FakeDAO NewAddress);
 
     struct ProposalCore {
-        string name;
-        uint voteStart;
-        uint voteEnd;
-        bool executed;
-        uint activeVoters;
-        uint approvingVotes;
-        uint refusingVotes;
-        uint incentiveAmount;
-        uint incentiveShare;
-        uint amountToBurn;
-        uint amountToExecutioner;
-        bool passed; // Can be "Not voted", "Passed" or "Not Passed"
-    }
-
-    struct ProposalContext {
-        address[] externalContract;
-        uint[] values;
-        string[] callOptions;
+        string Name;
+        uint VoteStarts;
+        uint VoteEnds;
+        bool Passed; // Can be "Not voted", "Passed" or "Not Passed"
+        uint ActiveVoters;
+        uint ApprovingVotes;
+        uint RefusingVotes;
+        uint IncentiveAmount;
+        uint AmountToBurn;
+        uint AmountToExecutioner;
     }
 
     struct VoterInfo {
         uint votesLocked;
+        uint incentiveShare;
         uint amountDonated;
         bool voted;
-        bool isExecutioner;
-    }
-
-    struct ExternalContracts {
-        address Contract;
+        bool isExecutioner;  // TO DO this on Core?
     }
 
     // Proposals being tracked by id here
     ProposalCore[] internal proposal;
-    // Proposals being tracked by id here
-    ProposalContext[] internal proposalContext;
-    // ExternalContracts being tracked by id here
-    ExternalContracts[] externalContract;
-    // ProposalContext being tracked by their proposal ID
-    // mapping (uint256 => mapping (uint256 => ProposalContext)) internal proposalContext;
     // Map user addresses over their info
     mapping (uint256 => mapping (address => VoterInfo)) internal voterInfo;
  
-     modifier OnlyDAO() {
-        _checkIfDAO();
+    modifier OnlyDAO{ 
+        require(msg.sender == address(DAO), 'This can only be done by the DAO');
         _;
     }
 
-    constructor(address cldAddr) 
+    constructor(address CLDAddr, FakeDAO DAOAddr, uint8 _ExecusCut, uint8 _BurnCut) 
     {
-        cld = cldAddr;
-        burnCut = 10;
-        execusCut = 10;
-        DAOExecutioner = payable(msg.sender);
+        DAO = DAOAddr;
+        CLD = CLDAddr;
+        // Setting the taxes
+        SetTaxAmount(_ExecusCut, "execusCut");
+        SetTaxAmount(_BurnCut, "burnCut");
     }
 
     // To do people should lock tokens in order to propose?
-    function createProposal(
-        string memory name, 
-        uint time,
-        uint256[] memory _values, 
-        address[] memory extContract, 
-        string[] memory callArgs
-        ) external {
-        require(ERC20(cld).balanceOf(msg.sender) >= memberHolding, "Sorry, you are not a DAO member");
-        require(keccak256(abi.encode(name)) != 0, "Proposals need a name");
-        require(time != 0, "Proposals need an end time");
-        for (uint256 i = 0; i < extContract.length; ++i) {
-            require(extContract[i] != address(0), "External contracts can't be the 0 address");
-        }
-        bytes32 hashCallArgs = keccak256(abi.encodePacked(callArgs[0]));
-        require(hashCallArgs != 0, "Proposals needs arguments");
+    function CreateProposal(
+        string memory _Name, 
+        uint Time
+        ) external OnlyDAO {
+        require(Time != 0, "Proposals need an end time");
 
-        bytes32 _proposalName = keccak256(abi.encodePacked(name));
-        _checkForDuplicate(_proposalName);
+        // TO DO verify if this is useful
+        // bytes32 _proposalName = keccak256(abi.encodePacked(_Name));
+        // _checkForDuplicate(_proposalName);
 
-        uint beginsNow = block.number;
-        uint endsIn = block.number + time;
         proposal.push(
             ProposalCore({
-                name: name,
-                voteStart: beginsNow,
-                voteEnd: endsIn,
-                executed: false,
-                activeVoters: 0,
-                approvingVotes: 0,
-                refusingVotes: 0,
-                incentiveAmount: 0,
-                incentiveShare: 0,
-                amountToBurn: 0,
-                amountToExecutioner: 0,
-                passed: false // False until voted, once executed is understood it didn't pass
+                Name: _Name,
+                VoteStarts: block.timestamp,
+                VoteEnds: block.timestamp + Time,
+                Passed: false,
+                ActiveVoters: 0,
+                ApprovingVotes: 0,
+                RefusingVotes: 0,
+                IncentiveAmount: 0,
+                AmountToBurn: 0,
+                AmountToExecutioner: 0
             })
         );
 
-        proposalContext.push(
-            ProposalContext({
-                externalContract: extContract,
-                values: _values,
-                callOptions: callArgs
-            })
-        );
-
-        emit ProposalCreated(msg.sender, name, beginsNow, endsIn);
+        emit ProposalCreated(msg.sender, _Name, block.timestamp, block.timestamp + Time);
     }
 
     function incentivizeProposal(uint proposalId, uint amount) external {
-        require(ERC20(cld).balanceOf(msg.sender) >= amount, 
+        require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), 
         "You do not have enough CLD to stake this amount"
         );
-        require(ERC20(cld).allowance(msg.sender, address(this)) >= amount, 
+        require(ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
         "You have not given the staking contract enough allowance"
         );
         require(keccak256(
-            abi.encodePacked(proposal[proposalId].name,
+            abi.encodePacked(proposal[proposalId].Name,
             "Proposal doesn't exist")) != 0);
-        
-        require(block.number < proposal[proposalId].voteEnd, 
+    
+        require(block.timestamp <= proposal[proposalId].VoteEnds, 
         "The voting period has ended, save for the next proposal!"
         );
-
-        ERC20(cld).transferFrom(msg.sender, address(this), amount);
-        proposal[proposalId].incentiveAmount += amount;
+        // TO DO update incentiveshare
+        proposal[proposalId].IncentiveAmount += amount;
         voterInfo[proposalId][msg.sender].amountDonated += amount;
         _updateTaxesAndIndIncentive(proposalId, true);
 
-        emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].incentiveAmount);
+        emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].IncentiveAmount);
     }
 
     function castVote(
@@ -205,11 +164,11 @@ contract VotingSystem {
         external 
     { 
         require(
-            ERC20(cld).balanceOf(msg.sender) >= amount, 
+            ERC20(CLD).balanceOf(msg.sender) >= amount, 
             "You do not have enough CLD to vote this amount"
         );
         require(
-            ERC20(cld).allowance(msg.sender, address(this)) >= amount, 
+            ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
             "You have not given the voting contract enough allowance"
         );
         require(
@@ -217,93 +176,85 @@ contract VotingSystem {
             "You must either vote 'Yes' or 'No'"
         );
         require(keccak256(
-            abi.encodePacked(proposal[proposalId].name,
+            abi.encodePacked(proposal[proposalId].Name,
             "Proposal doesn't exist")) != 0);
         require(!voterInfo[proposalId][msg.sender].voted, "You already voted in this proposal");
-        require(block.number < proposal[proposalId].voteEnd, "The voting period has ended");
+        require(block.number < proposal[proposalId].VoteEnds, "The voting period has ended");
 
-        ERC20(cld).transferFrom(msg.sender, address(this), amount);
+        ERC20(CLD).transferFrom(msg.sender, address(this), amount);
 
         if(yesOrNo == 0) {
-            proposal[proposalId].approvingVotes += amount;
+            proposal[proposalId].ApprovingVotes += amount;
             emit CastedVote(proposalId, "Yes", amount);
         } else {
-            proposal[proposalId].refusingVotes += amount;
+            proposal[proposalId].RefusingVotes += amount;
             emit CastedVote(proposalId, "No", amount);
         }
         voterInfo[proposalId][msg.sender].votesLocked += amount;
         voterInfo[proposalId][msg.sender].voted = true;
-        proposal[proposalId].activeVoters += 1;
+        proposal[proposalId].ActiveVoters += 1;
 
         _updateTaxesAndIndIncentive(proposalId, false);
     }
 
     // Proposal execution code
-    // Placeholder TO DO
+    // TO DO Take his out, we dont execute here
     function executeProposal(uint proposalId) external { 
         voterInfo[proposalId][msg.sender].isExecutioner = true;
 
         require(keccak256(
-            abi.encodePacked(proposal[proposalId].name,
+            abi.encodePacked(proposal[proposalId].Name,
             "Proposal doesn't exist")) != 0);
-        require(proposal[proposalId].voteEnd <= block.number, "Voting has not ended");
-        require(!proposal[proposalId].executed, "Proposal already executed!");
-        require(proposal[proposalId].activeVoters > 0, "Can't execute proposals without voters!");
+        require(proposal[proposalId].VoteEnds <= block.number, "Voting has not ended");
+        // TO DO Fix this
+        require(!proposal[proposalId].Passed, "Proposal already executed!");
+        require(proposal[proposalId].ActiveVoters > 0, "Can't execute proposals without voters!");
 
         uint burntAmount = _burnIncentiveShare(proposalId);
-        uint executShare = proposal[proposalId].amountToExecutioner;
-        ERC20(cld).transfer(msg.sender, executShare);
-        proposal[proposalId].incentiveAmount -= proposal[proposalId].amountToExecutioner;
+        uint executShare = proposal[proposalId].AmountToExecutioner;
+        ERC20(CLD).transfer(msg.sender, executShare);
+        proposal[proposalId].IncentiveAmount -= proposal[proposalId].AmountToExecutioner;
 
-        if (proposal[proposalId].approvingVotes > proposal[proposalId].refusingVotes) {
-            proposal[proposalId].passed = true;
-            // execute payload sending a .execute to the Executor TO DO
-            _processProposal(proposalContext[proposalId].values, 
-            proposalContext[proposalId].externalContract,
-            proposalContext[proposalId].callOptions);
+        if (proposal[proposalId].ApprovingVotes > proposal[proposalId].RefusingVotes) {
+            // TO DO Execution
+            proposal[proposalId].Passed = true;
 
-            //     function _processProposal(uint256[] memory _values, string[] memory _args, address[] memory _targets) internal virtual {
             emit ProposalPassed(msg.sender, proposalId, burntAmount, executShare);
-            /*
-        function addValuesWithCall(address calculator, uint256 a, uint256 b) public returns (uint256) {
-        (bool success, bytes memory result) = calculator.call(abi.encodeWithSignature("add(uint256,uint256)", a, b));
-        emit AddedValuesByCall(a, b, success);
-        return abi.decode(result, (uint256));*/
         } else {
-            proposal[proposalId].passed = false;
+            proposal[proposalId].Passed = false;
             emit ProposalNotPassed(msg.sender, proposalId, burntAmount, executShare);
 
         }
 
-        proposal[proposalId].executed = true;
+        proposal[proposalId].Passed = true;
         
     }
 
     function withdrawMyTokens(uint proposalId) external {
-        if (proposal[proposalId].activeVoters > 0) {
-            require(proposal[proposalId].executed, 'Proposal has not been executed!');
+        if (proposal[proposalId].ActiveVoters > 0) {
+            require(proposal[proposalId].Passed, 'Proposal has not been executed!');
             _returnTokens(proposalId, msg.sender, true);
         } else {
             _returnTokens(proposalId, msg.sender, true);
         }
 
-        emit IncentiveWithdrawed(proposal[proposalId].incentiveAmount);
+        emit IncentiveWithdrawed(proposal[proposalId].IncentiveAmount);
     }
 
-    function setTaxAmount(uint amount, string calldata taxToSet) external OnlyDAO returns (bool) {
-        require(amount < 100, "Percentages can't be higher than 100");
-        require(amount > 0, "This tax can't be zeroed!");
+    function SetTaxAmount(uint amount, string memory taxToSet) public OnlyDAO returns (bool) {
         bytes32 _setHash = keccak256(abi.encodePacked(taxToSet));
         bytes32 _execusCut = keccak256(abi.encodePacked("execusCut"));
         bytes32 _burnCut = keccak256(abi.encodePacked("burnCut"));
         bytes32 _memberHolding = keccak256(abi.encodePacked("memberHolding"));
 
         if (_setHash == _execusCut) {
-            execusCut = amount;
+            require(amount >= 0 && amount <= 100, "Percentages can't be higher than 100");
+            ExecusCut = amount;
         } else if (_setHash == _burnCut) {
-            burnCut = amount;
+            require(amount >= 0 && amount <= 100, "Percentages can't be higher than 100");
+            BurnCut = amount;
         } else if (_setHash == _memberHolding) {
-            memberHolding = amount;
+            MemberHolding = amount;
         } else {
             revert("You didn't choose a valid setting to modify!");
         }
@@ -311,17 +262,16 @@ contract VotingSystem {
         return true;
     }
 
-    function setDAOAddress(address payable newAddr) external OnlyDAO {
+    function ChangeDAO(FakeDAO newAddr) external OnlyDAO {
         _setDAOAddress(newAddr);
-        emit NewDAOExecutionerAddress(newAddr);
-
+        emit NewDAOAddress(newAddr);
     }
 
     function seeProposalInfo(uint proposalId) 
     public 
     view 
     returns (
-        string memory,
+     string memory,
         uint,
         uint,
         bool,
@@ -330,25 +280,21 @@ contract VotingSystem {
         uint,
         uint,
         uint,
-        uint,
-        uint,
-        bool
+        uint
     ) 
     {
         ProposalCore memory _proposal = proposal[proposalId];      
         return (
-            _proposal.name,
-            _proposal.voteStart,
-            _proposal.voteEnd,
-            _proposal.executed,
-            _proposal.activeVoters,
-            _proposal.approvingVotes,
-            _proposal.refusingVotes,
-            _proposal.incentiveAmount,
-            _proposal.incentiveShare,
-            _proposal.amountToBurn,
-            _proposal.amountToExecutioner,
-            _proposal.passed
+            _proposal.Name,
+            _proposal.VoteStarts,
+            _proposal.VoteEnds,
+            _proposal.Passed,
+            _proposal.ActiveVoters,
+            _proposal.ApprovingVotes,
+            _proposal.RefusingVotes,
+            _proposal.IncentiveAmount,
+            _proposal.AmountToBurn,
+            _proposal.AmountToExecutioner
             );
     }
     
@@ -356,105 +302,103 @@ contract VotingSystem {
     /////        Internal functions     /////
     /////////////////////////////////////////
 
-    // WIP [TEST REQUIRED]
+    // TO DO Refactor this
     function _returnTokens(
         uint _proposalId,
         address _voterAddr,
         bool _isItForProposals
         )
         internal {
-        require(block.number > proposal[_proposalId].voteEnd, "The voting period hasn't ended");
+        require(block.number > proposal[_proposalId].VoteEnds, "The voting period hasn't ended");
 
         uint _amount = voterInfo[_proposalId][_voterAddr].votesLocked;
 
         if(_isItForProposals) { // Debug only
-            if (proposal[_proposalId].activeVoters > 0) {
+            if (proposal[_proposalId].ActiveVoters > 0) {
                 require(
                     voterInfo[_proposalId][_voterAddr].votesLocked > 0, 
                     "You need to lock votes in order to take them out"
                 );
-                uint _totalAmount = _amount + proposal[_proposalId].incentiveShare;
-                ERC20(cld).transfer(_voterAddr, _totalAmount);
-                proposal[_proposalId].incentiveAmount -= proposal[_proposalId].incentiveShare; 
+                uint _totalAmount = _amount;
+                ERC20(CLD).transfer(_voterAddr, _totalAmount);
+                // to do proposal[_proposalId].IncentiveAmount -= proposal[_proposalId].IncentiveShare; 
             } else {
                 require(
                     voterInfo[_proposalId][_voterAddr].amountDonated > 0, 
                     "You have not incentivized this proposal"
                 );
                 uint incentiveToReturn = voterInfo[_proposalId][_voterAddr].amountDonated;
-                ERC20(cld).transfer(_voterAddr, incentiveToReturn);
+                ERC20(CLD).transfer(_voterAddr, incentiveToReturn);
                 voterInfo[_proposalId][_voterAddr].amountDonated -= incentiveToReturn;
-                proposal[_proposalId].incentiveAmount -= incentiveToReturn;
+                proposal[_proposalId].IncentiveAmount -= incentiveToReturn;
             }
         } else {  // Debug only
-            ERC20(cld).transfer(_voterAddr, _amount);
+            ERC20(CLD).transfer(_voterAddr, _amount);
         }
         voterInfo[_proposalId][_voterAddr].votesLocked -= _amount;
     }
 
     function _burnIncentiveShare(uint _proposalId) internal returns(uint) {
-        uint amount = proposal[_proposalId].amountToBurn;
-        ERC20(cld).Burn(amount);
-        proposal[_proposalId].incentiveAmount -= amount;
+        uint amount = proposal[_proposalId].AmountToBurn;
+        ERC20(CLD).Burn(amount);
+        proposal[_proposalId].IncentiveAmount -= amount;
 
         return(amount);
     }
-
-    function _updateTaxesAndIndIncentive(uint _proposalId, bool allOfThem) internal {
-        uint baseTokenAmount = proposal[_proposalId].incentiveAmount;
+    // TO DO Verify this
+    function _updateTaxesAndIndIncentive(uint _proposalId, bool allOfThem) internal  {
+        uint baseTokenAmount = proposal[_proposalId].IncentiveAmount;
 
         if (allOfThem) {            
-            uint newBurnAmount = baseTokenAmount * burnCut / 100;
-            proposal[_proposalId].amountToBurn = newBurnAmount;
+            uint newBurnAmount = baseTokenAmount * BurnCut / 100;
+            proposal[_proposalId].AmountToBurn = newBurnAmount;
 
-            uint newToExecutAmount = baseTokenAmount * execusCut / 100;
-            proposal[_proposalId].amountToExecutioner = newToExecutAmount;
+            uint newToExecutAmount = baseTokenAmount * ExecusCut / 100;
+            proposal[_proposalId].AmountToExecutioner = newToExecutAmount;
 
-            _updateIncentiveShare(_proposalId, baseTokenAmount);
+            //_updateIncentiveShare(_proposalId, baseTokenAmount);
         } else {
-            _updateIncentiveShare(_proposalId, baseTokenAmount);
+            //_updateIncentiveShare(_proposalId, baseTokenAmount);
         }
 
     }
 
-    function _setDAOAddress(address payable _newAddr) internal {
-        require(DAOExecutioner != _newAddr, "VSystem.setDAOAddress:New DAO address can't be the same as the old one");
-        require(_newAddr != address(0), "VSystem.setDAOAddress: New DAO can't be the zero address");
-        DAOExecutioner = _newAddr;
+    function _setDAOAddress(FakeDAO _newAddr) internal {
+        require(DAO != _newAddr, "VSystem.setDAOAddress:New DAO address can't be the same as the old one");
+        require(address(_newAddr) != address(0), "VSystem.setDAOAddress: New DAO can't be the zero address");
+        DAO = _newAddr;
     }
-
-    function _updateIncentiveShare(uint _proposalId, uint _baseTokenAmount) internal {
-        uint incentiveTaxes = proposal[_proposalId].amountToBurn + proposal[_proposalId].amountToExecutioner;
-        uint totalTokenAmount = _baseTokenAmount - incentiveTaxes;
-        if (proposal[_proposalId].activeVoters > 0) {
-             uint newIndividualIncetive = totalTokenAmount / proposal[_proposalId].activeVoters;
-            proposal[_proposalId].incentiveShare = newIndividualIncetive;
-        } else {
-            proposal[_proposalId].incentiveShare = totalTokenAmount;
-        }
+    /* TO DO Verify this
+    function _updateIncentiveShare(uint _proposalId, uint _baseTokenAmount) internal view {
+        // uint incentiveTaxes = proposal[_proposalId].AmountToBurn + proposal[_proposalId].AmountToExecutioner;
+        // uint totalTokenAmount = _baseTokenAmount - incentiveTaxes;
+        // to do
+        //if (proposal[_proposalId].ActiveVoters > 0) {
+        //     uint newIndividualIncetive = totalTokenAmount / proposal[_proposalId].ActiveVoters;
+        //} 
     }
-
-    function _processProposal(uint256[] memory _values, address payable[] memory _targets, string[] memory _args) internal virtual {
+    TO DO is this necessary?
+    function _processProposal(uint8[] memory _values, address payable[] memory _targets, string[] memory _args) internal virtual {
         uint _processedArgs = _checkArgsGiveOption(_args);
 
         if (_processedArgs == 11) {
-            FakeDAO(DAOExecutioner).NewTreasuryAssetLimit(_values[0]);
+            FakeDAO(DAO).NewTreasuryAssetLimit(_values[0]);
         } else if (_processedArgs == 12) {
-            FakeDAO(DAOExecutioner).ChangeDAO(_targets[0]);
+            FakeDAO(DAO).NewDAOInTreasury(_targets[0]);
         } else if (_processedArgs == 13) {
-            FakeDAO(DAOExecutioner)._AddAsset(_targets[0], 0);
+            FakeDAO(DAO).RegisterTreasuryAsset(_targets[0], 0);
         } else if (_processedArgs == 14) {
-            FakeDAO(DAOExecutioner)._SendRegisteredAsset(_values[1], _targets[0], _values[0]);
+            FakeDAO(DAO).TreasuryERC20Transfer(_values[1], _values[2], _targets[0]);
         } else if (_processedArgs == 15) {
-            FakeDAO(DAOExecutioner)._TransferEther(_values[0], payable(_targets[0]));
+            FakeDAO(DAO).TreasuryEtherTransfer(_values[0], payable(_targets[0]));
         } else if (_processedArgs == 21) {
-            FakeDAO(DAOExecutioner).setDAOAddress(_targets[0]);
+            FakeDAO(DAO).SetVotingAddress(_targets[0]);
         } else if (_processedArgs == 22) {
-            FakeDAO(DAOExecutioner).setVSysTax(_values[0], _args[3]);
+            FakeDAO(DAO).NewVotingTax(_values[0], _args[3]);
         } else if (_processedArgs == 31) {
-            FakeDAO(DAOExecutioner).setVotingAddress(_targets[0]);
+            FakeDAO(DAO).SetVotingAddress(_targets[0]);
         } else if (_processedArgs == 32) {
-            FakeDAO(DAOExecutioner).setTreasuryAddress(_targets[0]);
+            FakeDAO(DAO).SetTreasury(_targets[0]);
         }
     }
 
@@ -462,7 +406,7 @@ contract VotingSystem {
     * if the hash of the strings passed as arguments match to the proposal`s
     * passed strings it will return a number (See Executioner.sol's interfaces to see the options)
     * All these will be handled by the frontend (still under designing)
-    */
+
     function _checkArgsGiveOption(string[] memory _arg) internal pure returns(uint option) {
         if (keccak256(abi.encodePacked(_arg[0])) == keccak256("Treasury")) {
             if (keccak256(abi.encodePacked(_arg[1])) == keccak256("Change")) {
@@ -498,11 +442,6 @@ contract VotingSystem {
             return 4; // todo
         }
     }
-
-    function _checkIfDAO() internal view {
-        require(msg.sender == DAOExecutioner, "This function can only be called by the DAO");
-    }
-
     function _checkForDuplicate(bytes32 _proposalName) internal view {
         uint256 length = proposal.length;
         for (uint256 _proposalId = 0; _proposalId < length; _proposalId++) {
@@ -510,7 +449,7 @@ contract VotingSystem {
             require(_nameHash != _proposalName, "This proposal already exists!");
         }
     }
-
+    */
     /////////////////////////////////////////
     /////          Debug Tools          /////
     /////////////////////////////////////////
@@ -538,74 +477,6 @@ contract VotingSystem {
 
     function checkBlock() public view returns (uint){
         return block.number;
-    }
-}
-
-library Math {
-    /**
-     * @dev Returns the largest of two numbers.
-     */
-    function max(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a >= b ? a : b;
-    }
-
-    /**
-     * @dev Returns the smallest of two numbers.
-     */
-    function min(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a < b ? a : b;
-    }
-
-    /**
-     * @dev Returns the average of two numbers. The result is rounded towards
-     * zero.
-     */
-    function average(uint256 a, uint256 b) internal pure returns (uint256) {
-        // (a + b) / 2 can overflow, so we distribute
-        return (a / 2) + (b / 2) + ((a % 2 + b % 2) / 2);
-    }
-}
-
-/**
- * @dev Collection of functions related to array types.
- */
-library Arrays {
-    function findUpperBound(uint256[] storage array, uint256 element) internal view returns (uint256) {
-        if (array.length == 0) {
-            return 0;
-        }
-
-        uint256 low = 0;
-        uint256 high = array.length;
-
-        while (low < high) {
-            uint256 mid = Math.average(low, high);
-
-            // Note that mid will always be strictly less than high (i.e. it will be a valid array index)
-            // because Math.average rounds down (it does integer division with truncation).
-            if (array[mid] > element) {
-                high = mid;
-            } else {
-                low = mid + 1;
-            }
-        }
-
-        // At this point `low` is the exclusive upper bound. We will return the inclusive upper bound.
-        if (low > 0 && array[low - 1] == element) {
-            return low - 1;
-        } else {
-            return low;
-        }
-    }
-
-    function removeElement(uint256[] storage _array, uint256 _element) public {
-        for (uint256 i; i<_array.length; i++) {
-            if (_array[i] == _element) {
-                _array[i] = _array[_array.length - 1];
-                _array.pop();
-                break;
-            }
-        }
     }
 }
 
