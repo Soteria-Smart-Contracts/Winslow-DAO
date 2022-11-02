@@ -5,7 +5,7 @@ contract HarmoniaDAOTreasury{
     //Variable, struct and type declarations
     string public Version = "V1";
     address public DAO;
-    uint256 public RegisteredAssetLimit;
+    uint8 public RegisteredAssetLimit;
 
     mapping(address => bool) public AssetRegistryMap;
     mapping(uint8 => Token) public RegisteredAssets;
@@ -63,18 +63,16 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount);
 
         uint8 CurrentID = 1;
-        uint256 DecimalReplacer = (10**10);
         while(CurrentID <= RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
             if(RegisteredAssets[CurrentID].Filled == true){
-                uint256 ToSend = GetBackingValueAsset(CLDamount, CurrentID);
+                uint256 ToSend = GetAssetToSend(CLDamount, CurrentID, SupplyPreTransfer);
                 ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
                 emit ERC20Sent(ToSend, To, tx.origin);
             }
             CurrentID++;
         }
 
-        uint256 EtherToSend = ((CLDamount * ((address(this).balance * DecimalReplacer) / SupplyPreTransfer)) / DecimalReplacer); //this is where the problem was
-        To.transfer(EtherToSend);
+        To.transfer(GetEtherToSend(CLDamount, SupplyPreTransfer));
 
         return(success);
     }
@@ -114,7 +112,7 @@ contract HarmoniaDAOTreasury{
 
 
     //Setting modification functions
-    function ChangeRegisteredAssetLimit(uint NewLimit) external OnlyDAO{
+    function ChangeRegisteredAssetLimit(uint8 NewLimit) external OnlyDAO{
         RegisteredAssetLimit = NewLimit;
         
         emit AssetLimitChange(NewLimit);
@@ -134,11 +132,23 @@ contract HarmoniaDAOTreasury{
     }
 
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking){
-        require(AssetID > 0 && AssetID <= RegisteredAssetLimit, "Asset Cannot be CLD or a nonexistant slot");
+        require(AssetID > 0 && AssetID <= RegisteredAssetLimit && RegisteredAssets[AssetID].Filled == true, "Asset Cannot be CLD or a nonexistant slot");
         uint256 DecimalReplacer = (10**10);
         uint256 DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
-        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - DAObalance);
+        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this)));
         return(((CLDamount * ((DAObalance * DecimalReplacer) / Supply)) / DecimalReplacer));
+    }
+
+    function GetEtherToSend(uint256 CLDamount, uint256 PreSupply) internal view returns(uint256 EtherBacking){
+        uint256 DecimalReplacer = (10**10);
+        return(((CLDamount * ((address(this).balance * DecimalReplacer) / PreSupply)) / DecimalReplacer));
+    }
+
+    function GetAssetToSend(uint256 CLDamount, uint8 AssetID, uint256 PreSupply) internal view returns(uint256 AssetBacking){
+        require(AssetID > 0 && AssetID <= RegisteredAssetLimit && RegisteredAssets[AssetID].Filled == true, "Asset Cannot be CLD or a nonexistant slot");
+        uint256 DecimalReplacer = (10**10);
+        uint256 DAOAssetBalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
+        return(((CLDamount * ((DAOAssetBalance * DecimalReplacer) / PreSupply)) / DecimalReplacer));
     }
 
     //Fallback Functions
