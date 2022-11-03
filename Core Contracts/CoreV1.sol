@@ -19,6 +19,7 @@ contract HarmoniaDAO_V1_Core{
         uint256 RequestedEtherAmount; //Optional, can be zero
         uint256 RequestedAssetAmount; //Optional, can be zero
         uint8 RequestedAssetID;
+        //proxy proposal entries here
         bool Executed; //Can only be executed once, when finished, proposal exist only as archive
     }
 
