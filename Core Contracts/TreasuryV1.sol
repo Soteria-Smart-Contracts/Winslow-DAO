@@ -58,7 +58,8 @@ contract HarmoniaDAOTreasury{
     }
 
     function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success){
-        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this))); //Supply within the DAO does not count as backed
+        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this)));
+        //Supply within the DAO does not count as backed
         ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount);
 
         uint8 CurrentID = 1;
