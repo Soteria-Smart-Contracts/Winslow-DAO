@@ -18,7 +18,7 @@ contract HarmoniaDAO_V1_Core{
         uint8 ProposalType; //Type 0 is simple ether and asset sends, Type 1 are Proxy Proposals for external governance, Type 2 are Eros Prosposals
         uint256 RequestedEtherAmount; //Optional, can be zero
         uint256 RequestedAssetAmount; //Optional, can be zero
-        uint8 RequestedAssetID
+        uint8 RequestedAssetID;
         bool Executed; //Can only be executed once, when finished, proposal exist only as archive
     }
 
