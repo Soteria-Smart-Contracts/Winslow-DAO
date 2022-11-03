@@ -17,8 +17,13 @@ contract HarmoniaDAO_V1_Core{
         TreasurySetter = msg.sender;
     }
 
+    //Public calls
 
-    //Internal Execution
+    
+
+
+    //Internal Executioning
+
 
     
     //One Time Functions
