@@ -1,3 +1,4 @@
 {
-    "printcode.fontSize": 9
+    "printcode.fontSize": 9,
+    "printcode.lineNumbers": "editor"
 }
