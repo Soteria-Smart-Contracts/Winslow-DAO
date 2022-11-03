@@ -11,7 +11,7 @@ contract HarmoniaDAO_V1_Core{
 
     //Mapping, structs and other declarations
     
-    Proposal[]
+    Proposal[] Proposals;
 
     struct Proposal{
         uint256 ProposalID;
