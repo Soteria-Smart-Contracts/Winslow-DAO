@@ -18,7 +18,7 @@ contract HarmoniaDAOTreasury{
 
     struct Grant {
         bool IsActive;
-        address payable Requestor;
+        address payable[] Requestor;
         uint256 GrantID;
         bool IsItEther;
         uint256 OriginalValue;
@@ -121,7 +121,7 @@ contract HarmoniaDAOTreasury{
 
     function RegisterAllowance(
         // TO DO make this an array, as teams can reclaim their grants with different addressess
-        address payable _Requestor, 
+        address payable[] memory _Requestor, 
         bool _IsItEther,
         uint256 _Value, 
         uint8 _AssetID, 
@@ -130,7 +130,10 @@ contract HarmoniaDAOTreasury{
     ) public OnlyDAO {
     // Add this Grant to Requestor GrantList
         LastGrantID++;
-        RequestorGrantList[_Requestor].push(LastGrantID);
+        uint8 CurrentID = 0;
+        while(CurrentID <= RegisteredAssetLimit) {  
+            RequestorGrantList[_Requestor[CurrentID]].push(LastGrantID);
+        }      
     // Grant given to Requestor address mapping
         GrantList.push(
             Grant({
@@ -164,10 +167,10 @@ contract HarmoniaDAOTreasury{
         // TO DO emit event
     }
 
-    function ReclameAllowance(uint256 AllowanceID) external {
+    function ReclameAllowance(uint256 AllowanceID, uint8 RequestorID) external {
         require(GrantList[AllowanceID].IsActive,
             'ReclameAllowance: This grant is not active');
-        require(payable(msg.sender) == GrantList[AllowanceID].Requestor, 
+        require(payable(msg.sender) == GrantList[AllowanceID].Requestor[RequestorID], 
             'ReclameAllowance: You are not the owner of this grant');
         require(GrantList[AllowanceID].RemainingValue >= 0, 
             'ReclameAllowance: Debt is zero');
@@ -176,9 +179,9 @@ contract HarmoniaDAOTreasury{
         uint256 ToSend = GrantList[AllowanceID].OriginalValue / GrantList[AllowanceID].Installments;
         if (GrantList[AllowanceID].IsItEther) {
             // TO DO we need a EtherBalance globally so the grants wont drain the Treasury's balance
-            _TransferETH(ToSend, GrantList[AllowanceID].Requestor);
+            _TransferETH(ToSend, GrantList[AllowanceID].Requestor[RequestorID]);
         } else {
-            _TransferERC20(GrantList[AllowanceID].AssetID, ToSend, GrantList[AllowanceID].Requestor);
+            _TransferERC20(GrantList[AllowanceID].AssetID, ToSend, GrantList[AllowanceID].Requestor[RequestorID]);
         }
         GrantList[AllowanceID].RemainingValue -= ToSend;
         GrantList[AllowanceID].LastReclameTimestamp = block.timestamp;
