@@ -14,7 +14,7 @@ contract HarmoniaDAO_V1_Core{
 
     struct Proposal{
         uint256 ProposalID;
-        uint8 ProposalType; 
+        uint8 ProposalType; //Type 0 is simple fund
     }
 
 
