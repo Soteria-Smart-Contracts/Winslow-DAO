@@ -97,7 +97,8 @@ contract HarmoniaDAOTreasury{
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
         if(RegisteredAssets[slot].Filled == true){
-            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0); //Could be used to prevent tx by sending some amount?
+            //Could be used to prevent tx by sending some amount?
+            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0);
             AssetRegistryMap[RegisteredAssets[slot].TokenAddress] = false;
         }
         if(tokenAddress == address(0)){
