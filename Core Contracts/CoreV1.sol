@@ -17,6 +17,9 @@ contract HarmoniaDAO_V1_Core{
         TreasurySetter = msg.sender;
     }
 
+
+    //Internal Execution
+
     
     //One Time Functions
     function SetInitialTreasury(address TreasuryAddress) external{
