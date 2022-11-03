@@ -14,7 +14,7 @@ contract HarmoniaDAO_V1_Core{
 
     struct Proposal{
         uint256 ProposalID;
-        uint
+        uint8 ProposalType; 
     }
 
 
