@@ -12,7 +12,9 @@ contract HarmoniaDAO_V1_Core{
     //Mapping, structs and other declarations
 
 
-    struct Proposal
+    struct Proposal{
+        uint
+    }
 
 
     event FallbackToTreasury(uint256 amount);
