@@ -70,10 +70,11 @@ contract VotingSystemV1 {
         string Name;
         uint VoteStarts;
         uint VoteEnds;
-        bool Passed; // Can be "Not voted", "Passed" or "Not Passed"
+        uint8 Passed; // Can be 0 "Not voted", 1 "Passed" or 2 "Not Passed"
         uint ActiveVoters;
         uint ApprovingVotes;
         uint RefusingVotes;
+        bool Executed;
         uint IncentiveAmount;
         uint AmountToBurn;
         uint AmountToExecutioner;
@@ -126,10 +127,11 @@ contract VotingSystemV1 {
                 Name: _Name,
                 VoteStarts: block.timestamp,
                 VoteEnds: block.timestamp + Time,
-                Passed: false,
+                Passed: 0, // Not voted yet
                 ActiveVoters: 0,
                 ApprovingVotes: 0,
                 RefusingVotes: 0,
+                Executed: false,
                 IncentiveAmount: 0,
                 AmountToBurn: 0,
                 AmountToExecutioner: 0
@@ -139,7 +141,7 @@ contract VotingSystemV1 {
         emit ProposalCreated(msg.sender, _Name, block.timestamp, block.timestamp + Time);
     }
 
-    function incentivizeProposal(uint proposalId, uint amount) external {
+    function IncentivizeProposal(uint proposalId, uint amount) external {
         require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), 
         "You do not have enough CLD to stake this amount"
         );
@@ -204,15 +206,16 @@ contract VotingSystemV1 {
 
     // Proposal execution code
     // TO DO Take his out, we dont execute here
-    function executeProposal(uint proposalId) external { 
+    function ExecuteProposal(uint proposalId) external { 
         voterInfo[proposalId][msg.sender].isExecutioner = true;
 
         require(keccak256(
             abi.encodePacked(proposal[proposalId].Name,
             "Proposal doesn't exist")) != 0);
-        require(proposal[proposalId].VoteEnds <= block.number, "Voting has not ended");
+        require(block.timestamp >= proposal[proposalId].VoteEnds, 
+        "Voting has not ended");
         // TO DO Fix this
-        require(!proposal[proposalId].Passed, "Proposal already executed!");
+        require(proposal[proposalId].Passed == 0, "Proposal already executed!");
         require(proposal[proposalId].ActiveVoters > 0, "Can't execute proposals without voters!");
 
         uint burntAmount = _burnIncentiveShare(proposalId);
@@ -222,11 +225,11 @@ contract VotingSystemV1 {
 
         if (proposal[proposalId].ApprovingVotes > proposal[proposalId].RefusingVotes) {
             // TO DO Execution
-            proposal[proposalId].Passed = true;
+            proposal[proposalId].Passed = 1;
 
             emit ProposalPassed(msg.sender, proposalId, burntAmount, executShare);
         } else {
-            proposal[proposalId].Passed = false;
+            proposal[proposalId].Passed = 2;
             emit ProposalNotPassed(msg.sender, proposalId, burntAmount, executShare);
 
         }
@@ -237,7 +240,7 @@ contract VotingSystemV1 {
 
     function withdrawMyTokens(uint proposalId) external {
         if (proposal[proposalId].ActiveVoters > 0) {
-            require(proposal[proposalId].Passed, 'Proposal has not been executed!');
+            require(proposal[proposalId].Executed, 'Proposal has not been executed!');
             _returnTokens(proposalId, msg.sender, true);
         } else {
             _returnTokens(proposalId, msg.sender, true);
