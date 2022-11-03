@@ -3,7 +3,8 @@ pragma solidity ^0.8.17;
 
 //Just a testing contract, nothing to see here!
 contract FakeDAO{
-    address public owner; // this should be the voting addr
+    address public owner; // temporary owner, for tests only
+    address public votingSystem;
     address public treasury;
     address public auctionFactory;
 
@@ -35,7 +36,7 @@ contract FakeDAO{
     // FakeDAO admin functions
 
     function SetVotingAddress(address payable NewAddr) external OnlyOwner {
-        owner = NewAddr;
+        votingSystem = NewAddr;
     }
 
     function SetTreasury(address NewTreasuryAddr) external OnlyOwner{
@@ -44,11 +45,20 @@ contract FakeDAO{
 
     // Voting related functions
     function NewVotingTax(uint256 amount, string calldata taxToSet) external OnlyOwner {
-        VotingSystem(owner).setTaxAmount(amount, taxToSet);
+        VotingSystem(votingSystem).SetTaxAmount(amount, taxToSet);
     }
 
     function NewDAOInVoting(address payable NewAddr) external OnlyOwner {
-        VotingSystem(owner).ChangeDAO(NewAddr);
+        VotingSystem(votingSystem).ChangeDAO(NewAddr);
+    }
+
+    function NewProposal(string memory Name, uint256 Time) external {
+        // We need to ask for some gas to avoid spamming
+        // Also: verify the proposer holds enough CLD
+
+        // TO DO handle proposal via internal function??
+        // TO DO this should push new proposals to a struct
+        VotingSystem(votingSystem).CreateProposal(Name, Time);
     }
 
     // Treasury related functions
@@ -113,7 +123,8 @@ interface EROSEXT {
 }
 
 interface VotingSystem {
-    function setTaxAmount(uint amount, string calldata taxToSet) external;      
+    function CreateProposal(string memory Name, uint Time) external;      
+    function SetTaxAmount(uint amount, string memory taxToSet) external;      
     function ChangeDAO(address NewAddr) external;      
 }
 

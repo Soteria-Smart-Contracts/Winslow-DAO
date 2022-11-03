@@ -53,9 +53,10 @@ contract VotingSystemV1 {
     // Proposal executioner's bonus, proposal incentive burn percentage 
     FakeDAO public DAO;
     address public CLD;
+    uint public MemberHolding;
+    // These two are in Basis Points
     uint public ExecusCut;
     uint public BurnCut;
-    uint public MemberHolding;
 
     event ProposalCreated(address proposer, string proposalName, uint voteStart, uint voteEnd);
     event ProposalPassed(address executor, uint proposalId, uint amountBurned, uint executShare);
@@ -98,11 +99,15 @@ contract VotingSystemV1 {
 
     constructor(address CLDAddr, FakeDAO DAOAddr, uint8 _ExecusCut, uint8 _BurnCut) 
     {
-        DAO = DAOAddr;
-        CLD = CLDAddr;
+        DAO = FakeDAO(msg.sender);
         // Setting the taxes
         SetTaxAmount(_ExecusCut, "execusCut");
         SetTaxAmount(_BurnCut, "burnCut");
+
+        DAO = DAOAddr;
+        CLD = CLDAddr;
+
+        // TO DO insert poetic proposal #0 here
     }
 
     // To do people should lock tokens in order to propose?
@@ -156,7 +161,7 @@ contract VotingSystemV1 {
         emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].IncentiveAmount);
     }
 
-    function castVote(
+    function CastVote(
         uint amount,
         uint proposalId, 
         uint8 yesOrNo
@@ -248,10 +253,12 @@ contract VotingSystemV1 {
         bytes32 _memberHolding = keccak256(abi.encodePacked("memberHolding"));
 
         if (_setHash == _execusCut) {
-            require(amount >= 0 && amount <= 100, "Percentages can't be higher than 100");
+            require(amount >= 10 && amount <= 10000, 
+            "Percentages can't be higher than 100");
             ExecusCut = amount;
         } else if (_setHash == _burnCut) {
-            require(amount >= 0 && amount <= 100, "Percentages can't be higher than 100");
+            require(amount >= 10 && amount <= 10000, 
+            "Percentages can't be higher than 100");
             BurnCut = amount;
         } else if (_setHash == _memberHolding) {
             MemberHolding = amount;
@@ -267,7 +274,7 @@ contract VotingSystemV1 {
         emit NewDAOAddress(newAddr);
     }
 
-    function seeProposalInfo(uint proposalId) 
+    function SeeProposalInfo(uint proposalId) 
     public 
     view 
     returns (
