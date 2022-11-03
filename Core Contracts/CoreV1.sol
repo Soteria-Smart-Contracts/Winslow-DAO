@@ -9,7 +9,8 @@ contract HarmoniaDAO_V1_Core{
     address public TreasurySetter;
     bool public InitialTreasurySet = false;
 
-
+    //Mapping, structs and other declarations
+    
 
 
     event FallbackToTreasury(uint256 amount);
