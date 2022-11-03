@@ -18,9 +18,6 @@ contract HarmoniaDAO_V1_Core{
 
     }
 
-    struct ErosDetails{
-        
-    }
 
 
     event FallbackToTreasury(uint256 amount);
