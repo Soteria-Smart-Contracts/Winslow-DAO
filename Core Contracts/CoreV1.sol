@@ -10,7 +10,8 @@ contract HarmoniaDAO_V1_Core{
     bool public InitialTreasurySet = false;
 
     //Mapping, structs and other declarations
-
+    
+    
 
     struct Proposal{
         uint256 ProposalID;
