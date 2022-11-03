@@ -19,6 +19,8 @@ contract HarmoniaDAO_V1_Core{
 
     //Public state-modifing
 
+    //Public view
+
 
 
 
