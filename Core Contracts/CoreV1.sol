@@ -17,9 +17,10 @@ contract HarmoniaDAO_V1_Core{
         TreasurySetter = msg.sender;
     }
 
-    //Public state-modifing
+    //Public state-modifing functions
 
-    //Public view
+
+    //Public view functions
 
 
 
