@@ -1,5 +1,5 @@
 {
     "printcode.fontSize": 9,
-    "printcode.lineNumbers": "editor",
+    "printcode.lineNumbers": "on",
     "printcode.paperSize": "letter"
 }
