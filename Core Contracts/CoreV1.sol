@@ -103,13 +103,13 @@ contract VotingSystemV1 {
         uint RefusingVotes;
         bool Executed;
         uint IncentiveAmount;
+        uint IncentiveShare;
         uint AmountToBurn;
         uint AmountToExecutioner;
     }
 
     struct VoterInfo {
         uint votesLocked;
-        uint incentiveShare;
         uint amountDonated;
         bool voted;
         bool isExecutioner;  // TO DO this on Core?
@@ -131,7 +131,6 @@ contract VotingSystemV1 {
         // Setting the taxes
         SetTaxAmount(_ExecusCut, "execusCut");
         SetTaxAmount(_BurnCut, "burnCut");
-
         DAO = DAOAddr;
         CLD = CLDAddr;
 
@@ -160,6 +159,7 @@ contract VotingSystemV1 {
                 RefusingVotes: 0,
                 Executed: false,
                 IncentiveAmount: 0,
+                IncentiveShare: 0,
                 AmountToBurn: 0,
                 AmountToExecutioner: 0
             })
@@ -175,6 +175,7 @@ contract VotingSystemV1 {
         require(ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
         "You have not given the staking contract enough allowance"
         );
+        // TO DO optimize this
         require(keccak256(
             abi.encodePacked(proposal[proposalId].Name,
             "Proposal doesn't exist")) != 0);
@@ -209,9 +210,7 @@ contract VotingSystemV1 {
             yesOrNo == 0 || yesOrNo == 1, 
             "You must either vote 'Yes' or 'No'"
         );
-        require(keccak256(
-            abi.encodePacked(proposal[proposalId].Name,
-            "Proposal doesn't exist")) != 0);
+        require(proposal[proposalId].Passed == 0, 'This proposal has ended');
         require(!voterInfo[proposalId][msg.sender].voted, "You already voted in this proposal");
         require(block.number < proposal[proposalId].VoteEnds, "The voting period has ended");
 
@@ -246,22 +245,21 @@ contract VotingSystemV1 {
         require(proposal[proposalId].ActiveVoters > 0, "Can't execute proposals without voters!");
 
         uint burntAmount = _burnIncentiveShare(proposalId);
-        uint executShare = proposal[proposalId].AmountToExecutioner;
-        ERC20(CLD).transfer(msg.sender, executShare);
+        ERC20(CLD).transfer(msg.sender, proposal[proposalId].AmountToExecutioner);
         proposal[proposalId].IncentiveAmount -= proposal[proposalId].AmountToExecutioner;
 
         if (proposal[proposalId].ApprovingVotes > proposal[proposalId].RefusingVotes) {
             // TO DO Execution
             proposal[proposalId].Passed = 1;
 
-            emit ProposalPassed(msg.sender, proposalId, burntAmount, executShare);
+            emit ProposalPassed(msg.sender, proposalId, burntAmount, proposal[proposalId].AmountToExecutioner);
         } else {
             proposal[proposalId].Passed = 2;
-            emit ProposalNotPassed(msg.sender, proposalId, burntAmount, executShare);
+            emit ProposalNotPassed(msg.sender, proposalId, burntAmount, proposal[proposalId].AmountToExecutioner);
 
         }
 
-        proposal[proposalId].Passed = true;
+        proposal[proposalId].Executed = true;
         
     }
 
@@ -311,10 +309,11 @@ contract VotingSystemV1 {
      string memory,
         uint,
         uint,
+        uint8,
+        uint,
+        uint,
+        uint,
         bool,
-        uint,
-        uint,
-        uint,
         uint,
         uint,
         uint
@@ -329,6 +328,7 @@ contract VotingSystemV1 {
             _proposal.ActiveVoters,
             _proposal.ApprovingVotes,
             _proposal.RefusingVotes,
+            _proposal.Executed,
             _proposal.IncentiveAmount,
             _proposal.AmountToBurn,
             _proposal.AmountToExecutioner
@@ -384,18 +384,16 @@ contract VotingSystemV1 {
     }
     // TO DO Verify this
     function _updateTaxesAndIndIncentive(uint _proposalId, bool allOfThem) internal  {
-        uint baseTokenAmount = proposal[_proposalId].IncentiveAmount;
-
         if (allOfThem) {            
-            uint newBurnAmount = baseTokenAmount * BurnCut / 100;
+            uint newBurnAmount = proposal[_proposalId].IncentiveAmount * BurnCut / 100;
             proposal[_proposalId].AmountToBurn = newBurnAmount;
 
-            uint newToExecutAmount = baseTokenAmount * ExecusCut / 100;
+            uint newToExecutAmount = proposal[_proposalId].IncentiveAmount * ExecusCut / 100;
             proposal[_proposalId].AmountToExecutioner = newToExecutAmount;
 
-            //_updateIncentiveShare(_proposalId, baseTokenAmount);
+            _updateIncentiveShare(_proposalId, proposal[_proposalId].IncentiveAmount);
         } else {
-            //_updateIncentiveShare(_proposalId, baseTokenAmount);
+            _updateIncentiveShare(_proposalId, proposal[_proposalId].IncentiveAmount);
         }
 
     }
@@ -405,15 +403,18 @@ contract VotingSystemV1 {
         require(address(_newAddr) != address(0), "VSystem.setDAOAddress: New DAO can't be the zero address");
         DAO = _newAddr;
     }
-    /* TO DO Verify this
-    function _updateIncentiveShare(uint _proposalId, uint _baseTokenAmount) internal view {
-        // uint incentiveTaxes = proposal[_proposalId].AmountToBurn + proposal[_proposalId].AmountToExecutioner;
-        // uint totalTokenAmount = _baseTokenAmount - incentiveTaxes;
-        // to do
-        //if (proposal[_proposalId].ActiveVoters > 0) {
-        //     uint newIndividualIncetive = totalTokenAmount / proposal[_proposalId].ActiveVoters;
-        //} 
+
+    function _updateIncentiveShare(uint _proposalId, uint _baseTokenAmount) internal {
+       uint incentiveTaxes = proposal[_proposalId].AmountToBurn + proposal[_proposalId].AmountToExecutioner;
+        uint totalTokenAmount = _baseTokenAmount - incentiveTaxes;
+        if (proposal[_proposalId].ActiveVoters > 0) {
+            uint newIndividualIncetive = totalTokenAmount / proposal[_proposalId].ActiveVoters;
+            proposal[_proposalId].IncentiveShare = newIndividualIncetive;
+        } else {
+            proposal[_proposalId].IncentiveShare = totalTokenAmount;
+        }
     }
+    /* TO DO Verify this
     TO DO is this necessary?
     function _processProposal(uint8[] memory _values, address payable[] memory _targets, string[] memory _args) internal virtual {
         uint _processedArgs = _checkArgsGiveOption(_args);
