@@ -173,6 +173,6 @@ interface ERC20 {
   function totalSupply() external view returns (uint);
 } 
 
-interface EROSDAO{
+interface HarmoniaDAO{
     function CheckErosApproval(address) external view returns(bool);
 }

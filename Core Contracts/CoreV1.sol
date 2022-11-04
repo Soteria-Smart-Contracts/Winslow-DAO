@@ -109,6 +109,8 @@ interface TreasuryV1{//Only for the first treasury, if the DAO contract is not u
     function RegisterAsset(address tokenAddress, uint8 slot) external;
     function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
 //Public View Functions
-    function IsRegistered(address TokenAddress) public view;
+    function IsRegistered(address TokenAddress) public view returns(bool);
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking);
+    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking);
+    
 }
