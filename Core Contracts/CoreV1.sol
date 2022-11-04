@@ -55,7 +55,9 @@ contract HarmoniaDAO_V1_Core{
 
     //Internal Executioning
 
-    function 
+    function RegisterTreasuryAsset(address tokenAddress, uint8 slot) internal returns(bool success){
+        
+    }
 
 
     
