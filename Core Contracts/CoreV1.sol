@@ -15,7 +15,7 @@ contract HarmoniaDAO_V1_Core{
 
     struct Proposal{
         uint256 ProposalID;
-        uint8 ProposalType; //Type 0 is simple ether and asset sends, Type 1 are Proxy Proposals for external governance, Type 2 are Eros Prosposals
+        uint8 ProposalType; //Type 0 is simple ether and asset sends plus DAO, Type 1 are Proxy Proposals for external governance, Type 2 are Eros Prosposals
         uint256 ProposalVotingLenght;
         uint256 RequestedEtherAmount; //Optional, can be zero
         uint256 RequestedAssetAmount; //Optional, can be zero
@@ -23,6 +23,8 @@ contract HarmoniaDAO_V1_Core{
         ProxyProposalArguments ProxyArgs;
         bool Executed; //Can only be executed once, when finished, proposal exist only as archive
     }
+
+//How does it know what to call for Simple
 
     struct ProxyProposalArguments{
         uint256 UnsignedInt1;
@@ -58,7 +60,7 @@ contract HarmoniaDAO_V1_Core{
 
     function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
 
-        TreasuryV1(treasury).RegisterAsset(tokenAddress, slot);
+        TreasuryV1(Treasury).RegisterAsset(tokenAddress, slot);
     }
 
     function VerifyProposalAuthenticity(uint256 ProposalID, uint8 ExecutionType) internal returns(bool success){
@@ -112,5 +114,5 @@ interface TreasuryV1{//Only for the first treasury, if the DAO contract is not u
     function IsRegistered(address TokenAddress) public view returns(bool);
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking);
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking);
-    
+
 }
