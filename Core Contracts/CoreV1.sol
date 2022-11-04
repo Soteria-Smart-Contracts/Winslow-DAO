@@ -144,10 +144,6 @@ contract VotingSystemV1 {
         ) external OnlyDAO {
         require(Time != 0, "Proposals need an end time");
 
-        // TO DO verify if this is useful
-        // bytes32 _proposalName = keccak256(abi.encodePacked(_Name));
-        // _checkForDuplicate(_proposalName);
-
         proposal.push(
             ProposalCore({
                 Name: _Name,
@@ -170,15 +166,12 @@ contract VotingSystemV1 {
 
     function IncentivizeProposal(uint proposalId, uint amount) external {
         require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), 
-        "You do not have enough CLD to stake this amount"
+        "You do not have enough CLD to incentivize this proposal"
         );
         require(ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
-        "You have not given the staking contract enough allowance"
+        "You have not given  Voting enough allowance"
         );
-        // TO DO optimize this
-        require(keccak256(
-            abi.encodePacked(proposal[proposalId].Name,
-            "Proposal doesn't exist")) != 0);
+        require(proposal[proposalId].Passed == 0, 'This proposal has ended');
     
         require(block.timestamp <= proposal[proposalId].VoteEnds, 
         "The voting period has ended, save for the next proposal!"
@@ -186,8 +179,8 @@ contract VotingSystemV1 {
         // TO DO update incentiveshare
         proposal[proposalId].IncentiveAmount += amount;
         voterInfo[proposalId][msg.sender].amountDonated += amount;
+        // TO DO update this
         _updateTaxesAndIndIncentive(proposalId, true);
-
         emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].IncentiveAmount);
     }
 
@@ -227,6 +220,7 @@ contract VotingSystemV1 {
         voterInfo[proposalId][msg.sender].voted = true;
         proposal[proposalId].ActiveVoters += 1;
 
+        // TO DO update this
         _updateTaxesAndIndIncentive(proposalId, false);
     }
 
@@ -316,6 +310,7 @@ contract VotingSystemV1 {
         bool,
         uint,
         uint,
+        uint,
         uint
     ) 
     {
@@ -330,6 +325,7 @@ contract VotingSystemV1 {
             _proposal.RefusingVotes,
             _proposal.Executed,
             _proposal.IncentiveAmount,
+            _proposal.IncentiveShare,
             _proposal.AmountToBurn,
             _proposal.AmountToExecutioner
             );
@@ -385,10 +381,10 @@ contract VotingSystemV1 {
     // TO DO Verify this
     function _updateTaxesAndIndIncentive(uint _proposalId, bool allOfThem) internal  {
         if (allOfThem) {            
-            uint newBurnAmount = proposal[_proposalId].IncentiveAmount * BurnCut / 100;
+            uint newBurnAmount = proposal[_proposalId].IncentiveAmount * BurnCut / 10000;
             proposal[_proposalId].AmountToBurn = newBurnAmount;
 
-            uint newToExecutAmount = proposal[_proposalId].IncentiveAmount * ExecusCut / 100;
+            uint newToExecutAmount = proposal[_proposalId].IncentiveAmount * ExecusCut / 10000;
             proposal[_proposalId].AmountToExecutioner = newToExecutAmount;
 
             _updateIncentiveShare(_proposalId, proposal[_proposalId].IncentiveAmount);
@@ -415,71 +411,6 @@ contract VotingSystemV1 {
         }
     }
     /* TO DO Verify this
-    TO DO is this necessary?
-    function _processProposal(uint8[] memory _values, address payable[] memory _targets, string[] memory _args) internal virtual {
-        uint _processedArgs = _checkArgsGiveOption(_args);
-
-        if (_processedArgs == 11) {
-            FakeDAO(DAO).NewTreasuryAssetLimit(_values[0]);
-        } else if (_processedArgs == 12) {
-            FakeDAO(DAO).NewDAOInTreasury(_targets[0]);
-        } else if (_processedArgs == 13) {
-            FakeDAO(DAO).RegisterTreasuryAsset(_targets[0], 0);
-        } else if (_processedArgs == 14) {
-            FakeDAO(DAO).TreasuryERC20Transfer(_values[1], _values[2], _targets[0]);
-        } else if (_processedArgs == 15) {
-            FakeDAO(DAO).TreasuryEtherTransfer(_values[0], payable(_targets[0]));
-        } else if (_processedArgs == 21) {
-            FakeDAO(DAO).SetVotingAddress(_targets[0]);
-        } else if (_processedArgs == 22) {
-            FakeDAO(DAO).NewVotingTax(_values[0], _args[3]);
-        } else if (_processedArgs == 31) {
-            FakeDAO(DAO).SetVotingAddress(_targets[0]);
-        } else if (_processedArgs == 32) {
-            FakeDAO(DAO).SetTreasury(_targets[0]);
-        }
-    }
-
-    /* @dev So this is pretty simple, actually:
-    * if the hash of the strings passed as arguments match to the proposal`s
-    * passed strings it will return a number (See Executioner.sol's interfaces to see the options)
-    * All these will be handled by the frontend (still under designing)
-
-    function _checkArgsGiveOption(string[] memory _arg) internal pure returns(uint option) {
-        if (keccak256(abi.encodePacked(_arg[0])) == keccak256("Treasury")) {
-            if (keccak256(abi.encodePacked(_arg[1])) == keccak256("Change")) {
-                if (keccak256(abi.encodePacked(_arg[2])) == keccak256("ChangeRegisteredAssetLimit")) {
-                    return 11;
-                } else if (keccak256(abi.encodePacked(_arg[2])) == keccak256("ChangeDAOExecutioner")) {
-                    return 12;
-                } else if (keccak256(abi.encodePacked(_arg[2])) == keccak256("AddAsset")) {
-                    return 13;
-                } 
-            } else if (keccak256(abi.encodePacked(_arg[1])) == keccak256("Send")) {
-                 if (keccak256(abi.encodePacked(_arg[2])) == keccak256("SendRegisteredAsset")) {
-                    return 14;
-                } else if (keccak256(abi.encodePacked(_arg[2])) == keccak256("TransferEther")) {
-                    return 15;
-                }
-            } // End of TREASURY 
-        } else if (keccak256(abi.encodePacked(_arg[0])) == keccak256("VSystem")) {
-            if (keccak256(abi.encodePacked(_arg[1])) == keccak256("setDAOAddress")) {            
-                return 21;
-            } else if (keccak256(abi.encodePacked(_arg[1])) == keccak256("setTaxAmount")) {
-                return 22;
-            } // End of VOTINGSYSTEM
-        } else if (keccak256(abi.encodePacked(_arg[0])) == keccak256("DAOExec")) {
-            if (keccak256(abi.encodePacked(_arg[1])) == keccak256("Set")) {
-                if (keccak256(abi.encodePacked(_arg[2])) == keccak256("setVotingAddress")) {
-                        return 31;
-                } else if (keccak256(abi.encodePacked(_arg[2])) == keccak256("setTreasuryAddress")) {
-                        return 32;
-                }
-            }  // End of DAOEXECUTIONER
-        } else if (keccak256(abi.encodePacked(_arg[0])) == keccak256("External")) {
-            return 4; // todo
-        }
-    }
     function _checkForDuplicate(bytes32 _proposalName) internal view {
         uint256 length = proposal.length;
         for (uint256 _proposalId = 0; _proposalId < length; _proposalId++) {
