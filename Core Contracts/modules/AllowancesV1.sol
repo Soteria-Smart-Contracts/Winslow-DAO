@@ -107,6 +107,10 @@ contract HarmoniaDAO_Allowances {
         require(GrantList[AllowanceID].LastReclameTimestamp >= block.timestamp,
             'ReclameAllowance: Not enough time has passed since last withdraw');
         uint256 ToSend = GrantList[AllowanceID].OriginalValue / GrantList[AllowanceID].Installments;
+        // TO DO this check
+        // require(ToSend <= address(this).balance,
+        //    'ReclameAllowance: Not enough value in this contract for that');
+        
         if (GrantList[AllowanceID].IsItEther) {
             // TO DO we need a EtherBalance globally so the grants wont drain the Treasury's balance
             _TransferETH(ToSend, GrantList[AllowanceID].Requestor[RequestorID]);
