@@ -15,7 +15,7 @@ contract HarmoniaDAO_V1_Core{
 
     struct Proposal{
         uint256 ProposalID;
-        uint8 ProposalType; //Type 0 is simple ether and asset sends plus DAO, Type 1 are Proxy Proposals for external governance, Type 2 are Eros Prosposals
+        uint8 ProposalType; //Type 0 is simple ether and asset sends plus DAO variable changes, Type 1 are Proxy Proposals for external governance, Type 2 are Eros Prosposals
         uint256 ProposalVotingLenght;
         uint256 RequestedEtherAmount; //Optional, can be zero
         uint256 RequestedAssetAmount; //Optional, can be zero
@@ -24,7 +24,7 @@ contract HarmoniaDAO_V1_Core{
         bool Executed; //Can only be executed once, when finished, proposal exist only as archive
     }
 
-//How does it know what to call for Simple
+//How does it know what to call for Simple proposal? set up system, maybe some kind of int parser
 
     struct ProxyProposalArguments{
         uint256 UnsignedInt1;
