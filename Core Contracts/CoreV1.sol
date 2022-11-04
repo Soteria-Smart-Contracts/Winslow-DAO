@@ -228,7 +228,8 @@ contract VotingSystemV1 {
     // TO DO Take his out, we dont execute here
     function ExecuteProposal(uint proposalId) external { 
         voterInfo[proposalId][msg.sender].isExecutioner = true;
-
+        
+        // TO DO optimize this
         require(keccak256(
             abi.encodePacked(proposal[proposalId].Name,
             "Proposal doesn't exist")) != 0);
@@ -249,8 +250,8 @@ contract VotingSystemV1 {
             emit ProposalPassed(msg.sender, proposalId, burntAmount, proposal[proposalId].AmountToExecutioner);
         } else {
             proposal[proposalId].Passed = 2;
-            emit ProposalNotPassed(msg.sender, proposalId, burntAmount, proposal[proposalId].AmountToExecutioner);
 
+            emit ProposalNotPassed(msg.sender, proposalId, burntAmount, proposal[proposalId].AmountToExecutioner);
         }
 
         proposal[proposalId].Executed = true;
@@ -393,7 +394,7 @@ contract VotingSystemV1 {
         }
 
     }
-
+    // to do optimize this
     function _setDAOAddress(FakeDAO _newAddr) internal {
         require(DAO != _newAddr, "VSystem.setDAOAddress:New DAO address can't be the same as the old one");
         require(address(_newAddr) != address(0), "VSystem.setDAOAddress: New DAO can't be the zero address");
@@ -410,15 +411,7 @@ contract VotingSystemV1 {
             proposal[_proposalId].IncentiveShare = totalTokenAmount;
         }
     }
-    /* TO DO Verify this
-    function _checkForDuplicate(bytes32 _proposalName) internal view {
-        uint256 length = proposal.length;
-        for (uint256 _proposalId = 0; _proposalId < length; _proposalId++) {
-            bytes32 _nameHash = keccak256(abi.encodePacked(proposal[_proposalId].name));
-            require(_nameHash != _proposalName, "This proposal already exists!");
-        }
-    }
-    */
+
     /////////////////////////////////////////
     /////          Debug Tools          /////
     /////////////////////////////////////////
@@ -442,10 +435,6 @@ contract VotingSystemV1 {
 
     function takeMyTokensOut(uint proposalId) external {
         _returnTokens(proposalId,msg.sender,false);
-    }
-
-    function checkBlock() public view returns (uint){
-        return block.number;
     }
 }
 
