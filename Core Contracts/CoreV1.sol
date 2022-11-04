@@ -19,7 +19,7 @@ contract HarmoniaDAO_V1_Core{
         uint256 RequestedEtherAmount; //Optional, can be zero
         uint256 RequestedAssetAmount; //Optional, can be zero
         uint8 RequestedAssetID;
-        //proxy proposal entries here
+        ProxyProposalArguments ProxyArgs;
         bool Executed; //Can only be executed once, when finished, proposal exist only as archive
     }
 
@@ -27,7 +27,12 @@ contract HarmoniaDAO_V1_Core{
         uint256 UnsignedInt1;
         uint256 UnsignedInt2;
         uint256 UnsignedInt3; 
-        address Address1
+        address Address1;
+        address Address2;
+        address Address3;
+        bool Bool1;
+        bool Bool2;
+        bool Bool3;
     }
 
 
@@ -49,6 +54,8 @@ contract HarmoniaDAO_V1_Core{
 
 
     //Internal Executioning
+
+    function 
 
 
     
