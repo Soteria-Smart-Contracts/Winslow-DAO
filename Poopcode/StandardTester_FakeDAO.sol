@@ -58,7 +58,7 @@ contract FakeDAO{
 
         // TO DO handle proposal via internal function??
         // TO DO this should push new proposals to a struct
-        VotingSystem(votingSystem).CreateProposal(Name, Time);
+        VotingSystem(votingSystem).CreateProposal(msg.sender, Name, Time);
     }
 
     // Treasury related functions
@@ -123,7 +123,7 @@ interface EROSEXT {
 }
 
 interface VotingSystem {
-    function CreateProposal(string memory Name, uint Time) external;      
+    function CreateProposal(address Proposer, string memory Name, uint Time) external;      
     function SetTaxAmount(uint amount, string memory taxToSet) external;      
     function ChangeDAO(address NewAddr) external;      
 }
