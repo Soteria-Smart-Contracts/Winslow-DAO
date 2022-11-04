@@ -23,6 +23,8 @@ contract HarmoniaDAO_V1_Core{
         bool Executed; //Can only be executed once, when finished, proposal exist only as archive
     }
 
+    struct
+
 
 
     event FallbackToTreasury(uint256 amount);
