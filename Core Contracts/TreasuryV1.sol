@@ -45,7 +45,6 @@ contract HarmoniaDAOTreasury{
         _;
     }
 
-    //How could someone exploit this by using an un-updated erc20 balance?
 
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
@@ -78,11 +77,13 @@ contract HarmoniaDAOTreasury{
     }
 
     function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success){
-        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this))); //Supply within the DAO does not count as backed
+        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this)));
+        //Supply within the DAO does not count as backed
         ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount);
 
         uint8 CurrentID = 1;
-        while(CurrentID <= RegisteredAssetLimit){ //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
+        while(CurrentID <= RegisteredAssetLimit){
+            //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
             if(RegisteredAssets[CurrentID].Filled == true){
                 uint256 ToSend = GetAssetToSend(CLDamount, CurrentID, SupplyPreTransfer);
                 ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
@@ -194,7 +195,8 @@ contract HarmoniaDAOTreasury{
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
         if(RegisteredAssets[slot].Filled == true){
-            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0); //Could be used to prevent tx by sending some amount?
+            //Could be used to prevent tx by sending some amount?
+            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0);
             AssetRegistryMap[RegisteredAssets[slot].TokenAddress] = false;
         }
         if(tokenAddress == address(0)){
