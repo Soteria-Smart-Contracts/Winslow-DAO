@@ -23,7 +23,12 @@ contract HarmoniaDAO_V1_Core{
         bool Executed; //Can only be executed once, when finished, proposal exist only as archive
     }
 
-    struct
+    struct ProxyProposalArguments{
+        uint256 UnsignedInt1;
+        uint256 UnsignedInt2;
+        uint256 UnsignedInt3; 
+        address Address1
+    }
 
 
 
