@@ -98,6 +98,11 @@ contract HarmoniaDAO_V1_Core{
 
 }
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
-interface DAOTreasury{//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future,
-
+interface TreasuryV1{//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future,
+    function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external;
+    function UserAssetClaim(uint256 CLDamount) public returns(bool success);
+    function RegisterAsset(address tokenAddress, uint8 slot) external;
+    function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
+    function TransferETH(uint256 amount, address payable receiver) external;
+    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
 }
