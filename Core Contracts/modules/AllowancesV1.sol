@@ -6,6 +6,12 @@ contract HarmoniaDAO_Allowances {
     address public DAO;
     address public CLD;
     uint128 public LastGrantID;
+    mapping(uint8 => Token) public RegisteredAssets;
+
+    struct Token{ 
+        address TokenAddress;
+        bool Filled;
+    }
 
     struct Grant {
         bool IsActive;
@@ -54,8 +60,8 @@ contract HarmoniaDAO_Allowances {
     ) public OnlyDAO {
     // Add this Grant to Requestor GrantList
         LastGrantID++;
-        uint8 CurrentID = 0;
-        while(CurrentID <= RegisteredAssetLimit) {  
+        uint8 CurrentID = 0; 
+        while(CurrentID <= _Requestor.length) {  
             RequestorGrantList[_Requestor[CurrentID]].push(LastGrantID);
         }      
     // Grant given to Requestor address mapping
@@ -113,4 +119,24 @@ contract HarmoniaDAO_Allowances {
 
     }
 
+    function _TransferETH(uint256 amount, address payable receiver) internal { 
+        receiver.transfer(amount);
+    }
+
+    function _TransferERC20(uint8 AssetID, uint256 amount, address receiver) internal { 
+        ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
+    }
+}
+
+interface ERC20 {
+  function balanceOf(address owner) external view returns (uint256);
+  function allowance(address owner, address spender) external view returns (uint256);
+  function approve(address spender, uint value) external returns (bool);
+  function transfer(address to, uint value) external returns (bool);
+  function transferFrom(address from, address to, uint256 value) external returns (bool); 
+  function totalSupply() external view returns (uint);
+} 
+
+interface EROSDAO{
+    function CheckErosApproval(address) external view returns(bool);
 }
