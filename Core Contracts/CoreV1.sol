@@ -107,8 +107,8 @@ interface TreasuryV1{//Only for the first treasury, if the DAO contract is not u
     function TransferETH(uint256 amount, address payable receiver) external;
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
     function RegisterAsset(address tokenAddress, uint8 slot) external;
-    function IsRegistered(address TokenAddress) public view;
     function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
 //Public View Functions
-    
+    function IsRegistered(address TokenAddress) public view;
+    function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking);
 }
