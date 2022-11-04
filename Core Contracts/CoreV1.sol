@@ -8,10 +8,26 @@ import '../Poopcode/StandardTester_FakeDAO.sol';
 * Let's get this out of the way for now
 * Please, let's try to keep it as API compatible as we can
 contract HarmoniaDAO_V1_Core{
+    //Variable Declarations
     string public Version = "V1";
     address public Treasury = address(0);
     address public TreasurySetter;
     bool public InitialTreasurySet = false;
+
+    //Mapping, structs and other declarations
+    
+    Proposal[] Proposals;
+
+    struct Proposal{
+        uint256 ProposalID;
+        uint8 ProposalType; //Type 0 is simple ether and asset sends, Type 1 are Proxy Proposals for external governance, Type 2 are Eros Prosposals
+        uint256 RequestedEtherAmount; //Optional, can be zero
+        uint256 RequestedAssetAmount; //Optional, can be zero
+        uint8 RequestedAssetID;
+        //proxy proposal entries here
+        bool Executed; //Can only be executed once, when finished, proposal exist only as archive
+    }
+
 
 
     event FallbackToTreasury(uint256 amount);
@@ -21,6 +37,17 @@ contract HarmoniaDAO_V1_Core{
     constructor(){
         TreasurySetter = msg.sender;
     }
+
+    //Public state-modifing functions
+
+
+    //Public view functions
+
+
+
+
+    //Internal Executioning
+
 
     
     //One Time Functions
