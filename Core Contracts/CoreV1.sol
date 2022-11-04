@@ -61,7 +61,8 @@ contract HarmoniaDAO_V1_Core{
     }
 
     function VerifyProposalAuthenticity(uint256 ProposalID, uint8 ExecutionType) internal returns(bool success){
-        require(Proposals);
+        require(Proposals[ProposalID].ProposalType == ExecutionType);
+        if(requested)
     }
 
 
