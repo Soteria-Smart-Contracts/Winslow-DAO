@@ -112,7 +112,7 @@ contract VotingSystemV1 {
         uint votesLocked;
         uint amountDonated;
         bool voted;
-        bool isExecutioner;  // TO DO this on Core?
+        bool isExecutioner;
     }
 
     // Proposals being tracked by id here
@@ -179,7 +179,7 @@ contract VotingSystemV1 {
         // TO DO update incentiveshare
         proposal[proposalId].IncentiveAmount += amount;
         voterInfo[proposalId][msg.sender].amountDonated += amount;
-        // TO DO update this
+
         _updateTaxesAndIndIncentive(proposalId, true);
         emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].IncentiveAmount);
     }
@@ -220,26 +220,22 @@ contract VotingSystemV1 {
         voterInfo[proposalId][msg.sender].voted = true;
         proposal[proposalId].ActiveVoters += 1;
 
-        // TO DO update this
         _updateTaxesAndIndIncentive(proposalId, false);
     }
 
+    // TO DO verify this
     // Proposal execution code
-    // TO DO Take his out, we dont execute here
     function ExecuteProposal(uint proposalId) external { 
         voterInfo[proposalId][msg.sender].isExecutioner = true;
         
-        // TO DO optimize this
-        require(keccak256(
-            abi.encodePacked(proposal[proposalId].Name,
-            "Proposal doesn't exist")) != 0);
+        require(proposal[proposalId].Executed == false, "Proposal already executed!");
         require(block.timestamp >= proposal[proposalId].VoteEnds, 
         "Voting has not ended");
-        // TO DO Fix this
-        require(proposal[proposalId].Passed == 0, "Proposal already executed!");
         require(proposal[proposalId].ActiveVoters > 0, "Can't execute proposals without voters!");
 
-        uint burntAmount = _burnIncentiveShare(proposalId);
+        ERC20(CLD).Burn(proposal[proposalId].AmountToBurn);
+        proposal[proposalId].IncentiveAmount -= proposal[proposalId].AmountToBurn;
+        
         ERC20(CLD).transfer(msg.sender, proposal[proposalId].AmountToExecutioner);
         proposal[proposalId].IncentiveAmount -= proposal[proposalId].AmountToExecutioner;
 
@@ -247,23 +243,22 @@ contract VotingSystemV1 {
             // TO DO Execution
             proposal[proposalId].Passed = 1;
 
-            emit ProposalPassed(msg.sender, proposalId, burntAmount, proposal[proposalId].AmountToExecutioner);
+            emit ProposalPassed(msg.sender, proposalId, proposal[proposalId].AmountToBurn, proposal[proposalId].AmountToExecutioner);
         } else {
             proposal[proposalId].Passed = 2;
 
-            emit ProposalNotPassed(msg.sender, proposalId, burntAmount, proposal[proposalId].AmountToExecutioner);
+            emit ProposalNotPassed(msg.sender, proposalId, proposal[proposalId].AmountToBurn, proposal[proposalId].AmountToExecutioner);
         }
 
         proposal[proposalId].Executed = true;
-        
     }
 
-    function withdrawMyTokens(uint proposalId) external {
+    function WithdrawMyTokens(uint proposalId) external {
         if (proposal[proposalId].ActiveVoters > 0) {
             require(proposal[proposalId].Executed, 'Proposal has not been executed!');
-            _returnTokens(proposalId, msg.sender, true);
+            _returnTokens(proposalId, msg.sender);
         } else {
-            _returnTokens(proposalId, msg.sender, true);
+            _returnTokens(proposalId, msg.sender);
         }
 
         emit IncentiveWithdrawed(proposal[proposalId].IncentiveAmount);
@@ -293,7 +288,11 @@ contract VotingSystemV1 {
     }
 
     function ChangeDAO(FakeDAO newAddr) external OnlyDAO {
-        _setDAOAddress(newAddr);
+        require(DAO != newAddr, 
+            "VSystem.setDAOAddress: New DAO address can't be the same as the old one");
+        require(address(newAddr) != address(0), 
+            "VSystem.setDAOAddress: New DAO can't be the zero address");
+        DAO = newAddr;        
         emit NewDAOAddress(newAddr);
     }
 
@@ -339,47 +338,37 @@ contract VotingSystemV1 {
     // TO DO Refactor this
     function _returnTokens(
         uint _proposalId,
-        address _voterAddr,
-        bool _isItForProposals
+        address _voterAddr
         )
         internal {
-        require(block.number > proposal[_proposalId].VoteEnds, "The voting period hasn't ended");
+        require(block.timestamp >= proposal[_proposalId].VoteEnds, 
+            "The voting period hasn't ended");
 
         uint _amount = voterInfo[_proposalId][_voterAddr].votesLocked;
 
-        if(_isItForProposals) { // Debug only
-            if (proposal[_proposalId].ActiveVoters > 0) {
-                require(
-                    voterInfo[_proposalId][_voterAddr].votesLocked > 0, 
-                    "You need to lock votes in order to take them out"
-                );
-                uint _totalAmount = _amount;
-                ERC20(CLD).transfer(_voterAddr, _totalAmount);
-                // to do proposal[_proposalId].IncentiveAmount -= proposal[_proposalId].IncentiveShare; 
-            } else {
-                require(
-                    voterInfo[_proposalId][_voterAddr].amountDonated > 0, 
-                    "You have not incentivized this proposal"
-                );
-                uint incentiveToReturn = voterInfo[_proposalId][_voterAddr].amountDonated;
-                ERC20(CLD).transfer(_voterAddr, incentiveToReturn);
-                voterInfo[_proposalId][_voterAddr].amountDonated -= incentiveToReturn;
-                proposal[_proposalId].IncentiveAmount -= incentiveToReturn;
-            }
-        } else {  // Debug only
-            ERC20(CLD).transfer(_voterAddr, _amount);
+        if (proposal[_proposalId].ActiveVoters > 0) {
+            require(
+                voterInfo[_proposalId][_voterAddr].votesLocked > 0, 
+                "You need to lock votes in order to take them out"
+            );
+            uint _totalAmount = _amount + proposal[_proposalId].IncentiveShare;
+            ERC20(CLD).transfer(_voterAddr, _totalAmount);
+            // to do 
+            proposal[_proposalId].IncentiveAmount -= proposal[_proposalId].IncentiveShare; 
+        } else {
+            require(
+                voterInfo[_proposalId][_voterAddr].amountDonated > 0, 
+                "You have not incentivized this proposal"
+            );
+            uint incentiveToReturn = voterInfo[_proposalId][_voterAddr].amountDonated;
+            ERC20(CLD).transfer(_voterAddr, incentiveToReturn);
+            voterInfo[_proposalId][_voterAddr].amountDonated -= incentiveToReturn;
+            proposal[_proposalId].IncentiveAmount -= incentiveToReturn;
         }
+        
         voterInfo[_proposalId][_voterAddr].votesLocked -= _amount;
     }
 
-    function _burnIncentiveShare(uint _proposalId) internal returns(uint) {
-        uint amount = proposal[_proposalId].AmountToBurn;
-        ERC20(CLD).Burn(amount);
-        proposal[_proposalId].IncentiveAmount -= amount;
-
-        return(amount);
-    }
-    // TO DO Verify this
     function _updateTaxesAndIndIncentive(uint _proposalId, bool allOfThem) internal  {
         if (allOfThem) {            
             uint newBurnAmount = proposal[_proposalId].IncentiveAmount * BurnCut / 10000;
@@ -393,12 +382,6 @@ contract VotingSystemV1 {
             _updateIncentiveShare(_proposalId, proposal[_proposalId].IncentiveAmount);
         }
 
-    }
-    // to do optimize this
-    function _setDAOAddress(FakeDAO _newAddr) internal {
-        require(DAO != _newAddr, "VSystem.setDAOAddress:New DAO address can't be the same as the old one");
-        require(address(_newAddr) != address(0), "VSystem.setDAOAddress: New DAO can't be the zero address");
-        DAO = _newAddr;
     }
 
     function _updateIncentiveShare(uint _proposalId, uint _baseTokenAmount) internal {
@@ -432,13 +415,9 @@ contract VotingSystemV1 {
             voterInfo[proposalId][voter].voted
         );
     }
-
-    function takeMyTokensOut(uint proposalId) external {
-        _returnTokens(proposalId,msg.sender,false);
-    }
 }
 
- /////////////////////////////////////////
+    /////////////////////////////////////////
     /////          Interfaces           /////
     /////////////////////////////////////////
 
