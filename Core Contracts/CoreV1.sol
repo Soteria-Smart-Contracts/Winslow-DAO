@@ -11,7 +11,7 @@ contract HarmoniaDAO_V1_Core{
 
     //Mapping, structs and other declarations
     
-    Proposal[] Proposals;
+    Proposal[] public Proposals;
 
     struct Proposal{
         uint256 ProposalID;
@@ -60,7 +60,9 @@ contract HarmoniaDAO_V1_Core{
         TreasuryV1(treasury).RegisterAsset(tokenAddress, slot);
     }
 
-    function VerifyProposalAuthenticity()
+    function VerifyProposalAuthenticity(uint256 ProposalID, uint8 ExecutionType) internal returns(bool success){
+        require(Proposals);
+    }
 
 
     
