@@ -64,7 +64,6 @@ contract HarmoniaDAO_Allowances {
         while(CurrentID <= _Requestor.length) {  
             RequestorGrantList[_Requestor[CurrentID]].push(LastGrantID);
         }      
-    // Grant given to Requestor address mapping
         GrantList.push(
             Grant({
                 IsActive: true,
@@ -87,7 +86,19 @@ contract HarmoniaDAO_Allowances {
     function PauseAllowance(uint256 AllowanceID) external OnlyDAO {
         require(AllowanceID != 0,
             'PauseAllowance: Allowance ID 0 cannot be paused');
+        require(GrantList[AllowanceID].IsActive = true,
+            'UnpauseAllowance: Allowance must be unpaused');
         GrantList[AllowanceID].IsActive = false;
+
+        // TO DO emit event
+    }
+
+    function UnpauseAllowance(uint256 AllowanceID) external OnlyDAO {
+        require(AllowanceID != 0,
+            'UnpauseAllowance: Allowance ID 0 cannot be paused');
+        require(GrantList[AllowanceID].IsActive = false,
+            'UnpauseAllowance: Allowance must be paused');
+        GrantList[AllowanceID].IsActive = true;
 
         // TO DO emit event
     }
