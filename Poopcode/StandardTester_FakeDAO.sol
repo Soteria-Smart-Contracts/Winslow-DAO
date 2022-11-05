@@ -30,6 +30,12 @@ contract FakeDAO{
         _;
     }
 
+    
+    modifier OnlyVoting{
+        require(msg.sender == votingSystem);
+        _;
+    }
+
     constructor(){
         owner = msg.sender;
     }
@@ -73,8 +79,13 @@ contract FakeDAO{
         );
         NewProposal(ProposalsID, Time);
     }
+    // to do Maybe this should have another name
+    function ExecuteCoreProposal(uint256 ProposalID, bool Passed) external OnlyVoting returns (bool) {
+        Proposals[ProposalID].Executed = true;
 
-    // TO DO execution
+        // to do emit condition based test event
+        return Passed;
+    }
 
     // Voting related functions
     function NewVotingTax(uint256 amount, string calldata taxToSet) external OnlyOwner {
