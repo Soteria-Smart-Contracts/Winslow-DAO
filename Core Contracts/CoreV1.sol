@@ -85,7 +85,7 @@ contract VotingSystemV1 {
     uint public ExecusCut;
     uint public BurnCut;
 
-    event ProposalCreated(address proposer, string proposalName, uint voteStart, uint voteEnd);
+    event ProposalCreated(address proposer, uint256 proposalID, uint voteStart, uint voteEnd);
     event ProposalPassed(address executor, uint proposalId, uint amountBurned, uint executShare);
     event ProposalNotPassed(address executor, uint proposalId, uint amountBurned, uint executShare);
     event CastedVote(uint proposalId, string option, uint votesCasted);
@@ -94,7 +94,7 @@ contract VotingSystemV1 {
     event NewDAOAddress(FakeDAO NewAddress);
 
     struct ProposalCore {
-        string Name;
+        uint256 ProposalID;
         uint VoteStarts;
         uint VoteEnds;
         uint8 Passed; // Can be 0 "Not voted", 1 "Passed" or 2 "Not Passed"
@@ -116,7 +116,7 @@ contract VotingSystemV1 {
     }
 
     // Proposals being tracked by id here
-    ProposalCore[] internal proposal;
+    ProposalCore[] public proposal;
     // Map user addresses over their info
     mapping (uint256 => mapping (address => VoterInfo)) internal voterInfo;
  
@@ -136,12 +136,12 @@ contract VotingSystemV1 {
     }
 
     // To do people should lock tokens in order to propose?
-    function CreateProposal(address Proposer, string memory _Name, uint Time) external OnlyDAO {
+    function CreateProposal(address Proposer, uint256 ProposalID, uint Time) external OnlyDAO {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
 
         proposal.push(
             ProposalCore({
-                Name: _Name,
+                ProposalID: ProposalID,
                 VoteStarts: block.timestamp,
                 VoteEnds: block.timestamp + Time,
                 Passed: 0, // Not voted yet
@@ -156,20 +156,20 @@ contract VotingSystemV1 {
             })
         );
 
-        emit ProposalCreated(Proposer, _Name, block.timestamp, block.timestamp + Time);
+        emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
 
     function IncentivizeProposal(uint proposalId, uint amount) external {
         require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), 
-        "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal"
+            "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal"
         );
         require(ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
-        "VotingSystemV1.IncentivizeProposal: You have not given Voting enough allowance"
+            "VotingSystemV1.IncentivizeProposal: You have not given Voting enough allowance"
         );
         require(proposal[proposalId].Passed == 0, 
-        'VotingSystemV1.IncentivizeProposal: This proposal has ended');
+            'VotingSystemV1.IncentivizeProposal: This proposal has ended');
         require(block.timestamp <= proposal[proposalId].VoteEnds, 
-        "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!"
+            "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!"
         );
 
         proposal[proposalId].IncentiveAmount += amount;
@@ -290,7 +290,7 @@ contract VotingSystemV1 {
     public 
     view 
     returns (
-     string memory,
+        uint256,
         uint,
         uint,
         uint8,
@@ -306,7 +306,7 @@ contract VotingSystemV1 {
     {
         ProposalCore memory _proposal = proposal[proposalId];      
         return (
-            _proposal.Name,
+            _proposal.ProposalID,
             _proposal.VoteStarts,
             _proposal.VoteEnds,
             _proposal.Passed,

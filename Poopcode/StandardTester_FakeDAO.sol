@@ -7,6 +7,21 @@ contract FakeDAO{
     address public votingSystem;
     address public treasury;
     address public auctionFactory;
+    uint256 public ProposalsID;
+
+     //Mapping, structs and other declarations
+    
+    Proposal[] public Proposals;
+
+    struct Proposal{
+        uint256 ProposalID;
+        uint8 ProposalType; //Type 0 is simple ether and asset sends, Type 1 are Proxy Proposals for external governance, Type 2 are Eros Prosposals
+        uint256 RequestedEtherAmount; //Optional, can be zero
+        uint256 RequestedAssetAmount; //Optional, can be zero
+        uint8 RequestedAssetID;
+        //proxy proposal entries here
+        bool Executed; //Can only be executed once, when finished, proposal exist only as archive
+    }
 
     mapping(address => bool) public ApprovedErosProposals;
 
@@ -19,18 +34,18 @@ contract FakeDAO{
         owner = msg.sender;
     }
     // Eros related fuctions
-    function ApproveErosContract(address Proposal) external OnlyOwner{
-        ApprovedErosProposals[Proposal] = true;
+    function ApproveErosContract(address _Proposal) external OnlyOwner{
+        ApprovedErosProposals[_Proposal] = true;
     }
 
-    function ExecuteErosProposal(address Proposal) external OnlyOwner{
-        require(ApprovedErosProposals[Proposal] == true, "Eros External Proposal Contract not approved");
+    function ExecuteErosProposal(address _Proposal) external OnlyOwner{
+        require(ApprovedErosProposals[_Proposal] == true, "Eros External Proposal Contract not approved");
 
-        EROSEXT(Proposal).Execute();
+        EROSEXT(_Proposal).Execute();
     }
 
-    function CheckErosApproval(address Proposal) external view returns(bool){
-        return(ApprovedErosProposals[Proposal]);
+    function CheckErosApproval(address _Proposal) external view returns(bool){
+        return(ApprovedErosProposals[_Proposal]);
     }
 
     // FakeDAO admin functions
@@ -42,6 +57,24 @@ contract FakeDAO{
     function SetTreasury(address NewTreasuryAddr) external OnlyOwner{
         treasury = NewTreasuryAddr;
     }
+    // to do this
+    function CreateNewProposal(uint8 Type, uint8 ReqAssetID, uint256 AmountToSend, uint256 Time ) external {
+        ProposalsID++;
+
+        Proposals.push(
+            Proposal({
+                ProposalID: ProposalsID,
+                ProposalType: Type,
+                RequestedEtherAmount: AmountToSend,
+                RequestedAssetAmount: AmountToSend,
+                RequestedAssetID: ReqAssetID,
+                Executed: false
+            })
+        );
+        NewProposal(ProposalsID, Time);
+    }
+
+    // TO DO execution
 
     // Voting related functions
     function NewVotingTax(uint256 amount, string calldata taxToSet) external OnlyOwner {
@@ -52,13 +85,13 @@ contract FakeDAO{
         VotingSystem(votingSystem).ChangeDAO(NewAddr);
     }
 
-    function NewProposal(string memory Name, uint256 Time) external {
+    function NewProposal(uint256 ProposalID, uint256 Time) internal {
         // We need to ask for some gas to avoid spamming
         // Also: verify the proposer holds enough CLD
 
         // TO DO handle proposal via internal function??
         // TO DO this should push new proposals to a struct
-        VotingSystem(votingSystem).CreateProposal(msg.sender, Name, Time);
+        VotingSystem(votingSystem).CreateProposal(msg.sender, ProposalID, Time);
     }
 
     // Treasury related functions
@@ -123,7 +156,7 @@ interface EROSEXT {
 }
 
 interface VotingSystem {
-    function CreateProposal(address Proposer, string memory Name, uint Time) external;      
+    function CreateProposal(address Proposer, uint256 ProposalID, uint Time) external;      
     function SetTaxAmount(uint amount, string memory taxToSet) external;      
     function ChangeDAO(address NewAddr) external;      
 }
