@@ -6,6 +6,7 @@ contract FakeDAO{
     address public owner;
     address public treasury;
     address public auctionFactory;
+    address public allowances;
 
     mapping(address => bool) public ApprovedErosProposals;
 
@@ -53,7 +54,7 @@ contract FakeDAO{
         TreasuryV1(treasury).ChangeRegisteredAssetLimit(NewLimit);
     }
 
-    // Auction related contracts
+    // Auction related functions
     function SetAuctionFactory(address NewAucFactory) external OnlyOwner{
         auctionFactory = NewAucFactory;
     }
@@ -102,6 +103,32 @@ contract FakeDAO{
     {
             AuctionInstance(AuctInstance).RemDevs(NewDevAddrs);
     }
+
+    // Allowances related fuctions
+    function SetAllowancesAddress(address NewAllowancesAddress) external OnlyOwner{
+        allowances = NewAllowancesAddress;
+    }
+
+    // TO DO The real DAO needs to sent either ETHER or a REGISTERED ASSET
+    // For this to work
+    function RegisterAllowance(
+        address payable[] memory _Requestor, 
+        bool _IsItEther,
+        uint256 _Value, 
+        address _AssetAddress, 
+        uint8 _Installments, 
+        uint128 _TimeBI
+    ) external OnlyOwner {
+        Allowances(allowances).RegisterAllowance(
+        _Requestor, 
+        _IsItEther,
+        _Value, 
+        _AssetAddress, 
+        _Installments, 
+        _TimeBI
+        );
+    }
+
 }
 
 interface EROSEXT {
@@ -131,4 +158,18 @@ interface AuctionInstance {
     function AddDevs(address payable[] memory DevAddrs) external;
     function RemDev(address payable DevAddr) external;
     function RemDevs(address payable[] memory DevAddrs) external;
+}
+
+interface Allowances {
+    function RegisterAllowance(
+        address payable[] memory _Requestor, 
+        bool _IsItEther,
+        uint256 _Value, 
+        address _AssetAddress, 
+        uint8 _Installments, 
+        uint128 _TimeBI
+    ) external;
+    function PauseAllowance(uint256 AllowanceID) external;
+    function UnpauseAllowance(uint256 AllowanceID) external;
+    function ForgiveAllowanceDebt(uint256 AllowanceID) external;
 }

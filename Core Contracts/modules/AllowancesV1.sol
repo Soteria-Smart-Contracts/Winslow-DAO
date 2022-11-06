@@ -1,17 +1,10 @@
 //SPDX-License-Identifier:UNLICENSE
 pragma solidity ^0.8.17;
 
-// TO DO OnlyDAO modifiers and functions
 contract HarmoniaDAO_Allowances {
     address public DAO;
     address public CLD;
-    uint128 public LastGrantID;
-    mapping(uint8 => Token) public RegisteredAssets;
-
-    struct Token{ 
-        address TokenAddress;
-        bool Filled;
-    }
+    uint128 public LastGrantID = 0;
 
     struct Grant {
         bool IsActive;
@@ -20,14 +13,14 @@ contract HarmoniaDAO_Allowances {
         bool IsItEther;
         uint256 OriginalValue;
         uint256 RemainingValue;
-        uint8 AssetID;
+        address AssetAddress;
         uint8 Installments;
         uint256 TimeBetweenInstallments;
         uint256 LastReclameTimestamp;
     }
 
-    // GrantList[IDs] given to Requestor mapped address 
-    mapping(address => uint256[]) public RequestorGrantList;
+    // Requestors in a specific Grant  
+    mapping(uint256 => address[]) public RequestorsInGrant;
     // Grant given to Requestor address mapping
     Grant[] public GrantList;
 
@@ -43,41 +36,37 @@ contract HarmoniaDAO_Allowances {
     }
 
         //Code executed on deployment
-    constructor(address DAOcontract, address CLDcontract){
+    constructor(address DAOcontract){
         DAO = DAOcontract;
-        CLD = CLDcontract;
     }
 
-    
+    // TO DO The DAO needs to send the tokens for this grant
     function RegisterAllowance(
-        // TO DO make this an array, as teams can reclaim their grants with different addressess
-        address payable[] memory _Requestor, 
+        address payable[] memory _RequestorList, 
         bool _IsItEther,
         uint256 _Value, 
-        uint8 _AssetID, 
+        address _AssetAddress, 
         uint8 _Installments, 
-        uint128 _TimeBI
+        uint128 _TimeBI  // In seconds
     ) public OnlyDAO {
-    // Add this Grant to Requestor GrantList
-        LastGrantID++;
-        uint8 CurrentID = 0; 
-        while(CurrentID <= _Requestor.length) {  
-            RequestorGrantList[_Requestor[CurrentID]].push(LastGrantID);
-        }      
+    // Add these Requestor Grant to Requestor GrantList
+        RequestorsInGrant[LastGrantID] = _RequestorList;
+ 
         GrantList.push(
             Grant({
                 IsActive: true,
-                Requestor: _Requestor,
+                Requestor: _RequestorList,
                 GrantID: LastGrantID,
                 IsItEther: _IsItEther,
                 OriginalValue: _Value,
                 RemainingValue: _Value,
-                AssetID: _AssetID,
+                AssetAddress: _AssetAddress,
                 Installments: _Installments,
                 TimeBetweenInstallments: _TimeBI,
                 LastReclameTimestamp: block.timestamp
             })
         );
+        LastGrantID++;
 
     // TO DO emit event
 
@@ -104,7 +93,7 @@ contract HarmoniaDAO_Allowances {
     }
 
     function ForgiveAllowanceDebt(uint256 AllowanceID) external OnlyDAO {
-        // TO DO all of this
+        GrantList[AllowanceID].RemainingValue = 0;
         // TO DO emit event
     }
 
@@ -118,15 +107,15 @@ contract HarmoniaDAO_Allowances {
         require(GrantList[AllowanceID].LastReclameTimestamp >= block.timestamp,
             'ReclameAllowance: Not enough time has passed since last withdraw');
         uint256 ToSend = GrantList[AllowanceID].OriginalValue / GrantList[AllowanceID].Installments;
-        // TO DO this check
-        // require(ToSend <= address(this).balance,
-        //    'ReclameAllowance: Not enough value in this contract for that');
         
         if (GrantList[AllowanceID].IsItEther) {
-            // TO DO we need a EtherBalance globally so the grants wont drain the Treasury's balance
+            require(ToSend <= address(this).balance,
+                'ReclameAllowance: Not enough value in this contract for that');
             _TransferETH(ToSend, GrantList[AllowanceID].Requestor[RequestorID]);
         } else {
-            _TransferERC20(GrantList[AllowanceID].AssetID, ToSend, GrantList[AllowanceID].Requestor[RequestorID]);
+            require(ToSend <= ERC20(GrantList[AllowanceID].AssetAddress).balanceOf(address(this)),
+                'ReclameAllowance: Not enough value in this contract for that');
+            _TransferERC20(GrantList[AllowanceID].AssetAddress, ToSend, GrantList[AllowanceID].Requestor[RequestorID]);
         }
         GrantList[AllowanceID].RemainingValue -= ToSend;
         GrantList[AllowanceID].LastReclameTimestamp = block.timestamp;
@@ -138,8 +127,8 @@ contract HarmoniaDAO_Allowances {
         receiver.transfer(amount);
     }
 
-    function _TransferERC20(uint8 AssetID, uint256 amount, address receiver) internal { 
-        ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
+    function _TransferERC20(address _AssetAddress, uint256 amount, address receiver) internal { 
+        ERC20(_AssetAddress).transfer(receiver, amount);
     }
 }
 

@@ -164,7 +164,6 @@ contract CLDAuction {
 
         uint256 valueForEachDev = ETCDeductedFromRetirees / ActiveDevs;
         for (uint256 id = 0; id < DevTeam.length; ++id) {
-            // TO DO test this
             if (isDev[DevTeam[id]]) { 
                 DevTeam[id].transfer(valueForEachDev); 
             }
@@ -192,7 +191,6 @@ contract CLDAuction {
         emit CLDWithdrawed(CLDToSend, msg.sender);
     }
 
-    // To do DEBUG ONLY???
     function CheckParticipant(address PartAddr)
         public
         view
