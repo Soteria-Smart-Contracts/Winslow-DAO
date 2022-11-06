@@ -6,7 +6,6 @@ contract HarmoniaDAOTreasury{
     string public Version = "V1";
     address public DAO;
     uint8 public RegisteredAssetLimit;
-    uint128 public LastGrantID;
 
     mapping(address => bool) public AssetRegistryMap;
     mapping(uint8 => Token) public RegisteredAssets;
@@ -15,24 +14,6 @@ contract HarmoniaDAOTreasury{
         address TokenAddress;
         bool Filled;
     }
-
-    struct Grant {
-        bool IsActive;
-        address payable[] Requestor;
-        uint256 GrantID;
-        bool IsItEther;
-        uint256 OriginalValue;
-        uint256 RemainingValue;
-        uint8 AssetID;
-        uint8 Installments;
-        uint256 TimeBetweenInstallments;
-        uint256 LastReclameTimestamp;
-    }
-
-    // GrantList[IDs] given to Requestor mapped address 
-    mapping(address => uint256[]) public RequestorGrantList;
-    // Grant given to Requestor address mapping
-    Grant[] public GrantList;
 
     //Modifier declarations
     modifier OnlyDAO{ 
@@ -99,24 +80,16 @@ contract HarmoniaDAOTreasury{
 
 
     //DAO and Eros Proposal only access functions
-    function TransferETH(uint256 amount, address payable receiver) external OnlyDAO{ //Only DAO for moving fyi
-        _TransferETH(amount, receiver);
-
+     function TransferETH(uint256 amount, address payable receiver) external OnlyDAO { 
+        receiver.transfer(amount);
+        
         emit EtherSent(amount, receiver, tx.origin);
     }
 
-    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO{ 
-        _TransferERC20(AssetID, amount, receiver);
+    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO { 
+        ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
 
         emit ERC20Sent(amount, receiver, tx.origin);
-    }
-
-    function _TransferETH(uint256 amount, address payable receiver) internal { 
-        receiver.transfer(amount);
-    }
-
-    function _TransferERC20(uint8 AssetID, uint256 amount, address receiver) internal { 
-        ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
     }
 
     //Asset Registry management
