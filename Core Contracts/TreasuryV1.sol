@@ -17,7 +17,7 @@ contract HarmoniaDAOTreasury{
 
     //Modifier declarations
     modifier OnlyDAO{ 
-        require(msg.sender == DAO, 'This can only be done by the DAO');
+        require(msg.sender == DAO);
         _;
     }
 
@@ -26,7 +26,6 @@ contract HarmoniaDAOTreasury{
         _;
     }
 
-
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
@@ -34,7 +33,6 @@ contract HarmoniaDAOTreasury{
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receiver, address TxOrigin);
     event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
-
 
     //Code executed on deployment
     constructor(address DAOcontract, address CLDcontract){
@@ -49,7 +47,6 @@ contract HarmoniaDAOTreasury{
         ERC20(RegisteredAssets[AssetID].TokenAddress).transferFrom(msg.sender, address(this), amount);
     }
 
- 
     //CLD Claim
     function UserAssetClaim(uint256 CLDamount) public returns(bool success){
         AssetClaim(CLDamount, msg.sender, payable(msg.sender));
@@ -78,11 +75,10 @@ contract HarmoniaDAOTreasury{
         return(success);
     }
 
-
     //DAO and Eros Proposal only access functions
-     function TransferETH(uint256 amount, address payable receiver) external OnlyDAO { 
+    function TransferETH(uint256 amount, address payable receiver) external OnlyDAO { 
         receiver.transfer(amount);
-        
+
         emit EtherSent(amount, receiver, tx.origin);
     }
 
@@ -112,7 +108,6 @@ contract HarmoniaDAOTreasury{
         emit AssetRegistered(RegisteredAssets[slot].TokenAddress, ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)));
     }
 
-
     //Setting modification functions
     function ChangeRegisteredAssetLimit(uint8 NewLimit) external OnlyDAO{
         RegisteredAssetLimit = NewLimit;
@@ -124,7 +119,6 @@ contract HarmoniaDAOTreasury{
     function IsRegistered(address TokenAddress) public view returns(bool){
         return(AssetRegistryMap[TokenAddress]);
     }
-
 
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
         uint256 DecimalReplacer = (10**10);
@@ -161,7 +155,6 @@ contract HarmoniaDAOTreasury{
     fallback() external payable{
         emit EtherReceived(msg.value, msg.sender, tx.origin); //Does msg.value work for this?
     }
-
 }
 
 interface ERC20 {
