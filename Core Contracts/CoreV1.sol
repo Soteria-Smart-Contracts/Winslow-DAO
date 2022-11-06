@@ -213,13 +213,13 @@ contract VotingSystemV1 {
     }
 
     // Proposal execution code
-    function ExecuteProposal(uint proposalId) external {         
+    function ExecuteProposal(uint proposalId) external {
+        require(block.timestamp >= proposal[proposalId].VoteEnds, 
+            "VotingSystemV1.ExecuteProposal: Voting has not ended");      
         require(proposal[proposalId].Executed == false, 
             "VotingSystemV1.ExecuteProposal: Proposal already executed!");
         require(proposal[proposalId].ActiveVoters > 0, 
             "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
-        require(block.timestamp >= proposal[proposalId].VoteEnds, 
-            "VotingSystemV1.ExecuteProposal: Voting has not ended");
         voterInfo[proposalId][msg.sender].IsExecutioner = true;
 
         ERC20(CLD).Burn(proposal[proposalId].AmountToBurn);
@@ -263,14 +263,10 @@ contract VotingSystemV1 {
         bytes32 _burnCut = keccak256(abi.encodePacked("burnCut"));
         bytes32 _memberHolding = keccak256(abi.encodePacked("memberHolding"));
 
-        if (_setHash == _execusCut) {
+        if (_setHash == _execusCut || _setHash == _burnCut) {
             require(amount >= 10 && amount <= 10000, 
             "VotingSystemV1.SetTaxAmount: Percentages can't be higher than 100");
             ExecusCut = amount;
-        } else if (_setHash == _burnCut) {
-            require(amount >= 10 && amount <= 10000, 
-            "VotingSystemV1.SetTaxAmount: Percentages can't be higher than 100");
-            BurnCut = amount;
         } else if (_setHash == _memberHolding) {
             MemberHolding = amount;
         } else {
