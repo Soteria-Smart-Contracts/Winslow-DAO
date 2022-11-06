@@ -125,41 +125,6 @@ contract FakeDAO{
     function NewDAOInTreasury(address payable NewDAO) external OnlyOwner{
         TreasuryV1(treasury).ChangeDAO(NewDAO);
     }
-
-    // Auction related contracts
-    function SetAuctionFactory(address NewAucFactory) external OnlyOwner{
-        auctionFactory = NewAucFactory;
-    }
-
-    function NewTokenAuction(
-        uint256 _EndTime, 
-        uint256 _Amount, 
-        uint256 _MinimunFeeInGwei, 
-        uint256 _RetireeFeeInBP, 
-        address payable[] memory _DevTeam
-    ) external OnlyOwner{
-        AuctionFactory(auctionFactory).newCLDAuction(
-            _EndTime,
-            _Amount,
-            _MinimunFeeInGwei,
-            _RetireeFeeInBP,
-            _DevTeam
-        );
-    }
-
-    function AddAucInstanceDevAddress(address AuctInstance, address payable NewDevAddr) external OnlyOwner{
-        AuctionInstance(AuctInstance).AddDev(NewDevAddr);
-    }
-
-    function AddAucInstanceDevAddresses(
-        address AuctInstance, 
-        address payable[] memory NewDevAddrs
-        ) 
-        external 
-        OnlyOwner
-    {
-            AuctionInstance(AuctInstance).AddDevs(NewDevAddrs);
-    }
 }
 
 interface EROSEXT {
