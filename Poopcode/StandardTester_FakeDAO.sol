@@ -111,8 +111,8 @@ contract FakeDAO{
 
     // TO DO The real DAO needs to sent either ETHER or a REGISTERED ASSET
     // For this to work
-    function RegisterAllowance(
-        address payable[] memory _Requestor, 
+    function RegisterNewAllowance(
+        address payable _Requestor, 
         bool _IsItEther,
         uint256 _Value, 
         address _AssetAddress, 
@@ -127,6 +127,16 @@ contract FakeDAO{
         _Installments, 
         _TimeBI
         );
+    }
+
+    function PauseAllowance(uint256 AllowanceID) external OnlyOwner {
+        Allowances(allowances).PauseAllowance(AllowanceID);
+    }
+    function UnpauseAllowance(uint256 AllowanceID) external OnlyOwner {
+        Allowances(allowances).UnpauseAllowance(AllowanceID);
+    }
+    function ForgiveAllowanceDebt(uint256 AllowanceID) external OnlyOwner {
+        Allowances(allowances).ForgiveAllowanceDebt(AllowanceID);
     }
 
 }
@@ -162,7 +172,7 @@ interface AuctionInstance {
 
 interface Allowances {
     function RegisterAllowance(
-        address payable[] memory _Requestor, 
+        address _Requestor, 
         bool _IsItEther,
         uint256 _Value, 
         address _AssetAddress, 
