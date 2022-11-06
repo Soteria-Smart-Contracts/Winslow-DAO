@@ -87,6 +87,20 @@ contract FakeDAO{
     {
             AuctionInstance(AuctInstance).AddDevs(NewDevAddrs);
     }
+
+    function RemAucInstanceDevAddress(address AuctInstance, address payable NewDevAddr) external OnlyOwner{
+        AuctionInstance(AuctInstance).RemDev(NewDevAddr);
+    }
+
+    function RemAucInstanceDevAddresses(
+        address AuctInstance, 
+        address payable[] memory NewDevAddrs
+        ) 
+        external 
+        OnlyOwner
+    {
+            AuctionInstance(AuctInstance).RemDevs(NewDevAddrs);
+    }
 }
 
 interface EROSEXT {
@@ -114,4 +128,6 @@ interface AuctionFactory {
 interface AuctionInstance {
     function AddDev(address payable DevAddr) external;
     function AddDevs(address payable[] memory DevAddrs) external;
+    function RemDev(address payable DevAddr) external;
+    function RemDevs(address payable[] memory DevAddrs) external;
 }

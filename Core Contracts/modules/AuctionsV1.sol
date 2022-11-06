@@ -1,12 +1,12 @@
 //SPDX-License-Identifier:UNLICENSE
 pragma solidity ^0.8.17;
 
-// TO DO OnlyDAO modifiers and functions
 contract CLDAuction {
     address public DAO;
     address payable public Treasury;
     address public CLD;
     address payable[] public DevTeam;
+    uint8 public ActiveDevs;
     uint256 public MinimunFee;
     uint256 public RetireeFee;
     uint256 public StartTime;
@@ -37,6 +37,8 @@ contract CLDAuction {
     event ETCDWithdrawed(uint256 AmountWithdrawed);
     event CLDWithdrawed(uint256 AmountWithdrawed, address PartAddr);
     event NewDevAdded(address payable NewDevAddr);
+    event DevRemoved(address payable RemovedDevAddr);
+
 
     constructor(
         uint256 _StartTime,
@@ -65,6 +67,7 @@ contract CLDAuction {
 
         for (uint256 id = 0; id < DevTeam.length; ++id) {
             isDev[DevTeam[id]] = true;
+            ActiveDevs++; 
             emit NewDevAdded(DevTeam[id]);
         }
     }
@@ -123,14 +126,31 @@ contract CLDAuction {
     function AddDev(address payable DevAddr) public OnlyDAO {
         require(
             !isDev[DevAddr],
-            'CLDAuction.AddDev: This user is already set as a dev'
+            'CLDAuction.AddDev: This user is already a dev'
         );
         DevTeam.push(DevAddr);
+        isDev[DevAddr] = true;
+        ActiveDevs++;
         emit NewDevAdded(DevAddr);
     }
 
-    //TO DO OnlyDAO ???
-    function WithdrawETC() public returns (bool) {
+    function RemDevs(address payable[] memory DevAddrs) external {
+        for (uint256 id = 0; id < DevAddrs.length; ++id) {
+            RemDev(DevAddrs[id]);
+        }
+    }
+    
+    function RemDev(address payable DevAddr) public OnlyDAO {
+        require(
+            isDev[DevAddr],
+            'CLDAuction.RemDev: This user is not a dev'
+        );
+        isDev[DevAddr] = false;
+        ActiveDevs--;
+        emit DevRemoved(DevAddr);
+    }
+
+    function WithdrawETC() public {
         require(
             block.timestamp > EndTime,
             'CLDAuction.WithdrawETC: The sale is not over yet'
@@ -141,14 +161,16 @@ contract CLDAuction {
         );
 
         Treasury.transfer(ETCCollected);
-        // TO DO this needs testing
-        uint256 valueForEachDev = ETCDeductedFromRetirees / DevTeam.length;
+
+        uint256 valueForEachDev = ETCDeductedFromRetirees / ActiveDevs;
         for (uint256 id = 0; id < DevTeam.length; ++id) {
-            DevTeam[id].transfer(valueForEachDev);
+            // TO DO test this
+            if (isDev[DevTeam[id]]) { 
+                DevTeam[id].transfer(valueForEachDev); 
+            }
         }
 
         emit ETCDWithdrawed(ETCCollected);
-        return true;
     }
 
     function WithdrawCLD() public {
