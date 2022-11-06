@@ -58,6 +58,7 @@ contract FakeDAO{
         auctionFactory = NewAucFactory;
     }
 
+    // TO DO This one should move tokens from the Treasury to the Auction
     function NewTokenAuction(
         uint256 _EndTime, 
         uint256 _Amount, 
