@@ -109,6 +109,14 @@ contract FakeDAO{
         allowances = NewAllowancesAddress;
     }
 
+    function SetAllowancesDAOAddress(address NewAllowancesDAOAddress) external OnlyOwner{
+        Allowances(allowances).ChangeDAO(NewAllowancesDAOAddress);
+    }
+
+    function SetAllowancesTreasuryAddress(address payable NewAllowancesTreAddress) external OnlyOwner{
+        Allowances(allowances).ChangeTreasury(NewAllowancesTreAddress);
+    }
+
     // TO DO The real DAO needs to sent either ETHER or a REGISTERED ASSET
     // For this to work
     function RegisterNewAllowance(
@@ -171,6 +179,9 @@ interface AuctionInstance {
 }
 
 interface Allowances {
+    function ChangeDAO(address  NewDAO) external;
+    function ChangeTreasury(address payable NewTreasury) external;
+
     function RegisterAllowance(
         address _Requestor, 
         bool _IsItEther,

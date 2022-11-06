@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 contract HarmoniaDAO_Allowances {
     address public DAO;
+    address payable public Treasury; // TO DO set treasury
     address public CLD;
     uint128 public LastGrantID = 0;
 
@@ -21,8 +22,8 @@ contract HarmoniaDAO_Allowances {
 
     // Requestors in a specific Grant  
     mapping(uint256 => address) public RequestorsInGrant;
-    // Grant given to Requestor address mapping
-    Grant[] public grantList;
+    // Grants array
+    Grant[] public GrantList;
 
     //Modifier declarations
     modifier OnlyDAO{ 
@@ -39,16 +40,25 @@ contract HarmoniaDAO_Allowances {
     event NewAllowance(address payable _Requestor, uint256 LastGrantID, bool IsItEther, uint256 Value, address AssetAddress);
     event AllowancePaused(uint256 AllowanceID);
     event AllowanceUnpaused(uint256 AllowanceID);
-    event AllowanceForgiven(uint256 AllowanceID);
-    event AllowanceReclamed(uint256 AllowanceID, address Receiver, uint256 RemainingValue);
+    event AllowanceForgiven(uint256 AllowanceID, uint256 Value, bool IsEther, address AssetAddress);
+    event AllowanceReclaimed(uint256 AllowanceID, address Receiver, uint256 RemainingValue);
 
     //Code executed on deployment
-    constructor(address DAOcontract) {
+    constructor(address DAOcontract, address payable TreasuryAddr) {
         DAO = DAOcontract;
+        Treasury = TreasuryAddr;
     }
 
     receive() external payable{
         emit EtherReceived(msg.value, msg.sender);
+    }
+
+    function ChangeDAO(address NewDAO) external OnlyDAO {
+        DAO = NewDAO;
+    }
+
+    function ChangeTreasury(address payable NewTreasury) external OnlyDAO {
+        Treasury = NewTreasury;
     }
 
     // TO DO The DAO needs to send the tokens for this grant
@@ -63,7 +73,7 @@ contract HarmoniaDAO_Allowances {
     // Add these Requestor Grant to Requestor GrantList
         RequestorsInGrant[LastGrantID] = _Requestor;
  
-        grantList.push(
+        GrantList.push(
             Grant({
                 IsActive: true,
                 Requestor: _Requestor,
@@ -86,9 +96,9 @@ contract HarmoniaDAO_Allowances {
     function PauseAllowance(uint256 AllowanceID) external OnlyDAO {
         // require(AllowanceID != 0,
         //    'PauseAllowance: Allowance ID 0 cannot be paused');
-        require(grantList[AllowanceID].IsActive = false,
-            'failed');
-        grantList[AllowanceID].IsActive = false;
+        require(GrantList[AllowanceID].IsActive == true,
+            'PauseAllowance: Allowance must be unpaused');
+        GrantList[AllowanceID].IsActive = false;
 
         emit AllowancePaused(AllowanceID);
     }
@@ -96,44 +106,67 @@ contract HarmoniaDAO_Allowances {
     function UnpauseAllowance(uint256 AllowanceID) external OnlyDAO {
         //require(AllowanceID != 0,
         //    'UnpauseAllowance: Allowance ID 0 cannot be paused');
-        require(grantList[AllowanceID].IsActive == false,
+        require(GrantList[AllowanceID].IsActive == false,
             'UnpauseAllowance: Allowance must be paused');
-        grantList[AllowanceID].IsActive = true;
+        GrantList[AllowanceID].IsActive = true;
 
         emit AllowanceUnpaused(AllowanceID);
     }
 
     function ForgiveAllowanceDebt(uint256 AllowanceID) external OnlyDAO {
-        grantList[AllowanceID].RemainingValue = 0;
+        if(GrantList[AllowanceID].IsItEther) {
+            _TransferETH(GrantList[AllowanceID].RemainingValue /
+            GrantList[AllowanceID].Installments, Treasury);
 
-        emit AllowanceForgiven(AllowanceID);
+            emit AllowanceForgiven(
+            AllowanceID, 
+            GrantList[AllowanceID].RemainingValue, 
+            GrantList[AllowanceID].IsItEther,
+            address(0)
+            );
+        } else {
+            _TransferERC20(GrantList[AllowanceID].AssetAddress,  
+            GrantList[AllowanceID].RemainingValue / GrantList[AllowanceID].Installments,
+            Treasury);
+
+            emit AllowanceForgiven(
+            AllowanceID, 
+            GrantList[AllowanceID].RemainingValue, 
+            GrantList[AllowanceID].IsItEther,
+            GrantList[AllowanceID].AssetAddress
+            );
+        }
+
+        GrantList[AllowanceID].IsActive = false;
+        GrantList[AllowanceID].RemainingValue = 0;
+
     }
 
     function ReclameAllowance(uint256 AllowanceID) external {
-        require(grantList[AllowanceID].IsActive,
+        require(GrantList[AllowanceID].IsActive,
             'ReclameAllowance: This grant is not active');
-        require(payable(msg.sender) == grantList[AllowanceID].Requestor, 
+        require(payable(msg.sender) == GrantList[AllowanceID].Requestor, 
             'ReclameAllowance: You are not the owner of this grant');
-        require(grantList[AllowanceID].RemainingValue >= 0, 
+        require(GrantList[AllowanceID].RemainingValue >= 0, 
             'ReclameAllowance: Debt is zero');
-        require(block.timestamp >= grantList[AllowanceID].LastReclameTimestamp + 
-            grantList[AllowanceID].TimeBetweenInstallments,
+        require(block.timestamp >= GrantList[AllowanceID].LastReclameTimestamp + 
+            GrantList[AllowanceID].TimeBetweenInstallments,
                 'ReclameAllowance: Not enough time has passed since last withdraw');
-        uint256 ToSend = grantList[AllowanceID].OriginalValue / grantList[AllowanceID].Installments;
+        uint256 ToSend = GrantList[AllowanceID].OriginalValue / GrantList[AllowanceID].Installments;
         
-        if (grantList[AllowanceID].IsItEther) {
+        if (GrantList[AllowanceID].IsItEther) {
             require(ToSend <= address(this).balance,
                 'ReclameAllowance: Not enough value in this contract for that');
-            _TransferETH(ToSend, grantList[AllowanceID].Requestor);
+            _TransferETH(ToSend, GrantList[AllowanceID].Requestor);
         } else {
-            require(ToSend <= ERC20(grantList[AllowanceID].AssetAddress).balanceOf(address(this)),
+            require(ToSend <= ERC20(GrantList[AllowanceID].AssetAddress).balanceOf(address(this)),
                 'ReclameAllowance: Not enough value in this contract for that');
-            _TransferERC20(grantList[AllowanceID].AssetAddress, ToSend, grantList[AllowanceID].Requestor);
+            _TransferERC20(GrantList[AllowanceID].AssetAddress, ToSend, GrantList[AllowanceID].Requestor);
         }
-        grantList[AllowanceID].RemainingValue -= ToSend;
-        grantList[AllowanceID].LastReclameTimestamp = block.timestamp;
+        GrantList[AllowanceID].RemainingValue -= ToSend;
+        GrantList[AllowanceID].LastReclameTimestamp = block.timestamp;
         
-        emit AllowanceReclamed(AllowanceID, msg.sender, grantList[AllowanceID].RemainingValue);
+        emit AllowanceReclaimed(AllowanceID, msg.sender, GrantList[AllowanceID].RemainingValue);
     }
 
     function _TransferETH(uint256 amount, address payable receiver) internal { 
