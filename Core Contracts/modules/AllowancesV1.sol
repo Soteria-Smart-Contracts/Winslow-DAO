@@ -115,8 +115,7 @@ contract HarmoniaDAO_Allowances {
 
     function ForgiveAllowanceDebt(uint256 AllowanceID) external OnlyDAO {
         if(GrantList[AllowanceID].IsItEther) {
-            _TransferETH(GrantList[AllowanceID].RemainingValue /
-            GrantList[AllowanceID].Installments, Treasury);
+            _TransferETH(GrantList[AllowanceID].RemainingValue, Treasury);
 
             emit AllowanceForgiven(
             AllowanceID, 
@@ -126,7 +125,7 @@ contract HarmoniaDAO_Allowances {
             );
         } else {
             _TransferERC20(GrantList[AllowanceID].AssetAddress,  
-            GrantList[AllowanceID].RemainingValue / GrantList[AllowanceID].Installments,
+            GrantList[AllowanceID].RemainingValue,
             Treasury);
 
             emit AllowanceForgiven(
@@ -156,11 +155,11 @@ contract HarmoniaDAO_Allowances {
         
         if (GrantList[AllowanceID].IsItEther) {
             require(ToSend <= address(this).balance,
-                'ReclameAllowance: Not enough value in this contract for that');
+                'ReclameAllowance: Not enough ether value in this contract for that');
             _TransferETH(ToSend, GrantList[AllowanceID].Requestor);
         } else {
             require(ToSend <= ERC20(GrantList[AllowanceID].AssetAddress).balanceOf(address(this)),
-                'ReclameAllowance: Not enough value in this contract for that');
+                'ReclameAllowance: Not enough Token value in this contract for that');
             _TransferERC20(GrantList[AllowanceID].AssetAddress, ToSend, GrantList[AllowanceID].Requestor);
         }
         GrantList[AllowanceID].RemainingValue -= ToSend;
