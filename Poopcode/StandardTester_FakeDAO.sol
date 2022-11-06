@@ -179,19 +179,3 @@ interface TreasuryV1 {
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
     function ChangeDAO(address payable NewAddr) external;
 }
-
-interface AuctionFactory {
-    function newCLDAuction(
-        uint256 _EndTime, 
-        uint256 _Amount, 
-        uint256 _MinimunFeeInGwei, 
-        uint256 _RetireeFeeInBP, 
-        address payable[] memory _DevTeam
-    )
-    external;
-}
-
-interface AuctionInstance {
-    function AddDev(address payable DevAddr) external;
-    function AddDevs(address payable[] memory DevAddrs) external;
-}
