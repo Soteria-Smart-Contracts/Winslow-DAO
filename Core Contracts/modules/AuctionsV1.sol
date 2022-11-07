@@ -14,7 +14,6 @@ contract CLDAuction {
     uint256 public ETCCollected;
     uint256 public ETCDeductedFromRetirees;
     uint256 public TokenAmount;
-    uint256 public CurrentTokenBalance;
 
     modifier OnlyDAO() {
         require(msg.sender == DAO, 'This can only be done by the DAO');

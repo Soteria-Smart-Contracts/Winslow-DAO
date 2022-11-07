@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 contract HarmoniaDAO_Allowances {
     address public DAO;
-    address payable public Treasury; // TO DO set treasury
+    address payable public Treasury; 
     address public CLD;
     uint128 public LastGrantID = 0;
 
@@ -20,12 +20,8 @@ contract HarmoniaDAO_Allowances {
         uint256 LastReclaimTimestamp;
     }
 
-    // Requestors in a specific Grant  
-    mapping(uint256 => address) public RequestorsInGrant;
-    // Grants array
     Grant[] public GrantList;
 
-    //Modifier declarations
     modifier OnlyDAO{ 
         require(msg.sender == DAO, 'This can only be done by the DAO');
         _;
@@ -43,7 +39,6 @@ contract HarmoniaDAO_Allowances {
     event AllowanceForgiven(uint256 AllowanceID, uint256 Value, bool IsEther, address AssetAddress);
     event AllowanceReclaimed(uint256 AllowanceID, address Receiver, uint256 RemainingValue);
 
-    //Code executed on deployment
     constructor(address DAOcontract, address payable TreasuryAddr) {
         DAO = DAOcontract;
         Treasury = TreasuryAddr;
@@ -70,9 +65,7 @@ contract HarmoniaDAO_Allowances {
         uint8 _Installments, 
         uint128 _TimeBI  // In seconds
     ) public OnlyDAO {
-    // Add these Requestor Grant to Requestor GrantList
-        RequestorsInGrant[LastGrantID] = _Requestor;
- 
+
         GrantList.push(
             Grant({
                 IsActive: true,
@@ -138,7 +131,6 @@ contract HarmoniaDAO_Allowances {
 
         GrantList[AllowanceID].IsActive = false;
         GrantList[AllowanceID].RemainingValue = 0;
-
     }
 
     function ReclaimAllowance(uint256 AllowanceID) external {
@@ -176,6 +168,7 @@ contract HarmoniaDAO_Allowances {
         ERC20(_AssetAddress).transfer(receiver, amount);
     }
 }
+
 
 interface ERC20 {
   function balanceOf(address owner) external view returns (uint256);
