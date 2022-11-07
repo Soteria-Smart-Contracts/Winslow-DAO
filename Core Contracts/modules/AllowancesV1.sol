@@ -17,7 +17,7 @@ contract HarmoniaDAO_Allowances {
         address AssetAddress;
         uint8 Installments;
         uint256 TimeBetweenInstallments;
-        uint256 LastReclameTimestamp;
+        uint256 LastReclaimTimestamp;
     }
 
     // Requestors in a specific Grant  
@@ -84,7 +84,7 @@ contract HarmoniaDAO_Allowances {
                 AssetAddress: _AssetAddress,
                 Installments: _Installments,
                 TimeBetweenInstallments: _TimeBI,
-                LastReclameTimestamp: block.timestamp
+                LastReclaimTimestamp: block.timestamp
             })
         );
 
@@ -141,29 +141,29 @@ contract HarmoniaDAO_Allowances {
 
     }
 
-    function ReclameAllowance(uint256 AllowanceID) external {
+    function ReclaimAllowance(uint256 AllowanceID) external {
         require(GrantList[AllowanceID].IsActive,
-            'ReclameAllowance: This grant is not active');
+            'ReclaimAllowance: This grant is not active');
         require(payable(msg.sender) == GrantList[AllowanceID].Requestor, 
-            'ReclameAllowance: You are not the owner of this grant');
+            'ReclaimAllowance: You are not the owner of this grant');
         require(GrantList[AllowanceID].RemainingValue >= 0, 
-            'ReclameAllowance: Debt is zero');
-        require(block.timestamp >= GrantList[AllowanceID].LastReclameTimestamp + 
+            'ReclaimAllowance: Debt is zero');
+        require(block.timestamp >= GrantList[AllowanceID].LastReclaimTimestamp + 
             GrantList[AllowanceID].TimeBetweenInstallments,
-                'ReclameAllowance: Not enough time has passed since last withdraw');
+                'ReclaimAllowance: Not enough time has passed since last withdraw');
         uint256 ToSend = GrantList[AllowanceID].OriginalValue / GrantList[AllowanceID].Installments;
         
         if (GrantList[AllowanceID].IsItEther) {
             require(ToSend <= address(this).balance,
-                'ReclameAllowance: Not enough ether value in this contract for that');
+                'ReclaimAllowance: Not enough ether value in this contract for that');
             _TransferETH(ToSend, GrantList[AllowanceID].Requestor);
         } else {
             require(ToSend <= ERC20(GrantList[AllowanceID].AssetAddress).balanceOf(address(this)),
-                'ReclameAllowance: Not enough Token value in this contract for that');
+                'ReclaimAllowance: Not enough Token value in this contract for that');
             _TransferERC20(GrantList[AllowanceID].AssetAddress, ToSend, GrantList[AllowanceID].Requestor);
         }
         GrantList[AllowanceID].RemainingValue -= ToSend;
-        GrantList[AllowanceID].LastReclameTimestamp = block.timestamp;
+        GrantList[AllowanceID].LastReclaimTimestamp = block.timestamp;
         
         emit AllowanceReclaimed(AllowanceID, msg.sender, GrantList[AllowanceID].RemainingValue);
     }
