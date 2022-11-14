@@ -93,3 +93,21 @@ contract HarmoniaDAO_V1_Core{
         payable(Treasury).transfer(address(this).balance);
     }
 }
+
+//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
+interface TreasuryV1{//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future,
+//Public State Modifing Functions
+    function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external;
+    function UserAssetClaim(uint256 CLDamount) public returns(bool success);
+    function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success);
+//OnlyDAO or OnlyEros State Modifing Functions
+    function TransferETH(uint256 amount, address payable receiver) external;
+    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
+    function RegisterAsset(address tokenAddress, uint8 slot) external;
+    function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
+//Public View Functions
+    function IsRegistered(address TokenAddress) public view returns(bool);
+    function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking);
+    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking);
+
+}
