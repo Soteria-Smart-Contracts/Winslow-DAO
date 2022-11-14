@@ -59,13 +59,6 @@ contract HarmoniaDAO_V1_Core{
         TreasuryV1(Treasury).RegisterAsset(tokenAddress, slot);
     }
 
-    function VerifyProposalAuthenticity(uint256 ProposalID, uint8 ExecutionType) internal returns(bool success){
-        require(Proposals[ProposalID].ProposalType == ExecutionType);
-        if(Proposals[ProposalID].RequestedAssetID != address(0)){
-            require(Proposals[ProposalID].RequestedAssetID); //Require asset is registered
-        }
-    }
-
 
     
     //One Time Functions
