@@ -89,8 +89,8 @@ contract HarmoniaDAO_V1_Core{
 interface TreasuryV1{//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future,
 //Public State Modifing Functions
     function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external;
-    function UserAssetClaim(uint256 CLDamount) public returns(bool success);
-    function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success);
+    function UserAssetClaim(uint256 CLDamount) external returns(bool success);
+    function AssetClaim(uint256 CLDamount, address From, address payable To) external returns(bool success);
 //OnlyDAO or OnlyEros State Modifing Functions
     function TransferETH(uint256 amount, address payable receiver) external;
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
