@@ -17,7 +17,7 @@ contract VotingSystemV1 {
     event CastedVote(uint proposalId, string option, uint votesCasted);
     event ProposalIncentivized(address donator, uint proposalId, uint amountDonated);
     event IncentiveWithdrawed(uint remainingIncentive);
-    event NewDAOAddress(FakeDAO NewAddress);
+    event NewDAOAddress(address NewAddress);
 
     struct ProposalCore {
         uint256 ProposalID;
