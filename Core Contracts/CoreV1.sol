@@ -156,13 +156,13 @@ contract VotingSystemV1 {
         if (proposal[proposalId].ApprovingVotes > proposal[proposalId].RefusingVotes) {
             // TO DO Connect this to the real core
             proposal[proposalId].Passed = 1;
-            FakeDAO(DAO).ExecuteCoreProposal(proposalId, true);
+            FakeDAO(DAO).ExecuteCoreProposal(proposalId, true); //turn into interface
 
             emit ProposalPassed(msg.sender, proposalId, proposal[proposalId].AmountToBurn, proposal[proposalId].AmountToExecutioner);
         } else {
             // TO DO Execution (or lack of)
             proposal[proposalId].Passed = 2;
-            FakeDAO(DAO).ExecuteCoreProposal(proposalId, false);
+            FakeDAO(DAO).ExecuteCoreProposal(proposalId, false); //turn into interface
 
             emit ProposalNotPassed(msg.sender, proposalId, proposal[proposalId].AmountToBurn, proposal[proposalId].AmountToExecutioner);
         }
