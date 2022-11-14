@@ -17,7 +17,7 @@ contract HarmoniaDAOTreasury{
 
     //Modifier declarations
     modifier OnlyDAO{ 
-        require(msg.sender == DAO);
+        require(msg.sender == DAO, 'This can only be done by the DAO');
         _;
     }
 
@@ -80,6 +80,10 @@ contract HarmoniaDAOTreasury{
 
 
     //DAO and Eros Proposal only access functions
+    function ChangeDAO(address payable NewAddr) external OnlyDAO {
+        DAO = NewAddr;
+        // TO DO emit event
+    }
     function TransferETH(uint256 amount, address payable receiver) external OnlyDAO{ //Only DAO for moving fyi
         receiver.transfer(amount);
 
