@@ -349,7 +349,7 @@ interface TreasuryV1{
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
     function RegisterAsset(address tokenAddress, uint8 slot) external;
     function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
-/   /Public View Functions
+    //Public View Functions
     function IsRegistered(address TokenAddress) external view returns(bool);
     function GetBackingValueEther(uint256 CLDamount) external view returns(uint256 EtherBacking);
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
