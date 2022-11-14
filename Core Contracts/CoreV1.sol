@@ -1,8 +1,6 @@
 //SPDX-License-Identifier:UNLICENSE
 pragma solidity ^0.8.17;
 
-import '../Poopcode/StandardTester_FakeDAO.sol';
-
 
 contract VotingSystemV1 {
     // Proposal executioner's bonus, proposal incentive burn percentage 
