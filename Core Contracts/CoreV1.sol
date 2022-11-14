@@ -1,3 +1,5 @@
+//SPDX-License-Identifier:UNLICENSE
+
 contract HarmoniaDAO_V1_Core{
     //Variable Declarations
     string public Version = "V1";
