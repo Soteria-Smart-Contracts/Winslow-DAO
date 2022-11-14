@@ -58,8 +58,6 @@ contract HarmoniaDAO_V1_Core{
 
         TreasuryV1(Treasury).RegisterAsset(tokenAddress, slot);
     }
-
-
     
     //One Time Functions
     function SetInitialTreasury(address TreasuryAddress) external{
