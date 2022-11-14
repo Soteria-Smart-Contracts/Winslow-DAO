@@ -17,12 +17,12 @@ contract HarmoniaDAOTreasury{
 
     //Modifier declarations
     modifier OnlyDAO{ 
-        require(msg.sender == DAO);
+        require(msg.sender == DAO, 'This can only be done by the DAO');
         _;
     }
 
     modifier OnlyEros{
-        require(msg.sender == DAO  || EROSDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO");
+        require(msg.sender == DAO  || HarmoniaDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO");
         _;
     }
 
@@ -76,6 +76,10 @@ contract HarmoniaDAOTreasury{
     }
 
     //DAO and Eros Proposal only access functions
+    function ChangeDAO(address payable NewAddr) external OnlyDAO {
+        DAO = NewAddr;
+        // TO DO emit event
+    }
     function TransferETH(uint256 amount, address payable receiver) external OnlyDAO { 
         receiver.transfer(amount);
 
@@ -166,6 +170,6 @@ interface ERC20 {
   function totalSupply() external view returns (uint);
 } 
 
-interface EROSDAO{
+interface HarmoniaDAO{
     function CheckErosApproval(address) external view returns(bool);
 }
