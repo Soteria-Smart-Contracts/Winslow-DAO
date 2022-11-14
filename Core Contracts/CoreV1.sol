@@ -4,7 +4,7 @@ pragma solidity ^0.8.17;
 
 contract VotingSystemV1 {
     // Proposal executioner's bonus, proposal incentive burn percentage 
-    FakeDAO public DAO;
+    address public DAO;
     address public CLD;
     uint public MemberHolding;
     // These two are in Basis Points
