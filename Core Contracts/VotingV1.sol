@@ -338,7 +338,7 @@ interface ERC20 {
   function Burn(uint256 _BurnAmount) external;
 }
 
-    //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
+//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
 interface TreasuryV1{
     //Public State Modifing Functions
     function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external;
