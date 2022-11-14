@@ -51,7 +51,7 @@ contract VotingSystemV1 {
         _;
     }
 
-    constructor(address CLDAddr, FakeDAO DAOAddr, uint8 _ExecusCut, uint8 _BurnCut) 
+    constructor(address CLDAddr, address DAOAddr, uint8 _ExecusCut, uint8 _BurnCut) 
     {
         ExecusCut = _ExecusCut;
         BurnCut = _BurnCut;
