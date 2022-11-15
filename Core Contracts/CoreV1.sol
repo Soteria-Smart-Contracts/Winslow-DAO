@@ -8,6 +8,7 @@ contract HarmoniaDAO_V1_Core{
     address public Treasury = address(0);
     address public TreasurySetter;
     bool public InitialTreasurySet = false;
+    
 
     //Mapping, structs and other declarations
     
@@ -54,6 +55,7 @@ contract HarmoniaDAO_V1_Core{
 
     constructor(){
         TreasurySetter = msg.sender;
+        
     }
 
     //Public state-modifing functions
