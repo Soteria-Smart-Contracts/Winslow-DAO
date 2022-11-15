@@ -14,9 +14,8 @@ contract HarmoniaDAO_V1_Core{
     Proposal[] public Proposals;
 
     enum ProposalTypes{
-        Simpl/// @notice Explain to an end user what this does
-        /// @dev Explain to a developer any extra details
-        /// @param Documents a parameter just like in doxygen (must be followed by parameter name)
+        Simple,
+        Proxy
     }
 
     struct Proposal{
