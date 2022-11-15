@@ -8,7 +8,7 @@ contract HarmoniaDAO_V1_Core{
     address public Treasury = address(0);
     address public TreasurySetter;
     bool public InitialTreasurySet = false;
-    ProxyProposalArguments Empty
+    ProxyProposalArguments EmptyProxy;
 
     //Mapping, structs and other declarations
     
