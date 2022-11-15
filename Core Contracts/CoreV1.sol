@@ -15,7 +15,8 @@ contract HarmoniaDAO_V1_Core{
 
     enum ProposalTypes{
         Simple,
-        Proxy
+        Proxy,
+        Eros
     }
 
     struct Proposal{
