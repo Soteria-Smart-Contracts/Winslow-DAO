@@ -13,7 +13,9 @@ contract HarmoniaDAO_V1_Core{
     
     Proposal[] public Proposals;
 
-    enum Proposal
+    enum ProposalTypes{
+        
+    }
 
     struct Proposal{
         uint256 ProposalID;
