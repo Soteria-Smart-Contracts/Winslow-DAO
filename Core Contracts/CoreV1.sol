@@ -18,7 +18,8 @@ contract HarmoniaDAO_V1_Core{
         Security_Verification,
         Pre_Voting,
         Voting,
-        
+        Executed,
+        Rejected
     }
 
     enum ProposalTypes{
