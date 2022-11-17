@@ -39,6 +39,7 @@ contract HarmoniaDAO_V1_Core{
     enum SimpleProposalTypes{
         NotApplicable,
         AssetSend,
+        AssetRegister,
         TreasuryChange,
         VotingChange
     }
