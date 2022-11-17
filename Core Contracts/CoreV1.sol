@@ -23,7 +23,7 @@ contract HarmoniaDAO_V1_Core{
     }
 
     enum SecurityStatus{
-        UnChecked,
+        Unconfirmed,
         
     }
 
