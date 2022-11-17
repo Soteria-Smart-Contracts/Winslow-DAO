@@ -22,7 +22,7 @@ contract HarmoniaDAO_V1_Core{
 
     enum SimpleProposalTypes{
         AssetSend,
-        Asset
+        Treasury
     }
 
     struct Proposal{
