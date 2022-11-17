@@ -20,7 +20,7 @@ contract HarmoniaDAO_V1_Core{
         Eros
     }
 
-    
+    enum SimpleProposalTypes
 
     struct Proposal{
         uint256 ProposalID;
