@@ -83,7 +83,9 @@ contract HarmoniaDAO_V1_Core{
 
     //Public state-modifing functions
 
-    function SubmitProposal
+    function SubmitProposal() public {
+
+    }
 
 
     //  Public view functions
