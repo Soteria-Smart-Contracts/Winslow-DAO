@@ -14,7 +14,9 @@ contract HarmoniaDAO_V1_Core{
     
     Proposal[] public Proposals;
 
-    enum ProposalStatus
+    enum ProposalStatus{
+        Preliminary
+    }
 
     enum ProposalTypes{
         Simple,
