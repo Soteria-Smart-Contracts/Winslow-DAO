@@ -29,7 +29,7 @@ contract HarmoniaDAO_V1_Core{
 
     struct Proposal{
         uint256 ProposalID;
-        ProposalTypes ProposalType; //Type 0 is simple ether and asset sends plus DAO variable changes, Type 1 are Proxy Proposals for external governance, Type 2 are Eros Prosposals
+        ProposalTypes ProposalType; 
         SimpleProposalTypes SimpleType;
         uint256 ProposalVotingLenght;
         uint256 RequestedEtherAmount; //Optional, can be zero
