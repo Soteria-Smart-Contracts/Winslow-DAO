@@ -14,6 +14,8 @@ contract HarmoniaDAO_V1_Core{
     
     Proposal[] public Proposals;
 
+    enum ProposalStatus
+
     enum ProposalTypes{
         Simple,
         Proxy,
