@@ -25,8 +25,9 @@ contract HarmoniaDAO_V1_Core{
     enum SecurityStatus{
         Unconfirmed,
         Safe,
-        Mild,
-        
+        Medium,
+        Severe,
+        Fatal
     }
 
     enum ProposalTypes{
