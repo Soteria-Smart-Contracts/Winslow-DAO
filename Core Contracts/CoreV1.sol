@@ -29,8 +29,8 @@ contract HarmoniaDAO_V1_Core{
 
     struct Proposal{
         uint256 ProposalID;
-        ProposalTypes ProposalType; 
-        SimpleProposalTypes SimpleType;
+        ProposalTypes ProposalType; //Types declared in enum
+        SimpleProposalTypes SimpleType; //Types declared in enum
         uint256 ProposalVotingLenght;
         uint256 RequestedEtherAmount; //Optional, can be zero
         uint256 RequestedAssetAmount; //Optional, can be zero
