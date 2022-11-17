@@ -21,7 +21,7 @@ contract HarmoniaDAO_V1_Core{
     }
 
     enum SimpleProposalTypes{
-        AS,
+        AssetSend,
         
     }
 
