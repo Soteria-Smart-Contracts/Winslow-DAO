@@ -22,6 +22,10 @@ contract HarmoniaDAO_V1_Core{
         Rejected
     }
 
+    enum SecurityStatus{
+        
+    }
+
     enum ProposalTypes{
         Simple,
         Proxy,
