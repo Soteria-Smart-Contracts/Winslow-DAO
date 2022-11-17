@@ -16,8 +16,8 @@ contract HarmoniaDAO_V1_Core{
 
     enum ProposalStatus{
         Preliminary,
-        Pre-Voting,
-        
+        Pre_Voting,
+
     }
 
     enum ProposalTypes{
