@@ -10,7 +10,8 @@ contract FakeDAO{
     uint256 public ProposalsID;
 
      //Mapping, structs and other declarations
-    
+    address public allowances;
+
     Proposal[] public Proposals;
 
     struct Proposal{
@@ -55,7 +56,7 @@ contract FakeDAO{
     }
 
     // FakeDAO admin functions
-
+    // Eros related fuctions
     function SetVotingAddress(address payable NewAddr) external OnlyOwner {
         votingSystem = NewAddr;
     }
@@ -96,6 +97,7 @@ contract FakeDAO{
         VotingSystem(votingSystem).ChangeDAO(NewAddr);
     }
 
+    // Treasury related functions
     function NewProposal(uint256 ProposalID, uint256 Time) internal {
         // We need to ask for some gas to avoid spamming
         // Also: verify the proposer holds enough CLD
@@ -125,9 +127,102 @@ contract FakeDAO{
     function NewDAOInTreasury(address payable NewDAO) external OnlyOwner{
         TreasuryV1(treasury).ChangeDAO(NewDAO);
     }
+    // Auction related functions
+    function SetAuctionFactory(address NewAucFactory) external OnlyOwner{
+        auctionFactory = NewAucFactory;
+    }
+
+    // TO DO This one should move tokens from the Treasury to the Auction
+    function NewTokenAuction(
+        uint256 _EndTime, 
+        uint256 _Amount, 
+        uint256 _MinimunFeeInGwei, 
+        uint256 _RetireeFeeInBP, 
+        address payable[] memory _DevTeam
+    ) external OnlyOwner{
+        AuctionFactory(auctionFactory).newCLDAuction(
+            _EndTime,
+            _Amount,
+            _MinimunFeeInGwei,
+            _RetireeFeeInBP,
+            _DevTeam
+        );
+    }
+
+    function AddAucInstanceDevAddress(address AuctInstance, address payable NewDevAddr) external OnlyOwner{
+        AuctionInstance(AuctInstance).AddDev(NewDevAddr);
+    }
+
+    function AddAucInstanceDevAddresses(
+        address AuctInstance, 
+        address payable[] memory NewDevAddrs
+        ) 
+        external 
+        OnlyOwner
+    {
+            AuctionInstance(AuctInstance).AddDevs(NewDevAddrs);
+    }
+
+    function RemAucInstanceDevAddress(address AuctInstance, address payable NewDevAddr) external OnlyOwner{
+        AuctionInstance(AuctInstance).RemDev(NewDevAddr);
+    }
+
+    function RemAucInstanceDevAddresses(
+        address AuctInstance, 
+        address payable[] memory NewDevAddrs
+        ) 
+        external 
+        OnlyOwner
+    {
+            AuctionInstance(AuctInstance).RemDevs(NewDevAddrs);
+    }
+
+    // Allowances related fuctions
+    function SetAllowancesAddress(address NewAllowancesAddress) external OnlyOwner{
+        allowances = NewAllowancesAddress;
+    }
+
+    function SetAllowancesDAOAddress(address NewAllowancesDAOAddress) external OnlyOwner{
+        Allowances(allowances).ChangeDAO(NewAllowancesDAOAddress);
+    }
+
+    function SetAllowancesTreasuryAddress(address payable NewAllowancesTreAddress) external OnlyOwner{
+        Allowances(allowances).ChangeTreasury(NewAllowancesTreAddress);
+    }
+
+    // TO DO The real DAO needs to sent either ETHER or a REGISTERED ASSET
+    // For this to work
+    function RegisterNewAllowance(
+        address payable _Requestor, 
+        bool _IsItEther,
+        uint256 _Value, 
+        address _AssetAddress, 
+        uint8 _Installments, 
+        uint128 _TimeBI
+    ) external OnlyOwner {
+        Allowances(allowances).RegisterAllowance(
+        _Requestor, 
+        _IsItEther,
+        _Value, 
+        _AssetAddress, 
+        _Installments, 
+        _TimeBI
+        );
+    }
+
+    function PauseAllowance(uint256 AllowanceID) external OnlyOwner {
+        Allowances(allowances).PauseAllowance(AllowanceID);
+    }
+    function UnpauseAllowance(uint256 AllowanceID) external OnlyOwner {
+        Allowances(allowances).UnpauseAllowance(AllowanceID);
+    }
+    function ForgiveAllowanceDebt(uint256 AllowanceID) external OnlyOwner {
+        Allowances(allowances).ForgiveAllowanceDebt(AllowanceID);
+    }
+
 }
 
-interface EROSEXT {
+interface EROSEXT  {
     function Execute() external;
 }
 
@@ -143,4 +238,39 @@ interface TreasuryV1 {
     function TransferETH(uint256 amount, address payable receiver) external;
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
     function ChangeDAO(address payable NewAddr) external;
+}
+
+interface AuctionFactory {
+    function newCLDAuction(
+        uint256 _EndTime, 
+        uint256 _Amount, 
+        uint256 _MinimunFeeInGwei, 
+        uint256 _RetireeFeeInBP, 
+        address payable[] memory _DevTeam
+    )
+    external;
+}
+
+interface AuctionInstance {
+    function AddDev(address payable DevAddr) external;
+    function AddDevs(address payable[] memory DevAddrs) external;
+    function RemDev(address payable DevAddr) external;
+    function RemDevs(address payable[] memory DevAddrs) external;
+}
+
+interface Allowances {
+    function ChangeDAO(address  NewDAO) external;
+    function ChangeTreasury(address payable NewTreasury) external;
+
+    function RegisterAllowance(
+        address _Requestor, 
+        bool _IsItEther,
+        uint256 _Value, 
+        address _AssetAddress, 
+        uint8 _Installments, 
+        uint128 _TimeBI
+    ) external;
+    function PauseAllowance(uint256 AllowanceID) external;
+    function UnpauseAllowance(uint256 AllowanceID) external;
+    function ForgiveAllowanceDebt(uint256 AllowanceID) external;
 }
