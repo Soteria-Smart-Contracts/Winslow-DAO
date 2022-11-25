@@ -116,10 +116,15 @@ contract HarmoniaDAO_V1_Core{
         Proposals.push(NewProposal);
 
         return(NewIdentifier);
-
     }
 
     function InitializeErosProposal() internal returns(uint256 identifier){
+        require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
+        require(Slot != address(0));
+        Proposal memory NewProposal = Proposal(NewIdentifier, Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
+        Proposals.push(NewProposal);
+
+        return(NewIdentifier);
 
     }
 
