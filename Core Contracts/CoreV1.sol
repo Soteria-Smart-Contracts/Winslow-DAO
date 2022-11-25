@@ -93,7 +93,7 @@ contract HarmoniaDAO_V1_Core{
 
     //  Public view functions
 
-    function GetRegistered
+    function GetRegisteredAssetFromID
 
 
 
