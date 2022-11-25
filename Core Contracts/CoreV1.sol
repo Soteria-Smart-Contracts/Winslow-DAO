@@ -85,7 +85,7 @@ contract HarmoniaDAO_V1_Core{
     //Public state-modifing functions
 
     function SubmitProposal() public returns(bool success, uint256 Identifier){
-        
+
 
     }
 
@@ -97,7 +97,7 @@ contract HarmoniaDAO_V1_Core{
 
     //  Internal Executioning
     function InitializeSimpleProposal(SimpleProposalTypes Type, ) internal returns(uint256 identifier){
-
+        uint256 New
     }
 
     function InitializeProxyProposal() internal returns(uint256 identifier){
