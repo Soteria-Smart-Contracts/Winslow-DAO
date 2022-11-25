@@ -46,6 +46,7 @@ contract HarmoniaDAO_V1_Core{
 
     struct Proposal{
         uint256 ProposalID;
+        address AddressSlot; //
         ProposalStatus Status; //Types declared in enum
         SecurityStatus SecurityLevel; //Types declared in enum
         ProposalTypes ProposalType; //Types declared in enum
