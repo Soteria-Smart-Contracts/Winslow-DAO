@@ -176,3 +176,7 @@ interface TreasuryV1{//Only for the first treasury, if the DAO contract is not u
     function GetBackingValueEther(uint256 CLDamount) external view returns(uint256 EtherBacking);
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
 }
+
+interface EROS{
+    function DAO
+}
