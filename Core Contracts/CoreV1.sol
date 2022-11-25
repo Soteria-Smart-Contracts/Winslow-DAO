@@ -93,9 +93,9 @@ contract HarmoniaDAO_V1_Core{
 
     //  Public view functions
 
-    function GetRegisteredAssetFromID(uint8 Identifier) public view returns(address Contract)
-
-
+    function GetRegisteredAssetFromID(uint8 Identifier) public view returns(address Contract){
+        return()
+    }
 
     //  Internal Executioning
     function InitializeSimpleProposal(uint256 NewIdentifier, address Slot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
