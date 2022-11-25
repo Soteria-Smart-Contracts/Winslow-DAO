@@ -96,7 +96,9 @@ contract HarmoniaDAO_V1_Core{
 
 
     //  Internal Executioning
-    function InitializeProposal() internal returns(uint256 identifier)
+    function InitializeProposal() internal returns(uint256 identifier){
+        
+    }
 
     //    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
 
