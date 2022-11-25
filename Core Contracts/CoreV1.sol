@@ -100,7 +100,11 @@ contract HarmoniaDAO_V1_Core{
 
     }
 
-    function InitializeProposal() internal returns(uint256 identifier){
+    function InitializeProxyProposal() internal returns(uint256 identifier){
+
+    }
+
+    function InitializeProxyProposal() internal returns(uint256 identifier){
 
     }
 
