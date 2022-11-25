@@ -27,7 +27,7 @@ contract ErosProposal{
 
     function Execute() external OnlyDAO returns(bool success){
         Executed = true; //Updates first to avoid recursive calling
-        
+
         //External or internal code to execute
         ExtCon(ExternalContract).Update("This value was updated by the DAO!");
         //External or internal code to execute
@@ -56,6 +56,24 @@ interface ExtCon{ //Interface name can be different, ensure it is updated correc
     function ErosImplemented() external view returns(bool);
     function Update(string calldata) external;
 }
+
+//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
+interface TreasuryV1{
+//Public State Modifing Functions
+    function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external;
+    function UserAssetClaim(uint256 CLDamount) external returns(bool success);
+    function AssetClaim(uint256 CLDamount, address From, address payable To) external returns(bool success);
+//OnlyDAO or OnlyEros State Modifing Functions
+    function TransferETH(uint256 amount, address payable receiver) external;
+    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
+    function RegisterAsset(address tokenAddress, uint8 slot) external;
+    function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
+//Public View Functions
+    function IsRegistered(address TokenAddress) external view returns(bool);
+    function GetBackingValueEther(uint256 CLDamount) external view returns(uint256 EtherBacking);
+    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
+}
+
 
 interface ERC20 {
   function balanceOf(address owner) external view returns (uint256);
