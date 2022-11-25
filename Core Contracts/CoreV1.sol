@@ -125,7 +125,6 @@ contract HarmoniaDAO_V1_Core{
         Proposals.push(NewProposal);
 
         return(NewIdentifier);
-
     }
 
     //    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
