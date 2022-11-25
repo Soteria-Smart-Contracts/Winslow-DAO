@@ -99,7 +99,7 @@ contract HarmoniaDAO_V1_Core{
     //  Internal Executioning
     function InitializeSimpleProposal(uint256 NewIdentifier, address Slot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
         require(VotingLength >= 86400);
-        if(SimpleProposalTypes)
+        if(SimpleType != )
         Proposal memory NewProposal = Proposal(NewIdentifier, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleProposalTypes(SimpleType), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
         Proposals.push(NewProposal);
 
