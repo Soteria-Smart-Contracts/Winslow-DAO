@@ -106,7 +106,7 @@ contract HarmoniaDAO_V1_Core{
 
     function InitializeProxyProposal() internal returns(uint256 identifier){
         require(VotingLength >= 86400);
-        Proposal memory NewProposal = Proposal(NewIdentifier, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleProposalTypes(SimpleType), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
+        Proposal memory NewProposal = Proposal(NewIdentifier, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
         Proposals.push(NewProposal);
 
         return(NewIdentifier);
