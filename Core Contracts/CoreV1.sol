@@ -46,7 +46,7 @@ contract HarmoniaDAO_V1_Core{
 
     struct Proposal{
         uint256 ProposalID;
-        address AddressSlot; //To set an address either as a receiver,  for approval of Eros
+        address AddressSlot; //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal
         ProposalStatus Status; //Types declared in enum
         SecurityStatus SecurityLevel; //Types declared in enum
         ProposalTypes ProposalType; //Types declared in enum
