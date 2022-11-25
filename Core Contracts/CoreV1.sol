@@ -122,7 +122,7 @@ contract HarmoniaDAO_V1_Core{
     function InitializeErosProposal(uint256 NewIdentifier, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 identifier){
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         require(Slot != address(0));
-        
+
         Proposal memory NewProposal = Proposal(NewIdentifier, Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
         Proposals.push(NewProposal);
 
@@ -175,5 +175,4 @@ interface TreasuryV1{//Only for the first treasury, if the DAO contract is not u
     function IsRegistered(address TokenAddress) external view returns(bool);
     function GetBackingValueEther(uint256 CLDamount) external view returns(uint256 EtherBacking);
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
-
 }
