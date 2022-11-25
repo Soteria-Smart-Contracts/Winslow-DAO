@@ -85,7 +85,7 @@ contract HarmoniaDAO_V1_Core{
     //Public state-modifing functions
 
     function SubmitProposal() public returns(bool success, uint Identifier){
-        
+
 
     }
 
@@ -96,6 +96,7 @@ contract HarmoniaDAO_V1_Core{
 
 
     //  Internal Executioning
+    function Initi
 
     //    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
 
