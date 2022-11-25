@@ -97,7 +97,7 @@ contract HarmoniaDAO_V1_Core{
 
     //  Internal Executioning
     function InitializeSimpleProposal(uint256 NewIdentifier, SimpleProposalTypes Type, uint256 VotingLength) internal returns(uint256 Identifier){
-        require(VotingLe);
+        require(VotingLength == );
         Proposal NewProposal = Proposal(NewIdentifier, 0, 0, 0, )
         Proposals.push()
     }
