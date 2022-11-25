@@ -9,7 +9,7 @@ contract ErosProposal{
     //Fund request/s for the proposal, can only receive one asset per proposal, may receive both ERC20 and Ether
     uint256 public RequestEther = 0 ether; //Optional, can be ommited
     uint256 public RequestTokens = 0; //Optional, can be ommited
-    address public TokenIdentifier = 0x0000000000000000000000000000000000000000; //Optional, can be ommited
+    uint8 public TokenIdentifier = 0; //Optional, can be ommited
 
     //Events
     event ContractExecuted(uint256 time);
