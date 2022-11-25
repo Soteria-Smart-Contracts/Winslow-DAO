@@ -84,7 +84,8 @@ contract HarmoniaDAO_V1_Core{
 
     //Public state-modifing functions
 
-    function SubmitProposal() public returns(bool success, uint Identif){
+    function SubmitProposal() public returns(bool success, uint Identifier){
+        
 
     }
 
