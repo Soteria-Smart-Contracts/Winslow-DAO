@@ -97,11 +97,11 @@ contract HarmoniaDAO_V1_Core{
 
     //  Internal Executioning
     function InitializeSimpleProposal() internal returns(uint256 identifier){
-
+        
     }
 
     function InitializeProxyProposal() internal returns(uint256 identifier){
-        
+
     }
 
     function InitializeErosProposal() internal returns(uint256 identifier){
