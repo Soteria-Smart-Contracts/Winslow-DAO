@@ -96,8 +96,8 @@ contract HarmoniaDAO_V1_Core{
 
 
     //  Internal Executioning
-    function InitializeSimpleProposal(SimpleProposalTypes Type, ) internal returns(uint256 identifier){
-        uint256 NewID = 
+    function InitializeSimpleProposal(SimpleProposalTypes Type) internal returns(uint256 identifier){
+        uint256 NewID = Proposal
     }
 
     function InitializeProxyProposal() internal returns(uint256 identifier){
