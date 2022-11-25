@@ -50,7 +50,7 @@ contract HarmoniaDAO_V1_Core{
         SecurityStatus SecurityLevel;
         ProposalTypes ProposalType; //Types declared in enum
         SimpleProposalTypes SimpleType; //Types declared in enum
-        uint256 ProposalVotingLenght; //Minimum 24
+        uint256 ProposalVotingLenght; //Minimum 24 hours
         uint256 RequestedEtherAmount; //Optional, can be zero
         uint256 RequestedAssetAmount; //Optional, can be zero
         uint8 RequestedAssetID;
@@ -85,7 +85,7 @@ contract HarmoniaDAO_V1_Core{
     //Public state-modifing functions
 
     function SubmitProposal() public returns(bool success, uint256 Identifier){
-
+        
 
     }
 
