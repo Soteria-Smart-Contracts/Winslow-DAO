@@ -178,5 +178,5 @@ interface TreasuryV1{//Only for the first treasury, if the DAO contract is not u
 }
 
 interface EROS{
-    function DAO() external
+    function DAO() external view returns(address )
 }
