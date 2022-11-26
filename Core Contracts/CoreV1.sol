@@ -90,8 +90,8 @@ contract HarmoniaDAO_V1_Core{
         InitializeSimpleProposal(NewIdentifier);
     }
 
-    function SubmitProxyProposal(address Slot, ) public returns(bool success, uint256 Identifier){
-    }
+//   function SubmitProxyProposal(address Slot, ) public returns(bool success, uint256 Identifier){
+//    }
 
     function SubmitErosProposal(address Slot, ) public returns(bool success, uint256 Identifier){
     }
