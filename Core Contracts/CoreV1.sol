@@ -86,7 +86,8 @@ contract HarmoniaDAO_V1_Core{
     //Public state-modifing functions
 
     function SubmitSimpleProposal(address Slot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
-        InitializeSimpleProposal
+        uint256 NewIden
+        InitializeSimpleProposal()
     }
 
     function SubmitProxyProposal(address Slot, ) public returns(bool success, uint256 Identifier){
