@@ -124,7 +124,7 @@ contract HarmoniaDAO_V1_Core{
 
     function InitializeErosProposal(uint256 NewIdentifier, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 identifier){
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
-        require(Slot != address(0), "ProxyProposals must be a contract");
+        require(Slot != address(0), "ErosProposals must be a contract");
 
         Proposal memory NewProposal = Proposal(NewIdentifier, Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
         Proposals.push(NewProposal);
