@@ -87,7 +87,7 @@ contract HarmoniaDAO_V1_Core{
 
     function SubmitSimpleProposal(address Slot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
         uint256 NewIdentifier = Proposals.length;
-        InitializeSimpleProposal()
+        InitializeSimpleProposal(NewIdentifier)
     }
 
     function SubmitProxyProposal(address Slot, ) public returns(bool success, uint256 Identifier){
