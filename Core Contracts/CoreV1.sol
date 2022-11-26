@@ -99,7 +99,7 @@ contract HarmoniaDAO_V1_Core{
             require(Slot == address(0), "If a simple proposal is not of the type AssetSend, then the slot address must be 0");
         }
 
-        Proposal memory NewProposal = Proposal(NewIdentifier, Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleProposalTypes(SimpleType), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
+        Proposal memory NewProposal = Proposal(NewIdentifier, Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
         Proposals.push(NewProposal);
 
         return(NewIdentifier);
