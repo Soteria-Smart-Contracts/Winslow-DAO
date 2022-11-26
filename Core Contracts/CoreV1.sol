@@ -89,7 +89,7 @@ contract HarmoniaDAO_V1_Core{
         uint256 NewIdentifier = Proposals.length;
         InitializeSimpleProposal(NewIdentifier, Slot, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
-        //Call et
+        //Call voting, tell it to initialize 
     }
 
 //   function SubmitProxyProposal(address Slot, ) public returns(bool success, uint256 Identifier){
