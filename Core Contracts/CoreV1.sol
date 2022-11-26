@@ -88,10 +88,10 @@ contract HarmoniaDAO_V1_Core{
     function SubmitSimpleProposal(address Slot, ) public returns(bool success, uint256 Identifier){
     }
 
-    function SubmitSimpleProposal(address Slot, ) public returns(bool success, uint256 Identifier){
+    function SubmitProxyProposal(address Slot, ) public returns(bool success, uint256 Identifier){
     }
 
-    function SubmitSimpleProposal(address Slot, ) public returns(bool success, uint256 Identifier){
+    function SubmitErosProposal(address Slot, ) public returns(bool success, uint256 Identifier){
     }
 
 
