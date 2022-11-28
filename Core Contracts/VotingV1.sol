@@ -121,7 +121,7 @@ contract VotingSystemV1 {
         );
         require(
             VoteChoice == 0 || VoteChoice == 1, 
-            "VotingSystemV1.CastVote: You must either vote 'Yes' or 'No'"
+            "VotingSystemV1.CastVote: You must either vote 'Yea' or 'Nay'"
         );
         require(proposal[proposalId].Passed == 0, 'VotingSystemV1.CastVote: This proposal has ended');
         require(!voterInfo[proposalId][msg.sender].Voted, "VotingSystemV1.CastVote: You already voted in this proposal");
