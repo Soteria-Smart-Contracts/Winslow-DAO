@@ -20,8 +20,8 @@ contract VotingSystemV1 {
     event NewDAOAddress(address NewAddress);
 
     enum Vote{
-        Yea,
-        Nay
+        YEA,
+        NAY
     }
 
     struct ProposalCore {
@@ -120,7 +120,7 @@ contract VotingSystemV1 {
             "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount"
         );
         require(
-            VoteChoice == Yea || VoteChoice == 1, 
+            VoteChoice == YEA || VoteChoice == 1, 
             "VotingSystemV1.CastVote: You must either vote 'Yea' or 'Nay'"
         );
         require(proposal[proposalId].Passed == 0, 'VotingSystemV1.CastVote: This proposal has ended');
