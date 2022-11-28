@@ -6,17 +6,17 @@ contract VotingSystemV1 {
     // Proposal executioner's bonus, proposal incentive burn percentage 
     address public DAO;
     address public CLD;
-    uint public MemberHolding;
+    uint256 public MemberHolding;
     // These two are in Basis Points
-    uint public ExecusCut;
-    uint public BurnCut;
+    uint256 public ExecusCut;
+    uint256 public BurnCut;
 
-    event ProposalCreated(address proposer, uint256 proposalID, uint voteStart, uint voteEnd);
-    event ProposalPassed(address executor, uint proposalId, uint amountBurned, uint executShare);
-    event ProposalNotPassed(address executor, uint proposalId, uint amountBurned, uint executShare);
-    event CastedVote(uint proposalId, string option, uint votesCasted);
-    event ProposalIncentivized(address donator, uint proposalId, uint amountDonated);
-    event IncentiveWithdrawed(uint remainingIncentive);
+    event ProposalCreated(address proposer, uint256 proposalID, uint256 voteStart, uint256 voteEnd);
+    event ProposalPassed(address executor, uint256 proposalId, uint256 amountBurned, uint256 executShare);
+    event ProposalNotPassed(address executor, uint256 proposalId, uint256 amountBurned, uint256 executShare);
+    event CastedVote(uint256 proposalId, string option, uint256 votesCasted);
+    event ProposalIncentivized(address donator, uint256 proposalId, uint256 amountDonated);
+    event IncentiveWithdrawed(uint256 remainingIncentive);
     event NewDAOAddress(address NewAddress);
 
     enum Vote{
@@ -26,22 +26,22 @@ contract VotingSystemV1 {
 
     struct ProposalCore {
         uint256 ProposalID;
-        uint VoteStarts;
-        uint VoteEnds;
+        uint256 VoteStarts;
+        uint256 VoteEnds;
         uint8 Passed; // Can be 0 "Not voted", 1 "Passed" or 2 "Not Passed"
-        uint ActiveVoters;
-        uint ApprovingVotes;
-        uint RefusingVotes;
+        uint256 ActiveVoters;
+        uint256 ApprovingVotes;
+        uint256 RefusingVotes;
         bool Executed;
-        uint IncentiveAmount;
-        uint IncentiveShare;
-        uint AmountToBurn;
-        uint AmountToExecutioner;
+        uint256 IncentiveAmount;
+        uint256 IncentiveShare;
+        uint256 AmountToBurn;
+        uint256 AmountToExecutioner;
     }
 
     struct VoterInfo {
-        uint VotesLocked;
-        uint AmountDonated;
+        uint256 VotesLocked;
+        uint256 AmountDonated;
         bool Voted;
         bool IsExecutioner;
     }
@@ -67,7 +67,7 @@ contract VotingSystemV1 {
     }
 
     // To do people should lock tokens in order to propose?
-    function CreateProposal(address Proposer, uint256 ProposalID, uint Time) external OnlyDAO {
+    function CreateProposal(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
 
         proposal.push(
@@ -90,7 +90,7 @@ contract VotingSystemV1 {
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
 
-    function IncentivizeProposal(uint proposalId, uint amount) external {
+    function IncentivizeProposal(uint256 proposalId, uint256 amount) external {
         require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), 
             "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal"
         );
@@ -110,7 +110,7 @@ contract VotingSystemV1 {
         emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].IncentiveAmount);
     }
 
-    function CastVote(uint amount, uint proposalId, Vote VoteChoice) external {
+    function CastVote(uint256 amount, uint256 proposalId, Vote VoteChoice) external {
         require(
             ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
             "VotingSystemV1.CastVote: You have not given the voting contract enough allowance"
@@ -143,7 +143,7 @@ contract VotingSystemV1 {
     }
 
     // Proposal execution code
-    function ExecuteProposal(uint proposalId) external {
+    function ExecuteProposal(uint256 proposalId) external {
         require(block.timestamp >= proposal[proposalId].VoteEnds, 
             "VotingSystemV1.ExecuteProposal: Voting has not ended");      
         require(proposal[proposalId].Executed == false, 
@@ -175,7 +175,7 @@ contract VotingSystemV1 {
         proposal[proposalId].Executed = true;
     }
 
-    function WithdrawMyTokens(uint proposalId) external {
+    function WithdrawMyTokens(uint256 proposalId) external {
         if (proposal[proposalId].ActiveVoters > 0) {
             require(proposal[proposalId].Executed, 
             'VotingSystemV1.WithdrawMyTokens: Proposal has not been executed!');
@@ -187,7 +187,7 @@ contract VotingSystemV1 {
         emit IncentiveWithdrawed(proposal[proposalId].IncentiveAmount);
     }
 
-    function SetTaxAmount(uint amount, string memory taxToSet) public OnlyDAO returns (bool) {
+    function SetTaxAmount(uint256 amount, string memory taxToSet) public OnlyDAO returns (bool) {
         bytes32 _setHash = keccak256(abi.encodePacked(taxToSet));
         bytes32 _execusCut = keccak256(abi.encodePacked("execusCut"));
         bytes32 _burnCut = keccak256(abi.encodePacked("burnCut"));
@@ -214,41 +214,6 @@ contract VotingSystemV1 {
         DAO = newAddr;        
         emit NewDAOAddress(newAddr);
     }
-
-    function SeeProposalInfo(uint proposalId) 
-    public 
-    view 
-    returns (
-        uint256,
-        uint,
-        uint,
-        uint8,
-        uint,
-        uint,
-        uint,
-        bool,
-        uint,
-        uint,
-        uint,
-        uint
-    ) 
-    {
-        ProposalCore memory _proposal = proposal[proposalId];      
-        return (
-            _proposal.ProposalID,
-            _proposal.VoteStarts,
-            _proposal.VoteEnds,
-            _proposal.Passed,
-            _proposal.ActiveVoters,
-            _proposal.ApprovingVotes,
-            _proposal.RefusingVotes,
-            _proposal.Executed,
-            _proposal.IncentiveAmount,
-            _proposal.IncentiveShare,
-            _proposal.AmountToBurn,
-            _proposal.AmountToExecutioner
-            );
-    }
     
     /////////////////////////////////////////
     /////        Internal functions     /////
@@ -256,7 +221,7 @@ contract VotingSystemV1 {
 
     // TO DO Refactor this
     function _returnTokens(
-        uint _proposalId,
+        uint256 _proposalId,
         address _voterAddr
         )
         internal {
@@ -283,9 +248,9 @@ contract VotingSystemV1 {
         voterInfo[_proposalId][_voterAddr].VotesLocked -= voterInfo[_proposalId][_voterAddr].VotesLocked;
     }
 
-    function _updateTaxesAndIndIncentive(uint _proposalId, bool allOfThem) internal  {
+    function _updateTaxesAndIndIncentive(uint256 _proposalId, bool allOfThem) internal  {
         if (allOfThem) {            
-            uint newBurnAmount = proposal[_proposalId].IncentiveAmount * BurnCut / 10000;
+            uint256 newBurnAmount = proposal[_proposalId].IncentiveAmount * BurnCut / 10000;
             proposal[_proposalId].AmountToBurn = newBurnAmount;
 
             uint newToExecutAmount = proposal[_proposalId].IncentiveAmount * ExecusCut / 10000;
@@ -298,8 +263,8 @@ contract VotingSystemV1 {
 
     }
 
-    function _updateIncentiveShare(uint _proposalId, uint _baseTokenAmount) internal {
-        uint totalTokenAmount = _baseTokenAmount - (proposal[_proposalId].AmountToBurn + proposal[_proposalId].AmountToExecutioner);
+    function _updateIncentiveShare(uint256 _proposalId, uint256 _baseTokenAmount) internal {
+        uint256 totalTokenAmount = _baseTokenAmount - (proposal[_proposalId].AmountToBurn + proposal[_proposalId].AmountToExecutioner);
         if (proposal[_proposalId].ActiveVoters > 0) {
             proposal[_proposalId].IncentiveShare = totalTokenAmount / proposal[_proposalId].ActiveVoters;
         } else {
@@ -313,11 +278,11 @@ contract VotingSystemV1 {
 
     function viewVoterInfo(
         address voter, 
-        uint proposalId
+        uint256 proposalId
         ) 
         external view returns (
-        uint,
-        uint,  
+        uint256,
+        uint256,  
         bool 
     ) 
     {
@@ -336,27 +301,9 @@ contract VotingSystemV1 {
 interface ERC20 {
   function balanceOf(address owner) external view returns (uint256);
   function allowance(address owner, address spender) external view returns (uint256);
-  function approve(address spender, uint value) external returns (bool);
-  function transfer(address to, uint value) external returns (bool);
+  function approve(address spender, uint256 value) external returns (bool);
+  function transfer(address to, uint256 value) external returns (bool);
   function transferFrom(address from, address to, uint256 value) external returns (bool); 
-  function totalSupply() external view returns (uint);
+  function totalSupply() external view returns (uint256);
   function Burn(uint256 _BurnAmount) external;
-}
-
-//Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
-interface TreasuryV1{
-    //Public State Modifing Functions
-    function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external;
-    function UserAssetClaim(uint256 CLDamount) external returns(bool success);
-    function AssetClaim(uint256 CLDamount, address From, address payable To) external returns(bool success);
-    //OnlyDAO or OnlyEros State Modifing Functions
-    function TransferETH(uint256 amount, address payable receiver) external;
-    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external;
-    function RegisterAsset(address tokenAddress, uint8 slot) external;
-    function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
-    //Public View Functions
-    function IsRegistered(address TokenAddress) external view returns(bool);
-    function GetBackingValueEther(uint256 CLDamount) external view returns(uint256 EtherBacking);
-    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
-
 }
