@@ -110,7 +110,7 @@ contract VotingSystemV1 {
         emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].IncentiveAmount);
     }
 
-    function CastVote(uint amount, uint proposalId, Vote Vot) external {
+    function CastVote(uint amount, uint proposalId, Vote VoteInput) external {
         require(
             ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
             "VotingSystemV1.CastVote: You have not given the voting contract enough allowance"
