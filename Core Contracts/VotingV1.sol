@@ -128,7 +128,7 @@ contract VotingSystemV1 {
         require(block.timestamp <= proposal[proposalId].VoteEnds, "VotingSystemV1.CastVote: The voting period has ended");
 
 
-        if(VoteChoice == 0) {
+        if(VoteChoice == Vote(0)) {
             proposal[proposalId].ApprovingVotes += amount;
             emit CastedVote(proposalId, "Yes", amount);
         } else {
