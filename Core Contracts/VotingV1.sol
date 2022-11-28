@@ -19,7 +19,9 @@ contract VotingSystemV1 {
     event IncentiveWithdrawed(uint remainingIncentive);
     event NewDAOAddress(address NewAddress);
 
-    enum Vote
+    enum Vote{
+        
+    }
 
     struct ProposalCore {
         uint256 ProposalID;
