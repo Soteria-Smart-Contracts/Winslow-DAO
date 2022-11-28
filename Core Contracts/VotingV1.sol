@@ -20,7 +20,8 @@ contract VotingSystemV1 {
     event NewDAOAddress(address NewAddress);
 
     enum Vote{
-        Yea
+        Yea,
+        Nay
     }
 
     struct ProposalCore {
