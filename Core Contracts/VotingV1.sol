@@ -120,7 +120,7 @@ contract VotingSystemV1 {
             "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount"
         );
         require(
-            VoteChoice == 0 || VoteChoice == 1, 
+            VoteChoice == Yea || VoteChoice == 1, 
             "VotingSystemV1.CastVote: You must either vote 'Yea' or 'Nay'"
         );
         require(proposal[proposalId].Passed == 0, 'VotingSystemV1.CastVote: This proposal has ended');
@@ -128,7 +128,7 @@ contract VotingSystemV1 {
         require(block.timestamp <= proposal[proposalId].VoteEnds, "VotingSystemV1.CastVote: The voting period has ended");
 
 
-        if(yesOrNo == 0) {
+        if(VoteChoice == 0) {
             proposal[proposalId].ApprovingVotes += amount;
             emit CastedVote(proposalId, "Yes", amount);
         } else {
