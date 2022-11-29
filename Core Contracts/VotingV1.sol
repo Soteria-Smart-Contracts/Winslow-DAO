@@ -75,7 +75,7 @@ contract VotingSystemV1 {
         proposal.push(
             ProposalCore({
                 ProposalID: ProposalID,
-                VoteStarts: block.timestamp,
+                VoteStarts: block.timestamp, //Vote will only start when the DAO says so, so not at this point, must await security verification
                 VoteEnds: block.timestamp + Time,
                 Passed: 0, // Not voted yet
                 ActiveVoters: 0,
