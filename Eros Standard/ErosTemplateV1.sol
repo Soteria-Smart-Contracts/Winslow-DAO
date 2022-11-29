@@ -52,11 +52,6 @@ interface HarmoniaDAO{
     function ErosProposalExecuted(address) external; //This function in the DAO must require that the msg.sender is the same as the input
 }
 
-interface ExtCon{ //Interface name can be different, ensure it is updated correctly with the external functions to be used in execution
-    function ErosImplemented() external view returns(bool);
-    function Update(string calldata) external;
-}
-
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
 interface TreasuryV1{ //set up checker
 //Public State Modifing Functions
@@ -73,6 +68,11 @@ interface TreasuryV1{ //set up checker
     function RegisteredAssets(uin8 AssetID) external view returns(address);
     function GetBackingValueEther(uint256 CLDamount) external view returns(uint256 EtherBacking);
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
+}
+
+interface ExtCon{ //Interface name can be different, ensure it is updated correctly with the external functions to be used in execution
+    function ErosImplemented() external view returns(bool);
+    function Update(string calldata) external;
 }
 
 
