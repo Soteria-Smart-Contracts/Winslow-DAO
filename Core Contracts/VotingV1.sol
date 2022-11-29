@@ -92,7 +92,7 @@ contract VotingSystemV1 {
 
     function IncentivizeProposal(uint256 proposalId, uint256 amount) external {
         require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), 
-            "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal"
+            "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal or you may not have given the "
         );
 //        require(ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
 //            "VotingSystemV1.IncentivizeProposal: You have not given Voting enough allowance" //Dont need this, transferfrom will fail first
