@@ -24,7 +24,7 @@ contract VotingSystemV1 {
         NAY
     }
 
-    //Create vote status 
+    //Create vote status enum instead of using uint8
 
     struct ProposalCore {
         uint256 ProposalID;
