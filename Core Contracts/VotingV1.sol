@@ -99,9 +99,7 @@ contract VotingSystemV1 {
 //        );
         require(proposal[proposalId].Passed == 0, 
             'VotingSystemV1.IncentivizeProposal: This proposal has ended');
-        require(block.timestamp <= proposal[proposalId].VoteEnds, 
-            "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!"
-        );
+        require(block.timestamp <= proposal[proposalId].VoteEnds, "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!");
 
         proposal[proposalId].IncentiveAmount += amount;
         voterInfo[proposalId][msg.sender].AmountDonated += amount;
