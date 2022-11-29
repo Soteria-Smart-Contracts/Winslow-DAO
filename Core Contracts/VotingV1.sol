@@ -95,7 +95,7 @@ contract VotingSystemV1 {
             "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal"
         );
 //        require(ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
-//            "VotingSystemV1.IncentivizeProposal: You have not given Voting enough allowance" 
+//            "VotingSystemV1.IncentivizeProposal: You have not given Voting enough allowance" //Dont need this, transferfrom will fail first
 //        );
         require(proposal[proposalId].Passed == 0, 
             'VotingSystemV1.IncentivizeProposal: This proposal has ended');
