@@ -106,7 +106,7 @@ contract VotingSystemV1 {
 
         _updateTaxesAndIndIncentive(proposalId, true);
         emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].IncentiveAmount);
-    }
+    }//Checked
 
     function CastVote(uint256 amount, uint256 proposalId, Vote VoteChoice) external {
         require(
