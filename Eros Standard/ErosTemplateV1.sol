@@ -70,7 +70,7 @@ interface TreasuryV1{ //set up checker
     function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
 //Public View Functions
     function IsRegistered(address TokenAddress) external view returns(bool);
-    function RegisteredAssets()
+    function RegisteredAssets(uin8 AssetID)
     function GetBackingValueEther(uint256 CLDamount) external view returns(uint256 EtherBacking);
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
 }
