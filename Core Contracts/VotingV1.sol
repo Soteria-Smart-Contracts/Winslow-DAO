@@ -24,6 +24,8 @@ contract VotingSystemV1 {
         NAY
     }
 
+    //Create vote status 
+
     struct ProposalCore {
         uint256 ProposalID;
         uint256 VoteStarts;
