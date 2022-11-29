@@ -48,7 +48,7 @@ contract ErosProposal{
 }
 
 interface HarmoniaDAO{
-    function Treasury() external view returns(address)
+    function Treasury() external view returns(address);
 }
 
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
