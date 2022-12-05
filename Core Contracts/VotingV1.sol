@@ -82,8 +82,8 @@ contract VotingSystemV1 {
             ProposalCore({
                 ProposalID,
                 0, //Vote will only start when the DAO says so, so not at this point, must await security verification
-                VoteEnds: 0,
-                Passed: 0, // Not voted yet
+                0,
+                 0, // Not voted yet
                 ActiveVoters: 0,
                 ApprovingVotes: 0,
                 RefusingVotes: 0,
