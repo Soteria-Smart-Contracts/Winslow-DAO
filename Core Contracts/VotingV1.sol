@@ -83,10 +83,10 @@ contract VotingSystemV1 {
                 ProposalID,
                 0, //Vote will only start when the DAO says so, so not at this point, must await security verification
                 0,
-                 0, // Not voted yet
-                ActiveVoters: 0,
-                ApprovingVotes: 0,
-                RefusingVotes: 0,
+                0, // Not voted yet
+                0,
+                0,
+                0,
                 Executed: false,
                 IncentiveAmount: 0,
                 IncentiveShare: 0,
