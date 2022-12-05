@@ -36,7 +36,7 @@ contract VotingSystemV1 {
         uint256 ProposalID;
         uint256 VoteStarts;
         uint256 VoteEnds;
-        uint8 Passed; // Can be 0 "Not voted", 1 "Passed" or 2 "Not Passed"
+        VoteResult Result;
         uint256 ActiveVoters;
         uint256 ApprovingVotes;
         uint256 RefusingVotes;
