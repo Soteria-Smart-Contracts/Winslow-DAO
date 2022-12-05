@@ -26,7 +26,7 @@ contract VotingSystemV1 {
 
     enum VoteResult{
         APPROVED,
-        
+        REFUSED,
     }
 
     //Create vote status enum instead of using uint8
