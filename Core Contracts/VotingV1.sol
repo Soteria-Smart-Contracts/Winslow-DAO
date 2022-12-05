@@ -55,7 +55,7 @@ contract VotingSystemV1 {
     }
 
     // Proposals being tracked by id here
-    ProposalCore[] public proposal;
+    ProposalCore[] public VotingInstances;
     // Map user addresses over their info
     mapping (uint256 => mapping (address => VoterInfo)) internal voterInfo;
  
