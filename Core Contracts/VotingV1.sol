@@ -24,7 +24,9 @@ contract VotingSystemV1 {
         NAY
     }
 
-    enum 
+    enum VoteResult{
+        
+    }
 
     //Create vote status enum instead of using uint8
 
