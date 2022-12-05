@@ -41,7 +41,7 @@ contract VotingSystemV1 {
         uint256 YEAvotes;
         uint256 NAYvotes;
         bool Executed;
-        uint256 IncentiveAmount;
+        uint256 TotalIncentive;
         uint256 IncentivePerVote;
         uint256 AmountToBurn;
         uint256 AmountToExecutioner;
