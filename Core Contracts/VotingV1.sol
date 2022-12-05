@@ -144,15 +144,15 @@ contract VotingSystemV1 {
         ERC20(CLD).Burn(VotingInstances[proposalId].AmountToBurn);
         VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToBurn;
         
-        ERC20(CLD).transfer(msg.sender, proposal[proposalId].AmountToExecutioner);
-        proposal[proposalId].IncentiveAmount -= proposal[proposalId].AmountToExecutioner;
+        ERC20(CLD).transfer(msg.sender, VotingInstances[proposalId].AmountToExecutioner);
+        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToExecutioner;
 
-        if (proposal[proposalId].ApprovingVotes > proposal[proposalId].RefusingVotes) {
+        if (VotingInstances[proposalId].ApprovingVotes > VotingInstances[proposalId].RefusingVotes) {
             // TO DO Connect this to the real core
             proposal[proposalId].Passed = 1;
 //            FakeDAO(DAO).ExecuteCoreProposal(proposalId, true); //turn into interface
 
-            emit ProposalPassed(msg.sender, proposalId, proposal[proposalId].AmountToBurn, proposal[proposalId].AmountToExecutioner);
+            emit ProposalPassed(msg.sender, proposalId, VotingInstances[proposalId].AmountToBurn, proposal[proposalId].AmountToExecutioner);
         } else {
             // TO DO Execution (or lack of)
             proposal[proposalId].Passed = 2;
