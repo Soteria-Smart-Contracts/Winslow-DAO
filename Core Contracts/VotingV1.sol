@@ -25,6 +25,7 @@ contract VotingSystemV1 {
     }
 
     enum VoteResult{
+        APPROVED,
         
     }
 
