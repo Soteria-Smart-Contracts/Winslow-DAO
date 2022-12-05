@@ -39,7 +39,7 @@ contract VotingSystemV1 {
         VoteResult Result;
         uint256 ActiveVoters;
         uint256 YEAvotes;
-        uint256 RefusingVotes;
+        uint256 NAYvotes;
         bool Executed;
         uint256 IncentiveAmount;
         uint256 IncentiveShare;
