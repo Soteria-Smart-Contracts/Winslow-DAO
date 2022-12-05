@@ -78,8 +78,7 @@ contract VotingSystemV1 {
     function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
 
-        proposal.push(
-            ProposalCore(ProposalID,
+        proposal.push(ProposalCore(ProposalID,
                 0, //Vote will only start when the DAO says so, so not at this point, must await security verification
                 0,
                 0, // Not voted yet
