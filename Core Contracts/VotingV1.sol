@@ -36,8 +36,8 @@ contract VotingSystemV1 {
         uint256 ProposalID;  //DAO Proposal for voting instance
         uint256 VoteStarts;  //Unix Time
         uint256 VoteEnds;    //Unix Time
-        VoteResult Result;   // Using VoteResult enum
-        uint256 ActiveVoters;// 
+        VoteResult Result;   //Using VoteResult enum
+        uint256 ActiveVoters;//Total Number of users that have voted
         uint256 YEAvotes;
         uint256 NAYvotes;
         bool Executed;
