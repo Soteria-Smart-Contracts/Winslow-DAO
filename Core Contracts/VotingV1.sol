@@ -118,15 +118,15 @@ contract VotingSystemV1 {
 
 
         if(VoteChoice == Vote(0)) {
-            proposal[proposalId].ApprovingVotes += amount;
+            VotingInstances[proposalId].ApprovingVotes += amount;
             emit CastedVote(proposalId, "Yes", amount);
         } else {
-            proposal[proposalId].RefusingVotes += amount;
+            VotingInstances[proposalId].RefusingVotes += amount;
             emit CastedVote(proposalId, "No", amount);
         }
         voterInfo[proposalId][msg.sender].VotesLocked += amount;
         voterInfo[proposalId][msg.sender].Voted = true;
-        proposal[proposalId].ActiveVoters += 1;
+        VotingInstances[proposalId].ActiveVoters += 1;
 
         _updateTaxesAndIndIncentive(proposalId, false);
     }
