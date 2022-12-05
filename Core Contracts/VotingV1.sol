@@ -36,7 +36,7 @@ contract VotingSystemV1 {
         uint256 ProposalID;
         uint256 VoteStarts; //Unix Time
         uint256 VoteEnds; //Unix Time
-        VoteResult Result;// 
+        VoteResult Result;// Using VoteResult enum
         uint256 ActiveVoters;
         uint256 YEAvotes;
         uint256 NAYvotes;
