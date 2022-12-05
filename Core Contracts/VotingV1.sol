@@ -34,8 +34,8 @@ contract VotingSystemV1 {
 
     struct ProposalCore {
         uint256 ProposalID;
-        uint256 VoteStarts;
-        uint256 VoteEnds;
+        uint256 VoteStarts; //Unix Time
+        uint256 VoteEnds; //Unix Time
         VoteResult Result;
         uint256 ActiveVoters;
         uint256 YEAvotes;
