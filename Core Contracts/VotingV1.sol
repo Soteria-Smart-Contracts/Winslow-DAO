@@ -44,7 +44,7 @@ contract VotingSystemV1 {
         uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for voting incentives, burning and execution reward
         uint256 IncentivePerVote;//Total amount of CLD per CLD voted 
         uint256 CLDToBurn;       //Total amount of CLD to be burned on proposal execution
-        uint256 CLDToExecutioner;
+        uint256 CLDToExecutioner;//
     }
 
     struct VoterInfo {
