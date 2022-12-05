@@ -96,7 +96,7 @@ contract VotingSystemV1 {
         voterInfo[proposalId][msg.sender].AmountDonated += amount;
 
         _updateTaxesAndIndIncentive(proposalId, true);
-        emit ProposalIncentivized(msg.sender, proposalId, VotingInstances[proposalId].IncentiveAmount);
+        emit ProposalIncentivized(msg.sender, proposalId, VotingInstances[proposalId].TotalIncentive);
     }//Checked
 
     function CastVote(uint256 amount, uint256 proposalId, Vote VoteChoice) external {
