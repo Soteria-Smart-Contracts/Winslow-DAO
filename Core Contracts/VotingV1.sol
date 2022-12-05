@@ -75,7 +75,7 @@ contract VotingSystemV1 {
     }
 
     // To do people should lock tokens in order to propose?
-    function CreateProposal(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
+    function InitializeVote(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
 
         proposal.push(
