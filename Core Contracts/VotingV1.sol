@@ -89,9 +89,9 @@ contract VotingSystemV1 {
                 0,
                 false,
                 0,
-                IncentiveShare: 0,
-                AmountToBurn: 0,
-                AmountToExecutioner: 0
+                0,
+                0,
+                0
             })
         );
 
