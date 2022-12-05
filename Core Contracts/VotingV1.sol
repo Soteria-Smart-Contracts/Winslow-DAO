@@ -165,15 +165,15 @@ contract VotingSystemV1 {
     }
 
     function WithdrawMyTokens(uint256 proposalId) external {
-        if (proposal[proposalId].ActiveVoters > 0) {
-            require(proposal[proposalId].Executed, 
+        if (VotingInstances[proposalId].ActiveVoters > 0) {
+            require(VotingInstances[proposalId].Executed, 
             'VotingSystemV1.WithdrawMyTokens: Proposal has not been executed!');
             _returnTokens(proposalId, msg.sender);
         } else {
             _returnTokens(proposalId, msg.sender);
         }
 
-        emit IncentiveWithdrawed(proposal[proposalId].IncentiveAmount);
+        emit IncentiveWithdrawed(VotingInstances[proposalId].IncentiveAmount);
     }
 
     function SetTaxAmount(uint256 amount, string memory taxToSet) public OnlyDAO returns (bool) {
