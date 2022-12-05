@@ -78,7 +78,7 @@ contract VotingSystemV1 {
     function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
 
-        proposal.push(ProposalCore(ProposalID,0,0,0,0,0,0,false,0,0,0,0));
+        VotingInstances.push(ProposalCore(ProposalID,0,0,0,0,0,0,false,0,0,0,0));
 
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
@@ -88,7 +88,7 @@ contract VotingSystemV1 {
 //        require(ERC20(CLD).allowance(msg.sender, address(this)) >= amount, 
 //            "VotingSystemV1.IncentivizeProposal: You have not given Voting enough allowance" //Dont need this, transferfrom will fail first
 //        );
-        require(proposal[proposalId].Result == VoteResult(0), 
+        require(VotingInstances[proposalId].Result == VoteResult(0), 
             'VotingSystemV1.IncentivizeProposal: This proposal has ended');
         require(block.timestamp <= proposal[proposalId].VoteEnds, "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!");
 
