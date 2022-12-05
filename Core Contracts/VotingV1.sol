@@ -253,11 +253,11 @@ contract VotingSystemV1 {
     }
 
     function _updateIncentiveShare(uint256 _proposalId, uint256 _baseTokenAmount) internal {
-        uint256 totalTokenAmount = _baseTokenAmount - (VotingInstances[_proposalId].AmountToBurn + proposal[_proposalId].AmountToExecutioner);
-        if (proposal[_proposalId].ActiveVoters > 0) {
-            proposal[_proposalId].IncentiveShare = totalTokenAmount / proposal[_proposalId].ActiveVoters;
+        uint256 totalTokenAmount = _baseTokenAmount - (VotingInstances[_proposalId].AmountToBurn + VotingInstances[_proposalId].AmountToExecutioner);
+        if (VotingInstances[_proposalId].ActiveVoters > 0) {
+            VotingInstances[_proposalId].IncentiveShare = totalTokenAmount / VotingInstances[_proposalId].ActiveVoters;
         } else {
-            proposal[_proposalId].IncentiveShare = totalTokenAmount;
+            VotingInstances[_proposalId].IncentiveShare = totalTokenAmount;
         }
     }
 
