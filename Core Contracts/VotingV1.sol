@@ -214,16 +214,16 @@ contract VotingSystemV1 {
         address _voterAddr
         )
         internal {
-        require(block.timestamp >= proposal[_proposalId].VoteEnds, 
+        require(block.timestamp >= VotingInstances[_proposalId].VoteEnds, 
             "VotingSystemV1.WithdrawMyTokens: The voting period hasn't ended");
 
-        if (proposal[_proposalId].ActiveVoters > 0) {
+        if (VotingInstances[_proposalId].ActiveVoters > 0) {
             require(
                 voterInfo[_proposalId][_voterAddr].VotesLocked > 0, 
                 "VotingSystemV1.WithdrawMyTokens: You have no VotesLocked in this proposal"
             );
-            ERC20(CLD).transfer(_voterAddr, voterInfo[_proposalId][_voterAddr].VotesLocked + proposal[_proposalId].IncentiveShare);
-            proposal[_proposalId].IncentiveAmount -= proposal[_proposalId].IncentiveShare; 
+            ERC20(CLD).transfer(_voterAddr, voterInfo[_proposalId][_voterAddr].VotesLocked + VotingInstances[_proposalId].IncentiveShare);
+            VotingInstances[_proposalId].IncentiveAmount -= VotingInstances[_proposalId].IncentiveShare; 
         } else {
             require(
                 voterInfo[_proposalId][_voterAddr].AmountDonated > 0, 
@@ -231,7 +231,7 @@ contract VotingSystemV1 {
             );
             ERC20(CLD).transfer(_voterAddr, voterInfo[_proposalId][_voterAddr].AmountDonated);
             voterInfo[_proposalId][_voterAddr].AmountDonated -= voterInfo[_proposalId][_voterAddr].AmountDonated;
-            proposal[_proposalId].IncentiveAmount -= voterInfo[_proposalId][_voterAddr].AmountDonated;
+            VotingInstances[_proposalId].IncentiveAmount -= voterInfo[_proposalId][_voterAddr].AmountDonated;
         }
         
         voterInfo[_proposalId][_voterAddr].VotesLocked -= voterInfo[_proposalId][_voterAddr].VotesLocked;
