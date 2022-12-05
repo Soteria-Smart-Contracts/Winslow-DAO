@@ -133,16 +133,16 @@ contract VotingSystemV1 {
 
     // Proposal execution code
     function ExecuteProposal(uint256 proposalId) external {
-        require(block.timestamp >= proposal[proposalId].VoteEnds, 
+        require(block.timestamp >= VotingInstances[proposalId].VoteEnds, 
             "VotingSystemV1.ExecuteProposal: Voting has not ended");      
-        require(proposal[proposalId].Executed == false, 
+        require(VotingInstances[proposalId].Executed == false, 
             "VotingSystemV1.ExecuteProposal: Proposal already executed!");
-        require(proposal[proposalId].ActiveVoters > 0, 
+        require(VotingInstances[proposalId].ActiveVoters > 0, 
             "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
         voterInfo[proposalId][msg.sender].IsExecutioner = true;
 
-        ERC20(CLD).Burn(proposal[proposalId].AmountToBurn);
-        proposal[proposalId].IncentiveAmount -= proposal[proposalId].AmountToBurn;
+        ERC20(CLD).Burn(VotingInstances[proposalId].AmountToBurn);
+        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToBurn;
         
         ERC20(CLD).transfer(msg.sender, proposal[proposalId].AmountToExecutioner);
         proposal[proposalId].IncentiveAmount -= proposal[proposalId].AmountToExecutioner;
