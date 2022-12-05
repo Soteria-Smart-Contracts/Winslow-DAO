@@ -43,8 +43,8 @@ contract VotingSystemV1 {
         bool Executed;
         uint256 TotalIncentive;
         uint256 IncentivePerVote;
-        uint256 AmountToBurn;
-        uint256 AmountToExecutioner;
+        uint256 CLDToBurn;
+        uint256 CLDToExecutioner;
     }
 
     struct VoterInfo {
