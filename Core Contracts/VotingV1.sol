@@ -90,13 +90,13 @@ contract VotingSystemV1 {
 //        );
         require(VotingInstances[proposalId].Result == VoteResult(0), 
             'VotingSystemV1.IncentivizeProposal: This proposal has ended');
-        require(block.timestamp <= proposal[proposalId].VoteEnds, "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!");
+        require(block.timestamp <= VotingInstances[proposalId].VoteEnds, "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!");
 
-        proposal[proposalId].IncentiveAmount += amount;
+        VotingInstances[proposalId].IncentiveAmount += amount;
         voterInfo[proposalId][msg.sender].AmountDonated += amount;
 
         _updateTaxesAndIndIncentive(proposalId, true);
-        emit ProposalIncentivized(msg.sender, proposalId, proposal[proposalId].IncentiveAmount);
+        emit ProposalIncentivized(msg.sender, proposalId, VotingInstances[proposalId].IncentiveAmount);
     }//Checked
 
     function CastVote(uint256 amount, uint256 proposalId, Vote VoteChoice) external {
