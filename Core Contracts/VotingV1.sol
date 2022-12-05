@@ -40,7 +40,7 @@ contract VotingSystemV1 {
         uint256 ActiveVoters;//Total Number of users that have voted
         uint256 YEAvotes;    //Votes to approve
         uint256 NAYvotes;    //Votes to refuse
-        bool Executed;
+        bool Executed;       //Updated if 
         uint256 TotalIncentive;
         uint256 IncentivePerVote;
         uint256 CLDToBurn;
