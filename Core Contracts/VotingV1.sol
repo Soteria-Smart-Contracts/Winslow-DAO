@@ -38,7 +38,7 @@ contract VotingSystemV1 {
         uint256 VoteEnds;    //Unix Time
         VoteResult Result;   //Using VoteResult enum
         uint256 ActiveVoters;//Total Number of users that have voted
-        uint256 YEAvotes;
+        uint256 YEAvotes;    //Votes Appro
         uint256 NAYvotes;
         bool Executed;
         uint256 TotalIncentive;
