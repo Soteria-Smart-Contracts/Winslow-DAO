@@ -80,8 +80,8 @@ contract VotingSystemV1 {
 
         proposal.push(
             ProposalCore({
-                ProposalID: ProposalID,
-                VoteStarts: 0, //Vote will only start when the DAO says so, so not at this point, must await security verification
+                ProposalID,
+                0, //Vote will only start when the DAO says so, so not at this point, must await security verification
                 VoteEnds: 0,
                 Passed: 0, // Not voted yet
                 ActiveVoters: 0,
