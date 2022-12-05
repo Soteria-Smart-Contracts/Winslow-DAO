@@ -79,8 +79,7 @@ contract VotingSystemV1 {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
 
         proposal.push(
-            ProposalCore({
-                ProposalID,
+            ProposalCore(ProposalID,
                 0, //Vote will only start when the DAO says so, so not at this point, must await security verification
                 0,
                 0, // Not voted yet
