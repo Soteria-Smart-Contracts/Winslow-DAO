@@ -87,7 +87,7 @@ contract VotingSystemV1 {
                 0,
                 0,
                 0,
-                Executed: false,
+                false,
                 IncentiveAmount: 0,
                 IncentiveShare: 0,
                 AmountToBurn: 0,
