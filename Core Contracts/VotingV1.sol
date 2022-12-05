@@ -239,21 +239,21 @@ contract VotingSystemV1 {
 
     function _updateTaxesAndIndIncentive(uint256 _proposalId, bool allOfThem) internal  {
         if (allOfThem) {            
-            uint256 newBurnAmount = proposal[_proposalId].IncentiveAmount * BurnCut / 10000;
-            proposal[_proposalId].AmountToBurn = newBurnAmount;
+            uint256 newBurnAmount = VotingInstances[_proposalId].IncentiveAmount * BurnCut / 10000;
+            VotingInstances[_proposalId].AmountToBurn = newBurnAmount;
 
-            uint newToExecutAmount = proposal[_proposalId].IncentiveAmount * ExecusCut / 10000;
-            proposal[_proposalId].AmountToExecutioner = newToExecutAmount;
+            uint newToExecutAmount = VotingInstances[_proposalId].IncentiveAmount * ExecusCut / 10000;
+            VotingInstances[_proposalId].AmountToExecutioner = newToExecutAmount;
 
-            _updateIncentiveShare(_proposalId, proposal[_proposalId].IncentiveAmount);
+            _updateIncentiveShare(_proposalId, VotingInstances[_proposalId].IncentiveAmount);
         } else {
-            _updateIncentiveShare(_proposalId, proposal[_proposalId].IncentiveAmount);
+            _updateIncentiveShare(_proposalId, VotingInstances[_proposalId].IncentiveAmount);
         }
 
     }
 
     function _updateIncentiveShare(uint256 _proposalId, uint256 _baseTokenAmount) internal {
-        uint256 totalTokenAmount = _baseTokenAmount - (proposal[_proposalId].AmountToBurn + proposal[_proposalId].AmountToExecutioner);
+        uint256 totalTokenAmount = _baseTokenAmount - (VotingInstances[_proposalId].AmountToBurn + proposal[_proposalId].AmountToExecutioner);
         if (proposal[_proposalId].ActiveVoters > 0) {
             proposal[_proposalId].IncentiveShare = totalTokenAmount / proposal[_proposalId].ActiveVoters;
         } else {
