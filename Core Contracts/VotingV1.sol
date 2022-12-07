@@ -179,7 +179,7 @@ contract VotingSystemV1 {
         bytes32 _memberHolding = keccak256(abi.encodePacked("memberHolding"));
 
         if (_setHash == _execusCut || _setHash == _burnCut) {
-            require(amount >= 10 && amount <= 10000, 
+            require(amount >= 1 && amount <= 10000, 
             "VotingSystemV1.SetTaxAmount: Percentages can't be higher than 100");
             ExecusCut = amount;
         } else if (_setHash == _memberHolding) {
