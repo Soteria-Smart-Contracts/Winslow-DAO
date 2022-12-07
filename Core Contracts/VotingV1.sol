@@ -133,7 +133,7 @@ contract VotingSystemV1 {
         ERC20(CLD).transfer(msg.sender, VotingInstances[proposalId].CLDToExecutioner);
 //        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToExecutioner; //Should leave this for archival
 
-        if (VotingInstances[proposalId].YEAvotes > VotingInstances[proposalId].NAYvotes) {
+        if (VotingInstances[proposalId].YEAvotes > VotingInstances[proposalId].NAYvotes) { // Seb remove all this crap and create post results function
             // TO DO Connect this to the real core
             VotingInstances[proposalId].Passed = 1;
 //            FakeDAO(DAO).ExecuteCoreProposal(proposalId, true); //turn into interface
