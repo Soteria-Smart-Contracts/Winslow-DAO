@@ -137,7 +137,7 @@ contract VotingSystemV1 {
         VoterInfo[proposalId][msg.sender].IsExecutioner = true;
 
         ERC20(CLD).Burn(VotingInstances[proposalId].CLDToBurn);
-        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToBurn;
+        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].CLDToBurn;
         
         ERC20(CLD).transfer(msg.sender, VotingInstances[proposalId].AmountToExecutioner);
         VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToExecutioner;
