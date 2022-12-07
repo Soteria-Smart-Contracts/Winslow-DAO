@@ -137,10 +137,10 @@ contract VotingSystemV1 {
         VoterInfo[proposalId][msg.sender].IsExecutioner = true;
 
         ERC20(CLD).Burn(VotingInstances[proposalId].CLDToBurn);
-        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].CLDToBurn;
+//        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].CLDToBurn;
         
         ERC20(CLD).transfer(msg.sender, VotingInstances[proposalId].AmountToExecutioner);
-        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToExecutioner;
+//        VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToExecutioner;
 
         if (VotingInstances[proposalId].YEAvotes > VotingInstances[proposalId].NAYvotes) {
             // TO DO Connect this to the real core
