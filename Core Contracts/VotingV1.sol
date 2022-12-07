@@ -136,7 +136,7 @@ contract VotingSystemV1 {
             "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
         VoterInfo[proposalId][msg.sender].IsExecutioner = true;
 
-        ERC20(CLD).Burn(VotingInstances[proposalId].AmountToBurn);
+        ERC20(CLD).Burn(VotingInstances[proposalId].CLDToBurn);
         VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToBurn;
         
         ERC20(CLD).transfer(msg.sender, VotingInstances[proposalId].AmountToExecutioner);
