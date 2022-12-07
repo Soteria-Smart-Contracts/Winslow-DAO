@@ -8,7 +8,7 @@ contract VotingSystemV1 {
     address public CLD;
     uint256 public MemberHolding;
     // These two are in Basis Points
-    uint256 public ExecutorReward;
+    uint256 public ExecuCut;
     uint256 public BurnCut;
 
     event ProposalCreated(address proposer, uint256 proposalID, uint256 voteStart, uint256 voteEnd);
