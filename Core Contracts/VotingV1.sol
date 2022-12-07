@@ -113,7 +113,7 @@ contract VotingSystemV1 {
 
 
         if(VoteChoice == Vote(0)) {
-            VotingInstances[proposalId].ApprovingVotes += amount;
+            VotingInstances[proposalId].YEAvotes += amount;
             emit CastedVote(proposalId, "Yes", amount);
         } else {
             VotingInstances[proposalId].RefusingVotes += amount;
@@ -142,7 +142,7 @@ contract VotingSystemV1 {
         ERC20(CLD).transfer(msg.sender, VotingInstances[proposalId].AmountToExecutioner);
         VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToExecutioner;
 
-        if (VotingInstances[proposalId].ApprovingVotes > VotingInstances[proposalId].RefusingVotes) {
+        if (VotingInstances[proposalId].YEAvotes > VotingInstances[proposalId].RefusingVotes) {
             // TO DO Connect this to the real core
             VotingInstances[proposalId].Passed = 1;
 //            FakeDAO(DAO).ExecuteCoreProposal(proposalId, true); //turn into interface
