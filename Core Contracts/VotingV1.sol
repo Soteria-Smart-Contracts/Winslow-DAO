@@ -66,7 +66,7 @@ contract VotingSystemV1 {
 
     constructor(address CLDAddr, address DAOAddr, uint8 _ExecusCut, uint8 _BurnCut) 
     {
-        ExecusCut = _ExecusCut;
+        ExecutorCut = _ExecusCut;
         BurnCut = _BurnCut;
         DAO = DAOAddr;
         CLD = CLDAddr;
@@ -181,7 +181,7 @@ contract VotingSystemV1 {
         if (_setHash == _execusCut || _setHash == _burnCut) {
             require(amount >= 1 && amount <= 10000, 
             "VotingSystemV1.SetTaxAmount: Percentages can't be higher than 100");
-            ExecusCut = amount;
+            ExecutorCut = amount;
         } else if (_setHash == _memberHolding) {
             MemberHolding = amount;
         } else {
@@ -238,7 +238,7 @@ contract VotingSystemV1 {
             uint256 newBurnAmount = VotingInstances[_proposalId].IncentiveAmount * BurnCut / 10000;
             VotingInstances[_proposalId].AmountToBurn = newBurnAmount;
 
-            uint newToExecutAmount = VotingInstances[_proposalId].IncentiveAmount * ExecusCut / 10000;
+            uint newToExecutAmount = VotingInstances[_proposalId].IncentiveAmount * ExecutorCut / 10000;
             VotingInstances[_proposalId].AmountToExecutioner = newToExecutAmount;
 
             _updateIncentiveShare(_proposalId, VotingInstances[_proposalId].IncentiveAmount);
