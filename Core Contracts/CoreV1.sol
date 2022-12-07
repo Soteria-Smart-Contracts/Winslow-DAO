@@ -40,7 +40,6 @@ contract HarmoniaDAO_V1_Core{
         NotApplicable,
         AssetSend,
         AssetRegister,
-        VotingTaxChange,
         TreasuryChange,
         VotingChange
     }
