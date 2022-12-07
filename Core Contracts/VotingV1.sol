@@ -108,7 +108,6 @@ contract VotingSystemV1 {
             VoteChoice == Vote(0) || VoteChoice == Vote(1), 
             "VotingSystemV1.CastVote: You must either vote 'Yea' or 'Nay'"
         );
-        require(VotingInstances[proposalId].Passed == 0, 'VotingSystemV1.CastVote: This proposal has ended');
         require(!VoterInfo[proposalId][msg.sender].Voted, "VotingSystemV1.CastVote: You already voted in this proposal");
         require(block.timestamp <= VotingInstances[proposalId].VoteEnds, "VotingSystemV1.CastVote: The voting period has ended");
 
