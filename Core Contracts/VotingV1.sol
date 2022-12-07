@@ -109,7 +109,7 @@ contract VotingSystemV1 {
             "VotingSystemV1.CastVote: You must either vote 'Yea' or 'Nay'"
         );
         require(!VoterInfo[proposalId][msg.sender].Voted, "VotingSystemV1.CastVote: You already voted in this proposal");
-        require(block.timestamp <= VotingInstances[proposalId].VoteEnds, "VotingSystemV1.CastVote: This instance has ");
+        require(block.timestamp <= VotingInstances[proposalId].VoteEnds, "VotingSystemV1.CastVote: This instance is not currently in voting");
 
 
         if(VoteChoice == Vote(0)) {
