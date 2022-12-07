@@ -150,7 +150,7 @@ contract VotingSystemV1 {
         VotingInstances[proposalId].Executed = true;
     }
 
-    function WithdrawVoteTokens(uint256 proposalId) external {
+    function WithdrawVoteTokens(uint256 proposalId) external { //Seb review this it looks weird
         if (VotingInstances[proposalId].ActiveVoters > 0) {
             require(VotingInstances[proposalId].Executed, 
             'VotingSystemV1.WithdrawMyTokens: Proposal has not been executed!');
