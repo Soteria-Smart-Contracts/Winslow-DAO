@@ -74,15 +74,6 @@ contract VotingSystemV1 {
         // TO DO insert poetic proposal #0 here
     }
 
-    // To do people should lock tokens in order to propose?
-    function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
-        require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
-
-        VotingInstances.push(ProposalCore(ProposalID,0,0,VoteResult(0),0,0,0,false,0,0,0,0));
-
-        emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
-    }
-
     function IncentivizeProposal(uint256 proposalId, uint256 amount) external {
         require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal or you may not have given this contract enough allowance");
         require(VotingInstances[proposalId].Result == VoteResult(0), 'VotingSystemV1.IncentivizeProposal: This proposal has ended');
