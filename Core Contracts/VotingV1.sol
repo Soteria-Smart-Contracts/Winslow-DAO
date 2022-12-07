@@ -57,7 +57,7 @@ contract VotingSystemV1 {
     // Proposals being tracked by id here
     ProposalCore[] public VotingInstances;
     // Map user addresses over their info
-    mapping (uint256 => mapping (address => VoterInfo)) internal voterInfo;
+    mapping (uint256 => mapping (address => VoterInfo)) internal VoterInfo;
  
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
@@ -89,7 +89,7 @@ contract VotingSystemV1 {
         require(block.timestamp <= VotingInstances[proposalId].VoteEnds, "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!");
 
         VotingInstances[proposalId].TotalIncentive += amount;
-        voterInfo[proposalId][msg.sender].AmountDonated += amount;
+        VoterInfo[proposalId][msg.sender].AmountDonated += amount;
 
         _updateTaxesAndIndIncentive(proposalId, true);
         emit ProposalIncentivized(msg.sender, proposalId, VotingInstances[proposalId].TotalIncentive);
@@ -109,7 +109,7 @@ contract VotingSystemV1 {
             "VotingSystemV1.CastVote: You must either vote 'Yea' or 'Nay'"
         );
         require(VotingInstances[proposalId].Passed == 0, 'VotingSystemV1.CastVote: This proposal has ended');
-        require(!voterInfo[proposalId][msg.sender].Voted, "VotingSystemV1.CastVote: You already voted in this proposal");
+        require(!VoterInfo[proposalId][msg.sender].Voted, "VotingSystemV1.CastVote: You already voted in this proposal");
         require(block.timestamp <= VotingInstances[proposalId].VoteEnds, "VotingSystemV1.CastVote: The voting period has ended");
 
 
@@ -120,8 +120,8 @@ contract VotingSystemV1 {
             VotingInstances[proposalId].RefusingVotes += amount;
             emit CastedVote(proposalId, "No", amount);
         }
-        voterInfo[proposalId][msg.sender].VotesLocked += amount;
-        voterInfo[proposalId][msg.sender].Voted = true;
+        VoterInfo[proposalId][msg.sender].VotesLocked += amount;
+        VoterInfo[proposalId][msg.sender].Voted = true;
         VotingInstances[proposalId].ActiveVoters += 1;
 
         _updateTaxesAndIndIncentive(proposalId, false);
@@ -135,7 +135,7 @@ contract VotingSystemV1 {
             "VotingSystemV1.ExecuteProposal: Proposal already executed!");
         require(VotingInstances[proposalId].ActiveVoters > 0, 
             "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
-        voterInfo[proposalId][msg.sender].IsExecutioner = true;
+        VoterInfo[proposalId][msg.sender].IsExecutioner = true;
 
         ERC20(CLD).Burn(VotingInstances[proposalId].AmountToBurn);
         VotingInstances[proposalId].IncentiveAmount -= VotingInstances[proposalId].AmountToBurn;
@@ -215,22 +215,22 @@ contract VotingSystemV1 {
 
         if (VotingInstances[_proposalId].ActiveVoters > 0) {
             require(
-                voterInfo[_proposalId][_voterAddr].VotesLocked > 0, 
+                VoterInfo[_proposalId][_voterAddr].VotesLocked > 0, 
                 "VotingSystemV1.WithdrawMyTokens: You have no VotesLocked in this proposal"
             );
-            ERC20(CLD).transfer(_voterAddr, voterInfo[_proposalId][_voterAddr].VotesLocked + VotingInstances[_proposalId].IncentiveShare);
+            ERC20(CLD).transfer(_voterAddr, VoterInfo[_proposalId][_voterAddr].VotesLocked + VotingInstances[_proposalId].IncentiveShare);
             VotingInstances[_proposalId].IncentiveAmount -= VotingInstances[_proposalId].IncentiveShare; 
         } else {
             require(
-                voterInfo[_proposalId][_voterAddr].AmountDonated > 0, 
+                VoterInfo[_proposalId][_voterAddr].AmountDonated > 0, 
                 "VotingSystemV1.WithdrawMyTokens: You have no AmountDonated in this proposal"
             );
-            ERC20(CLD).transfer(_voterAddr, voterInfo[_proposalId][_voterAddr].AmountDonated);
-            voterInfo[_proposalId][_voterAddr].AmountDonated -= voterInfo[_proposalId][_voterAddr].AmountDonated;
-            VotingInstances[_proposalId].IncentiveAmount -= voterInfo[_proposalId][_voterAddr].AmountDonated;
+            ERC20(CLD).transfer(_voterAddr, VoterInfo[_proposalId][_voterAddr].AmountDonated);
+            VoterInfo[_proposalId][_voterAddr].AmountDonated -= VoterInfo[_proposalId][_voterAddr].AmountDonated;
+            VotingInstances[_proposalId].IncentiveAmount -= VoterInfo[_proposalId][_voterAddr].AmountDonated;
         }
         
-        voterInfo[_proposalId][_voterAddr].VotesLocked -= voterInfo[_proposalId][_voterAddr].VotesLocked;
+        VoterInfo[_proposalId][_voterAddr].VotesLocked -= VoterInfo[_proposalId][_voterAddr].VotesLocked;
     }
 
     function _updateTaxesAndIndIncentive(uint256 _proposalId, bool allOfThem) internal  {
@@ -272,9 +272,9 @@ contract VotingSystemV1 {
     ) 
     {
         return (
-            voterInfo[proposalId][voter].VotesLocked,
-            voterInfo[proposalId][voter].AmountDonated,
-            voterInfo[proposalId][voter].Voted
+            VoterInfo[proposalId][voter].VotesLocked,
+            VoterInfo[proposalId][voter].AmountDonated,
+            VoterInfo[proposalId][voter].Voted
         );
     }
 }
