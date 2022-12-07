@@ -47,7 +47,7 @@ contract VotingSystemV1 {
         uint256 CLDToExecutioner;//Total amount of CLD to be sent to the address that pays the gas for executing the proposal
     }
 
-    struct VoterInfo {
+    struct VoterDetails {
         uint256 VotesLocked;
         uint256 AmountDonated;
         bool Voted;
@@ -57,7 +57,7 @@ contract VotingSystemV1 {
     // Proposals being tracked by id here
     ProposalCore[] public VotingInstances;
     // Map user addresses over their info
-    mapping (uint256 => mapping (address => VoterInfo)) internal VoterInfo;
+    mapping (uint256 => mapping (address => VoterDetails)) internal VoterInfo;
  
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
