@@ -206,7 +206,6 @@ contract VotingSystemV1 {
                 "VotingSystemV1.WithdrawMyTokens: You have no VotesLocked in this proposal"
             );
             ERC20(CLD).transfer(_voterAddr, (VoterInfo[_proposalId][_voterAddr].VotesLocked + VotingInstances[_proposalId].IncentivePerVote));
-            VotingInstances[_proposalId].IncentivePerVote -= VotingInstances[_proposalId].IncentivePerVote; 
         } else {
             require(
                 VoterInfo[_proposalId][_voterAddr].AmountDonated > 0, 
