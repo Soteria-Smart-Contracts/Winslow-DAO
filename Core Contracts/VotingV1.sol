@@ -18,6 +18,7 @@ contract VotingSystemV1 {
     event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
     event IncentiveWithdrawed(uint256 remainingIncentive);
     event NewDAOAddress(address NewAddress);
+    event FallbackToTreasury(uint256 amount);
 
     enum Vote{
         YEA,
