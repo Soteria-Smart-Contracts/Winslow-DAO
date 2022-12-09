@@ -147,7 +147,7 @@ contract VotingSystemV1 {
         require(NewExecCut > 0 && NewExecCut <= 10000);
 
         ExecutorCut = NewExecCut;
-        
+        BurnCut = NewBurnCut;
 
         return true;
     }
