@@ -124,8 +124,7 @@ contract VotingSystemV1 {
             "VotingSystemV1.ExecuteProposal: Proposal already executed!");
         require(VotingInstances[VotingInstance].ActiveVoters > 0, 
             "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
-        VoterInfo[VotingInstance][msg.sender].IsExecutioner = true;
-
+            
         ERC20(CLD).Burn(VotingInstances[VotingInstance].CLDToBurn);
 //        VotingInstances[VotingInstance].IncentiveAmount -= VotingInstances[VotingInstance].CLDToBurn;  //Should leave this for archival
         
