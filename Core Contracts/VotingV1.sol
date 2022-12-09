@@ -142,7 +142,7 @@ contract VotingSystemV1 {
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
 
-    function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) public OnlyDAO returns (bool) {
+    function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) public OnlyDAO returns (bool success) {
         
 
         return true;
