@@ -118,7 +118,7 @@ contract VotingSystemV1 {
     }
 
     // Proposal execution code
-    function ExecuteProposal(uint256 proposalId) external {
+    function PostResults(proposalId);(uint256 proposalId) external {
         require(block.timestamp >= VotingInstances[proposalId].VoteEnds, 
             "VotingSystemV1.ExecuteProposal: Voting has not ended");      
         require(VotingInstances[proposalId].Executed == false, 
