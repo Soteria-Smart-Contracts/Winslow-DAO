@@ -208,7 +208,7 @@ contract VotingSystemV1 {
 
     function _updateTaxesAndIndIncentive(uint256 _proposalId, bool allOfThem) internal  {
         if (allOfThem) {            
-            uint256 newBurnAmount = VotingInstances[_proposalId].IncentiveAmount * BurnCut / 10000;
+            uint256 newBurnAmount = VotingInstances[_proposalId].TotalIncentive * BurnCut / 10000;
             VotingInstances[_proposalId].AmountToBurn = newBurnAmount;
 
             uint newToExecutAmount = VotingInstances[_proposalId].IncentiveAmount * ExecutorCut / 10000;
