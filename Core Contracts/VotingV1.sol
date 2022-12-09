@@ -82,7 +82,7 @@ contract VotingSystemV1 {
         VotingInstances[VotingInstance].TotalIncentive += amount;
         VoterInfo[VotingInstance][msg.sender].AmountDonated += amount;
 
-        _updateTaxesAndIndIncentive(VotingInstance, true);
+        _updateTaxesAndIndIncentive(VotingInstance);
         emit ProposalIncentivized(msg.sender, VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
     }//Checked
 
