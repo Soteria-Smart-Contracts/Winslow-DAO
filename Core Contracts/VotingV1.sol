@@ -216,9 +216,9 @@ contract VotingSystemV1 {
             _updateIncentiveShare(_proposalId, VotingInstances[_proposalId].TotalIncentive);
     }
 
-    function _updateIncentiveShare(uint256 _proposalId, uint256 _baseTokenAmount) internal {
+    //function _updateIncentiveShare(uint256 _proposalId, uint256 _baseTokenAmount) internal {
         
-    }
+    //}
 
     /////////////////////////////////////////
     /////          Debug Tools          /////
