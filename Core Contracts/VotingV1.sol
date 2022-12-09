@@ -51,7 +51,6 @@ contract VotingSystemV1 {
         uint256 VotesLocked;
         uint256 AmountDonated;
         bool Voted;
-        bool IsExecutioner;
     }
 
     // Proposals being tracked by id here
