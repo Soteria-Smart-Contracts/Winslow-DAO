@@ -89,7 +89,7 @@ contract VotingSystemV1 {
     function CastVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice) external {
         require(
             ERC20(CLD).transferFrom(msg.sender, address(this), amount), 
-            "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or hopefully"
+            "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or "
         );
         require(
             VoteChoice == Vote(0) || VoteChoice == Vote(1), 
