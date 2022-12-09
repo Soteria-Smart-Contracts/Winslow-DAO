@@ -32,7 +32,7 @@ contract VotingSystemV1 {
 
     //Create vote status enum instead of using uint8
 
-    struct ProposalCore {
+    struct VoteInstance {
         uint256 ProposalID;      //DAO Proposal for voting instance
         uint256 VoteStarts;      //Unix Time
         uint256 VoteEnds;        //Unix Time
@@ -55,7 +55,7 @@ contract VotingSystemV1 {
     }
 
     // Proposals being tracked by id here
-    ProposalCore[] public VotingInstances;
+    VoteInstance[] public VotingInstances;
     // Map user addresses over their info
     mapping (uint256 => mapping (address => VoterDetails)) internal VoterInfo;
  
