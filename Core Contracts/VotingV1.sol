@@ -234,7 +234,8 @@ contract VotingSystemV1 {
     /////          Interfaces           /////
     /////////////////////////////////////////
 
-interface ERC20 {
+interface HarmoniaDAO {
+}
 
 interface ERC20 {
   function balanceOf(address owner) external view returns (uint256);
