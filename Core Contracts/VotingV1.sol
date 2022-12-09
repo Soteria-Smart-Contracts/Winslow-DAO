@@ -217,27 +217,6 @@ contract VotingSystemV1 {
         
     //}
 
-    /////////////////////////////////////////
-    /////          Debug Tools          /////
-    /////////////////////////////////////////
-
-    function viewVoterInfo(
-        address voter, 
-        uint256 VotingInstance
-        ) 
-        external view returns (
-        uint256,
-        uint256,  
-        bool 
-    ) 
-    {
-        return (
-            VoterInfo[VotingInstance][voter].VotesLocked,
-            VoterInfo[VotingInstance][voter].AmountDonated,
-            VoterInfo[VotingInstance][voter].Voted
-        );
-    }
-
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
         payable(Treasury).transfer(address(this).balance);
