@@ -192,10 +192,8 @@ contract VotingSystemV1 {
     /////////////////////////////////////////
 
     // TO DO Refactor this
-    function _returnTokens(uint256 _proposalId,address _voterAddr)
-        internal {
-        require(block.timestamp >= VotingInstances[_proposalId].VoteEnds, 
-            "VotingSystemV1.WithdrawMyTokens: The voting period hasn't ended");
+    function _returnTokens(uint256 _proposalId,address _voterAddr) internal {
+        require(block.timestamp >= VotingInstances[_proposalId].VoteEnds, "VotingSystemV1.WithdrawMyTokens: The voting period hasn't ended");
 
         if (VotingInstances[_proposalId].ActiveVoters > 0) {
             require(
