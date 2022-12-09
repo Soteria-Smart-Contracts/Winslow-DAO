@@ -114,7 +114,7 @@ contract VotingSystemV1 {
         VoterInfo[proposalId][msg.sender].Voted = true;
         VotingInstances[proposalId].ActiveVoters += 1;
 
-        _updateTaxesAndIndIncentive(proposalId, false);
+        _updateTaxesAndIndIncentive(proposalId);
     }
 
     // Proposal execution code
