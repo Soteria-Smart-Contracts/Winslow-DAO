@@ -206,8 +206,7 @@ contract VotingSystemV1 {
         VoterInfo[_proposalId][_voterAddr].VotesLocked -= VoterInfo[_proposalId][_voterAddr].VotesLocked;
     }
 
-    function _updateTaxesAndIndIncentive(uint256 _proposalId, bool allOfThem) internal  {
-        if (allOfThem) {            
+    function _updateTaxesAndIndIncentive(uint256 _proposalId, bool allOfThem) internal  {         
             uint256 newBurnAmount = VotingInstances[_proposalId].TotalIncentive * BurnCut / 10000;
             VotingInstances[_proposalId].CLDToBurn = newBurnAmount;
 
@@ -215,10 +214,6 @@ contract VotingSystemV1 {
             VotingInstances[_proposalId].CLDToExecutioner = newToExecutAmount;
 
             _updateIncentiveShare(_proposalId, VotingInstances[_proposalId].TotalIncentive);
-        } else {
-            _updateIncentiveShare(_proposalId, VotingInstances[_proposalId].To);
-        }
-
     }
 
     function _updateIncentiveShare(uint256 _proposalId, uint256 _baseTokenAmount) internal {
