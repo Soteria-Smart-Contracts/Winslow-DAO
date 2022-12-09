@@ -147,7 +147,6 @@ contract VotingSystemV1 {
         
             ExecutorCut = amount;
 
-            MemberHolding = amount;
         
 
         return true;
