@@ -146,7 +146,7 @@ contract VotingSystemV1 {
             _returnTokens(proposalId, msg.sender);
         }
 
-        emit IncentiveWithdrawed(VotingInstances[proposalId].IncentiveAmount);
+      //  emit IncentiveWithdrawed(VotingInstances[proposalId].IncentiveAmount);
     }
 
     //OnlyDAO functions
