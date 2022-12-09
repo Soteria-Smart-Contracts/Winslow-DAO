@@ -143,7 +143,7 @@ contract VotingSystemV1 {
     }
 
     function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) public OnlyDAO returns (bool success) {
-        require(NewExecCut > 0 && < 10);
+        require(NewExecCut > 0 && < 10000);
 
         return true;
     }
