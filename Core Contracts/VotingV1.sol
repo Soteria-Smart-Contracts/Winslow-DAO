@@ -206,7 +206,7 @@ contract VotingSystemV1 {
         VoterInfo[_proposalId][_voterAddr].VotesLocked -= VoterInfo[_proposalId][_voterAddr].VotesLocked;
     }
 
-    function _updateTaxesAndIndIncentive(uint256 _proposalId, bool allOfThem) internal  {         
+    function _updateTaxesAndIndIncentive(uint256 _proposalId) internal  {         
             uint256 newBurnAmount = VotingInstances[_proposalId].TotalIncentive * BurnCut / 10000;
             VotingInstances[_proposalId].CLDToBurn = newBurnAmount;
 
