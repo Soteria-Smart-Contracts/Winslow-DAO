@@ -104,7 +104,7 @@ contract HarmoniaDAO_V1_Core{
 
 
     //  Internal Executioning
-    function InitializeSimpleProposal(uint256 NewIdentifier, address Slot, string Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
+    function InitializeSimpleProposal(uint256 NewIdentifier, address Slot, string memory Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         if(SimpleType != SimpleProposalTypes(1)){
             require(Slot == address(0), "If a simple proposal is not of the type AssetSend, then the slot address must be 0");
