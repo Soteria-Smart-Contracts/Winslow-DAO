@@ -44,6 +44,7 @@ contract VotingSystemV1 {
         bool Executed;           //Updated if the proposal utilising this instance has been executed by the DAO
         uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for voting incentives, burning and execution reward
         uint256 IncentivePerVote;//Total amount of CLD per CLD voted 
+        uint256 CLDtoIncentive;
         uint256 CLDToBurn;       //Total amount of CLD to be burned on proposal execution
         uint256 CLDToExecutioner;//Total amount of CLD to be sent to the address that pays the gas for executing the proposal
     }
