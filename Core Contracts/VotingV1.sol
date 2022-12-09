@@ -57,7 +57,7 @@ contract VotingSystemV1 {
     // Proposals being tracked by id here
     VoteInstance[] public VotingInstances;
     // Map user addresses over their info
-    mapping (uint256 => mapping (address => VoterDetails)) internal VoterInfo;
+    mapping (uint256 => mapping (address => VoterDetails)) public VoterInfo;
  
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
