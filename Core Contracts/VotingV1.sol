@@ -235,7 +235,7 @@ contract VotingSystemV1 {
     /////////////////////////////////////////
 
 interface HarmoniaDAO {
-    function 
+    function Treasury() 
 }
 
 interface ERC20 {
