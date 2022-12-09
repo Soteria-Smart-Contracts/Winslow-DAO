@@ -212,7 +212,7 @@ contract VotingSystemV1 {
             VotingInstances[_proposalId].CLDToBurn = newBurnAmount;
 
             uint newToExecutAmount = VotingInstances[_proposalId].TotalIncentive * ExecutorCut / 10000;
-            VotingInstances[_proposalId].AmountToExecutioner = newToExecutAmount;
+            VotingInstances[_proposalId].CLDToExecutioner = newToExecutAmount;
 
             _updateIncentiveShare(_proposalId, VotingInstances[_proposalId].IncentiveAmount);
         } else {
