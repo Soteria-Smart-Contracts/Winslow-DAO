@@ -154,9 +154,7 @@ contract VotingSystemV1 {
             ExecutorCut = amount;
         } else if (_setHash == _memberHolding) {
             MemberHolding = amount;
-        } else {
-            revert("VotingSystemV1.SetTaxAmount: You didn't choose a valid setting to modify!");
-        }
+        
 
         return true;
     }
