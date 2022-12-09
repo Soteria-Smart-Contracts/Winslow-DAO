@@ -237,6 +237,17 @@ contract VotingSystemV1 {
             VoterInfo[VotingInstance][voter].Voted
         );
     }
+
+    receive() external payable{
+        emit FallbackToTreasury(address(this).balance);
+        payable(Treasury).transfer(address(this).balance);
+    }
+
+    fallback() external payable{
+        emit FallbackToTreasury(address(this).balance);
+        payable(Treasury).transfer(address(this).balance);
+    }
+
 }
 
     /////////////////////////////////////////
