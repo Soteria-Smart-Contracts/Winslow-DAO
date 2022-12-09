@@ -143,16 +143,10 @@ contract VotingSystemV1 {
     }
 
     function SetTaxAmount(uint256 amount, string memory taxToSet) public OnlyDAO returns (bool) {
-        bytes32 _setHash = keccak256(abi.encodePacked(taxToSet));
-        bytes32 _execusCut = keccak256(abi.encodePacked("execusCut"));
-        bytes32 _burnCut = keccak256(abi.encodePacked("burnCut"));
-        bytes32 _memberHolding = keccak256(abi.encodePacked("memberHolding"));
-
-        if (_setHash == _execusCut || _setHash == _burnCut) {
-            require(amount >= 1 && amount <= 10000, 
-            "VotingSystemV1.SetTaxAmount: Percentages can't be higher than 100");
+    
+        
             ExecutorCut = amount;
-        } else if (_setHash == _memberHolding) {
+
             MemberHolding = amount;
         
 
