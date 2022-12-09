@@ -191,31 +191,31 @@ contract VotingSystemV1 {
     /////////////////////////////////////////
 
     // TO DO Refactor this
-    function _returnTokens(uint256 _proposalId,address _voterAddr) internal {
-        require(block.timestamp >= VotingInstances[_proposalId].VoteEnds, "VotingSystemV1.WithdrawMyTokens: The voting period isn't over");
+    function _returnTokens(uint256 VotingInstance,address _voterAddr) internal {
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.WithdrawMyTokens: The voting period isn't over");
 
-        if (VotingInstances[_proposalId].ActiveVoters > 0) {
+        if (VotingInstances[VotingInstance].ActiveVoters > 0) {
             require(
-                VoterInfo[_proposalId][_voterAddr].VotesLocked > 0, 
+                VoterInfo[VotingInstance][_voterAddr].VotesLocked > 0, 
                 "VotingSystemV1.WithdrawMyTokens: You have no VotesLocked in this proposal"
             );
-            ERC20(CLD).transfer(_voterAddr, (VoterInfo[_proposalId][_voterAddr].VotesLocked + VotingInstances[_proposalId].IncentivePerVote));
+            ERC20(CLD).transfer(_voterAddr, (VoterInfo[VotingInstance][_voterAddr].VotesLocked + VotingInstances[VotingInstance].IncentivePerVote));
         }
         
-        VoterInfo[_proposalId][_voterAddr].VotesLocked -= VoterInfo[_proposalId][_voterAddr].VotesLocked;
+        VoterInfo[VotingInstance][_voterAddr].VotesLocked -= VoterInfo[VotingInstance][_voterAddr].VotesLocked;
     }
 
-    function _updateTaxesAndIndIncentive(uint256 _proposalId) internal  {         
-            uint256 newBurnAmount = VotingInstances[_proposalId].TotalIncentive * BurnCut / 10000;
-            VotingInstances[_proposalId].CLDToBurn = newBurnAmount;
+    function _updateTaxesAndIndIncentive(uint256 VotingInstance) internal  {         
+            uint256 newBurnAmount = VotingInstances[VotingInstance].TotalIncentive * BurnCut / 10000;
+            VotingInstances[VotingInstance].CLDToBurn = newBurnAmount;
 
-            uint newToExecutAmount = VotingInstances[_proposalId].TotalIncentive * ExecutorCut / 10000;
-            VotingInstances[_proposalId].CLDToExecutioner = newToExecutAmount;
+            uint newToExecutAmount = VotingInstances[VotingInstance].TotalIncentive * ExecutorCut / 10000;
+            VotingInstances[VotingInstance].CLDToExecutioner = newToExecutAmount;
 
-            _updateIncentiveShare(_proposalId, VotingInstances[_proposalId].TotalIncentive);
+            _updateIncentiveShare(VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
     }
 
-    //function _updateIncentiveShare(uint256 _proposalId, uint256 _baseTokenAmount) internal {
+    //function _updateIncentiveShare(uint256 VotingInstance, uint256 _baseTokenAmount) internal {
         
     //}
 
