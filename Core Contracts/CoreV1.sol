@@ -91,6 +91,7 @@ contract HarmoniaDAO_V1_Core{
         InitializeSimpleProposal(NewIdentifier, Slot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
         //Call voting, tell it to initialize a voting campaign to begin once CoreV1 tells it to
+        return()
     }
 
 //   function SubmitProxyProposal(address Slot, ) public returns(bool success, uint256 Identifier){
