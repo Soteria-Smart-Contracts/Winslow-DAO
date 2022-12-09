@@ -225,7 +225,7 @@ contract VotingSystemV1 {
 
     fallback() external payable{
         emit FallbackToTreasury(address(this).balance);
-        payable(Treasury).transfer(address(this).balance);
+        payable(HarmoniaDAO(DAO).Treasury()).transfer(address(this).balance);
     }
 
 }
