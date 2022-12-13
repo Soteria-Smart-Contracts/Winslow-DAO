@@ -98,7 +98,7 @@ contract HarmoniaDAO_V1_Core{
 //    }
 
 //    function SubmitErosProposal(address Slot, ) public returns(bool success, uint256 Identifier){
-//    }using the code I sent above, create a SubmitProxyProposal proposal, where proxy proposal arguments can be empty or null
+//    }
 
 
     //  Public view functions
