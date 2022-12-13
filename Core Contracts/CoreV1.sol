@@ -94,8 +94,14 @@ contract HarmoniaDAO_V1_Core{
         return(true, NewIdentifier);
     }
 
-//   function SubmitProxyProposal(address Slot, ) public returns(bool success, uint256 Identifier){
-//    }
+    function SubmitProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) public returns(bool success, uint256 Identifier) {
+        uint256 NewIdentifier = Proposals.length;
+        InitializeProxyProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
+
+    //Call voting, tell it to initialize a voting campain to begin once CoreV1 tells it to
+    return(true, NewIdentifier);
+}
+
 
 //    function SubmitErosProposal(address Slot, ) public returns(bool success, uint256 Identifier){
 //    }
