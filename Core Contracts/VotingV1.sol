@@ -129,6 +129,18 @@ contract VotingSystemV1 {
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
 
+    function ProposalExecuted(uint256 VotingInstance) external OnlyDAO {
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
+        require(VotingInstances[VotingInstance].Executed == false, "VotingSystemV1.ExecuteProposal: Proposal already executed!");
+        require(VotingInstances[VotingInstance].ActiveVoters > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
+
+        ERC20(CLD).Burn(VotingInstances[VotingInstance].CLDToBurn);
+        
+        ERC20(CLD).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
+
+        VotingInstances[VotingInstance].Executed = true;
+    }
+
     function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) public OnlyDAO returns (bool success) {
         require(NewExecCut > 0 && NewExecCut <= 10000);
         require(NewExecCut > 0 && NewExecCut <= 10000);
