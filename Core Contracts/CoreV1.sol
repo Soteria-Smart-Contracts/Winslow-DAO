@@ -105,7 +105,8 @@ contract HarmoniaDAO_V1_Core{
 
     function SubmitErosProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
         uint256 NewIdentifier = Proposals.length;
-        InitializeErosProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther)
+        InitializeErosProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        
     }
 
 
