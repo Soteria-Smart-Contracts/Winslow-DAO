@@ -60,8 +60,6 @@ contract HarmoniaDAO_V1_Core{
         bool Executed; //Can only be executed once, when finished, proposal exist only as archive
     }
 
-//How does it know what to call for Simple proposal? set up system, maybe some kind of int parser
-
     struct ProxyProposalArguments{
         uint256 UnsignedInt1;
         uint256 UnsignedInt2;
