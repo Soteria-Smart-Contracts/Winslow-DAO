@@ -107,6 +107,7 @@ contract HarmoniaDAO_V1_Core{
         uint256 NewIdentifier = Proposals.length;
         InitializeErosProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
         
+        return(true, NewIdentifier);
     }
 
 
