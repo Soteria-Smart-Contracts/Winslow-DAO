@@ -92,7 +92,6 @@ contract VotingSystemV1 {
         require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastVote: You already voted in this proposal");
         require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastVote: This instance is not currently in voting");
 
-
         if(VoteChoice == Vote(0)) {
             VotingInstances[VotingInstance].YEAvotes += amount;
             emit CastedVote(VotingInstance, "Yes", amount);
@@ -100,6 +99,7 @@ contract VotingSystemV1 {
             VotingInstances[VotingInstance].NAYvotes += amount;
             emit CastedVote(VotingInstance, "No", amount);
         }
+        
         VoterInfo[VotingInstance][msg.sender].VotesLocked += amount;
         VoterInfo[VotingInstance][msg.sender].Voted = true;
         VotingInstances[VotingInstance].ActiveVoters += 1;
