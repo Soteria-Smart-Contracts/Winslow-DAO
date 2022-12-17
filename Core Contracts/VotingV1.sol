@@ -99,25 +99,12 @@ contract VotingSystemV1 {
             VotingInstances[VotingInstance].NAYvotes += amount;
             emit CastedVote(VotingInstance, "No", amount);
         }
-        
+
         VoterInfo[VotingInstance][msg.sender].VotesLocked += amount;
         VoterInfo[VotingInstance][msg.sender].Voted = true;
         VotingInstances[VotingInstance].ActiveVoters += 1;
 
         _updateTaxesAndIndIncentive(VotingInstance);
-    }
-
-    // Proposal execution code
-    function ProposalExecuted(uint256 VotingInstance) external OnlyDAO {
-        require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
-        require(VotingInstances[VotingInstance].Executed == false, "VotingSystemV1.ExecuteProposal: Proposal already executed!");
-        require(VotingInstances[VotingInstance].ActiveVoters > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
-
-        ERC20(CLD).Burn(VotingInstances[VotingInstance].CLDToBurn);
-        
-        ERC20(CLD).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
-
-        VotingInstances[VotingInstance].Executed = true;
     }
 
     function WithdrawVoteTokens(uint256 VotingInstance) external { //Seb review this it looks weird
