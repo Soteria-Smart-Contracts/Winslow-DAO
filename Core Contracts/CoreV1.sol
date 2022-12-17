@@ -110,8 +110,6 @@ contract HarmoniaDAO_V1_Core{
         return(true, NewIdentifier);
     }
 
-
-
     //  Public view functions
 
 
