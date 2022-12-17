@@ -103,8 +103,8 @@ contract HarmoniaDAO_V1_Core{
     }
 
 
-//    function SubmitErosProposal(address Slot, ) public returns(bool success, uint256 Identifier){
-//    }
+    function SubmitErosProposal(address Slot, ) public returns(bool success, uint256 Identifier){}
+    }
 
 
     //  Public view functions
