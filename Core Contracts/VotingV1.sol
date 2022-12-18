@@ -121,7 +121,7 @@ contract VotingSystemV1 {
 
     //OnlyDAO functions
 
-    //Vote Setup
+        //Vote Setup
     function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
 
@@ -130,7 +130,7 @@ contract VotingSystemV1 {
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
 
-    //Status Changes
+        //Status Changes
     function ProposalExecuted(uint256 VotingInstance) external OnlyDAO {
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
         require(VotingInstances[VotingInstance].Executed == false, "VotingSystemV1.ExecuteProposal: Proposal already executed!");
