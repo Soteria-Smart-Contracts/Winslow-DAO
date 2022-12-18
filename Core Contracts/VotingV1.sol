@@ -1,5 +1,5 @@
 //SPDX-License-Identifier:UNLICENSE
-/
+//This contract is able to be replaced 
 pragma solidity ^0.8.17;
 
 
