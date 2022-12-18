@@ -62,13 +62,11 @@ contract VotingSystemV1 {
         _;
     }
 
-    constructor(address CLDAddr, address DAOAddr, uint8 _ExecusCut, uint8 _BurnCut) 
-    {
+    constructor(address CLDAddr, address DAOAddr, uint8 _ExecusCut, uint8 _BurnCut){
         ExecutorCut = _ExecusCut;
         BurnCut = _BurnCut;
         DAO = DAOAddr;
         CLD = CLDAddr;
-
         // TO DO insert poetic proposal #0 here
     }
 
