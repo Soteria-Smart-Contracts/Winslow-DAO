@@ -69,7 +69,7 @@ contract VotingSystemV1 {
         CLD = CLDAddr;
     }
 
-    //Pre-Vote Functions 
+    //Pre-Vote Functions (Incentivize is available pre and during vote)
     
 
     //Active Vote Functions
