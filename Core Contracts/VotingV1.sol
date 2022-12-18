@@ -106,9 +106,9 @@ contract VotingSystemV1 {
         if (VotingInstances[VotingInstance].ActiveVoters > 0) {
             require(VotingInstances[VotingInstance].Executed, 
             'VotingSystemV1.WithdrawMyTokens: Proposal has not been executed!');
-            _returnTokens(VotingInstance, msg.sender);
+            ReturnTokens(VotingInstance, msg.sender);
         } else {
-            _returnTokens(VotingInstance, msg.sender);
+            ReturnTokens(VotingInstance, msg.sender);
         }
 
       //  emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
