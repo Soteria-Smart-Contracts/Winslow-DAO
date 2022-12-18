@@ -39,7 +39,7 @@ contract VotingSystemV1 {
         uint256 YEAvotes;        //Votes to approve
         uint256 NAYvotes;        //Votes to refuse
         uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for voting incentives, burning and execution reward
-        uint256 IncentivePerVote;//Total amount of CLD per CLD voted 
+        uint256 IncentivePerVote;//Total amount of CLD per 0.01 CLD voted
         uint256 CLDtoIncentive;  //Total amount of CLD to be shared amongst voters
         uint256 CLDToBurn;       //Total amount of CLD to be burned on proposal execution
         uint256 CLDToExecutioner;//Total amount of CLD to be sent to the address that pays the gas for executing the proposal
