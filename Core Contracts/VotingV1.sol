@@ -11,6 +11,11 @@ contract VotingSystemV1 {
     uint256 public ExecutorCut;
     uint256 public BurnCut;
 
+    // Proposals being tracked by id here
+    VoteInstance[] public VotingInstances;
+    // Map user addresses over their info
+    mapping (uint256 => mapping (address => VoterDetails)) public VoterInfo;
+
     enum Vote{
         YEA,
         NAY
@@ -44,11 +49,6 @@ contract VotingSystemV1 {
         uint256 AmountDonated;
         bool Voted;
     }
-
-    // Proposals being tracked by id here
-    VoteInstance[] public VotingInstances;
-    // Map user addresses over their info
-    mapping (uint256 => mapping (address => VoterDetails)) public VoterInfo;
 
     event ProposalCreated(address proposer, uint256 proposalID, uint256 voteStart, uint256 voteEnd);
     event ProposalPassed(address executor, uint256 VotingInstance, uint256 amountBurned, uint256 executShare);
