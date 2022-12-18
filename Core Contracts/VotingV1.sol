@@ -26,8 +26,6 @@ contract VotingSystemV1 {
         VotingComplete
     }
 
-    //Create vote status enum instead of using uint8
-
     struct VoteInstance {
         uint256 ProposalID;      //DAO Proposal for voting instance
         uint256 VoteStarts;      //Unix Time
