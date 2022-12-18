@@ -141,9 +141,10 @@ contract VotingSystemV1 {
         ERC20(CLD).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
 
         VotingInstances[VotingInstance].Status = VoteStatus(1);
+        //Post results
     }
 
-    //Post results to archive contract
+    //Post results to archive contract function
 
     function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) external OnlyDAO returns (bool success) {
         require(NewExecCut > 0 && NewExecCut <= 10000);
