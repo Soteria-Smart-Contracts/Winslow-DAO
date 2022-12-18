@@ -2,6 +2,7 @@
 pragma solidity ^0.8.17;
 
 
+
 contract VotingSystemV1 {
     // Proposal executioner's bonus, proposal incentive burn percentage 
     address public DAO;
@@ -160,7 +161,7 @@ contract VotingSystemV1 {
         require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
         require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
         DAO = newAddr;    
-        emit NewDAOAddress(newAddr); //Check implications of new DAO
+        emit NewDAOAddress(newAddr);
     }
     
     /////////////////////////////////////////
