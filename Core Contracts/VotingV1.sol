@@ -105,7 +105,7 @@ contract VotingSystemV1 {
     function WithdrawVoteTokens(uint256 VotingInstance) external { //Seb review this it looks weird
         
 
-      //  emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
+        //emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
     }
 
     //OnlyDAO functions
