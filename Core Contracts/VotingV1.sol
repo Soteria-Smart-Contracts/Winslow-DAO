@@ -48,7 +48,7 @@ contract VotingSystemV1 {
     struct VoterDetails {
         uint256 VotesLocked;
         uint256 AmountDonated;
-        bool Return
+        bool CLDReturned;
         bool Voted;
     }
 
