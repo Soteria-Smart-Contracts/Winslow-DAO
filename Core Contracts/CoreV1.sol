@@ -56,7 +56,7 @@ contract HarmoniaDAO_V1_Core{
         uint256 RequestedEtherAmount;   //Optional, can be zero
         uint256 RequestedAssetAmount;   //Optional, can be zero
         uint8 RequestedAssetID;         //Treasury asset identifier for proposals moving funds
-        ProxyProposalArguments ProxyArgs; //List of arguments that can be used for proxy proposals. Also used for other data storage for simple proposals.
+        ProxyProposalArguments ProxyArgs; //List of arguments that can be used for proxy proposals, Also used for other data storage for simple proposals
         bool Executed;                  //Can only be executed once, when finished, proposal exist only as archive
     }
 
