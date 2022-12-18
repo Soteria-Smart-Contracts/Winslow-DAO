@@ -131,6 +131,7 @@ contract VotingSystemV1 {
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
 
+    //Status Changes
     function ProposalExecuted(uint256 VotingInstance) external OnlyDAO {
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
         require(VotingInstances[VotingInstance].Executed == false, "VotingSystemV1.ExecuteProposal: Proposal already executed!");
