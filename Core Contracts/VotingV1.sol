@@ -26,6 +26,7 @@ contract VotingSystemV1 {
 
     enum VoteStatus{
         VotingIncomplete,
+        VotingActive,
         VotingComplete
     }
 
