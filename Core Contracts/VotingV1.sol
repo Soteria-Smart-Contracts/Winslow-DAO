@@ -1,6 +1,6 @@
 //SPDX-License-Identifier:UNLICENSE
 //This contract is able to be replaced by the Harmonia Core, and can also continue to be used if a new Harmonia Core is deployed by changing DAO addresses
-//When setting up a new 
+//When setting up a new core or voting contract, ensure cro
 pragma solidity ^0.8.17;
 
 
