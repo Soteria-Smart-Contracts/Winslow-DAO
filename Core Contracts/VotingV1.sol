@@ -106,7 +106,7 @@ contract VotingSystemV1 {
         require(VoterInfo[VotingInstance][msg.sender].VotesLocked > 0);
 
         uint256 TotalToReturn;
-        TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked > 0;
+        TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
 
         //emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
     }
