@@ -119,7 +119,7 @@ contract VotingSystemV1 {
         //emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
     }
 
-    //OnlyDAO functions
+//OnlyDAO functions
 
         //Vote Setup
     function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
@@ -144,7 +144,7 @@ contract VotingSystemV1 {
         //Post results
     }
 
-    //Post results to archive contract function
+        //Post results to archive contract function
 
     function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) external OnlyDAO returns (bool success) {
         require(NewExecCut > 0 && NewExecCut <= 10000);
