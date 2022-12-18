@@ -119,7 +119,7 @@ contract VotingSystemV1 {
         //emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
     }
 
-//OnlyDAO functions
+    //OnlyDAO functions
 
         //Vote Setup
     function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
