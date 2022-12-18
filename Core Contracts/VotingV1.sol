@@ -101,6 +101,7 @@ contract VotingSystemV1 {
         VotingInstances[VotingInstance].ActiveVoters += 1;
 
         _updateTaxesAndIndIncentive(VotingInstance);
+        return(success);
     }
 
     function ReturnTokens(uint256 VotingInstance) external { //For returning your tokens for a specific instance after voting, with the incentive payout
