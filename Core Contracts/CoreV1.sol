@@ -48,9 +48,9 @@ contract HarmoniaDAO_V1_Core{
         uint256 ProposalID;
         address AddressSlot;            //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal contract
         string Memo;                    //Short description of what the proposal is and does (Reduce length for gas efficiency)
-        ProposalStatus Status; //Types declared in enum
-        SecurityStatus SecurityLevel; //Types declared in enum
-        ProposalTypes ProposalType; //Types declared in enum
+        ProposalStatus Status;          //Types declared in enum
+        SecurityStatus SecurityLevel;   //Types declared in enum
+        ProposalTypes ProposalType;     //Types declared in enum
         SimpleProposalTypes SimpleType; //Types declared in enum
         uint256 ProposalVotingLenght; //Minimum 24 hours
         uint256 RequestedEtherAmount; //Optional, can be zero
