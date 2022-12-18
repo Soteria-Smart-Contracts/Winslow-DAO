@@ -49,6 +49,15 @@ contract VotingSystemV1 {
     VoteInstance[] public VotingInstances;
     // Map user addresses over their info
     mapping (uint256 => mapping (address => VoterDetails)) public VoterInfo;
+
+    event ProposalCreated(address proposer, uint256 proposalID, uint256 voteStart, uint256 voteEnd);
+    event ProposalPassed(address executor, uint256 VotingInstance, uint256 amountBurned, uint256 executShare);
+    event ProposalNotPassed(address executor, uint256 VotingInstance, uint256 amountBurned, uint256 executShare);
+    event VoteCast(uint256 VotingInstance, string option, uint256 votesCasted);
+    event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
+    event IncentiveWithdrawed(uint256 remainingIncentive);
+    event NewDAOAddress(address NewAddress);
+    event FallbackToTreasury(uint256 amount);
  
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
