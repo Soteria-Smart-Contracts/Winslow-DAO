@@ -55,8 +55,8 @@ contract HarmoniaDAO_V1_Core{
         uint256 ProposalVotingLenght;   //Minimum 24 hours
         uint256 RequestedEtherAmount;   //Optional, can be zero
         uint256 RequestedAssetAmount;   //Optional, can be zero
-        uint8 RequestedAssetID;         //
-        ProxyProposalArguments ProxyArgs;
+        uint8 RequestedAssetID;         //Treasury asset identifier for proposals moving funds
+        ProxyProposalArguments ProxyArgs; //
         bool Executed;                  //Can only be executed once, when finished, proposal exist only as archive
     }
 
