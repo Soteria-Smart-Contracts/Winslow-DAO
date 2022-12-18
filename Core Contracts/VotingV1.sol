@@ -34,7 +34,6 @@ contract VotingSystemV1 {
         uint256 ActiveVoters;    //Total Number of users that have voted
         uint256 YEAvotes;        //Votes to approve
         uint256 NAYvotes;        //Votes to refuse
-        bool Executed;           //Updated if the proposal utilising this instance has been executed by the DAO
         uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for voting incentives, burning and execution reward
         uint256 IncentivePerVote;//Total amount of CLD per CLD voted 
         uint256 CLDtoIncentive;  //Total amount of CLD to be shared amongst voters
