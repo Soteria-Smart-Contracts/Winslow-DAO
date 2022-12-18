@@ -80,6 +80,7 @@ contract HarmoniaDAO_V1_Core{
     constructor(){
         TreasurySetter = msg.sender;
         EmptyProxy = ProxyProposalArguments(0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
+        //Special proposal in index 0
     }
 
     //Public state-modifing functions
