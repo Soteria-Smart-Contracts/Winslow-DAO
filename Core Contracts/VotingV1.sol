@@ -103,7 +103,7 @@ contract VotingSystemV1 {
     }
 
     function WithdrawVoteTokens(uint256 VotingInstance) external { //Seb review this it looks weird
-        require(VoterInfo[]);
+        require(VoterInfo[msg.sender][]);
 
         //emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
     }
