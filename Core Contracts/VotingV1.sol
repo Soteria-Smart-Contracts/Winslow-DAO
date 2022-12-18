@@ -103,13 +103,7 @@ contract VotingSystemV1 {
     }
 
     function WithdrawVoteTokens(uint256 VotingInstance) external { //Seb review this it looks weird
-        if (VotingInstances[VotingInstance].ActiveVoters > 0) {
-            require(VotingInstances[VotingInstance].Executed, 
-            'VotingSystemV1.WithdrawMyTokens: Proposal has not been executed!');
-            ReturnTokens(VotingInstance, msg.sender);
-        } else {
-            ReturnTokens(VotingInstance, msg.sender);
-        }
+        
 
       //  emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
     }
