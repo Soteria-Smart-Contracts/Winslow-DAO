@@ -140,7 +140,7 @@ contract VotingSystemV1 {
         
         ERC20(CLD).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
 
-        VotingInstances[VotingInstance].Status = Voting;
+        VotingInstances[VotingInstance].Status = VoteStatus(1);
     }
 
     //EndVoting
