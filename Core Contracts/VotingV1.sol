@@ -1,5 +1,5 @@
 //SPDX-License-Identifier:UNLICENSE
-//This contract is able to be replaced 
+//This contract is able to be replaced by the Harmonia Core, and can also 
 pragma solidity ^0.8.17;
 
 
