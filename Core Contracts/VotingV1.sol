@@ -67,7 +67,6 @@ contract VotingSystemV1 {
         BurnCut = _BurnCut;
         DAO = DAOAddr;
         CLD = CLDAddr;
-        // TO DO insert poetic proposal #0 here
     }
 
     function IncentivizeProposal(uint256 VotingInstance, uint256 amount) external {
