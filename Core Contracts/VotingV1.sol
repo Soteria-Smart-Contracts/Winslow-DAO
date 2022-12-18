@@ -69,8 +69,8 @@ contract VotingSystemV1 {
         CLD = CLDAddr;
     }
 
-    //Pre-Vote Functions
-
+    //Pre-Vote Functions 
+    
 
     //Active Vote Functions
     function IncentivizeProposal(uint256 VotingInstance, uint256 amount) public returns(bool success){
