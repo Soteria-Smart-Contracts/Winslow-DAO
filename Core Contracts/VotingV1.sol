@@ -102,7 +102,7 @@ contract VotingSystemV1 {
         _updateTaxesAndIndIncentive(VotingInstance);
     }
 
-    function WithdrawVoteTokens(uint256 VotingInstance) external { //Seb review this it looks weird
+    function ReturnTokens(uint256 VotingInstance) external { //Seb review this it looks weird
         require(VoterInfo[VotingInstance][msg.sender].VotesLocked > 0);
 
         uint256 TotalToReturn
