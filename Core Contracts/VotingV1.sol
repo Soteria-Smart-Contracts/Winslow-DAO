@@ -144,6 +144,8 @@ contract VotingSystemV1 {
         VotingInstances[VotingInstance].Executed = true;
     }
 
+    //EndVoting
+
     function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) external OnlyDAO returns (bool success) {
         require(NewExecCut > 0 && NewExecCut <= 10000);
         require(NewExecCut > 0 && NewExecCut <= 10000);
