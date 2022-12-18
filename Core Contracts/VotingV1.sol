@@ -115,7 +115,7 @@ contract VotingSystemV1 {
     //Post-Vote Functions
 
     function ReturnTokens(uint256 VotingInstance) external { //For returning your tokens for a specific instance after voting, with the incentive payout
-        require(VoterInfo[VotingInstance][msg.sender].Voted = true);
+        require(VoterInfo[VotingInstance][msg.sender].Voted == true);
         require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
 
