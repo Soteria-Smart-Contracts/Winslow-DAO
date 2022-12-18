@@ -158,7 +158,7 @@ contract VotingSystemV1 {
     /////////////////////////////////////////
 
     // TO DO Refactor this
-    function _returnTokens(uint256 VotingInstance,address _voterAddr) internal {
+    function ReturnTokens(uint256 VotingInstance,address _voterAddr) internal {
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.WithdrawMyTokens: The voting period isn't over");
 
         if (VotingInstances[VotingInstance].ActiveVoters > 0) {
