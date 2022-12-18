@@ -156,19 +156,6 @@ contract VotingSystemV1 {
     /////////////////////////////////////////
 
     // TO DO Refactor this
-    function ReturnTokens(uint256 VotingInstance,address _voterAddr) internal {
-        require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.WithdrawMyTokens: The voting period isn't over");
-
-        if (VotingInstances[VotingInstance].ActiveVoters > 0) {
-            require(
-                VoterInfo[VotingInstance][_voterAddr].VotesLocked > 0, 
-                "VotingSystemV1.WithdrawMyTokens: You have no VotesLocked in this proposal"
-            );
-            ERC20(CLD).transfer(_voterAddr, (VoterInfo[VotingInstance][_voterAddr].VotesLocked + VotingInstances[VotingInstance].IncentivePerVote));
-        }
-        
-        VoterInfo[VotingInstance][_voterAddr].VotesLocked -= VoterInfo[VotingInstance][_voterAddr].VotesLocked;
-    }
 
     function _updateTaxesAndIndIncentive(uint256 VotingInstance) internal  {         
             uint256 newBurnAmount = VotingInstances[VotingInstance].TotalIncentive * BurnCut / 10000;
