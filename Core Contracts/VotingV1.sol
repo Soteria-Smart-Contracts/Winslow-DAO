@@ -122,7 +122,7 @@ contract VotingSystemV1 {
         uint256 TotalToReturn;
         TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
         TotalToReturn += (((VoterInfo[VotingInstance][msg.sender].VotesLocked * 100) * VotingInstances[VotingInstance].IncentivePerVote) / 10**9);
-
+        
         //emit TokensReturned(VotingInstances[VotingInstance].IncentiveAmount);
     }
 
