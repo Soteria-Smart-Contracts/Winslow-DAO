@@ -31,6 +31,7 @@ contract VotingSystemV1 {
         OptionThree,
         OptionFour,
         OptionFive
+    }
 
     enum VoteStatus{
         VotingIncomplete,
