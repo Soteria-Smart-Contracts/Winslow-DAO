@@ -184,7 +184,7 @@ contract VotingSystemV1 {
 
             VotingInstances[VotingInstance].CLDToExecutioner = ((VotingInstances[VotingInstance].TotalIncentive * ExecutorCut) / 10000);
 
-            VotingInstances[VotingInstance].
+            VotingInstances[VotingInstance].CLDtoIncentive
     }
 
     //function _updateIncentiveShare(uint256 VotingInstance, uint256 _baseTokenAmount) internal {
