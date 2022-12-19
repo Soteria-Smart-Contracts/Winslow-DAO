@@ -149,7 +149,7 @@ contract VotingSystemV1 {
         
         ERC20(CLD).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
 
-        VotingInstances[VotingInstance].IncentivePerVote = (VotingInstances[VotingInstance].CLDtoIncentive * 10**9) / 
+        VotingInstances[VotingInstance].IncentivePerVote = (VotingInstances[VotingInstance].CLDtoIncentive * 10**9) / VotingInstances[VotingInstance].C
 
         VotingInstances[VotingInstance].Status = VoteStatus(2);
         //Post results
