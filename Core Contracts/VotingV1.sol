@@ -26,8 +26,10 @@ contract VotingSystemV1 {
     }
 
     enum MultiOptionVote{
-        OptionOne
-    }
+        OptionOne;
+        OptionTwo;
+        OptionThree;
+        OptionFour
 
     enum VoteStatus{
         VotingIncomplete,
