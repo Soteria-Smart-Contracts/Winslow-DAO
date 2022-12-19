@@ -141,7 +141,7 @@ contract VotingSystemV1 {
         //Status Changes
     function ProposalExecuted(uint256 VotingInstance) external OnlyDAO {
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
-        require(VotingInstances[VotingInstance].Status == VotingStatus, "VotingSystemV1.ExecuteProposal: Proposal already executed!");
+        require(VotingInstances[VotingInstance].Status == VoteStatus(1), "VotingSystemV1.ExecuteProposal: Proposal already executed!");
         require(VotingInstances[VotingInstance].ActiveVoters > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
 
         ERC20(CLD).Burn(VotingInstances[VotingInstance].CLDToBurn);
