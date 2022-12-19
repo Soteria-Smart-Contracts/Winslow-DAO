@@ -46,7 +46,9 @@ contract VotingSystemV1 {
         uint256 CLDToExecutioner;//Total amount of CLD to be sent to the address that pays the gas for executing the proposal
     }
 
-    struct MultiOptionVotes
+    struct MultiOptionVotes{
+        
+    }
 
     struct VoterDetails {
         uint256 VotesLocked;
