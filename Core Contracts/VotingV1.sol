@@ -122,7 +122,7 @@ contract VotingSystemV1 {
         uint256 TotalToReturn;
         TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
         TotalToReturn += (((VoterInfo[VotingInstance][msg.sender].VotesLocked * 100) * VotingInstances[VotingInstance].IncentivePerVote) / 10**9);
-        
+
         //emit TokensReturned(VotingInstances[VotingInstance].IncentiveAmount);
     }
 
@@ -182,8 +182,10 @@ contract VotingSystemV1 {
             uint256 newBurnAmount = VotingInstances[VotingInstance].TotalIncentive * BurnCut / 10000;
             VotingInstances[VotingInstance].CLDToBurn = newBurnAmount;
 
-            uint newToExecutAmount = VotingInstances[VotingInstance].TotalIncentive * ExecutorCut / 10000;
+            uint256 newToExecutAmount = VotingInstances[VotingInstance].TotalIncentive * ExecutorCut / 10000;
             VotingInstances[VotingInstance].CLDToExecutioner = newToExecutAmount;
+
+            uint256 
     }
 
     //function _updateIncentiveShare(uint256 VotingInstance, uint256 _baseTokenAmount) internal {
