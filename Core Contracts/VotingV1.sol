@@ -49,7 +49,7 @@ contract VotingSystemV1 {
     struct MultiOptionVotes{
         uint256 OptionOne;
         uint256 OptionTwo;
-
+        uint256 OptionThree;
     }
 
     struct VoterDetails {
