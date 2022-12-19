@@ -50,6 +50,8 @@ contract VotingSystemV1 {
         uint256 OptionOne;
         uint256 OptionTwo;
         uint256 OptionThree;
+        uint256 OptionFour;
+        uint256 OptionFive;
     }
 
     struct VoterDetails {
