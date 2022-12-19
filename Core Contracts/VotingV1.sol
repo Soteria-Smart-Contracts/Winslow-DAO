@@ -25,6 +25,8 @@ contract VotingSystemV1 {
         NAY
     }
 
+    enum MultiOptionVote
+
     enum VoteStatus{
         VotingIncomplete,
         VotingActive,
