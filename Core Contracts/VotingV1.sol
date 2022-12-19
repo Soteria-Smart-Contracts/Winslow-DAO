@@ -20,24 +20,6 @@ contract VotingSystemV1 {
     // Map user addresses over their info
     mapping (uint256 => mapping (address => VoterDetails)) public VoterInfo;
 
-    enum Vote{
-        YEA,
-        NAY
-    }
-
-    enum MultiOptionVote{
-        OptionOne,
-        OptionTwo,
-        OptionThree,
-        OptionFour,
-        OptionFive
-    }
-
-    enum VoteStatus{
-        VotingIncomplete,
-        VotingActive,
-        VotingComplete
-    }
 
     struct VoteInstance {
         uint256 ProposalID;      //DAO Proposal for voting instance
@@ -67,6 +49,25 @@ contract VotingSystemV1 {
         uint256 VotesLocked;
         bool CLDReturned;
         bool Voted;
+    }
+    
+    enum Vote{
+        YEA,
+        NAY
+    }
+
+    enum MultiOptionVote{
+        OptionOne,
+        OptionTwo,
+        OptionThree,
+        OptionFour,
+        OptionFive
+    }
+
+    enum VoteStatus{
+        VotingIncomplete,
+        VotingActive,
+        VotingComplete
     }
 
     event ProposalCreated(address proposer, uint256 proposalID, uint256 voteStart, uint256 voteEnd);
