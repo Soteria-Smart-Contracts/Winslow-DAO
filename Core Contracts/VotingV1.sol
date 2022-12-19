@@ -48,7 +48,6 @@ contract VotingSystemV1 {
 
     struct VoterDetails {
         uint256 VotesLocked;
-        uint256 AmountDonated;
         bool CLDReturned;
         bool Voted;
     }
@@ -84,7 +83,6 @@ contract VotingSystemV1 {
         require(block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!");
 
         VotingInstances[VotingInstance].TotalIncentive += amount;
-        VoterInfo[VotingInstance][msg.sender].AmountDonated += amount;
 
         _updateTaxesAndIndIncentive(VotingInstance);
         emit ProposalIncentivized(msg.sender, VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
