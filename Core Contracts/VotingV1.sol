@@ -48,6 +48,7 @@ contract VotingSystemV1 {
 
     struct MultiOptionVotes{
         uint256 OptionOne;
+        uint256 OptionTwo;
 
     }
 
