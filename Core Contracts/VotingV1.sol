@@ -179,7 +179,7 @@ contract VotingSystemV1 {
     // TO DO Refactor this
 
     function _updateTaxesAndIndIncentive(uint256 VotingInstance) internal  {         
-            VotingInstances[VotingInstance].CLDToBurn = VotingInstances[VotingInstance].TotalIncentive * BurnCut / 10000;
+            VotingInstances[VotingInstance].CLDToBurn = ((VotingInstances[VotingInstance].TotalIncentive * BurnCut) / 10000);
 
             VotingInstances[VotingInstance].CLDToExecutioner = ((VotingInstances[VotingInstance].TotalIncentive * ExecutorCut) / 10000);
 
