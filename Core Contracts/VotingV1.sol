@@ -122,7 +122,7 @@ contract VotingSystemV1 {
 
         uint256 TotalToReturn;
         TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
-        TotalToReturn += 
+       // TotalToReturn += 
 
         //emit IncentiveWithdrawed(VotingInstances[VotingInstance].IncentiveAmount);
     }
