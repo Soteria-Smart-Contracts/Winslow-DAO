@@ -28,7 +28,7 @@ contract VotingSystemV1 {
         VoteStatus Status;       //Using VoteResult enum
         uint256 ActiveVoters;    //Total Number of users that have voted
         uint256 TotalCLDVoted;   //Total of CLD used in this instance for voting
-        bool MultiVote;          //Determines if the
+        bool MultiVote;          //Determines if this instance s
         uint256 YEAvotes;        //Votes to approve
         uint256 NAYvotes;        //Votes to refuse
         uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for voting incentives, burning and execution reward
