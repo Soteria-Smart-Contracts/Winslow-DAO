@@ -37,7 +37,7 @@ contract VotingSystemV1 {
         uint256 CLDToExecutioner;//Total amount of CLD to be sent to the address that pays the gas for executing the proposal
     }
 
-    struct MultiOptionVotes{
+    struct MultiVoteCard{
         uint256 OptionOne;
         uint256 OptionTwo;
         uint256 OptionThree;
@@ -50,7 +50,7 @@ contract VotingSystemV1 {
         bool CLDReturned;
         bool Voted;
     }
-    
+
     enum Vote{
         YEA,
         NAY
