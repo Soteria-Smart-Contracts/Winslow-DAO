@@ -127,11 +127,11 @@ contract VotingSystemV1 {
         VoterInfo[VotingInstance][msg.sender].Voted = true;
         VotingInstances[VotingInstance].ActiveVoters += 1;
 
-        _updateTaxesAndIndIncentive(VotingInstance);
+        _updateTaxesAndIndIncentive(VotingInstance, uint256 VotingInstance);
         return(success);
     }
 
-    function CastMultiVote()
+    function CastMultiVote(uint256 amount)
 
     //Post-Vote Functions
 
