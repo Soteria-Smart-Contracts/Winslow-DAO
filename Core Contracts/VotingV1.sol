@@ -57,7 +57,7 @@ contract VotingSystemV1 {
         NAY
     }
 
-    enum MultiOptionVote{
+    enum MultiOptions{
         OptionOne,
         OptionTwo,
         OptionThree,
