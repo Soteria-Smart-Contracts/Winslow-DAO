@@ -127,7 +127,7 @@ contract VotingSystemV1 {
         VoterInfo[VotingInstance][msg.sender].Voted = true;
         VotingInstances[VotingInstance].ActiveVoters += 1;
 
-        _updateTaxesAndIndIncentive(VotingInstance, uint256 VotingInstance);
+        _updateTaxesAndIndIncentive(VotingInstance, uint256 VotingInstance, Vote VoteChoice);
         return(success);
     }
 
