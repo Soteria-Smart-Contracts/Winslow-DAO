@@ -131,7 +131,7 @@ contract VotingSystemV1 {
         return(success);
     }
 
-    function CastMultiVote()
+    function CastMultiVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice, Multi)
 
     //Post-Vote Functions
 
