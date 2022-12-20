@@ -96,17 +96,6 @@ contract VotingSystemV1 {
     
 
     //Active Vote Functions
-    function IncentivizeProposal(uint256 VotingInstance, uint256 amount) public returns(bool success){
-        require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal or you may not have given this contract enough allowance");
-        require(VotingInstances[VotingInstance].Status == VoteStatus(0), 'VotingSystemV1.IncentivizeProposal: This proposal has ended');
-        require(block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!");
-
-        VotingInstances[VotingInstance].TotalIncentive += amount;
-
-        _updateTaxesAndIndIncentive(VotingInstance);
-        emit ProposalIncentivized(msg.sender, VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
-        return(success);
-    }
 
     function CastVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice) external returns(bool success){
         require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or have not given the proper allowance to voting");
