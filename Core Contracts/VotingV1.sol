@@ -155,7 +155,7 @@ contract VotingSystemV1 {
     //OnlyDAO functions
 
         //Vote Setup
-    function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time) external OnlyDAO {
+    function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time, bool Multi) external OnlyDAO {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
 
         VotingInstances.push(VoteInstance(ProposalID,0,0,VoteStatus(0),0,0, false,0,0,0,0,0,0,0));
