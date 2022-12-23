@@ -116,7 +116,6 @@ contract VotingSystemV1 {
         VoterInfo[VotingInstance][msg.sender].Voted = true;
         VotingInstances[VotingInstance].ActiveVoters += 1;
 
-        _updateTaxesAndIndIncentive(VotingInstance);
         return(success);
     }
         //This is set up so that you can vote for or against the proposal, and if yes what of the options you prefer
