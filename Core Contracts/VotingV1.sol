@@ -142,7 +142,7 @@ contract VotingSystemV1 {
     function ReturnTokens(uint256 VotingInstance) external { //For returning your tokens for a specific instance after voting, with the incentive payout
         require(VoterInfo[VotingInstance][msg.sender].Voted == true);
         require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
-        require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastVote: This instance is currently in voting");
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastVote: This instance is currently in voting");
 
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
 
