@@ -148,7 +148,7 @@ contract VotingSystemV1 {
         TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
         TotalToReturn += (((VoterInfo[VotingInstance][msg.sender].VotesLocked * 100) * VotingInstances[VotingInstance].IncentivePerVote) / 10**9);
 
-        
+        ERC20(CLD).
 
         //emit TokensReturned(VotingInstances[VotingInstance].IncentiveAmount);
     }
