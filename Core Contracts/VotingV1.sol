@@ -119,7 +119,7 @@ contract VotingSystemV1 {
         _updateTaxesAndIndIncentive(VotingInstance);
         return(success);
     }
-        
+        //This is set up so that you can vote for or against the proposal, and if yes what 
     function CastMultiVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice, MultiOptions OptionChoice) external returns(bool success){ 
         require(ERC20(CLD).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or have not given the proper allowance to voting");
         require(VoteChoice == Vote(0) || VoteChoice == Vote(1), "VotingSystemV1.CastVote: You must either vote YEA or NAY");
