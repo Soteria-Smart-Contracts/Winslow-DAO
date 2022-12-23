@@ -150,7 +150,7 @@ contract VotingSystemV1 {
 
         ERC20(CLD).transfer(msg.sender, TotalToReturn);
 
-        //emit TokensReturned(VotingInstances[VotingInstance].IncentiveAmount);
+        //emit TokensReturned(VoterInfo[VotingInstance][msg.sender].VotesLocked, T);
     }
 
     //OnlyDAO functions
