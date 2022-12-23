@@ -76,7 +76,7 @@ contract VotingSystemV1 {
     event ProposalNotPassed(address executor, uint256 VotingInstance, uint256 amountBurned, uint256 executShare);
     event VoteCast(uint256 VotingInstance, string option, uint256 votesCasted);
     event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
-    event TokensReturned()
+    event TokensReturned(addres)
     event NewDAOAddress(address NewAddress);
     event FallbackToTreasury(uint256 amount);
  
