@@ -150,7 +150,7 @@ contract VotingSystemV1 {
     //Post-Vote Functions
 
     function ReturnTokens(uint256 VotingInstance) external { //For returning your tokens for a specific instance after voting, with the incentive payout
-    
+
         require(VoterInfo[VotingInstance][msg.sender].Voted == true);
         require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Voting has not ended for this instance");
@@ -170,6 +170,7 @@ contract VotingSystemV1 {
 
         //Vote Setup
     function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time, bool Multi) external OnlyDAO {
+        
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
         uint256 NewInstanceID= MRInstance++;
 
