@@ -15,8 +15,8 @@ contract VotingSystemV1 {
     uint256 public BurnCut;
 
     // Proposals being tracked by id here
-    uint256 MRInstance; //Most recent instance tracker for new initializations
     mapping(uint256 => VoteInstance) public VotingInstances;
+    uint256 MRInstance; //Most recent instance tracker for new initializations
 
     mapping(uint256 => MultiVoteCard) public MultiVotes;
     // Map user addresses over their info
