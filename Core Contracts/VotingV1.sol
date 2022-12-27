@@ -120,6 +120,7 @@ contract VotingSystemV1 {
         VotingInstances[VotingInstance].Voters += 1;
 
         return(success);
+        
     }
         //This is set up so that you can vote for or against the proposal, and if yes what of the options you prefer
     function CastMultiVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice, MultiOptions OptionChoice) external returns(bool success){ 
@@ -145,6 +146,7 @@ contract VotingSystemV1 {
         _updateTaxesAndIndIncentive(VotingInstance);
         emit ProposalIncentivized(msg.sender, VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
         return(success);
+
     }
 
     //Post-Vote Functions
@@ -170,7 +172,7 @@ contract VotingSystemV1 {
 
         //Vote Setup
     function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time, bool Multi) external OnlyDAO {
-        
+
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
         uint256 NewInstanceID= MRInstance++;
 
