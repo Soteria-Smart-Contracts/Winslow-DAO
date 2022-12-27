@@ -114,7 +114,7 @@ contract VotingSystemV1 {
 
         VoterInfo[VotingInstance][msg.sender].VotesLocked += amount;
         VoterInfo[VotingInstance][msg.sender].Voted = true;
-        VotingInstances[VotingInstance].ActiveVoters += 1;
+        VotingInstances[VotingInstance].Voters += 1;
 
         return(success);
     }
@@ -173,7 +173,7 @@ contract VotingSystemV1 {
     function EndVoting(uint256 VotingInstance) external OnlyDAO {
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
         require(VotingInstances[VotingInstance].Status == VoteStatus(1), "VotingSystemV1.ExecuteProposal: Proposal already executed!");
-        require(VotingInstances[VotingInstance].ActiveVoters > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
+        require(VotingInstances[VotingInstance].Voters > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
 
         ERC20(CLD).Burn(VotingInstances[VotingInstance].CLDToBurn);
         
