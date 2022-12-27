@@ -18,7 +18,6 @@ contract VotingSystemV1 {
     uint256 MRInstance; //Most recent instance tracker for new initializations
     mapping(uint256 => VoteInstance) public VotingInstances;
 
-
     mapping(uint256 => MultiVoteCard) public MultiVotes;
     // Map user addresses over their info
     mapping (uint256 => mapping (address => VoterDetails)) public VoterInfo;
