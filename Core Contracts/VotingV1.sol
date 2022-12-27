@@ -169,8 +169,7 @@ contract VotingSystemV1 {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
         uint256 NewInstanceID= MRInstance++;
 
-        VoteInstance memory NewInstance = VoteInstance(ProposalID,0,0,VoteStatus(0),0,0, Multi,0,0,0,0,0,0,0);
-        VotingInstances[NewInstanceID] = NewInstance;
+        VotingInstances[NewInstanceID] = VoteInstance(ProposalID,0,0,VoteStatus(0),0,0, Multi,0,0,0,0,0,0,0);
 
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
