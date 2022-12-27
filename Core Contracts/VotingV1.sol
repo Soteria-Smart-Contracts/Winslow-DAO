@@ -109,7 +109,7 @@ contract VotingSystemV1 {
             emit VoteCast(msg.sender, VotingInstance, "YEA", amount);
         } else {
             VotingInstances[VotingInstance].NAYvotes += amount;
-            emit VoteCast(VotingInstance, "NEA", amount);
+            emit VoteCast(msg.sender, VotingInstance, "NEA", amount);
         }
 
         VoterInfo[VotingInstance][msg.sender].VotesLocked += amount;
