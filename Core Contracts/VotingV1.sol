@@ -25,7 +25,7 @@ contract VotingSystemV1 {
         uint256 ProposalID;      //DAO Proposal for voting instance
         uint256 VoteStarts;      //Unix Time
         uint256 VoteEnds;        //Unix Time
-        VoteStatus Status;       //Using VoteResult enum
+        VoteStatus Status;       //Using VoteStatus enum
         uint256 ActiveVoters;    //Total Number of users that have voted
         uint256 TotalCLDVoted;   //Total of CLD used in this instance for voting
         bool MultiVote;          //Determines if this instance supports multivote
