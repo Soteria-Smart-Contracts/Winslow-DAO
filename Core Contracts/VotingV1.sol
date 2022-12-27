@@ -167,10 +167,10 @@ contract VotingSystemV1 {
         //Vote Setup
     function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time, bool Multi) external OnlyDAO {
         require(Time > 0, "VotingSystemV1.CreateProposal: Proposals need an end time");
-        uint256 NewInstanceIdentifier = MRInstance++;
+        uint256 NewInstanceID= MRInstance++;
 
         VoteInstance memory NewInstance = VoteInstance(ProposalID,0,0,VoteStatus(0),0,0, Multi,0,0,0,0,0,0,0);
-        VotingInstances[NewInstanceIdentifier]
+        VotingInstances[NewInstanceID] = NewInstance;
 
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
