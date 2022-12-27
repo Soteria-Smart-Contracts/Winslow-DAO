@@ -106,7 +106,7 @@ contract VotingSystemV1 {
 
         if(VoteChoice == Vote(0)) {
             VotingInstances[VotingInstance].YEAvotes += amount;
-            emit VoteCast(VotingInstance, "YEA", amount);
+            emit VoteCast(msg.sender, VotingInstance, "YEA", amount);
         } else {
             VotingInstances[VotingInstance].NAYvotes += amount;
             emit VoteCast(VotingInstance, "NEA", amount);
