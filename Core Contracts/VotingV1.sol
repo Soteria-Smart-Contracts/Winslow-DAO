@@ -15,7 +15,7 @@ contract VotingSystemV1 {
     uint256 public BurnCut;
 
     // Proposals being tracked by id here
-    uint256 MRInstance; //
+    uint256 MRInstance; //Instance 
     VoteInstance[] public VotingInstances;
 
 
