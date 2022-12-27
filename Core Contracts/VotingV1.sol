@@ -26,7 +26,7 @@ contract VotingSystemV1 {
         uint256 VoteStarts;      //Unix Time
         uint256 VoteEnds;        //Unix Time
         VoteStatus Status;       //Using VoteStatus enum
-        uint256 ActiveVoters;    //Total Number of users that have voted
+        uint256 Voters;    //Total Number of users that have voted
         uint256 TotalCLDVoted;   //Total of CLD used in this instance for voting
         bool MultiVote;          //Determines if this instance supports multivote
         uint256 YEAvotes;        //Votes to approve
