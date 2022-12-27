@@ -16,7 +16,7 @@ contract VotingSystemV1 {
 
     // Proposals being tracked by id here
     uint256 MRInstance; //Most recent instance tracker for new initializations
-    VoteInstance[] public VotingInstances;
+    mapping(uint256 => VoteInstance) public VotingInstances;
 
 
     mapping(uint256 => MultiVoteCard) public MultiVotes;
