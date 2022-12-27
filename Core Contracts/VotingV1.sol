@@ -170,7 +170,7 @@ contract VotingSystemV1 {
         uint256 NewInstanceIdentifier = MRInstance++;
 
         VoteInstance memory NewInstance = VoteInstance(ProposalID,0,0,VoteStatus(0),0,0, Multi,0,0,0,0,0,0,0);
-        Instances
+        VotingInstances[NewInstanceIdentifier]
 
         emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
     }
