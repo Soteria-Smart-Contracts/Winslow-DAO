@@ -160,9 +160,6 @@ contract HarmoniaDAO_V1_Core{
         emit NewTreasurySet(TreasuryAddress);
     }
 
-    
-
-
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
         payable(Treasury).transfer(address(this).balance);
