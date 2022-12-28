@@ -6,7 +6,7 @@ pragma solidity ^0.8.17;
 
 
 contract Winslow_Voting_V1 {
-    // Proposal executioner's bonus, proposal incentive burn percentage 
+    // Contracts and Routing Variables
     address public DAO;
     address public CLD;
     uint256 public MemberHolding;
