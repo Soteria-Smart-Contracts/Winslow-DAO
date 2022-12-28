@@ -86,7 +86,7 @@ contract Winslow_Core_V1{
     //Public state-modifing functions
 
     function SubmitSimpleProposal(address Slot, SimpleProposalTypes SimpleType, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
-        
+
         uint256 NewIdentifier = Proposals.length;
         InitializeSimpleProposal(NewIdentifier, Slot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
@@ -120,6 +120,7 @@ contract Winslow_Core_V1{
 
     //  Internal Executioning
     function InitializeSimpleProposal(uint256 NewIdentifier, address Slot, string memory Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
+
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events
 
@@ -127,9 +128,11 @@ contract Winslow_Core_V1{
         Proposals.push(NewProposal);
 
         return(NewIdentifier);
+
     }
 
     function InitializeProxyProposal(uint256 NewIdentifier, address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) internal returns(uint256 identifier){
+        
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         require(Slot != address(0), "ProxyProposals must be a contract");
 
