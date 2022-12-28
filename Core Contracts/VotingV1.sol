@@ -246,7 +246,7 @@ contract Winslow_Voting_V1 {
 //Interfaces
 
 interface HarmoniaDAO {
-    function Treasury() external returns(address payable TreausryAddress);
+    function Treasury() external returns(address payable TreasuryAddress);
 }
 
 interface ERC20 {
