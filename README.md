@@ -1,8 +1,6 @@
 # Winslow-DAO
 Official repository for the Winslow Decentralized Autonomous Organization protocol, including all smart contracts and documentation for use
 
-# Main Folders
-
 # Core Contracts
 This folder contains all the core contracts and module contracts for the Winslow Protocol
 
