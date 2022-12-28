@@ -166,7 +166,7 @@ contract VotingSystemV1 {
         ERC20(CLD).transfer(msg.sender, TotalToReturn);
 
         emit TokensReturned(msg.sender, TotalToReturn, (TotalToReturn - VoterInfo[VotingInstance][msg.sender].VotesLocked));
-    }
+    } 
 
     //OnlyDAO functions
 
@@ -183,7 +183,7 @@ contract VotingSystemV1 {
 
         //Status Changes
     function EndVoting(uint256 VotingInstance) external OnlyDAO {
-        
+
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
         require(VotingInstances[VotingInstance].Status == VoteStatus(1), "VotingSystemV1.ExecuteProposal: Proposal already executed!");
         require(VotingInstances[VotingInstance].Voters > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
