@@ -10,7 +10,8 @@ contract Winslow_Voting_V1 {
     address public DAO;
     address public CLD;
     uint256 public MemberHolding;
-    // These two are in Basis Points
+    
+    // Percentages in Basis Points
     uint256 public ExecutorCut;
     uint256 public BurnCut;
 
