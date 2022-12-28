@@ -10,7 +10,7 @@ contract Winslow_Voting_V1 {
     address public DAO;
     address public CLD;
     uint256 public MemberHolding;
-    
+
     // Percentages in Basis Points
     uint256 public ExecutorCut;
     uint256 public BurnCut;
@@ -167,6 +167,7 @@ contract Winslow_Voting_V1 {
         ERC20(CLD).transfer(msg.sender, TotalToReturn);
 
         emit TokensReturned(msg.sender, TotalToReturn, (TotalToReturn - VoterInfo[VotingInstance][msg.sender].VotesLocked));
+        
     } 
 
     //OnlyDAO functions
