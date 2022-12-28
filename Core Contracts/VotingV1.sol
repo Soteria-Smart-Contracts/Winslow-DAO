@@ -219,10 +219,7 @@ contract Winslow_Voting_V1 {
         emit NewDAOAddress(newAddr);
     }
     
-    /////////////////////////////////////////
-    /////        Internal functions     /////
-    /////////////////////////////////////////
-
+    //Internal functions
     // TO DO Refactor this
 
     function _updateTaxesAndIndIncentive(uint256 VotingInstance) internal  {    
