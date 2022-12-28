@@ -1,7 +1,7 @@
 //SPDX-License-Identifier:UNLICENSE
 pragma solidity ^0.8.17;
 
-contract HarmoniaDAO_Treasury_V1{
+contract Winslow_Treasury_V1{
     //Variable, struct and type declarations
     string public Version = "V1";
     address public DAO;
