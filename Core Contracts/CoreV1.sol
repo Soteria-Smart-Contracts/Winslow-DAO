@@ -152,7 +152,7 @@ contract Winslow_Core_V1{
         Proposals.push(NewProposal);
 
         return(NewIdentifier);
-        
+
     }
 
     //    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
@@ -162,6 +162,7 @@ contract Winslow_Core_V1{
     
     //One Time Functions
     function SetInitialTreasury(address TreasuryAddress) external{
+
         require(msg.sender == TreasurySetter);
         require(InitialTreasurySet == false);
 
@@ -170,6 +171,7 @@ contract Winslow_Core_V1{
         InitialTreasurySet = true;
 
         emit NewTreasurySet(TreasuryAddress);
+        
     }
 
     receive() external payable{
