@@ -89,8 +89,9 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = Proposals.length;
         InitializeSimpleProposal(NewIdentifier, Slot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
-        //Call voting, tell it to initialize a voting campain to begin once CoreV1 tells it to
+
         return(true, NewIdentifier);
+
     }
 
     function SubmitProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) public returns(bool success, uint256 Identifier) {
@@ -99,6 +100,7 @@ contract Winslow_Core_V1{
 
         
         return(true, NewIdentifier);
+        
     }
 
 
