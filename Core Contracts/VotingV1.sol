@@ -220,7 +220,6 @@ contract Winslow_Voting_V1 {
     }
     
     //Internal functions
-    // TO DO Refactor this
 
     function _updateTaxesAndIndIncentive(uint256 VotingInstance) internal  {    
             VotingInstances[VotingInstance].CLDToBurn = ((VotingInstances[VotingInstance].TotalIncentive * BurnCut) / 10000);
