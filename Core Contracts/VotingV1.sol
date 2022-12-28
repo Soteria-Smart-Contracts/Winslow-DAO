@@ -242,9 +242,8 @@ contract Winslow_Voting_V1 {
 
 }
 
-    /////////////////////////////////////////
-    /////          Interfaces           /////
-    /////////////////////////////////////////
+
+//Interfaces
 
 interface HarmoniaDAO {
     function Treasury() external returns(address payable TreausryAddress);
