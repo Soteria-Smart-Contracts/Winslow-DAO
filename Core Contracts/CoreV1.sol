@@ -86,6 +86,7 @@ contract Winslow_Core_V1{
     //Public state-modifing functions
 
     function SubmitSimpleProposal(address Slot, SimpleProposalTypes SimpleType, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
+        
         uint256 NewIdentifier = Proposals.length;
         InitializeSimpleProposal(NewIdentifier, Slot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
@@ -95,20 +96,23 @@ contract Winslow_Core_V1{
     }
 
     function SubmitProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) public returns(bool success, uint256 Identifier) {
+
         uint256 NewIdentifier = Proposals.length;
         InitializeProxyProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
 
         
         return(true, NewIdentifier);
-        
+
     }
 
 
     function SubmitErosProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
+
         uint256 NewIdentifier = Proposals.length;
         InitializeErosProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
         
         return(true, NewIdentifier);
+
     }
 
     //  Public view functions
