@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 
-contract HarmoniaDAO_Core_V1{
+contract Winslow_Core_V1{
     //Variable Declarations
     string public Version = "V1";
     address public Treasury = address(0);
