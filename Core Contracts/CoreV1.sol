@@ -97,7 +97,7 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = Proposals.length;
         InitializeProxyProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
 
-        //Call voting, tell it to initialize a voting campain to begin once CoreV1 tells it to
+        
         return(true, NewIdentifier);
     }
 
