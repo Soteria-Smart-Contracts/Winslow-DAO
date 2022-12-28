@@ -85,7 +85,7 @@ contract VotingSystemV1 {
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
         _;
-    }
+    } 
 
     constructor(address CLDAddr, address DAOAddr, uint8 _ExecusCut, uint8 _BurnCut){
         ExecutorCut = _ExecusCut;
