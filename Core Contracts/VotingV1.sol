@@ -167,7 +167,7 @@ contract Winslow_Voting_V1 {
         ERC20(CLD).transfer(msg.sender, TotalToReturn);
 
         emit TokensReturned(msg.sender, TotalToReturn, (TotalToReturn - VoterInfo[VotingInstance][msg.sender].VotesLocked));
-        
+
     } 
 
     //OnlyDAO functions
@@ -232,10 +232,6 @@ contract Winslow_Voting_V1 {
 
             VotingInstances[VotingInstance].CLDtoIncentive = VotingInstances[VotingInstance].TotalIncentive - (VotingInstances[VotingInstance].CLDToBurn + VotingInstances[VotingInstance].CLDToExecutioner);
     }
-
-    //function _updateIncentiveShare(uint256 VotingInstance, uint256 _baseTokenAmount) internal {
-        
-    //}
 
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
