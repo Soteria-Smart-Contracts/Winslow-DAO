@@ -49,7 +49,7 @@ contract ErosProposal{
             ExtCon(ExternalContract).Update("This value was updated by the DAO using the fifth option!");
         }
         else{
-            revert("Option to execute is out of bounds");
+            revert("Option to execute is out of bounds, Eros Proposal Execution failed");
         }
         //External or internal code to execute
 
