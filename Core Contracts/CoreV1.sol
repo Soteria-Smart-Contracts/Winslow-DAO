@@ -155,7 +155,7 @@ contract Winslow_Core_V1{
 
     }
 
-    
+    //External Simple Proposal Call Functions
 
     //    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
 
