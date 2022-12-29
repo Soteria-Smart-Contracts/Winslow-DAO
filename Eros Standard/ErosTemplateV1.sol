@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
 contract ErosProposal{
     address public DAO = 0x0000000000000000000000000000000000000000;
     bool public Executed;
-    bool public Multi = false;
+    bool public Multi = false; //Must Exist or will be rejected by Core
 
 
     //Fund request/s for the proposal, can only receive one asset per proposal, may receive both ERC20 and Ether
