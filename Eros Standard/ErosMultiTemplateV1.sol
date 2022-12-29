@@ -36,8 +36,8 @@ contract ErosProposal{
         if(OptionToExecute == 1){
             ExtCon(ExternalContract).Update("This value was updated by the DAO using the first option!");
         }
-        else if(OptionToExecute == 1){
-
+        else if(OptionToExecute == 2){
+            ExtCon(ExternalContract).Update("This value was updated by the DAO using the first option!");
         }
         //External or internal code to execute
 
