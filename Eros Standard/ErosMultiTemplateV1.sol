@@ -28,13 +28,13 @@ contract ErosProposal{
     }
 
 
-    function Execute() external OnlyDAO returns(bool success){
+    function Execute(uint8 ) external OnlyDAO returns(bool success){
         Executed = true; //Updates first to avoid recursive calling
         address TokenAddress = TreasuryV1(HarmoniaDAO(DAO).Treasury()).RegisteredAssets(TokenIdentifier);
 
         //External or internal code to execute
-        
-        ExtCon(ExternalContract).Update("This value was updated by the DAO!");
+
+        ExtCon(ExternalContract).Update("This value was updated by the DAO using the first option!");
         //External or internal code to execute
 
 
