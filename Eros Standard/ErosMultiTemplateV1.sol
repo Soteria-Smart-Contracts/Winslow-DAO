@@ -28,7 +28,7 @@ contract ErosProposal{
         _;
     }
 
-    constructor () public {
+    constructor(){
         
     }
 
