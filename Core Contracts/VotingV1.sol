@@ -134,6 +134,7 @@ contract Winslow_Voting_V1 {
         require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastMultiVote: This instance is not currently in voting");
 
 
+        return(success);
         
     }
 
