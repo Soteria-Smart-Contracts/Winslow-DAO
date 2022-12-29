@@ -123,6 +123,7 @@ contract Winslow_Voting_V1 {
         return(success);
 
     }
+    
         //This is set up so that you can vote for or against the proposal, and if yes what of the options you prefer
     function CastMultiVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice, MultiOptions OptionChoice) external returns(bool success){ 
 
