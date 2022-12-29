@@ -33,6 +33,7 @@ contract ErosProposal{
         address TokenAddress = TreasuryV1(HarmoniaDAO(DAO).Treasury()).RegisteredAssets(TokenIdentifier);
 
         //External or internal code to execute
+        
         ExtCon(ExternalContract).Update("This value was updated by the DAO!");
         //External or internal code to execute
 
