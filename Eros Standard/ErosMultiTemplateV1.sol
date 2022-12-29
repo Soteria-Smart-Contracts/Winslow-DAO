@@ -6,7 +6,7 @@ contract ErosProposal{
     address public DAO = 0x0000000000000000000000000000000000000000;
     bool public Executed;
     bool public Multi = true; //Must Exist or will be rejected by Core
-    uint8 Options
+    uint8 public OptionCount; 
 
     //Fund request/s for the proposal, can only receive one asset per proposal, may receive both ERC20 and Ether
     uint256 public RequestEther = 0 ether; //Optional, can be ommited
