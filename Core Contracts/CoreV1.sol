@@ -15,7 +15,7 @@ contract Winslow_Core_V1{
     Proposal[] public Proposals;
 
     enum ProposalStatus{
-        Security_Verification
+        Security_Verification,
         Pre_Voting,
         Voting,
         Executed,
@@ -23,7 +23,7 @@ contract Winslow_Core_V1{
     }
 
     enum SecurityStatus{
-        Unconfirmed
+        Unconfirmed,
         Safe,
         Medium,
         Severe,
@@ -31,13 +31,13 @@ contract Winslow_Core_V1{
     }
 
     enum ProposalTypes{
-        Simple
+        Simple,
         Proxy,
         Eros
     }
 
     enum SimpleProposalTypes{
-        NotApplicable
+        NotApplicable,
         AssetSend,
         AssetRegister,
         TreasuryChange,
