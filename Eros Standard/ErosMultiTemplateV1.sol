@@ -28,6 +28,10 @@ contract ErosProposal{
         _;
     }
 
+    constructor () public {
+        
+    }
+
 
     function Execute(uint8 OptionToExecute) external OnlyDAO returns(bool success){
         Executed = true; //Updates first to avoid recursive calling
