@@ -28,7 +28,7 @@ contract ErosProposal{
         _;
     }
 
-    constructor(){
+    constructor(string MemoOptionOne){
         
     }
 
