@@ -118,7 +118,8 @@ contract Winslow_Core_V1{
     //  Public view functions
 
 
-    //  Internal Executioning
+    //  Internal Functions
+
     function InitializeSimpleProposal(uint256 NewIdentifier, address Slot, string memory Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
@@ -155,7 +156,7 @@ contract Winslow_Core_V1{
 
     }
 
-    //External Simple Proposal Call Functions
+    //      External Simple Proposal Call Functions
 
     //    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
 
