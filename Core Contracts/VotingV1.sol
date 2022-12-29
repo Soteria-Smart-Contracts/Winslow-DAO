@@ -132,10 +132,10 @@ contract Winslow_Voting_V1 {
         require(amount >= 10000000000000000, "VotingSystemV1.CastMultiVote: The minimum CLD per vote is 0.01"); //For incentive payout reasons
         require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastMultiVote: You may only cast a single vote per address per proposal"); //This may be changed in V2
         require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastMultiVote: This instance is not currently in voting");
-
+        
 
         return(success);
-        
+
     }
 
     function IncentivizeProposal(uint256 VotingInstance, uint256 amount) public returns(bool success){
