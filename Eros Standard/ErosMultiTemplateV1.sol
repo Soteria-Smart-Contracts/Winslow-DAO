@@ -29,12 +29,12 @@ contract ErosProposal{
     }
 
     constructor(string memory MemoOptionOne, string memory MemoOptionTwo, string memory MemoOptionThree, string memory MemoOptionFour, string memory MemoOptionFive){
-OptionMemo[1] = MemoOptionOne;
-OptionMemo[2] = MemoOptionTwo;
-OptionMemo[3] = MemoOptionThree;
-OptionMemo[4] = MemoOptionFour;
-OptionMemo[5] = MemoOptionFive;
-}
+        OptionMemo[1] = MemoOptionOne;
+        OptionMemo[2] = MemoOptionTwo;
+        OptionMemo[3] = MemoOptionThree;
+        OptionMemo[4] = MemoOptionFour;
+        OptionMemo[5] = MemoOptionFive;
+    }
 
 
     function Execute(uint8 OptionToExecute) external OnlyDAO returns(bool success){
