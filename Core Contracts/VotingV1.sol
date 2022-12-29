@@ -74,6 +74,9 @@ contract Winslow_Voting_V1 {
         VotingActive,
         VotingComplete
     }
+    func 
+    fucnky
+    finally
 
     event ProposalCreated(address proposer, uint256 proposalID, uint256 voteStart, uint256 voteEnd);
     event ProposalPassed(address executor, uint256 VotingInstance, uint256 amountBurned, uint256 executShare);
