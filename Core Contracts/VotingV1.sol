@@ -10,14 +10,14 @@ contract Winslow_Voting_V1 {
     address public DAO;
     iek
     address public CLD;
-    uint256 public MemberHolding;
+    uint256 public MemberHolding
 
     // Percentages in Basis Points
-    uint256 public ExecutorCut;
+    uint256 public ExecutorCut
     uint256 public BurnCut;
 
     // Proposals being tracked by id here
-    mapping(uint256 => VoteInstance) public VotingInstances;
+    mapping(uint256 => VoteInstance) public VotingInstances
     uint256 MRInstance; //Most recent instance tracker for new initializations
 
     mapping(uint256 => MultiVoteCard) public MultiVotes;
