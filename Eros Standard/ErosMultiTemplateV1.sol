@@ -54,7 +54,6 @@ contract ErosProposal{
         }
         //External or internal code to execute
 
-
         if(address(this).balance > 0){ //Must be the last state changing part of this function
             payable(DAO).transfer(address(this).balance);
         }
