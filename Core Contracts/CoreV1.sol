@@ -13,7 +13,7 @@ contract Winslow_Core_V1{
     //Mapping, structs and other declarations
      
     mapping(uint256 => Proposal) public Proposals;
-    uint256 MRIdentifier;
+    uint256 MRIdentifier = 0;
 
     enum ProposalStatus{
         Security_Verification,
