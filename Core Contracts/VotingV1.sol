@@ -175,7 +175,7 @@ contract Winslow_Voting_V1 {
     //Public View Functions
 
     function CLDAddress() public view returns(address CLD){
-        return(TreasuryV1(Treasury).CLDAddress());
+        return(CoreV1(DAO).CLDAddress());
     }
 
     //OnlyDAO functions
