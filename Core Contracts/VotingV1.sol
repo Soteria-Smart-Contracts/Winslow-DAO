@@ -8,7 +8,6 @@ pragma solidity ^0.8.17;
 contract Winslow_Voting_V1 {
     // Contracts and Routing Variables
     address public DAO;
-    address public CLD;
     uint256 public MemberHolding;
 
     // Percentages in Basis Points
