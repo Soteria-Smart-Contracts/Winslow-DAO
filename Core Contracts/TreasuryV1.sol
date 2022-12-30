@@ -124,6 +124,10 @@ contract Winslow_Treasury_V1{
         return(AssetRegistryMap[TokenAddress]);
     }
 
+    function CLDAddress() public view returns(address CLD){
+        
+    }
+
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
         uint256 DecimalReplacer = (10**10);
         uint256 DAObalance = ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this));
@@ -149,10 +153,6 @@ contract Winslow_Treasury_V1{
         uint256 DecimalReplacer = (10**10);
         uint256 DAOAssetBalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
         return(((CLDamount * ((DAOAssetBalance * DecimalReplacer) / PreSupply)) / DecimalReplacer));
-    }
-
-    function CLDAddress() public view returns(address CLD){
-        
     }
 
     //Fallback Functions
