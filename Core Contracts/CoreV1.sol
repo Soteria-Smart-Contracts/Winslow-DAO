@@ -11,7 +11,7 @@ contract Winslow_Core_V1{
     ProxyProposalArguments internal EmptyProxy;
 
     //Mapping, structs and other declarations
-    
+     
     mapping(uint256 => Proposal) public Proposals;
 
     enum ProposalStatus{
