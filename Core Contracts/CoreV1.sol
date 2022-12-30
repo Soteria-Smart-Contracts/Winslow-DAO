@@ -165,6 +165,8 @@ contract Winslow_Core_V1{
         ERC20(CLDAddress()).transferFrom(msg.sender, Treasury, (ProposalCost / 2));
         ERC20(CLDAddress()).Burn(ERC20(CLDAddress()).balanceOf(address(this)));
 
+        return(success);
+
     }
 
     //  External Simple Proposal Call Functions
