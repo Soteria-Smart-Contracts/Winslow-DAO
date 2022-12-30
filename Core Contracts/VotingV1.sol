@@ -87,7 +87,7 @@ contract Winslow_Voting_V1 {
         _;
     } 
 
-    constructor(address CLDAddr, address DAOAddr, uint8 _ExecusCut, uint8 _BurnCut){
+    constructor(address DAOAddr, uint8 _ExecusCut, uint8 _BurnCut){
         ExecutorCut = _ExecusCut;
         BurnCut = _BurnCut;
         DAO = DAOAddr;
