@@ -160,9 +160,10 @@ contract Winslow_Core_V1{
     }
 
     function ReceiveProposalCost() internal returns(bool success){
+        
+        ERC20(CLDAddress()).transferFrom(msg.sender, Treasury, (ProposalCost / 2));
 
         ERC20(CLDAddress()).transferFrom(msg.sender, address(this), (ProposalCost / 2));
-        ERC20(CLDAddress()).transferFrom(msg.sender, Treasury, (ProposalCost / 2));
         ERC20(CLDAddress()).Burn(ERC20(CLDAddress()).balanceOf(address(this)));
 
         return(success);
