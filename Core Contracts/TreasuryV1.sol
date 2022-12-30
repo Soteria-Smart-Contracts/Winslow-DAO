@@ -151,6 +151,8 @@ contract Winslow_Treasury_V1{
         return(((CLDamount * ((DAOAssetBalance * DecimalReplacer) / PreSupply)) / DecimalReplacer));
     }
 
+    function CLD
+
     //Fallback Functions
     receive() external payable{
         emit EtherReceived(msg.value, msg.sender, tx.origin); //Does msg.value work for this?
