@@ -172,6 +172,12 @@ contract Winslow_Voting_V1 {
 
     } 
 
+    //Public View Functions
+
+    function CLDAddress() public view returns(address CLD){
+        return(RegisteredAssets[0].TokenAddress);
+    }
+
     //OnlyDAO functions
 
         //Vote Setup
