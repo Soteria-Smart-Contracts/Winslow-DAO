@@ -12,7 +12,7 @@ contract Winslow_Core_V1{
 
     //Mapping, structs and other declarations
     
-    Proposal[] public Proposals;
+    mapping(uint256 =>  public Proposals;
 
     enum ProposalStatus{
         Security_Verification,
