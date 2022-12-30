@@ -6,7 +6,7 @@ contract Winslow_Core_V1{
     //Variable Declarations
     string public Version = "V1";
     address public Treasury = address(0);
-    address public TreasurySetter;
+    address public InitialSetter;
     bool public InitialTreasurySet = false;
     ProxyProposalArguments internal EmptyProxy;
 
