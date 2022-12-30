@@ -164,7 +164,7 @@ contract Winslow_Voting_V1 {
         TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
         TotalToReturn += (((VoterInfo[VotingInstance][msg.sender].VotesLocked * 100) * VotingInstances[VotingInstance].IncentivePerVote) / 10**9);
 
-        ERC20(CLD).transfer(msg.sender, TotalToReturn);
+        ERC20(CLDAddress()).transfer(msg.sender, TotalToReturn);
 
         emit TokensReturned(msg.sender, TotalToReturn, (TotalToReturn - VoterInfo[VotingInstance][msg.sender].VotesLocked));
 
@@ -196,9 +196,9 @@ contract Winslow_Voting_V1 {
         require(VotingInstances[VotingInstance].Status == VoteStatus(1), "VotingSystemV1.ExecuteProposal: Proposal already executed!");
         require(VotingInstances[VotingInstance].Voters > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
 
-        ERC20(CLD).Burn(VotingInstances[VotingInstance].CLDToBurn);
+        ERC20(CLDAddress()).Burn(VotingInstances[VotingInstance].CLDToBurn);
         
-        ERC20(CLD).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
+        ERC20(CLDAddress()).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
 
         VotingInstances[VotingInstance].IncentivePerVote = ((VotingInstances[VotingInstance].CLDtoIncentive * 10**9) / VotingInstances[VotingInstance].TotalCLDVoted);
 
