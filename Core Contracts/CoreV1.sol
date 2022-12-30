@@ -88,7 +88,7 @@ contract Winslow_Core_V1{
 
     function SubmitSimpleProposal(address Slot, SimpleProposalTypes SimpleType, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
 
-        uint256 NewIdentifier = Proposals.length;
+        uint256 NewIdentifier = MRIdentifier++;
         InitializeSimpleProposal(NewIdentifier, Slot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
 
