@@ -79,7 +79,7 @@ contract Winslow_Core_V1{
 
 
     constructor(){
-        TreasurySetter = msg.sender;
+        InitialSetter = msg.sender;
         EmptyProxy = ProxyProposalArguments(0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
         //Special proposal in index 0
     }
@@ -173,11 +173,11 @@ contract Winslow_Core_V1{
     //One Time Functions
     function SetInitialTreasury(address TreasuryAddress) external{
 
-        require(msg.sender == TreasurySetter);
+        require(msg.sender == InitialSetter);
         require(InitialTreasurySet == false);
 
         Treasury = TreasuryAddress;
-        TreasurySetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
+        InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialTreasurySet = true;
 
         emit NewTreasurySet(TreasuryAddress);
