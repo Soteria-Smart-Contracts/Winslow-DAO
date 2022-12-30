@@ -128,7 +128,6 @@ contract Winslow_Core_V1{
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events
 
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false);
-        Proposals.push(NewProposal);
 
         return(NewIdentifier);
 
@@ -140,7 +139,6 @@ contract Winslow_Core_V1{
         require(Slot != address(0), "ProxyProposals must be a contract");
 
         Proposal memory NewProposal = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs, false);
-        Proposals.push(NewProposal);
 
         return(NewIdentifier);
 
