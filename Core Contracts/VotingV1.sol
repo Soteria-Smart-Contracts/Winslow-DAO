@@ -240,7 +240,7 @@ contract Winslow_Voting_V1 {
 
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
-        payable(WinslowDAO(DAO).Treasury()).transfer(address(this).balance);
+        payable(WinslowDAOV1(DAO).Treasury()).transfer(address(this).balance);
     }
 
     fallback() external payable{
