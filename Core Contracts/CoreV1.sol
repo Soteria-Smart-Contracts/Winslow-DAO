@@ -161,7 +161,7 @@ contract Winslow_Core_V1{
 
     function ReceiveProposalCost() internal returns(bool success){
 
-        ERC20(CLDAddress()).transferFrom(msg.sender, address(this), )
+        ERC20(CLDAddress()).transferFrom(msg.sender, address(this), (ProposalCost / 2))
     }
 
     //  External Simple Proposal Call Functions
