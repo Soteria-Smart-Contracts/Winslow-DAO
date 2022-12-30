@@ -119,6 +119,9 @@ contract Winslow_Core_V1{
 
     //  Public view functions
 
+    function CLDAddress() public view returns(address CLD){
+        return(RegisteredAssets[0].TokenAddress);
+    }
 
     //  Internal Functions
 
