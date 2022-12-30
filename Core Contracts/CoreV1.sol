@@ -158,7 +158,7 @@ contract Winslow_Core_V1{
 
     }
 
-    function ReceiveProposalCost
+    function ReceiveProposalCost()
 
     //  External Simple Proposal Call Functions
 
