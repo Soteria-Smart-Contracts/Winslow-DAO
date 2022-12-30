@@ -47,7 +47,7 @@ contract Winslow_Treasury_V1{
         ERC20(RegisteredAssets[AssetID].TokenAddress).transferFrom(msg.sender, address(this), amount);
     }
 
-    //CLD Claim
+        //CLD Claim
     function UserAssetClaim(uint256 CLDamount) public returns(bool success){
         AssetClaim(CLDamount, msg.sender, payable(msg.sender));
 
