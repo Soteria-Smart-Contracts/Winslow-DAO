@@ -156,7 +156,8 @@ contract Winslow_Core_V1{
     }
 
     function ReceiveProposalCost() internal returns(bool success){
-        
+
+        ERC
     }
 
     //  External Simple Proposal Call Functions
