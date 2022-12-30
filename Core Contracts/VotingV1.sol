@@ -91,7 +91,6 @@ contract Winslow_Voting_V1 {
         ExecutorCut = _ExecusCut;
         BurnCut = _BurnCut;
         DAO = DAOAddr;
-        CLD = CLDAddress();;
     }
 
     //Pre-Vote Functions (Incentivize is available pre and during vote)
