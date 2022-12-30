@@ -151,7 +151,9 @@ contract Winslow_Treasury_V1{
         return(((CLDamount * ((DAOAssetBalance * DecimalReplacer) / PreSupply)) / DecimalReplacer));
     }
 
-    function CLDAddress() p
+    function CLDAddress() public view returns(address CLD){
+        
+    }
 
     //Fallback Functions
     receive() external payable{
