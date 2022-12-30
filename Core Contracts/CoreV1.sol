@@ -159,7 +159,7 @@ contract Winslow_Core_V1{
     }
 
     function ReceiveProposalCost() internal returns(bool success){
-        ERC20
+    
     }
 
     //  External Simple Proposal Call Functions
