@@ -255,6 +255,7 @@ contract Winslow_Voting_V1 {
 
 interface CoreV1 {
     function Treasury() external returns(address payable TreasuryAddress);
+    function CLDAddress() external view returns(address CLD);
 }
 
 interface ERC20 {
