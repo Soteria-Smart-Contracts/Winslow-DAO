@@ -125,7 +125,7 @@ contract Winslow_Treasury_V1{
     }
 
     function CLDAddress() public view returns(address CLD){
-        return(RegisteredAssets[0])
+        return(RegisteredAssets[0].TokenAddress);
     }
 
     function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
