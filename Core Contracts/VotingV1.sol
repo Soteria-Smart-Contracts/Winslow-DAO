@@ -233,12 +233,12 @@ contract Winslow_Voting_V1 {
 
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
-        payable(HarmoniaDAO(DAO).Treasury()).transfer(address(this).balance);
+        payable(WinslowDAO(DAO).Treasury()).transfer(address(this).balance);
     }
 
     fallback() external payable{
         emit FallbackToTreasury(address(this).balance);
-        payable(HarmoniaDAO(DAO).Treasury()).transfer(address(this).balance);
+        payable(WinslowDAO(DAO).Treasury()).transfer(address(this).balance);
     }
 
 }
@@ -246,7 +246,7 @@ contract Winslow_Voting_V1 {
 
 //Interfaces
 
-interface HarmoniaDAO {
+interface WinslowDAO {
     function Treasury() external returns(address payable TreasuryAddress);
 }
 
