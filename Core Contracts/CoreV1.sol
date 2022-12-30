@@ -98,7 +98,7 @@ contract Winslow_Core_V1{
 
     function SubmitProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) public returns(bool success, uint256 Identifier) {
 
-        uint256 NewIdentifier = Proposals.length;
+        uint256 NewIdentifier = MRIdentifier++;
         InitializeProxyProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
 
         
@@ -109,7 +109,7 @@ contract Winslow_Core_V1{
 
     function SubmitErosProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
 
-        uint256 NewIdentifier = Proposals.length;
+        uint256 NewIdentifier = MRIdentifier++;
         InitializeErosProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
         
         return(true, NewIdentifier);
