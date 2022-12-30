@@ -100,6 +100,8 @@ contract Winslow_Core_V1{
 
     function SubmitProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) public returns(bool success, uint256 Identifier) {
 
+        require(ReceiveProposalCost());
+
         uint256 NewIdentifier = MRIdentifier++;
         InitializeProxyProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
 
@@ -160,7 +162,7 @@ contract Winslow_Core_V1{
     }
 
     function ReceiveProposalCost() internal returns(bool success){
-        
+
         ERC20(CLDAddress()).transferFrom(msg.sender, Treasury, (ProposalCost / 2));
 
         ERC20(CLDAddress()).transferFrom(msg.sender, address(this), (ProposalCost / 2));
