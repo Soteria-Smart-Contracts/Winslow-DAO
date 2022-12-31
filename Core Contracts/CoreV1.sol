@@ -195,7 +195,7 @@ contract Winslow_Core_V1{
         require(InitialTreasurySet == false);
 
         Treasury = TreasuryAddress;
-        Voting = V
+        Voting = VotingAddress;
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialContractsSet = true;
 
