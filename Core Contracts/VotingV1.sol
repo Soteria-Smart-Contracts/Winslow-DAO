@@ -140,7 +140,7 @@ contract Winslow_Voting_V1 {
             emit VoteCast(msg.sender, VotingInstance, "NEA", amount);
         }
 
-        MultiVotes[VotingInstance].
+        MultiVotes[VotingInstance][1] = 2;
         
 
         return(success);
