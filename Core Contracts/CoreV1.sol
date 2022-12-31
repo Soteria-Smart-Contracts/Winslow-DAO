@@ -141,7 +141,7 @@ contract Winslow_Core_V1{
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events
-        VotingV1(Voting).InitializeVoteInstance(ProposalID, VotingLength, Multi);
+        VotingV1(Voting).InitializeVoteInstance(ProposalID, VotingLength, false);
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, msg.sender);
 
         return(NewIdentifier);
