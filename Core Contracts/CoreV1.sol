@@ -142,7 +142,7 @@ contract Winslow_Core_V1{
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
 
         uint256 NewIdentifier = MRIdentifier++;
-        
+        MRIdentifier++;
 
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events
         VotingV1(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
@@ -156,6 +156,9 @@ contract Winslow_Core_V1{
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         require(Slot != address(0), "ProxyProposals must be a contract");
+
+        uint256 NewIdentifier = MRIdentifier++;
+        MRIdentifier++;
 
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs, false, msg.sender);
 
