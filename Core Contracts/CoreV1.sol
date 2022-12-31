@@ -118,13 +118,13 @@ contract Winslow_Core_V1{
     }
 
 
-    function SubmitErosProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success, uint256 Identifier){
+    function SubmitErosProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
 
         require(ReceiveProposalCost());
 
         InitializeErosProposal(Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
         
-        return(true, NewIdentifier);
+        return(success);
 
     }
 
