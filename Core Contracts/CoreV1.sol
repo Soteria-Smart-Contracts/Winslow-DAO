@@ -160,6 +160,7 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
+        
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs, false, msg.sender);
 
         return(NewIdentifier);
