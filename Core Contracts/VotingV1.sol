@@ -140,9 +140,11 @@ contract Winslow_Voting_V1 {
             emit VoteCast(msg.sender, VotingInstance, "NEA", amount);
         }
 
-        if (OptionChoice == MultiOptions(0))
+        if (OptionChoice == MultiOptions(0)){
+            MultiVotes[VotingInstance].OptionOne = 2;
+        }
+        
 
-        MultiVotes[VotingInstance].OptionOne = 2;
         
 
         return(success);
