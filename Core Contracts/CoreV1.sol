@@ -122,8 +122,7 @@ contract Winslow_Core_V1{
 
         require(ReceiveProposalCost());
 
-        uint256 NewIdentifier = MRIdentifier++;
-        InitializeErosProposal(NewIdentifier, Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        InitializeErosProposal(Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
         
         return(true, NewIdentifier);
 
