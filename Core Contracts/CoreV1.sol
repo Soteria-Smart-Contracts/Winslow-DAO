@@ -101,11 +101,11 @@ contract Winslow_Core_V1{
         InitializeSimpleProposal(NewIdentifier, Slot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
 
-        return(true, NewIdentifier);
+        return(success);
 
     }
 
-    function SubmitProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) public returns(bool success, uint256 Identifier) {
+    function SubmitProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) public returns(bool success, uint256 Identifier){
 
         require(ReceiveProposalCost());
 
@@ -113,7 +113,7 @@ contract Winslow_Core_V1{
         InitializeProxyProposal(Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
 
         
-        return(true, NewIdentifier);
+        return(success);
 
     }
 
