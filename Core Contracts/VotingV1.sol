@@ -74,10 +74,7 @@ contract Winslow_Voting_V1 {
     }
 
     //TODO: Review events for each function
-
-    event ProposalCreated(address proposer, uint256 proposalID, uint256 voteStart, uint256 voteEnd);
-    event ProposalPassed(address executor, uint256 VotingInstance, uint256 amountBurned, uint256 executShare);
-    event ProposalNotPassed(address executor, uint256 VotingInstance, uint256 amountBurned, uint256 executShare);
+    
     event VoteCast(address Voter, uint256 VotingInstance, string option, uint256 votesCasted);
     event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
     event TokensReturned(address Voter, uint256 TotalSent, uint256 IncentiveShare);
