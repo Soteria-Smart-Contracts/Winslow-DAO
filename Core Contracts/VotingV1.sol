@@ -141,7 +141,7 @@ contract Winslow_Voting_V1 {
         }
 
         if (OptionChoice == MultiOptions(0)){
-            MultiVotes[VotingInstance].OptionOne += 2;
+            MultiVotes[VotingInstance].OptionOne += amount;
         }
         if (OptionChoice == MultiOptions(0)){
             MultiVotes[VotingInstance].OptionTwo += 2;
