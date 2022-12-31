@@ -74,7 +74,7 @@ contract Winslow_Voting_V1 {
     }
 
     //TODO: Review events for each function
-    
+
     event VoteCast(address Voter, uint256 VotingInstance, string option, uint256 votesCasted);
     event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
     event TokensReturned(address Voter, uint256 TotalSent, uint256 IncentiveShare);
@@ -194,7 +194,7 @@ contract Winslow_Voting_V1 {
 
         VotingInstances[NewInstanceID] = VoteInstance(ProposalID,0,0,VoteStatus(0),0,0, Multi,0,0,0,0,0,0,0);
 
-        emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
+        // emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
         return(NewInstanceID);
     }
 
