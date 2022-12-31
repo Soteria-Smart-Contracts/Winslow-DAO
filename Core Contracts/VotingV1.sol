@@ -107,7 +107,7 @@ contract Winslow_Voting_V1 {
         require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastVote: This instance is not currently in voting");
 
         if(VotingInstances[VotingInstance].Voters == 0){
-            VotingInstances[VotingInstance].Status = VoteSt;
+            VotingInstances[VotingInstance].Status = VoteStatus(1);
         }
 
         if(VoteChoice == Vote(0)) {
