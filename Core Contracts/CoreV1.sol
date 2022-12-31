@@ -8,7 +8,7 @@ contract Winslow_Core_V1{
     address public Treasury = address(0);
     address public Voting = address(0);
     address public InitialSetter;
-    bool public InitialTreasurySet = false;
+    bool public InitialContractsSet = false;
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     ProxyProposalArguments internal EmptyProxy;
 
