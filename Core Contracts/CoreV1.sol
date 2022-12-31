@@ -46,7 +46,7 @@ contract Winslow_Core_V1{
         VotingChange,
         CoreReplacement,
         RemoveSecurityCommiteeMember,
-        AddSe
+        AddSecurityCommiteeMember
     }
 
     struct Proposal{
