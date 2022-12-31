@@ -215,7 +215,7 @@ contract Winslow_Core_V1{
 }
 
 interface VotingV1{
-    function InitializeVoteInstance(address Proposer, uint256 ProposalID, uint256 Time, bool Multi) external returns(uint256 VoteInstanceID);
+    function InitializeVoteInstance(uint256 ProposalID, uint256 VotingLength, bool Multi) external returns(uint256 VoteInstanceID);
 
 }
 
