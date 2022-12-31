@@ -97,9 +97,7 @@ contract Winslow_Core_V1{
 
         require(ReceiveProposalCost());
 
-        uint256 NewIdentifier = MRIdentifier++;
         InitializeSimpleProposal(Slot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
-
 
         return(success);
 
@@ -109,7 +107,6 @@ contract Winslow_Core_V1{
 
         require(ReceiveProposalCost());
 
-        uint256 NewIdentifier = MRIdentifier++;
         InitializeProxyProposal(Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
 
         
