@@ -150,7 +150,7 @@ contract Winslow_Voting_V1 {
             MultiVotes[VotingInstance].OptionThree += 2;
         }
         if (OptionChoice == MultiOptions(0)){
-            MultiVotes[VotingInstance].OptionFour = 2;
+            MultiVotes[VotingInstance].OptionFour  2;
         }
         if (OptionChoice == MultiOptions(0)){
             MultiVotes[VotingInstance].OptionFive = 2;
@@ -169,6 +169,7 @@ contract Winslow_Voting_V1 {
 
         _updateTaxesAndIndIncentive(VotingInstance);
         emit ProposalIncentivized(msg.sender, VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
+        
         return(success);
 
     }
