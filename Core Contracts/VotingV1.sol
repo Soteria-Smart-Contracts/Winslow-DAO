@@ -73,7 +73,7 @@ contract Winslow_Voting_V1 {
         VotingComplete
     }
 
-    //TODO: Remake
+    //TODO: Remake events for each function
  
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
