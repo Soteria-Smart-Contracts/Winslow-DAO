@@ -150,10 +150,10 @@ contract Winslow_Voting_V1 {
             MultiVotes[VotingInstance].OptionThree = 2;
         }
         if (OptionChoice == MultiOptions(0)){
-            MultiVotes[VotingInstance].OptionOne = 2;
+            MultiVotes[VotingInstance].OptionFour = 2;
         }
         if (OptionChoice == MultiOptions(0)){
-            MultiVotes[VotingInstance].OptionOne = 2;
+            MultiVotes[VotingInstance].OptionFive = 2;
         }
 
         return(success);
