@@ -108,7 +108,6 @@ contract Winslow_Core_V1{
         require(ReceiveProposalCost());
 
         InitializeProxyProposal(Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
-
         
         return(success);
 
