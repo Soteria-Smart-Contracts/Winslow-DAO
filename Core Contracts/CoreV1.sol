@@ -213,7 +213,7 @@ interface VotingV1{
 }
 
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
-interface TreasuryV1{
+interface TreasuryV1 {
 //Public State Modifing Functions
     function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external;
     function UserAssetClaim(uint256 CLDamount) external returns(bool success);
@@ -230,7 +230,7 @@ interface TreasuryV1{
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
 }
 
-interface ERC20{
+interface ERC20 {
   function balanceOf(address owner) external view returns (uint256);
   function allowance(address owner, address spender) external view returns (uint256);
   function approve(address spender, uint256 value) external returns (bool);
@@ -240,6 +240,6 @@ interface ERC20{
   function Burn(uint256 _BurnAmount) external;
 }
 
-interface EROS{
+interface EROS {
     function DAO() external view returns(address DAOaddress);
 }
