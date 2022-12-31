@@ -22,6 +22,7 @@ contract Winslow_Voting_V1 {
     // Map user addresses to their voting information
     mapping (uint256 => mapping (address => VoterDetails)) public VoterInfo;
 
+    
 
     struct VoteInstance {
         uint256 ProposalID;      //DAO Proposal for voting instance
