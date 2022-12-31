@@ -189,7 +189,7 @@ contract Winslow_Core_V1{
     //    }
     
     //One Time Functions
-    function SetInitialContracts(address TreasuryAddress, address ) external{
+    function SetInitialContracts(address TreasuryAddress, address VotingAddress) external{
 
         require(msg.sender == InitialSetter);
         require(InitialTreasurySet == false);
