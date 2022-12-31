@@ -44,7 +44,7 @@ contract Winslow_Core_V1{
         AssetRegister,
         TreasuryChange,
         VotingChange,
-        
+        CoreReplacement,
     }
 
     struct Proposal{
