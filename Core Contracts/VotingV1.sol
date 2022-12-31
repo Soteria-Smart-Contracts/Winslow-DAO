@@ -140,7 +140,7 @@ contract Winslow_Voting_V1 {
             emit VoteCast(msg.sender, VotingInstance, "NEA", amount);
         }
 
-        if (OptionChoice == MultiOptions(0)){ //
+        if (OptionChoice == MultiOptions(0)){ //Options number is -1 because of how enums work
             MultiVotes[VotingInstance].OptionOne += amount;
         }
         if (OptionChoice == MultiOptions(1)){
