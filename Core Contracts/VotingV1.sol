@@ -139,6 +139,8 @@ contract Winslow_Voting_V1 {
             VotingInstances[VotingInstance].NAYvotes += amount;
             emit VoteCast(msg.sender, VotingInstance, "NEA", amount);
         }
+
+        
         
 
         return(success);
