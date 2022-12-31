@@ -143,12 +143,20 @@ contract Winslow_Voting_V1 {
         if (OptionChoice == MultiOptions(0)){
             MultiVotes[VotingInstance].OptionOne = 2;
         }
-        
-
-        
+        if (OptionChoice == MultiOptions(0)){
+            MultiVotes[VotingInstance].OptionOne = 2;
+        }
+        if (OptionChoice == MultiOptions(0)){
+            MultiVotes[VotingInstance].OptionOne = 2;
+        }
+        if (OptionChoice == MultiOptions(0)){
+            MultiVotes[VotingInstance].OptionOne = 2;
+        }
+        if (OptionChoice == MultiOptions(0)){
+            MultiVotes[VotingInstance].OptionOne = 2;
+        }
 
         return(success);
-
     }
 
     function IncentivizeProposal(uint256 VotingInstance, uint256 amount) public returns(bool success){
