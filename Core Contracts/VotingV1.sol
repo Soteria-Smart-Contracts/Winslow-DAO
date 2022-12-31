@@ -100,7 +100,7 @@ contract Winslow_Voting_V1 {
 
     function CastVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice) external returns(bool success){
 
-        require(VotingInstances[VotingInstance].MultiVote == true);
+        require(VotingInstances[VotingInstance].MultiVote == false);
         require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or have not given the proper allowance to voting");
         require(VoteChoice == Vote(0) || VoteChoice == Vote(1), "VotingSystemV1.CastVote: You must either vote YEA or NAY");
         require(amount >= 10000000000000000, "VotingSystemV1.CastVote: The minimum CLD per vote is 0.01"); //For incentive payout reasons
