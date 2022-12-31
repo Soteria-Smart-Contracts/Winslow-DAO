@@ -54,7 +54,7 @@ contract Winslow_Core_V1{
         SecurityStatus SecurityLevel;   //Types declared in enum
         ProposalTypes ProposalType;     //Types declared in enum
         SimpleProposalTypes SimpleType; //Types declared in enum
-        uint256 VotingInstanceID;       
+        uint256 VotingInstanceID;       //Identifier for the voting instance used for this proposal
         uint256 ProposalVotingLenght;   //Minimum 24 hours
         uint256 RequestedEtherAmount;   //Optional, can be zero
         uint256 RequestedAssetAmount;   //Optional, can be zero
