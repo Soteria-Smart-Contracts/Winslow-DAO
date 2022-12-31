@@ -106,7 +106,9 @@ contract Winslow_Voting_V1 {
         require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastVote: You may only cast a single vote per address per proposal"); //This may be changed in V2
         require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastVote: This instance is not currently in voting");
 
-        if(VotingInstances[VotingInstance].Voters == 0)
+        if(VotingInstances[VotingInstance].Voters == 0){
+            
+        }
 
         if(VoteChoice == Vote(0)) {
             VotingInstances[VotingInstance].YEAvotes += amount;
