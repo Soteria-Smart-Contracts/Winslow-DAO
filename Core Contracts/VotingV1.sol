@@ -195,8 +195,7 @@ contract Winslow_Voting_V1 {
 
         VotingInstances[NewInstanceID] = VoteInstance(ProposalID,0,0,VoteStatus(0),0,0, Multi,0,0,0,0,0,0,0);
 
-                emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
-
+        emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
         return(NewInstanceID);
     }
 
