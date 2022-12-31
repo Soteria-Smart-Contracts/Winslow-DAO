@@ -213,6 +213,7 @@ contract Winslow_Voting_V1 {
 
         // emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
         return(NewInstanceID);
+        
     }
 
         //Status Changes
