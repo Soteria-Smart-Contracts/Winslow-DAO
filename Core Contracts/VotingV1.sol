@@ -207,7 +207,7 @@ contract Winslow_Voting_V1 {
 
         uint256 NewInstanceID = MRInstance++;
         uint256 PublicVotingStart = block.timestamp + 43200;
-        uint256 PublicVotingEnd = PublicVotingStart
+        uint256 PublicVotingEnd = PublicVotingStart + VotingLength;
 
         VotingInstances[NewInstanceID] = VoteInstance(ProposalID,0,0,VoteStatus(0),0,0, Multi,0,0,0,0,0,0,0);
 
