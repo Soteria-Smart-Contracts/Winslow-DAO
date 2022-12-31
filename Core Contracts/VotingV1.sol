@@ -144,16 +144,16 @@ contract Winslow_Voting_V1 {
             MultiVotes[VotingInstance].OptionOne += amount;
         }
         if (OptionChoice == MultiOptions(0)){
-            MultiVotes[VotingInstance].OptionTwo += 2;
+            MultiVotes[VotingInstance].OptionTwo += amount;
         }
         if (OptionChoice == MultiOptions(0)){
-            MultiVotes[VotingInstance].OptionThree += 2;
+            MultiVotes[VotingInstance].OptionThree += amount;
         }
         if (OptionChoice == MultiOptions(0)){
-            MultiVotes[VotingInstance].OptionFour += 2;
+            MultiVotes[VotingInstance].OptionFour += amount;
         }
         if (OptionChoice == MultiOptions(0)){
-            MultiVotes[VotingInstance].OptionFive += 2;
+            MultiVotes[VotingInstance].OptionFive += amount;
         }
 
         return(success);
