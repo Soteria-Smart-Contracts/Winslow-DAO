@@ -171,7 +171,7 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 VotingInstanceID = Voting(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
+        uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, msg.sender);
 
         return(NewIdentifier);
@@ -186,8 +186,8 @@ contract Winslow_Core_V1{
         // VotingChange
     function ReplaceVoting(address NewVoting) internal returns(bool success){
         
-        Replacements(NewVoting).SendPreviousVoting(Voting);
-        Voting = NewVoting;
+        Replacements(NewVoting).SendPreviousVoting(VotingContract);
+        VotingContract = NewVoting;
 
     }
 
