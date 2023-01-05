@@ -187,7 +187,7 @@ contract Winslow_Core_V1{
     function ReplaceVoting(address NewVoting) internal returns(bool success){
         Voting = NewVoting;
 
-        
+
     }
 
 
@@ -252,7 +252,7 @@ interface VotingV1{
 
 }
 
-interface CoreReplacement{
+interface Replacement{
     function InheritCore(address Treasury, address Voting, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
 }
 
