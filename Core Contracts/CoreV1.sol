@@ -205,7 +205,7 @@ contract Winslow_Core_V1{
 
     function ReceiveProposalCost() internal returns(bool success){
 
-        ERC20(CLDAddress()).transferFrom(msg.sender, Treasury, (ProposalCost / 2));
+        ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, (ProposalCost / 2));
 
         ERC20(CLDAddress()).transferFrom(msg.sender, address(this), (ProposalCost / 2));
         ERC20(CLDAddress()).Burn(ERC20(CLDAddress()).balanceOf(address(this)));
@@ -227,7 +227,7 @@ contract Winslow_Core_V1{
         require(msg.sender == InitialSetter);
         require(InitialContractsSet == false);
 
-        Treasury = TreasuryAddress;
+        TreasuryContract = TreasuryAddress;
         Voting = VotingAddress;
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialContractsSet = true;
