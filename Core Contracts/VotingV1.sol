@@ -217,6 +217,7 @@ contract Winslow_Voting_V1 {
     function InitializeVoteInstance(uint256 ProposalID, uint256 VotingLength, bool Multi) external OnlyDAO returns(uint256 VoteInstanceID){
 
         uint256 NewInstanceID = MRInstance++;
+        ActiveInstances++;
         uint256 PublicVotingStart = block.timestamp + 43200;
         uint256 PublicVotingEnd = PublicVotingStart + VotingLength;
 
