@@ -182,9 +182,9 @@ contract Winslow_Core_V1{
         // AssetSend
         // AssetRegister
         // TreasuryChange
-        // VotingChange,
-        // CoreReplacement,
-        // AddSecurityCommiteeMember,
+        // VotingChange
+        // CoreReplacement
+        // AddSecurityCommiteeMember
         // RemoveSecurityCommiteeMember
 
     function ReceiveProposalCost() internal returns(bool success){
