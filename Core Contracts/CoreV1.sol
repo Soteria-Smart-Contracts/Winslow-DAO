@@ -185,7 +185,7 @@ contract Winslow_Core_V1{
         // TreasuryChange
         // VotingChange
         // CoreReplacement
-    function CoreReplacement(address NewCore) internal returns(bool success){
+    function ReplaceCore(address NewCore) internal returns(bool success){
         ActiveContract = false;
 
         CoreReplacement(NewCore).InheritCore(Treasury, Voting, MRIdentifier, ProposalCost);
