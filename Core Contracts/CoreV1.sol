@@ -5,6 +5,7 @@ pragma solidity ^0.8.17;
 contract Winslow_Core_V1{
     //Variable Declarations
     string public Version = "V1";
+    bool public 
     address public Treasury = address(0);
     address public Voting = address(0);
     address public InitialSetter;
@@ -185,7 +186,7 @@ contract Winslow_Core_V1{
         // VotingChange
         // CoreReplacement
     function CoreReplacement(address NewCore) internal returns(bool success){
-        
+
     }
         // AddSecurityCommiteeMember
         // RemoveSecurityCommiteeMember
