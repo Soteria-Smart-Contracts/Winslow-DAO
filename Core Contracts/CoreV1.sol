@@ -6,8 +6,8 @@ contract Winslow_Core_V1{
     //Variable Declarations
     string public Version = "V1";
     bool public ActiveContract;
-    address public Treasury = address(0);
-    address public Voting = address(0);
+    address public TreasuryContract = address(0);
+    address public VotingContract = address(0);
     address public InitialSetter;
     bool public InitialContractsSet = false;
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
