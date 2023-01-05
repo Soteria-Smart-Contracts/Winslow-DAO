@@ -189,6 +189,7 @@ contract Winslow_Core_V1{
         Replacements(NewVoting).SendPreviousVoting(VotingContract);
         VotingContract = NewVoting;
 
+        return(success);
     }
 
 
