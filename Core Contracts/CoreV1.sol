@@ -243,7 +243,7 @@ interface VotingV1{
 }
 
 interface CoreReplacement{
-    function InheritCore(address Treasury, address Voting, uint256 LatestProposal)
+    function InheritCore(address Treasury, address Voting, uint256 LatestProposal, uint256 ProposalCost,)
 }
 
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
