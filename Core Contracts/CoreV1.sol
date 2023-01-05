@@ -181,7 +181,7 @@ contract Winslow_Core_V1{
     //  Execution Functions
 
         // AssetSend
-    function 
+    
         // AssetRegister
         // TreasuryChange
         // VotingChange
