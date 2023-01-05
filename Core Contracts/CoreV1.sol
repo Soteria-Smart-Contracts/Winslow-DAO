@@ -128,7 +128,7 @@ contract Winslow_Core_V1{
     //  Public view functions
 
     function CLDAddress() public view returns(address CLD){
-        return(TreasuryV1(Treasury).CLDAddress());
+        return(Treasury(Treasury).CLDAddress());
     }
 
     //  Internal Functions
