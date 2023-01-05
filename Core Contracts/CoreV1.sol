@@ -190,7 +190,7 @@ contract Winslow_Core_V1{
 
         CoreReplacement(NewCore).InheritCore(Treasury, Voting, MRIdentifier, ProposalCost);
 
-        return(success)
+        return(success);
 
     }
         // AddSecurityCommiteeMember
