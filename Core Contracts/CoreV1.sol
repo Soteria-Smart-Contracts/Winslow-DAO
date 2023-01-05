@@ -184,7 +184,7 @@ contract Winslow_Core_V1{
         // TreasuryChange
         // VotingChange
         // CoreReplacement
-    function CoreReplacement
+    function CoreReplacement(address NewCore)
         // AddSecurityCommiteeMember
         // RemoveSecurityCommiteeMember
 
