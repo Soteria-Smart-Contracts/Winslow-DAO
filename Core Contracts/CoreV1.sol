@@ -5,7 +5,7 @@ pragma solidity ^0.8.17;
 contract Winslow_Core_V1{
     //Variable Declarations
     string public Version = "V1";
-    bool public 
+    bool public ActiveContract;
     address public Treasury = address(0);
     address public Voting = address(0);
     address public InitialSetter;
