@@ -128,7 +128,7 @@ contract Winslow_Core_V1{
     //  Public view functions
 
     function CLDAddress() public view returns(address CLD){
-        return(Treasury(Treasury).CLDAddress());
+        return(Treasury(TreasuryContract).CLDAddress());
     }
 
     //  Internal Functions
@@ -141,7 +141,7 @@ contract Winslow_Core_V1{
         MRIdentifier++;
 
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events
-        uint256 VotingInstanceID = Voting(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
+        uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, msg.sender);
 
         return(NewIdentifier);
@@ -156,7 +156,7 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 VotingInstanceID = Voting(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
+        uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs, false, msg.sender);
 
         return(NewIdentifier);
