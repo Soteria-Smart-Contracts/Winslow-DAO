@@ -195,7 +195,7 @@ contract Winslow_Core_V1{
     function ReplaceCore(address NewCore) internal returns(bool success){
         ActiveContract = false;
 
-        CoreReplacement(NewCore).InheritCore(Treasury, Voting, MRIdentifier, ProposalCost);
+        Replacements(NewCore).InheritCore(Treasury, Voting, MRIdentifier, ProposalCost);
 
         return(success);
     }
@@ -252,7 +252,7 @@ interface VotingV1{
 
 }
 
-interface Replacement{
+interface Replacements{
     function InheritCore(address Treasury, address Voting, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
 }
 
