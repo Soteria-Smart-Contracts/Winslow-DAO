@@ -187,7 +187,7 @@ contract Winslow_Core_V1{
     function ReplaceVoting(address NewVoting) internal returns(bool success){
         Voting = NewVoting;
         
-        Replacements(NewVoting)
+        Replacements(NewVoting).SendPreviousVoting(Voting);
 
     }
 
