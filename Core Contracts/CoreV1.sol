@@ -141,7 +141,7 @@ contract Winslow_Core_V1{
         MRIdentifier++;
 
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events
-        uint256 VotingInstanceID = VotingV1(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
+        uint256 VotingInstanceID = Voting(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, msg.sender);
 
         return(NewIdentifier);
@@ -156,7 +156,7 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 VotingInstanceID = VotingV1(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
+        uint256 VotingInstanceID = Voting(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs, false, msg.sender);
 
         return(NewIdentifier);
@@ -171,7 +171,7 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 VotingInstanceID = VotingV1(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
+        uint256 VotingInstanceID = Voting(Voting).InitializeVoteInstance(NewIdentifier, VotingLength, false);
         Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, msg.sender);
 
         return(NewIdentifier);
