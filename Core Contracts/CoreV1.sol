@@ -184,9 +184,9 @@ contract Winslow_Core_V1{
         // AssetRegister
         // TreasuryChange
         // VotingChange
-    
+    function ChangeVoting
 
-    
+
         // CoreReplacement
     function ReplaceCore(address NewCore) internal returns(bool success){
         ActiveContract = false;
