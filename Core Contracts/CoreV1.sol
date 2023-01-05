@@ -186,7 +186,8 @@ contract Winslow_Core_V1{
         // VotingChange
     function ReplaceVoting(address NewVoting) internal returns(bool success){
         Voting = NewVoting;
-
+        
+        OldVoting
 
     }
 
