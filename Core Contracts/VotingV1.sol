@@ -208,7 +208,7 @@ contract Winslow_Voting_V1 {
     //Public View Functions
 
     function CLDAddress() public view returns(address CLD){
-        return(CoreV1(DAO).CLDAddress());
+        return(Core(DAO).CLDAddress());
     }
 
     //OnlyDAO functions
@@ -292,7 +292,7 @@ contract Winslow_Voting_V1 {
 
 //Interfaces
 
-interface CoreV1 {
+interface Core {
     function Treasury() external returns(address payable TreasuryAddress);
     function CLDAddress() external view returns(address CLD);
 }
