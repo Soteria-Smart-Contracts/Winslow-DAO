@@ -18,6 +18,7 @@ contract Winslow_Voting_V1 {
     // Proposals being tracked by id here
     mapping(uint256 => VoteInstance) public VotingInstances;
     uint256 MRInstance; // Most recent [poll/voting] instance tracker for new initializations
+    uint256 ActiveInstances;
     
     mapping(uint256 => MultiVoteCard) public MultiVotes;
     // Map user addresses to their voting information
