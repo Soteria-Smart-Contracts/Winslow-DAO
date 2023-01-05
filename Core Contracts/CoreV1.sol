@@ -188,7 +188,7 @@ contract Winslow_Core_V1{
     function CoreReplacement(address NewCore) internal returns(bool success){
         ActiveContract = false;
 
-        
+        CoreReplacement(NewCore).InheritCore;
 
     }
         // AddSecurityCommiteeMember
