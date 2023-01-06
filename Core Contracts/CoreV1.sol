@@ -140,7 +140,8 @@ contract Winslow_Core_V1{
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
 
         if(SimpleType == SimpleProposalTypes(2)){
-            require(condition);
+            require(UintSlot > 0);
+            
         }
 
         uint256 NewIdentifier = MRIdentifier++;
