@@ -95,7 +95,6 @@ contract Winslow_Treasury_V1{
         require(AssetRegistryMap[tokenAddress] == false);
         if(RegisteredAssets[slot].Filled == true){
             //Could be used to prevent tx by sending some amount?
-            require(ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)) == 0);
             AssetRegistryMap[RegisteredAssets[slot].TokenAddress] = false;
         }
         if(tokenAddress == address(0)){
