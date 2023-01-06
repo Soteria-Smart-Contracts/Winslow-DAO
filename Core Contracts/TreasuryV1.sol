@@ -77,10 +77,6 @@ contract Winslow_Treasury_V1{
     }
 
     //DAO and Eros Proposal only access functions
-    function ChangeDAO(address payable NewAddr) external OnlyDAO {
-        DAO = NewAddr;
-        // TO DO emit event
-    }
     function TransferETH(uint256 amount, address payable receiver) external OnlyDAO { 
         receiver.transfer(amount);
 
