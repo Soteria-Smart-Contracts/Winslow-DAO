@@ -187,6 +187,11 @@ contract Winslow_Core_V1{
         // AssetSend
     
         // AssetRegister
+
+    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
+
+        Treasury(Treasury).RegisterAsset(tokenAddress, slot);
+    }
         // TreasuryChange
     function ReplaceTreasury(address NewTreasury) internal returns(bool success){
 
