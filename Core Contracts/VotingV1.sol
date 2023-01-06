@@ -238,7 +238,7 @@ contract Winslow_Voting_V1 {
 
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
         require(VotingInstances[VotingInstance].Status == VoteStatus(1), "VotingSystemV1.ExecuteProposal: Proposal already executed!");
-        require(VotingInstances[VotingInstance].Voters > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
+        require(VotingInstances[VotingInstance].Voters.length > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
 
         ERC20(CLDAddress()).Burn(VotingInstances[VotingInstance].CLDToBurn);
         
