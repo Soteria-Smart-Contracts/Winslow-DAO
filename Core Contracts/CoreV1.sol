@@ -187,7 +187,7 @@ contract Winslow_Core_V1{
     function ReplaceTreasury(address NewTreasury) internal returns(bool success){
 
         Replacements(NewTreasury).SendPreviousTreasury(TreasuryContract);
-        TreasuryAddress = NewTreasury;
+        TreasuryContract = NewTreasury;
 
         return(success);
     }
@@ -200,8 +200,6 @@ contract Winslow_Core_V1{
 
         return(success);
     }
-
-
         // CoreReplacement
     function ReplaceCore(address NewCore) internal returns(bool success){
         ActiveContract = false;
