@@ -120,11 +120,11 @@ contract Winslow_Treasury_V1{
         emit AssetLimitChange(NewLimit);
     }
 
-    function ChangeDAO(address dad) external OnlyDAO {
-        require(DAO != dad, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
-        require(address(dad) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
-        DAO = dad;    
-        emit NewDAOAddress(dad);
+    function ChangeDAO(address newAddr) external OnlyDAO{
+        require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
+        require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
+        DAO = newAddr;    
+        emit NewDAOAddress(newAddr);
     }
 
     //Public viewing functions 
