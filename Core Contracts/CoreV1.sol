@@ -184,6 +184,8 @@ contract Winslow_Core_V1{
     
         // AssetRegister
         // TreasuryChange
+
+    
         // VotingChange
     function ReplaceVoting(address NewVoting) internal returns(bool success){
         
