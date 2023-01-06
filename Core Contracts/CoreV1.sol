@@ -287,6 +287,7 @@ interface Replacements{
     function InheritCore(address Treasury, address Voting, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
     function SendPreviousVoting(address OldVoting) external returns(bool success);
     function SendPreviousTreasury(address OldTreasury) external returns(bool success);
+    function ChangeDAO(address NewDAO)
 
 }
 
