@@ -193,7 +193,7 @@ contract Winslow_Core_V1{
     //  External Simple Proposal Call Functions
 
         // AssetSend
- //   function SendAssets(uint256 ProposalID)
+    function SendAssets(uint256 ProposalID)
     
         // AssetRegister
     function RegisterTreasuryAsset(uint256 ProposalID) internal returns(bool success){
