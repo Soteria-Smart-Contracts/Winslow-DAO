@@ -211,6 +211,9 @@ contract Winslow_Core_V1{
         // AddSecurityCommiteeMember
         // RemoveSecurityCommiteeMember
 
+
+
+    
     function ReceiveProposalCost() internal returns(bool success){
 
         ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, (ProposalCost / 2));
