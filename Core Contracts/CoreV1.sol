@@ -82,7 +82,7 @@ contract Winslow_Core_V1{
         bool Bool2;
         bool Bool3;
     }
-
+    
     //TODO: Make Events
     event FallbackToTreasury(uint256 amount);
     event NewTreasurySet(address NewTreasury);
