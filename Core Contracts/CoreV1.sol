@@ -194,6 +194,7 @@ contract Winslow_Core_V1{
 
         return(success);
     }
+
         // TreasuryChange
     function ReplaceTreasury(address NewTreasury) internal returns(bool success){
 
@@ -211,6 +212,7 @@ contract Winslow_Core_V1{
 
         return(success);
     }
+    
         // CoreReplacement
     function ReplaceCore(address NewCore) internal returns(bool success){
         ActiveContract = false;
