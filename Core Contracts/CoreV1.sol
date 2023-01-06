@@ -232,7 +232,7 @@ contract Winslow_Core_V1{
 
         Replacements(NewCore).InheritCore(TreasuryContract, VotingContract, MRIdentifier, ProposalCost);
         Replacements(TreasuryContract).ChangeDAO(NewCore);
-
+        Replacements();
 
         return(success);
     }
