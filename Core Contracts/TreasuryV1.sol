@@ -110,6 +110,8 @@ contract Winslow_Treasury_V1{
 
     //Setting modification functions
     function ChangeRegisteredAssetLimit(uint8 NewLimit) external OnlyDAO{
+        
+
         RegisteredAssetLimit = NewLimit;
         
         emit AssetLimitChange(NewLimit);
