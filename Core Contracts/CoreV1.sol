@@ -199,7 +199,7 @@ contract Winslow_Core_V1{
         // AssetSend
     function SendAssets(uint256 ProposalID) internal returns(bool success){
 
-        Treasury(TreasuryContract).TransferETH(Proposals[ProposalID]., receiver);
+        Treasury(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, receiver);
     }
     
         // AssetRegister
