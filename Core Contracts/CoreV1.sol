@@ -40,6 +40,7 @@ contract Winslow_Core_V1{
         Eros
     }
 
+    
     enum SimpleProposalTypes{
         NotApplicable,
         AssetSend,
