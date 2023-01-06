@@ -188,11 +188,11 @@ contract Winslow_Core_V1{
     
         // AssetRegister
 
-    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
+    function RegisterTreasuryAsset(address tokenAddress, uint8 slot) internal returns(bool success){
 
         Treasury(TreasuryContract).RegisterAsset(tokenAddress, slot);
 
-        return
+        return(success);
     }
         // TreasuryChange
     function ReplaceTreasury(address NewTreasury) internal returns(bool success){
