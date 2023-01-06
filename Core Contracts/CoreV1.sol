@@ -231,10 +231,10 @@ contract Winslow_Core_V1{
 
     //  External Simple Proposal Call Functions
 
-    //    function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
+        function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
 
-    //        TreasuryV1(Treasury).RegisterAsset(tokenAddress, slot);
-    //    }
+            TreasuryV1(Treasury).RegisterAsset(tokenAddress, slot);
+        }
     
     //One Time Functions
     function SetInitialContracts(address TreasuryAddress, address VotingAddress) external{
