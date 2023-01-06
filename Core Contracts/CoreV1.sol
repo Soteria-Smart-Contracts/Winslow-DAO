@@ -191,8 +191,8 @@ contract Winslow_Core_V1{
     function RegisterTreasuryAsset(uint256 ProposalID) internal returns(bool success){
 
         address TokenAddress = Proposals[ProposalID].AddressSlot;
-        uint256 Slot = ProposalID[ProposalID].ProxyArgs.UnsignedInt1;
-        Treasury(TreasuryContract).RegisterAsset(TokenAddress, slot);
+        uint256 Slot = Proposals[ProposalID].ProxyArgs.UnsignedInt1;
+        Treasury(TreasuryContract).RegisterAsset(TokenAddress, Slot);
 
         return(success);
     }
