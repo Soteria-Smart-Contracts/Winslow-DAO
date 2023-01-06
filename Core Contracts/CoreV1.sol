@@ -303,6 +303,7 @@ interface Treasury {
     function ChangeRegisteredAssetLimit(uint8 NewLimit) external;
 //Public View Functions
     function CLDAddress() external view returns(address CLD);
+    function RegisteredAssetLimit()
     function IsRegistered(address TokenAddress) external view returns(bool);
     function GetBackingValueEther(uint256 CLDamount) external view returns(uint256 EtherBacking);
     function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) external view returns(uint256 AssetBacking);
