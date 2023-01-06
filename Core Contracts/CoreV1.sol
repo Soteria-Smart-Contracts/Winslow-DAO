@@ -231,6 +231,7 @@ contract Winslow_Core_V1{
         ActiveContract = false;
 
         Replacements(NewCore).InheritCore(TreasuryContract, VotingContract, MRIdentifier, ProposalCost);
+        
 
         return(success);
     }
