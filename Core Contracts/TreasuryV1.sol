@@ -94,7 +94,7 @@ contract Winslow_Treasury_V1{
         require(slot <= RegisteredAssetLimit && slot != 0);
         require(AssetRegistryMap[tokenAddress] == false);
         if(RegisteredAssets[slot].Filled == true){
-            //Could be used to prevent tx by sending some amount?
+            //Careful, if registered asset is replaced but not empty in contract, funds will be inaccesible 
             AssetRegistryMap[RegisteredAssets[slot].TokenAddress] = false;
         }
         if(tokenAddress == address(0)){
