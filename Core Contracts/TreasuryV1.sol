@@ -165,11 +165,11 @@ contract Winslow_Treasury_V1{
 
     //Fallback Functions
     receive() external payable{
-        emit EtherReceived(msg.value, msg.sender, tx.origin); //Does msg.value work for this?
+        emit EtherReceived(msg.value, msg.sender, tx.origin); 
     }
 
     fallback() external payable{
-        emit EtherReceived(msg.value, msg.sender, tx.origin); //Does msg.value work for this?
+        emit EtherReceived(msg.value, msg.sender, tx.origin); 
     }
 }
 
