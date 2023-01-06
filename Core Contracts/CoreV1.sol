@@ -135,7 +135,7 @@ contract Winslow_Core_V1{
 
     //  Internal Functions
 
-    function InitializeSimpleProposal(address Slot, string memory Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
+    function InitializeSimpleProposal(address AddressSlot, string memory Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
 
@@ -144,7 +144,7 @@ contract Winslow_Core_V1{
 
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
-        Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, msg.sender);
+        Proposals[NewIdentifier] = Proposal(NewIdentifier, AddressSlot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, msg.sender);
 
         return(NewIdentifier);
 
