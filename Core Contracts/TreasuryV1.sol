@@ -29,6 +29,7 @@ contract Winslow_Treasury_V1{
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
+    event NewDAOAddress(address NewAddress);
     event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
     event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receiver, address TxOrigin);
