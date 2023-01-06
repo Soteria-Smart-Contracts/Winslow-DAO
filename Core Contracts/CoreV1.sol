@@ -44,7 +44,7 @@ contract Winslow_Core_V1{
         NotApplicable,
         AssetSend,
         AssetRegister,
-        Change
+        ChangeRegisteredAssetLimit,
         TreasuryReplacement,
         VotingReplacement,
         CoreReplacement,
