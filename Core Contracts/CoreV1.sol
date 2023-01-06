@@ -49,7 +49,7 @@ contract Winslow_Core_V1{
         TreasuryReplacement,
         VotingReplacement,
         CoreReplacement,
-        Start
+        StartPublicSale, 
         AddSecurityCommiteeMember,
         RemoveSecurityCommiteeMember
     }
