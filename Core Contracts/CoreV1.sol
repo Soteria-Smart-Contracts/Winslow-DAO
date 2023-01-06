@@ -187,8 +187,9 @@ contract Winslow_Core_V1{
     function ReplaceTreasury(address NewTreasury) internal returns(bool success){
 
         Replacements(NewTreasury).SendPreviousTreasury(TreasuryContract);
-        Treasury = NewTreasury
+        Treasury = NewTreasury;
 
+        return(success);
     }
     
         // VotingChange
