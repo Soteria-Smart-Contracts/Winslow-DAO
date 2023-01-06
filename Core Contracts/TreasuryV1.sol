@@ -120,7 +120,7 @@ contract Winslow_Treasury_V1{
         emit AssetLimitChange(NewLimit);
     }
 
-    function ChangeDAO(address newAddr) external OnlyDAO {
+    function ChangeDAO(address calldata newAddr) external OnlyDAO {
         require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
         require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
         DAO = newAddr;    
