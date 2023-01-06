@@ -209,7 +209,8 @@ contract Winslow_Core_V1{
         return(success);
     }
 
-    function ChangeRegisteredAssetLimit()
+    function ChangeRegisteredAssetLimit(uint256 ProposalID) internal returns(bool success){
+        
 
         // TreasuryChange
     function ReplaceTreasury(address NewTreasury) internal returns(bool success){
