@@ -205,6 +205,8 @@ contract Winslow_Core_V1{
         if(Proposals[ProposalID].RequestedAssetAmount > 0){
             Treasury(TreasuryContract).TransferERC20(Proposals[ProposalID].RequestedAssetID, Proposals[ProposalID].RequestedAssetAmount, Proposals[ProposalID].AddressSlot);
         }
+
+        return(success);
     }
     
         // AssetRegister
