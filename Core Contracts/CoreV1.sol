@@ -98,7 +98,7 @@ contract Winslow_Core_V1{
 
         require(ReceiveProposalCost());
 
-        InitializeSimpleProposal(AddressSlot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        InitializeSimpleProposal(AddressSlot, UintSlot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
         return(success);
 
