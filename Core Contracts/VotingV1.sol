@@ -167,6 +167,10 @@ contract Winslow_Voting_V1 {
             MultiVotes[VotingInstance].OptionFive += amount;
         }
 
+        VoterInfo[VotingInstance][msg.sender].VotesLocked += amount;
+        VoterInfo[VotingInstance][msg.sender].Voted = true;
+        VotingInstances[VotingInstance].Voters.push(msg.sender);
+
         return(success);
     }
 
