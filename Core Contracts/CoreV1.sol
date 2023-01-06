@@ -216,7 +216,7 @@ contract Winslow_Core_V1{
         // RemoveSecurityCommiteeMember
 
 
-    
+    // Other Internals
 
     function ReceiveProposalCost() internal returns(bool success){
 
