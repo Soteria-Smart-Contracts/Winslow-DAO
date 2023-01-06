@@ -216,7 +216,7 @@ contract Winslow_Core_V1{
         // RemoveSecurityCommiteeMember
 
 
-
+    
 
     function ReceiveProposalCost() internal returns(bool success){
 
@@ -228,13 +228,6 @@ contract Winslow_Core_V1{
         return(success);
 
     }
-
-    //  External Simple Proposal Call Functions
-
-        function RegisterTreasuryAsset(address tokenAddress, uint8 slot, uint256 ProposalID) internal returns(bool success){
-
-            TreasuryV1(Treasury).RegisterAsset(tokenAddress, slot);
-        }
     
     //One Time Functions
     function SetInitialContracts(address TreasuryAddress, address VotingAddress) external{
