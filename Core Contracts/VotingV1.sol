@@ -31,7 +31,7 @@ contract Winslow_Voting_V1 {
         uint256 VoteStarts;      //Unix Time
         uint256 VoteEnds;        //Unix Time
         VoteStatus Status;       //Using VoteStatus enum
-        address[] Voters;    //List of users that have voted that also can be called for total number of voters
+        address[] Voters;        //List of users that have voted that also can be called for total number of voters
         uint256 TotalCLDVoted;   //Total of CLD used in this instance for voting
         bool MultiVote;          //Determines if this instance supports multivote
         uint256 YEAvotes;        //Votes to approve
