@@ -131,7 +131,7 @@ contract Winslow_Core_V1{
         return(Treasury(TreasuryContract).CLDAddress());
     }
 
-    //Security Commitie
+    //  Security Commitee functions
 
     //  Internal Functions
 
