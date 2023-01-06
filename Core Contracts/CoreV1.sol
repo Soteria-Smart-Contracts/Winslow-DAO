@@ -131,6 +131,8 @@ contract Winslow_Core_V1{
         return(Treasury(TreasuryContract).CLDAddress());
     }
 
+    //Security Commitie
+
     //  Internal Functions
 
     function InitializeSimpleProposal( address Slot, string memory Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
