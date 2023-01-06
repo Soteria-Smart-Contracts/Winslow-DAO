@@ -40,7 +40,7 @@ contract Winslow_Core_V1{
         Eros
     }
 
-    
+
     enum SimpleProposalTypes{
         NotApplicable,
         AssetSend,
@@ -49,6 +49,7 @@ contract Winslow_Core_V1{
         TreasuryReplacement,
         VotingReplacement,
         CoreReplacement,
+        Start
         AddSecurityCommiteeMember,
         RemoveSecurityCommiteeMember
     }
