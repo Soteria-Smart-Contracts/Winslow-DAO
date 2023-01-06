@@ -211,6 +211,7 @@ contract Winslow_Core_V1{
 
     function ChangeRegisteredAssetLimit(uint256 ProposalID) internal returns(bool success){
         
+        uint8 NewLimit = uint8(Proposals[ProposalID].ProxyArgs.UnsignedInt1); 
         Treasury(TreasuryContract).ChangeRegisteredAssetLimit(NewLimit);
         
     }
