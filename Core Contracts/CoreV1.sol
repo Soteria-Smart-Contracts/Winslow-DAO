@@ -145,7 +145,7 @@ contract Winslow_Core_V1{
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
         if(SimpleType == SimpleProposalTypes(2)){
-            require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= );
+            require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Treasury());
             ProxyProposalArguments storage ProxyArgsWithSlot = EmptyProxy;
             ProxyArgsWithSlot.UnsignedInt1 = UintSlot;
             Proposals[NewIdentifier] = Proposal(NewIdentifier, AddressSlot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgsWithSlot, false, msg.sender);
