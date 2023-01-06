@@ -202,7 +202,7 @@ contract Winslow_Core_V1{
         if(Proposals[ProposalID].RequestedEtherAmount > 0){
         Treasury(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, payable(Proposals[ProposalID].AddressSlot));
         }
-        if(Proposals[ProposalID].Requested)
+        if(Proposals[ProposalID].RequestedAssetAmount > 0)
         TreasuryContract
     }
     
