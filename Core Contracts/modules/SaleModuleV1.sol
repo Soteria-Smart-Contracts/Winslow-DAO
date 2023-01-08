@@ -11,7 +11,7 @@ contract CLDAuction {
     uint256 public RetireeFee; //FIXME:
     uint256 public StartTime;
     uint256 public EndTime;
-    uint256 public ETCCollected;
+    uint256 public ETCCollected; //Should be Ether
     uint256 public ETCDeductedFromRetirees;
     uint256 public TokenAmount;
 
