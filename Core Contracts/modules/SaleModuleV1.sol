@@ -98,7 +98,7 @@ contract CLDAuction {
         return true;
     }
 
-    function RetireFromAuction(uint256 Amount) external {
+    function RetractFromSale(uint256 Amount) external {
         require(
             Amount <= participantInfo[msg.sender].DepositedETC,
             "CLDAuction.RetireFromAuction: You can't withdraw this many ETC"
