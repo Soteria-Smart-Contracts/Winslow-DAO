@@ -8,7 +8,7 @@ contract CLDAuction {
     address payable[] public DevTeam;
     uint8 public ActiveDevs;
     uint256 public MinimunFee; //FIXME:
-    uint256 public RetireeFee;
+    uint256 public RetireeFee; //FIXME:
     uint256 public StartTime;
     uint256 public EndTime;
     uint256 public ETCCollected;
