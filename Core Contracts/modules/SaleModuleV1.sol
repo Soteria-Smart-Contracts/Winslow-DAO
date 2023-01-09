@@ -143,14 +143,11 @@ contract CLDAuction {
 
     function RetractFromSale(uint256 Amount) external {
         require( Amount <= participantInfo[msg.sender].DepositedETC, "CLDAuction.RetireFromAuction: You can't withdraw this many ETC" );
-        require(
-            block.timestamp < EndTime,
-            'CLDAuction.RetireFromAuction: The sale is over, you can only withdraw your CLD'
-        );
+        require( block.timestamp < EndTime, 'CLDAuction.RetireFromAuction: The sale is over, you can only withdraw your CLD' );
         participantInfo[msg.sender].DepositedETC -= Amount;
         uint256 penalty = (Amount * RetireeFee) / 10000;
         payable(msg.sender).transfer(Amount - penalty);
-        ETCDeductedFromRetirees += penalty;
+//        ETCDeductedFromRetirees += penalty;
         ETCCollected -= Amount;
 
         emit ParticipantRetired(Amount - penalty);
