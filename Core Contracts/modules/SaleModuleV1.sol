@@ -106,6 +106,8 @@ contract CLDAuction {
         emit ParticipantRetired(Amount - penalty);
     }
 
+    //TODO: Decide on 
+
     function WithdrawETC() public {
         require(
             block.timestamp > EndTime,
