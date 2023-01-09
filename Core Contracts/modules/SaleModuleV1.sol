@@ -21,11 +21,7 @@ contract CLDAuctionFactory {
         _;
     }
 
-    constructor(
-        address _DAO,
-        address _CLD,
-        address payable _Treasury
-    ) {
+    constructor( address _DAO, address _CLD, address payable _Treasury ) {
         DAO = _DAO;
         Treasury = _Treasury;
         CLD = _CLD;
