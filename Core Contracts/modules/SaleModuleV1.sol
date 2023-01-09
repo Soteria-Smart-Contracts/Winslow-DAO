@@ -27,7 +27,7 @@ contract CLDAuctionFactory {
         CLD = _CLD;
     }
 
-    function newCLDAuction( uint256 _EndTime, uint256 _AmountToAuction, uint256 _MinimunFeeInGwei, uint256 _RetireeFeeInBP, address payable[] memory _DevTeam ) external OnlyDAO returns({
+    function newCLDAuction( uint256 _EndTime, uint256 _AmountToAuction, uint256 _MinimunFeeInGwei, uint256 _RetireeFeeInBP, address payable[] memory _DevTeam ) external OnlyDAO returns(address Ne{
         uint256 _startDate = block.timestamp;
         uint256 _endDate = _startDate + _EndTime;
         CLDAuction newInstance = new CLDAuction( _startDate, _endDate, _AmountToAuction, _MinimunFeeInGwei, _RetireeFeeInBP, DAO, Treasury, CLD, _DevTeam);
