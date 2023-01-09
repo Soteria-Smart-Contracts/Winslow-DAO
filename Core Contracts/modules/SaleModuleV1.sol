@@ -35,7 +35,7 @@ contract CLDAuctionFactory {
         auctionList.push( Auction({ auctionAddress: address(newInstance), startDate: _startDate, endDate: _endDate, amountAuctioned: _AmountToAuction }) );//FIXME:
 
         emit NewAuction( address(newInstance), _startDate, _endDate, _AmountToAuction, _DevTeam );
-        return(addressewInstance)
+        return(address(newInstance));
     }
 
     function setDAOAddress(address NewDAOAddress) external OnlyDAO {
