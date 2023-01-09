@@ -135,19 +135,14 @@ contract CLDAuction {
             participantInfo[msg.sender].DepositedETC += msg.value;
             ParticipantsList.push(msg.sender);
         }
-        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(
-            msg.sender
-        );
+        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare(msg.sender);
 
         emit ETCDeposited(msg.value, msg.sender);
         return true;
     }
 
     function RetractFromSale(uint256 Amount) external {
-        require(
-            Amount <= participantInfo[msg.sender].DepositedETC,
-            "CLDAuction.RetireFromAuction: You can't withdraw this many ETC"
-        );
+        require( Amount <= participantInfo[msg.sender].DepositedETC, "CLDAuction.RetireFromAuction: You can't withdraw this many ETC" );
         require(
             block.timestamp < EndTime,
             'CLDAuction.RetireFromAuction: The sale is over, you can only withdraw your CLD'
