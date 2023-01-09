@@ -147,7 +147,7 @@ contract CLDAuction {
         participantInfo[msg.sender].DepositedETC -= Amount;
         uint256 penalty = (Amount * RetireeFee) / 10000;
         payable(msg.sender).transfer(Amount - penalty);
-//        ETCDeductedFromRetirees += penalty;
+//        ETCDeductedFromRetirees += penalty; FIXME:
         ETCCollected -= Amount;
 
         emit ParticipantRetired(Amount - penalty);
