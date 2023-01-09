@@ -47,7 +47,6 @@ contract CLDAuction {
         address _DAO,
         address payable _Treasury,
         address _CLD,
-        address payable[] memory _Devs
     ) {
         require( // Fees goes from 0,10% to 100% in BP
             _RetireeFeeInBP >= 10 && _RetireeFeeInBP <= 10000,
@@ -61,13 +60,6 @@ contract CLDAuction {
         DAO = _DAO;
         Treasury = _Treasury;
         CLD = _CLD;
-        DevTeam = _Devs;
-
-        for (uint256 id = 0; id < DevTeam.length; ++id) {
-            isDev[DevTeam[id]] = true;
-            ActiveDevs++; 
-            emit NewDevAdded(DevTeam[id]);
-        }
     }
 
     function DepositETC() external payable returns (bool) {
