@@ -128,7 +128,8 @@ contract CLDAuction {
         ETCCollected += msg.value;
         if (participantInfo[msg.sender].Participated) {
             participantInfo[msg.sender].DepositedETC += msg.value;
-        } else {
+        } 
+        else {
             participantInfo[msg.sender].Participated = true;
             participantInfo[msg.sender].PartAddr = msg.sender;
             participantInfo[msg.sender].DepositedETC += msg.value;
