@@ -1,5 +1,5 @@
 //SPDX-License-Identifier:UNLICENSE
-/* This contract is able to be replaced by the Harmonia Core, and can also continue to be used 
+/* This contract is able to be replaced by the Winslow Core, and can also continue to be used 
 if a new Harmonia Core is deployed by changing DAO addresses
 When setting up a new core or voting contract, ensure cross-compatibility and record keeping 
 done by the archive contract, voting index and proposal indexes never restart */
