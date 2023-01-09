@@ -161,7 +161,7 @@ contract CLDAuction {
         );
     }
 
-    //FIXME: Review
+    //FIXME: Probably remove
     function UpdatePooledTokenShare(address PartAddr)
         internal
         view
