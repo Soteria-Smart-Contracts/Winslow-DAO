@@ -118,10 +118,8 @@ contract CLDAuction {
         address payable _Treasury,
         address _CLD
     ) {
-        require( // Fees goes from 0,10% to 100% in BP
-            _RetireeFeeInBP >= 10 && _RetireeFeeInBP <= 10000,
-            'CLDAuction._RetireeFeeInBP: Needs to be at least 0,1 or 100 in Basis Points'
-        );
+        // Fees goes from 0,10% to 100% in BP
+        require( _RetireeFeeInBP >= 10 && _RetireeFeeInBP <= 10000, 'CLDAuction._RetireeFeeInBP: Needs to be at least 0,1 or 100 in Basis Points' );
         StartTime = _StartTime;
         EndTime = _EndTime;
         TokenAmount = _Amount;
