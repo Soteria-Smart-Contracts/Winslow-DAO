@@ -156,14 +156,8 @@ contract CLDAuction {
     //TODO: Decide on economics for withdraws and foundation payout
 
     function WithdrawETC() public {
-        require(
-            block.timestamp > EndTime,
-            'CLDAuction.WithdrawETC: The sale is not over yet'
-        );
-        require(
-            address(this).balance > 0,
-            'CLDAuction.WithdrawETC: No ether on this contract'
-        );
+        require( block.timestamp > EndTime, 'CLDAuction.WithdrawETC: The sale is not over yet' );
+        require(address(this).balance > 0, 'CLDAuction.WithdrawETC: No ether on this contract' );
 
         Treasury.transfer(ETCCollected);
 
