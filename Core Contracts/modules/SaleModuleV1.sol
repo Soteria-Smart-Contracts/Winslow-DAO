@@ -168,9 +168,9 @@ contract CLDAuction {
         require( block.timestamp > EndTime, 'CLDAuction.WithdrawCLD: The sale is not over yet' );
         require( participantInfo[msg.sender].DepositedETC > 0, "CLDAuction.WithdrawCLD: You didn't buy any CLD" );
 //        participantInfo[msg.sender].PooledTokenShare = UpdatePooledTokenShare( msg.sender ); FIXME:
-        uint256 CLDToSend = (TokenAmount *
-            participantInfo[msg.sender].PooledTokenShare) / 10000;
+        uint256 CLDToSend = (TokenAmount * participantInfo[msg.sender].PooledTokenShare) / 10000;
         participantInfo[msg.sender].DepositedETC = 0;
+        
         ERC20(CLD).transfer(msg.sender, CLDToSend);
         emit CLDWithdrawed(CLDToSend, msg.sender);
     }
