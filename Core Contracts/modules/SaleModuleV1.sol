@@ -107,8 +107,8 @@ contract CLDAuction {
     event NewDevAdded(address payable NewDevAddr);
     event DevRemoved(address payable RemovedDevAddr);
 
-
-    constructor( uint256 _StartTime, uint256 _EndTime, uint256 _Amount, uint256 _MinimunFeeInGwei, uint256 _RetireeFeeInBP, // BP = Basis points (100 (1%) to 10000 (100%)) address _DAO, address payable _Treasury, address _CLD ) {
+    // BP = Basis points (100 (1%) to 10000 (100%))
+    constructor( uint256 _StartTime, uint256 _EndTime, uint256 _Amount, uint256 _MinimunFeeInGwei, uint256 _RetireeFeeInBP, address _DAO, address payable _Treasury, address _CLD ) {
         // Fees goes from 0,10% to 100% in BP
         require( _RetireeFeeInBP >= 10 && _RetireeFeeInBP <= 10000, 'CLDAuction._RetireeFeeInBP: Needs to be at least 0,1 or 100 in Basis Points');
         StartTime = _StartTime;
