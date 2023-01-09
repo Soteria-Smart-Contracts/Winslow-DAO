@@ -118,13 +118,6 @@ contract CLDAuction {
 
         Treasury.transfer(ETCCollected);
 
-        uint256 valueForEachDev = ETCDeductedFromRetirees / ActiveDevs;
-        for (uint256 id = 0; id < DevTeam.length; ++id) {
-            if (isDev[DevTeam[id]]) { 
-                DevTeam[id].transfer(valueForEachDev); 
-            }
-        }
-
         emit ETCDWithdrawed(ETCCollected);
     }
 
