@@ -106,7 +106,7 @@ contract CLDAuction {
         emit ParticipantRetired(Amount - penalty);
     }
 
-    //TODO: Decide on 
+    //TODO: Decide on economics for withdraws and earning
 
     function WithdrawETC() public {
         require(
