@@ -11,7 +11,7 @@ contract CLDAuction {
     uint256 public StartTime;
     uint256 public EndTime;
     uint256 public ETCCollected; //Should be Ether
-    uint256 public ETCDeductedFromRetirees;
+    uint256 public ETCDeductedFromRetracts;
     uint256 public TokenAmount;
 
     modifier OnlyDAO() {
