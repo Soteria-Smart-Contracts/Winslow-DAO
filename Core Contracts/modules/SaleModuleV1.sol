@@ -41,9 +41,8 @@ contract CLDAuctionFactory {
         DAO = NewDAOAddress;
     }
 
-    function SeeAuctionData(uint256 AuctionID) public view returns (address, uint256, uint256, uint256)
-    {
-        return ( auctionList[AuctionID].auctionAddress, auctionList[AuctionID].startDate, auctionList[AuctionID].endDate, auctionList[AuctionID].amountAuctioned );
+    function SeeAuctionData(uint256 AuctionID) public view returns (address, uint256, uint256, uint256){
+        return (auctionList[AuctionID].auctionAddress, auctionList[AuctionID].startDate, auctionList[AuctionID].endDate, auctionList[AuctionID].amountAuctioned );
     }
 }
 
