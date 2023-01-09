@@ -32,14 +32,7 @@ contract CLDAuctionFactory {
         uint256 _endDate = _startDate + _EndTime;
         CLDAuction newInstance = new CLDAuction( _startDate, _endDate, _AmountToAuction, _MinimunFeeInGwei, _RetireeFeeInBP, DAO, Treasury, CLD, _DevTeam);
 
-        auctionList.push(
-            Auction({
-                auctionAddress: address(newInstance),
-                startDate: _startDate,
-                endDate: _endDate,
-                amountAuctioned: _AmountToAuction
-            })
-        );
+        auctionList.push( Auction({ auctionAddress: address(newInstance), startDate: _startDate, endDate: _endDate, amountAuctioned: _AmountToAuction }) );
 
         emit NewAuction(
             address(newInstance),
