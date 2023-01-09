@@ -106,23 +106,6 @@ contract CLDAuction {
         emit ParticipantRetired(Amount - penalty);
     }
 
-    function AddDevs(address payable[] memory DevAddrs) external {
-        for (uint256 id = 0; id < DevAddrs.length; ++id) {
-            AddDev(DevAddrs[id]);
-        }
-    }
-
-    function AddDev(address payable DevAddr) public OnlyDAO {
-        require(
-            !isDev[DevAddr],
-            'CLDAuction.AddDev: This user is already a dev'
-        );
-        DevTeam.push(DevAddr);
-        isDev[DevAddr] = true;
-        ActiveDevs++;
-        emit NewDevAdded(DevAddr);
-    }
-
     function RemDevs(address payable[] memory DevAddrs) external {
         for (uint256 id = 0; id < DevAddrs.length; ++id) {
             RemDev(DevAddrs[id]);
