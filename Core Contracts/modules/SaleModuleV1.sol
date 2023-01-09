@@ -1,6 +1,129 @@
 //SPDX-License-Identifier:UNLICENSE
 pragma solidity ^0.8.17;
 
+contract CLDAuctionFactory {
+    address public DAO;
+    address payable public Treasury;
+    address public CLD;
+    Auction[] public auctionList;
+
+    event NewAuction(
+        address Addr,
+        uint256 startDate,
+        uint256 endDate,
+        uint256 _AmountToAuction,
+        address payable[] DevTeam
+    );
+
+    struct Auction {
+        address auctionAddress;
+        uint256 startDate;
+        uint256 endDate;
+        uint256 amountAuctioned;
+    }
+
+    modifier OnlyDAO() {
+        require(msg.sender == DAO, 'This can only be done by the DAO');
+        _;
+    }
+
+    constructor(
+        address _DAO,
+        address _CLD,
+        address payable _Treasury
+    ) {
+        DAO = _DAO;
+        Treasury = _Treasury;
+        CLD = _CLD;
+    }
+
+    function newCLDAuction(
+        uint256 _EndTime,
+        uint256 _AmountToAuction,
+        uint256 _MinimunFeeInGwei,
+        uint256 _RetireeFeeInBP,
+        address payable[] memory _DevTeam
+    ) external OnlyDAO {
+        uint256 _startDate = block.timestamp;
+        uint256 _endDate = _startDate + _EndTime;
+        CLDAuction newInstance = new CLDAuction(
+            _startDate,
+            _endDate,
+            _AmountToAuction,
+            _MinimunFeeInGwei,
+            _RetireeFeeInBP,
+            DAO,
+            Treasury,
+            CLD,
+            _DevTeam
+        );
+
+        auctionList.push(
+            Auction({
+                auctionAddress: address(newInstance),
+                startDate: _startDate,
+                endDate: _endDate,
+                amountAuctioned: _AmountToAuction
+            })
+        );
+
+        emit NewAuction(
+            address(newInstance),
+            _startDate,
+            _endDate,
+            _AmountToAuction,
+            _DevTeam
+        );
+    }
+
+    function setDAOAddress(address NewDAOAddress) external OnlyDAO {
+        DAO = NewDAOAddress;
+    }
+
+    function SeeAuctionData(uint256 AuctionID)
+        public
+        view
+        returns (
+            address,
+            uint256,
+            uint256,
+            uint256
+        )
+    {
+        return (
+            auctionList[AuctionID].auctionAddress,
+            auctionList[AuctionID].startDate,
+            auctionList[AuctionID].endDate,
+            auctionList[AuctionID].amountAuctioned
+        );
+    }
+}
+
+interface ERC20 {
+    function balanceOf(address owner) external view returns (uint256);
+
+    function allowance(address owner, address spender)
+        external
+        view
+        returns (uint256);
+
+    function approve(address spender, uint256 value) external returns (bool);
+
+    function Mint(address _MintTo, uint256 _MintAmount) external;
+
+    function transfer(address to, uint256 value) external;
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 value
+    ) external returns (bool);
+
+    function totalSupply() external view returns (uint256);
+
+    function CheckMinter(address AddytoCheck) external view returns (uint256);
+}
+
 contract CLDAuction {
     address public DAO;
     address payable public Treasury;
@@ -175,125 +298,3 @@ contract CLDAuction {
 
 // TO DO This contract needs to ask the DAO to send CLD tokens from the Treasury
 // to the Auction contract
-contract CLDAuctionFactory {
-    address public DAO;
-    address payable public Treasury;
-    address public CLD;
-    Auction[] public auctionList;
-
-    event NewAuction(
-        address Addr,
-        uint256 startDate,
-        uint256 endDate,
-        uint256 _AmountToAuction,
-        address payable[] DevTeam
-    );
-
-    struct Auction {
-        address auctionAddress;
-        uint256 startDate;
-        uint256 endDate;
-        uint256 amountAuctioned;
-    }
-
-    modifier OnlyDAO() {
-        require(msg.sender == DAO, 'This can only be done by the DAO');
-        _;
-    }
-
-    constructor(
-        address _DAO,
-        address _CLD,
-        address payable _Treasury
-    ) {
-        DAO = _DAO;
-        Treasury = _Treasury;
-        CLD = _CLD;
-    }
-
-    function newCLDAuction(
-        uint256 _EndTime,
-        uint256 _AmountToAuction,
-        uint256 _MinimunFeeInGwei,
-        uint256 _RetireeFeeInBP,
-        address payable[] memory _DevTeam
-    ) external OnlyDAO {
-        uint256 _startDate = block.timestamp;
-        uint256 _endDate = _startDate + _EndTime;
-        CLDAuction newInstance = new CLDAuction(
-            _startDate,
-            _endDate,
-            _AmountToAuction,
-            _MinimunFeeInGwei,
-            _RetireeFeeInBP,
-            DAO,
-            Treasury,
-            CLD,
-            _DevTeam
-        );
-
-        auctionList.push(
-            Auction({
-                auctionAddress: address(newInstance),
-                startDate: _startDate,
-                endDate: _endDate,
-                amountAuctioned: _AmountToAuction
-            })
-        );
-
-        emit NewAuction(
-            address(newInstance),
-            _startDate,
-            _endDate,
-            _AmountToAuction,
-            _DevTeam
-        );
-    }
-
-    function setDAOAddress(address NewDAOAddress) external OnlyDAO {
-        DAO = NewDAOAddress;
-    }
-
-    function SeeAuctionData(uint256 AuctionID)
-        public
-        view
-        returns (
-            address,
-            uint256,
-            uint256,
-            uint256
-        )
-    {
-        return (
-            auctionList[AuctionID].auctionAddress,
-            auctionList[AuctionID].startDate,
-            auctionList[AuctionID].endDate,
-            auctionList[AuctionID].amountAuctioned
-        );
-    }
-}
-
-interface ERC20 {
-    function balanceOf(address owner) external view returns (uint256);
-
-    function allowance(address owner, address spender)
-        external
-        view
-        returns (uint256);
-
-    function approve(address spender, uint256 value) external returns (bool);
-
-    function Mint(address _MintTo, uint256 _MintAmount) external;
-
-    function transfer(address to, uint256 value) external;
-
-    function transferFrom(
-        address from,
-        address to,
-        uint256 value
-    ) external returns (bool);
-
-    function totalSupply() external view returns (uint256);
-
-    function CheckMinter(address AddytoCheck) external view returns (uint256);
-}
