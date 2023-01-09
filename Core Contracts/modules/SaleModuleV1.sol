@@ -122,14 +122,8 @@ contract CLDAuction {
     }
 
     function DepositETC() external payable returns (bool) {
-        require(
-            block.timestamp < EndTime,
-            'CLDAuction.DepositETC: The sale is over'
-        );
-        require(
-            msg.value > MinimunFee,
-            'CLDAuction.DepositETC: Deposit amount not high enough'
-        );
+        require( block.timestamp < EndTime, 'CLDAuction.DepositETC: The sale is over' );
+        require( msg.value > MinimunFee, 'CLDAuction.DepositETC: Deposit amount not high enough' );
 
         ETCCollected += msg.value;
         if (participantInfo[msg.sender].Participated) {
