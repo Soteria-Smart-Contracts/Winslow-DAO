@@ -5,7 +5,6 @@ contract CLDAuction {
     address public DAO;
     address payable public Treasury;
     address public CLD;
-    uint8 public ActiveDevs;
     uint256 public MinimunFee; //FIXME:
     uint256 public RetireeFee; //FIXME:
     uint256 public StartTime;
@@ -46,7 +45,7 @@ contract CLDAuction {
         uint256 _RetireeFeeInBP, // BP = Basis points (100 (1%) to 10000 (100%))
         address _DAO,
         address payable _Treasury,
-        address _CLD,
+        address _CLD
     ) {
         require( // Fees goes from 0,10% to 100% in BP
             _RetireeFeeInBP >= 10 && _RetireeFeeInBP <= 10000,
