@@ -142,6 +142,7 @@ contract CLDAuction {
         emit CLDWithdrawed(CLDToSend, msg.sender);
     }
 
+    //FIXME: Review
     function CheckParticipant(address PartAddr)
         public
         view
