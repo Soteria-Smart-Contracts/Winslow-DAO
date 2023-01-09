@@ -7,12 +7,10 @@ contract CLDAuctionFactory {
     address public CLD;
     Auction[] public auctionList;
 
-    event NewAuction(
-        address Addr,
+    event NewAuction(address Addr,
         uint256 startDate,
         uint256 endDate,
-        uint256 _AmountToAuction,
-        address payable[] DevTeam
+        uint256 _AmountToAuction
     );
 
     struct Auction {
