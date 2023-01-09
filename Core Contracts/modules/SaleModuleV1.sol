@@ -106,22 +106,6 @@ contract CLDAuction {
         emit ParticipantRetired(Amount - penalty);
     }
 
-    function RemDevs(address payable[] memory DevAddrs) external {
-        for (uint256 id = 0; id < DevAddrs.length; ++id) {
-            RemDev(DevAddrs[id]);
-        }
-    }
-    
-    function RemDev(address payable DevAddr) public OnlyDAO {
-        require(
-            isDev[DevAddr],
-            'CLDAuction.RemDev: This user is not a dev'
-        );
-        isDev[DevAddr] = false;
-        ActiveDevs--;
-        emit DevRemoved(DevAddr);
-    }
-
     function WithdrawETC() public {
         require(
             block.timestamp > EndTime,
