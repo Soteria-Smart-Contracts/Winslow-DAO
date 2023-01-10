@@ -17,7 +17,7 @@ contract SaleV2{
     uint256 CLDToBeSold;
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
     uint256 DAOFoundationFee; //Fee that goes directly to the foundation for further development
-    uint256 RetractFee; //Fee that is charged when a user r
+    uint256 RetractFee; //Fee that is charged when a user removes their ether
     // Details
     uint256 TotalEtherPool; //Defines the total amount of ether deposited by participators
 
