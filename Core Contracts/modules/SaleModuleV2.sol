@@ -17,7 +17,7 @@ contract SaleV2{
     uint256 CLDToBeSold;
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
     uint256 DAOFoundationFee;
-    uint256 Re
+    uint256 RetractFee;
 
 
 
