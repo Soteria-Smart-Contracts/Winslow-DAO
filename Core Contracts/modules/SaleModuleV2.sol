@@ -10,10 +10,11 @@ contract SaleFactoryV2{
 }
 
 contract SaleV2{
+    //Core 
     address DAO;
     address CLD;
     address Treasury;
     uint256 CLDToBeSold;
-    
+
 
 }
