@@ -20,7 +20,7 @@ contract SaleV2{
     uint256 RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
     // Details
     uint256 TotalEtherPool; //Defines the total amount of ether deposited by participators
-    uint256 RetractionFeeTotal;
+    uint256 eTotalRetractionFees; //
 
 
 
