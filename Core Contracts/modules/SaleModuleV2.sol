@@ -10,5 +10,7 @@ contract SaleFactoryV2{
 }
 
 contract SaleV2{
+    address DAO;
     uint256 TokensToBeSold;
+
 }
