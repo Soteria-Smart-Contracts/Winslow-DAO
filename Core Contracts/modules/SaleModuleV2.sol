@@ -28,7 +28,8 @@ contract SaleV2{
         bool Participated;
         uint256 EtherDeposited;
     }
-    =
+    
+    mapping(P)
 
 
 
