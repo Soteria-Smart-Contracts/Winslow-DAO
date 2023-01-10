@@ -24,12 +24,12 @@ contract SaleV2{
     uint256 TotalEtherPool; //Defines the total amount of ether deposited by participators
     uint256 TotalRetractionFees; //Total amount of ether received from retraction fees 
 
-    struct ParticipantDetails{
+    struct Participant{
         bool Participated;
         uint256 EtherDeposited;
     }
     
-    mapping(address => ParticipantDetails) public ParticipantDetails;
+    mapping(address => Participant) public ParticipantDetails;
 
 
 
