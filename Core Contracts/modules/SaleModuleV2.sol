@@ -9,4 +9,6 @@ contract SaleFactoryV2{
 
 }
 
-contract 
+contract SaleV2{
+    
+}
