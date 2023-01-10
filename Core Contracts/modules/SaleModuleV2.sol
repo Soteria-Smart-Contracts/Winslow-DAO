@@ -15,7 +15,7 @@ contract SaleV2{
     address CLD;
     address Treasury;
     uint256 CLDToBeSold;
-    //  Fees in basis points
+    //  Fees in basis points, chosen by proposer/al
     uint256 DAOFoundationFee;
 
 
