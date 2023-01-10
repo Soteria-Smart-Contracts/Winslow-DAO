@@ -26,6 +26,7 @@ contract SaleV2{
     uint256 
 
     struct ParticipantDetails{
+        bool Participated;
         uint256 EtherDeposited;
     }
 
