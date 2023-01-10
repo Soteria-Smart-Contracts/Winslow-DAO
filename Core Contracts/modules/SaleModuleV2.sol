@@ -19,7 +19,7 @@ contract SaleV2{
     uint256 DAOFoundationFee;
     uint256 RetractFee;
     // Details
-    uint256 
+    uint256 TotalETCPool;
 
 
 
