@@ -29,7 +29,7 @@ contract SaleV2{
         uint256 EtherDeposited;
     }
     
-    mapping(address => ParticipantDetails) public 
+    mapping(address => ParticipantDetails) public ParticipantDetails
 
 
 
