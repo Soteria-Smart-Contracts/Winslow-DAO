@@ -18,6 +18,7 @@ contract SaleV2{
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
     uint256 DAOFoundationFee;
     uint256 RetractFee;
+    // 
 
 
 
