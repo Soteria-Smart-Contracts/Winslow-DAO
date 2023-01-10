@@ -20,6 +20,7 @@ contract SaleV2{
     uint256 RetractFee;
     // Details
     uint256 TotalEtherPool; //Defines the total amount of ether deposited by participators
+    
 
 
 
