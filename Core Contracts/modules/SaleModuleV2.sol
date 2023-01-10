@@ -25,7 +25,9 @@ contract SaleV2{
     uint256 TotalRetractionFees; //Total amount of ether received from retraction fees
     uint256 
 
-    struct ParticipantDetails
+    struct ParticipantDetails{
+        uint256 EtherDeposited;
+    }
 
 
 
