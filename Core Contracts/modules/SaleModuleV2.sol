@@ -15,7 +15,7 @@ contract SaleV2{
     address CLD;
     address Treasury;
     uint256 CLDToBeSold;
-    //  Fees in basis points, chosen by proposer/al
+    //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
     uint256 DAOFoundationFee;
 
 
