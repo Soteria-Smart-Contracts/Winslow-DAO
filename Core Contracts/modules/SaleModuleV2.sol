@@ -10,5 +10,5 @@ contract SaleFactoryV2{
 }
 
 contract SaleV2{
-    
+    uint256 
 }
