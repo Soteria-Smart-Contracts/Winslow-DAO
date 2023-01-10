@@ -10,7 +10,7 @@ contract SaleFactoryV2{
 }
 
 contract SaleV2{
-    //Core 
+    //Variable Declarations
     address DAO;
     address CLD;
     address Treasury;
