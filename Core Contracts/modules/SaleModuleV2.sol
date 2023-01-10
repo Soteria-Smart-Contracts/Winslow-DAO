@@ -27,6 +27,7 @@ contract SaleV2{
     struct Participant{
         bool Participated;
         uint256 EtherDeposited;
+        uint256 CLDWithdrawn;
     }
     
     mapping(address => Participant) public ParticipantDetails;
