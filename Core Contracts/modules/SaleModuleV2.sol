@@ -15,7 +15,8 @@ contract SaleV2{
     address CLD;
     address Treasury;
     uint256 CLDToBeSold;
-    //  
+    //  Fees
+
 
 
 }
