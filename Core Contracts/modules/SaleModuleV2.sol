@@ -5,3 +5,4 @@ When setting up a new core or voting contract, ensure cross-compatibility and re
 done by the archive contract, voting index and proposal indexes never restart  TODO:Change This*/
 pragma solidity ^0.8.17;
 
+contract SaleFactory
