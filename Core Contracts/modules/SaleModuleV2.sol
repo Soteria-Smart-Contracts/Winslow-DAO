@@ -42,7 +42,8 @@ contract SaleV2{
         CLDToBeSold = CLDtoSell;
         StartTime = block.timestamp + 43200;
         EndTime = StartTime + SaleLength;
-        DAOFoundationFee = 
+        DAOFoundationFee = FoundationFee;
+        RetractFee = Retrac
 
     }
 
