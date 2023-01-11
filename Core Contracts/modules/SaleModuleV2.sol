@@ -35,7 +35,7 @@ contract SaleV2{
     //List of participants for front-end ranking
     address[] public ParticipantList; 
 
-    constructor(address _DAO, address _Treasury, _CLD){
+    constructor(address _DAO, address _Treasury, CLDtoSell, ){
 
     }
 
