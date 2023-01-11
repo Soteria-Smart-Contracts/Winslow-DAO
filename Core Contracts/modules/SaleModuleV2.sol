@@ -32,7 +32,7 @@ contract SaleV2{
     
     //Mapping
     mapping(address => Participant) public ParticipantDetails; 
-    a
+    address[]
 
 
 
