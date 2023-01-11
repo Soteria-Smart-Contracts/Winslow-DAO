@@ -32,6 +32,8 @@ contract SaleV2{
     
     mapping(address => Participant) public ParticipantDetails;
 
+    
+
 
 
 
