@@ -44,6 +44,7 @@ contract SaleV2{
         EndTime = StartTime + SaleLength;
         DAOFoundationFee = FoundationFee;
         RetractFee = RetractionFee;
+        
 
     }
 
@@ -52,4 +53,9 @@ contract SaleV2{
 
 
 
+}
+
+interface Core {
+    function Treasury() external returns(address payable TreasuryAddress);
+    function CLDAddress() external view returns(address CLD);
 }
