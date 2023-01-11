@@ -47,7 +47,10 @@ contract SaleV2{
         RetractFee = RetractionFee;
     }
 
-    //
+    
+    //Deposit ETC
+    //Withdraw ETC
+
 
 
 
