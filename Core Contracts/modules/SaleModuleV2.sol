@@ -39,7 +39,8 @@ contract SaleV2{
         DAO = DAO;
         CLD = CLD;
         CLDToBeSold = CLDtoSell;
-        StartTime = block.timestamp + 
+        StartTime = block.timestamp + 43200;
+        EndTime = StartTime + SaleLength;
 
     }
 
