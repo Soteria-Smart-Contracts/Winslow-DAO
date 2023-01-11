@@ -38,6 +38,7 @@ contract SaleV2{
     constructor(address _DAO, address _Treasury, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee){
         require(SaleLength >= 259200 && SaleLength <= 1209600);
         DAO = _DAO;
+        Treasury = Core(DAO).Treasury();
         CLD = Core(DAO).CLDAddress();
         CLDToBeSold = CLDtoSell;
         StartTime = block.timestamp + 43200;
