@@ -30,7 +30,7 @@ contract SaleV2{
         uint256 CLDWithdrawn;
     }
     
-    //Mapping for all participants
+    //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
     address[] public ParticipantList; 
 
