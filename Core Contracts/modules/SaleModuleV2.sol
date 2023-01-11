@@ -30,9 +30,10 @@ contract SaleV2{
         uint256 CLDWithdrawn;
     }
     
+    
     mapping(address => Participant) public ParticipantDetails;
 
-    
+
 
 
 
