@@ -9,7 +9,7 @@ contract SaleFactoryV2{
 }
 
 contract SaleV2{
-    //  Variable Declarations
+    //  Variable, struct, mapping and other Declarations
     //  Core
     address DAO;
     address CLD;
