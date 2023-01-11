@@ -40,7 +40,7 @@ contract SaleV2{
         DAO = _DAO;
         Treasury = Core(DAO).TreasuryContract();
         CLD = Core(DAO).CLDAddress();
-        CLDToBeSold = CLDtoSell;
+        CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract after treasury, additional CLD sent to the sale contract will be lost
         StartTime = block.timestamp + 43200;
         EndTime = StartTime + SaleLength;
         DAOFoundationFee = FoundationFee;
