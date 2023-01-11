@@ -39,7 +39,7 @@ contract SaleV2{
         DAO = DAO;
         CLD = CLD;
         CLDToBeSold = CLDtoSell;
-        
+        StartTime = block.timestamp + 
 
     }
 
