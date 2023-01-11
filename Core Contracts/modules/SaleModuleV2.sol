@@ -47,11 +47,14 @@ contract SaleV2{
         RetractFee = RetractionFee;
     }
 
-    //During Sale
+    //  During Sale
     //Deposit ETC
     //Withdraw ETC
 
-    
+    //  Post Sale
+    //Withdraw CLD
+
+
 
 
 
