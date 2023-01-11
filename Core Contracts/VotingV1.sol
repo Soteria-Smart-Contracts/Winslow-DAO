@@ -282,7 +282,7 @@ contract Winslow_Voting_V1 {
 
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
-        payable(Core(DAO).Treasury()).transfer(address(this).balance);
+        payable(Core(DAO).TreasuryContract()).transfer(address(this).balance);
     }
 
     fallback() external payable{
@@ -296,7 +296,7 @@ contract Winslow_Voting_V1 {
 //Interfaces
 
 interface Core {
-    function Treasury() external returns(address payable TreasuryAddress);
+    function TreasuryContract() external returns(address payable TreasuryAddress);
     function CLDAddress() external view returns(address CLD);
 }
 
