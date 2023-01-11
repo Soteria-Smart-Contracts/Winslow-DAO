@@ -47,6 +47,8 @@ contract SaleV2{
         RetractFee = RetractionFee;
     }
 
+    //
+
 
 
 
