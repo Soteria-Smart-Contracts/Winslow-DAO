@@ -43,7 +43,7 @@ contract SaleV2{
         StartTime = block.timestamp + 43200;
         EndTime = StartTime + SaleLength;
         DAOFoundationFee = FoundationFee;
-        RetractFee = Retrac
+        RetractFee = RetractionFee;
 
     }
 
