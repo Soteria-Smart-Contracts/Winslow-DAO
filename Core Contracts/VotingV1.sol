@@ -287,7 +287,7 @@ contract Winslow_Voting_V1 {
 
     fallback() external payable{
         emit FallbackToTreasury(address(this).balance);
-        payable(Core(DAO).Treasury()).transfer(address(this).balance);
+        payable(Core(DAO).TreasuryContract()).transfer(address(this).balance);
     }
 
 }
