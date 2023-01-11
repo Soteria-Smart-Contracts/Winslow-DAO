@@ -36,6 +36,7 @@ contract SaleV2{
     address[] public ParticipantList; 
 
     constructor(address _DAO, address _Treasury, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee){
+        require(SaleLength >= );
         DAO = DAO;
         CLD = CLD;
         CLDToBeSold = CLDtoSell;
