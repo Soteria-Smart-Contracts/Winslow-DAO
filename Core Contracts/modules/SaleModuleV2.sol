@@ -32,7 +32,7 @@ contract SaleV2{
     
     //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
-    //List of participants
+    //List of participants for front
     address[] public ParticipantList; 
 
 
