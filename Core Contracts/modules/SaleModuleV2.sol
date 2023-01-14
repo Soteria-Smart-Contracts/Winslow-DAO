@@ -82,6 +82,9 @@ contract SaleV2{
         if(block.timestamp > EndTime){
             return(SaleStatuses(2));
         }
+        else{
+            revert();
+        }
     }
 
 
