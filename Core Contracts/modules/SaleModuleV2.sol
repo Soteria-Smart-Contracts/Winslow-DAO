@@ -65,7 +65,7 @@ contract SaleV2{
 
         if(ParticipantDetails[msg.sender].Participated = false){
             ParticipantDetails[msg.sender].Participated = true;
-            ParticipantList.push
+            ParticipantList.push(msg.sender);
         }
 
         ParticipantDetails[msg.sender].Participated = true;
