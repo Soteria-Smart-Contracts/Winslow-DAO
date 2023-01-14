@@ -75,7 +75,8 @@ contract SaleV2{
     }
 
     function WithdrawEther(uint256 amount) public returns(bool success){
-        
+
+        return(success)
     }
 
 
