@@ -24,7 +24,7 @@ contract SaleV2{
     uint256 TotalEtherPool; //Defines the total amount of ether deposited by participators
     uint256 TotalRetractionFees; //Total amount of ether received from retraction fees 
 
-    enum SaleStatus{ 
+    enum SaleStatuses{ 
         Uncommenced, //Before the sale, allowing users to view the amount of CLD that will sold and additional information
         Ongoing,     //While the sale is active, allowing users to deposit or withdraw ETC from the pool 
         Complete     //After the sale is complete, allowing users to withdraw their CLD in which they purchased
