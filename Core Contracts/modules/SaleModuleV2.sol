@@ -59,7 +59,9 @@ contract SaleV2{
     //  During Sale
     //Deposit ETC
 
-    function Deposit() public payable returns()
+    function Deposit() public payable returns(bool success){
+        
+    }
 
 
     //Withdraw ETC
