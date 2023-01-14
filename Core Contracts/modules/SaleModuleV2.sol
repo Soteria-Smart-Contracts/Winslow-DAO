@@ -79,7 +79,7 @@ contract SaleV2{
         require(amount <= ParticipantDetails[msg.sender].EtherDeposited);
         require(SaleStatus() == SaleStatuses(1));
 
-        uint256 Fee = amount * 1
+        uint256 Fee = amount * 
 
         return(success);
     }
