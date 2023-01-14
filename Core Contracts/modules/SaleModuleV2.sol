@@ -82,7 +82,7 @@ contract SaleV2{
         uint256 Fee = ((amount * RetractFee) / 10000);
 
         TotalRetractionFeesAccrued += Fee;
-        ParticipantDetails[msg.sender]
+        ParticipantDetails[msg.sender].EtherDeposited
 
         return(success);
     }
