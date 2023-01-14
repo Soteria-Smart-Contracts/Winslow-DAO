@@ -56,6 +56,10 @@ contract SaleV2{
 
     //  During Sale
     //Deposit ETC
+
+    finally
+
+    
     //Withdraw ETC
 
     //  Post Sale
