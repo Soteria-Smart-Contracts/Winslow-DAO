@@ -63,7 +63,7 @@ contract SaleV2{
         require(SaleStatus() == SaleStatuses(1));
         require(msg.value >= MinimumDeposit); 
 
-        ParticipantDetails
+        ParticipantDetails[msg.sender]
 
         return(success);
     }
