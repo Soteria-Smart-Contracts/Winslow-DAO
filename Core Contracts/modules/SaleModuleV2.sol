@@ -69,6 +69,7 @@ contract SaleV2{
         }
 
         ParticipantDetails[msg.sender].EtherDeposited += msg.value;
+        TotalEtherPool += msg.value;
 
         return(success);
     }
