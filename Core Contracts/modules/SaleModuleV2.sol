@@ -26,7 +26,7 @@ contract SaleV2{
 
     enum SaleModes{ 
         Uncommenced, //Before the sale, allowing users to view the amount of CLD that will sold and additional information
-        Ongoing,
+        Ongoing,     //
         Complete
     }
 
