@@ -80,7 +80,7 @@ contract SaleV2{
             return(SaleStatuses(1));
         }
         if(block.timestamp > EndTime){
-            return
+            return(SaleStatuses(2));
         }
     }
 
