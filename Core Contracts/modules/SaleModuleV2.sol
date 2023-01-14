@@ -17,7 +17,7 @@ contract SaleV2{
     uint256 CLDToBeSold;
     uint256 StartTime; //Unix Time
     uint256 EndTime;   //Unix Time
-    SaleStatuses S
+    SaleStatuses SaleStatus;
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
     uint256 DAOFoundationFee; //Fee that goes directly to the foundation for further development
     uint256 RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
