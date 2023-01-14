@@ -57,7 +57,7 @@ contract SaleV2{
     //  During Sale
     //Deposit ETC
 
-    functionn 
+    function 
 
 
     //Withdraw ETC
