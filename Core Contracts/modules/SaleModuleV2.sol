@@ -79,9 +79,9 @@ contract SaleV2{
         require(amount <= ParticipantDetails[msg.sender].EtherDeposited);
         require(SaleStatus() == SaleStatuses(1));
 
-        uint256 Fee = ((amount * RetractFee) / 10000)
-        
-        TotalRetractionFeesAccrued += fee;
+        uint256 Fee = ((amount * RetractFee) / 10000);
+
+        TotalRetractionFeesAccrued += Fee;
 
         return(success);
     }
