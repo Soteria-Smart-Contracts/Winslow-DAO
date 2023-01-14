@@ -82,6 +82,7 @@ contract SaleV2{
         uint256 Fee = ((amount * RetractFee) / 10000);
 
         TotalRetractionFeesAccrued += Fee;
+        
 
         return(success);
     }
