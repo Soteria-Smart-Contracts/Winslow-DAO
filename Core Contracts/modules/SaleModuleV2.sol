@@ -15,15 +15,15 @@ contract SaleV2{
     address public CLD;
     address public Treasury;
     uint256 public CLDToBeSold;
-    uint256 StartTime; //Unix Time
-    uint256 EndTime;   //Unix Time
+    uint256 public StartTime; //Unix Time
+    uint256 public EndTime;   //Unix Time
     SaleStatuses public SaleStatus;
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
-    uint256 DAOFoundationFee; //Fee that goes directly to the foundation for further development
-    uint256 RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
+    uint256 public DAOFoundationFee; //Fee that goes directly to the foundation for further development
+    uint256 public RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
     // Details
-    uint256 TotalEtherPool; //Defines the total amount of ether deposited by participators
-    uint256 TotalRetractionFees; //Total amount of ether received from retraction fees 
+    uint256 public TotalEtherPool; //Defines the total amount of ether deposited by participators
+    uint256 public TotalRetractionFees; //Total amount of ether received from retraction fees 
 
     enum SaleStatuses{ 
         Uncommenced, //Before the sale, allowing users to view the amount of CLD that will sold and additional information
