@@ -76,8 +76,6 @@ contract SaleV2{
 
     function WithdrawEther(uint256 amount) public returns(bool success){
         require(SaleStatus() == SaleStatuses(1));
-        require(amount > );
-
 
         return(success)
     }
