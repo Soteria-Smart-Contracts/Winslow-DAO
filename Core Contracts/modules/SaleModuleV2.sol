@@ -76,7 +76,9 @@ contract SaleV2{
         if(block.timestamp < StartTime){
             return(SaleStatuses(0));
         }
-        if(block.timestamp > StartTime && block.timestamp < EndTime)
+        if(block.timestamp > StartTime && block.timestamp < EndTime){
+
+        }
     }
 
 
