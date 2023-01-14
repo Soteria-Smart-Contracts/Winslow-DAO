@@ -18,7 +18,7 @@ contract SaleV2{
     uint256 public StartTime; //Unix Time
     uint256 public EndTime;   //Unix Time
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
-    uint256 public MinimumDeposit; //Minimum amount of Ether to be deposited
+    uint256 public MinimumDeposit; //Minimum amount of Ether to be deposited when calling the deposit function
     uint256 public DAOFoundationFee; //Fee that goes directly to the foundation for further development
     uint256 public RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
     // Details
