@@ -74,7 +74,7 @@ contract SaleV2{
         return(success);
     }
 
-    /
+    //You may only withdraw all your ether 
     function WithdrawEther()
 
 
