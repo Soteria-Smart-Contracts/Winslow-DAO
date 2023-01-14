@@ -36,6 +36,8 @@ contract SaleV2{
         uint256 EtherDeposited;
         uint256 CLDWithdrawn;
     }
+
+    //TODO: dont forget events on all contracts
     
     //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
