@@ -63,7 +63,7 @@ contract SaleV2{
         require(SaleStatus() == SaleStatuses(1));
         require(msg.value >= MinimumDeposit); 
 
-        ParticipantDetails[msg.sender].Paricipa
+        ParticipantDetails[msg.sender].Participated = true;
 
         return(success);
     }
