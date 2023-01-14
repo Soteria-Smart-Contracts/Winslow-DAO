@@ -80,7 +80,8 @@ contract SaleV2{
         require(SaleStatus() == SaleStatuses(1));
 
         uint256 Fee = ((amount * RetractFee) / 10000)
-        TotalRetractionFeesAccrued +=
+        
+        TotalRetractionFeesAccrued += fee;
 
         return(success);
     }
