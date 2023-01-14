@@ -75,7 +75,7 @@ contract SaleV2{
     }
 
     function WithdrawEther(uint256 amount) public returns(bool success){
-        require(ParticipantDetails[msg.sender] == );
+        require(ParticipantDetails[msg.sender].Participated == true);
         require(SaleStatus() == SaleStatuses(1));
 
         return(success)
