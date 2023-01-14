@@ -73,8 +73,8 @@ contract SaleV2{
     //View Functions
 
     function SaleStatus() public view returns(SaleStatuses SaleStatus){
-        if(block.timestamp < Starttime){
-
+        if(block.timestamp < StartTime){
+            ret
         }
     }
 
