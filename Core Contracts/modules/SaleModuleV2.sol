@@ -83,7 +83,7 @@ contract SaleV2{
             return(SaleStatuses(2));
         }
         else{
-            revert("Error on ");
+            revert("Error on getting sale status");
         }
     }
 
