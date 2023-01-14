@@ -61,7 +61,7 @@ contract SaleV2{
 
     function Deposit() public payable returns(bool success){
         require(SaleStatus() == SaleStatuses(1));
-        require(msg.value >= MinimumDeposit);
+        require(msg.value >= MinimumDeposit); 
 
 
 
