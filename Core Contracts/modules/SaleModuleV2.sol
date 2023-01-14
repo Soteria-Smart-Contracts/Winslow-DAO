@@ -74,7 +74,7 @@ contract SaleV2{
 
     function SaleStatus() public view returns(SaleStatuses SaleStatus){
         if(block.timestamp < StartTime){
-            return
+            return(SaleStatuses(0))
         }
     }
 
