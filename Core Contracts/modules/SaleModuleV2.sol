@@ -60,7 +60,7 @@ contract SaleV2{
     //Deposit ETC
 
     function Deposit() public payable returns(bool success){
-        require(SaleS);
+        require(SaleStatus);
     }
 
 
