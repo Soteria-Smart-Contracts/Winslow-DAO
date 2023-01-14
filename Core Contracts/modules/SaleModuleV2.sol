@@ -71,7 +71,9 @@ contract SaleV2{
 
 
 
+    //View Functions
 
+    function
 
 
 
