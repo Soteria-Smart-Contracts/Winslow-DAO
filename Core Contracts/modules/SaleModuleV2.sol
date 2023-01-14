@@ -57,7 +57,7 @@ contract SaleV2{
     //  During Sale
     //Deposit ETC
 
-    function Deposit() public payable returns()
+    function Deposit() public payable returns(uint256 TotalDeposited)
 
 
     //Withdraw ETC
