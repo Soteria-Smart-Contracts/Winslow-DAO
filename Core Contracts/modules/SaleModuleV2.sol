@@ -26,7 +26,8 @@ contract SaleV2{
 
     enum SaleModes{
         Uncommenced,
-        
+        Ongoing,
+        Complete
     }
 
     struct Participant{
