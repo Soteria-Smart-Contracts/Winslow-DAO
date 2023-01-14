@@ -68,7 +68,7 @@ contract SaleV2{
             ParticipantList.push(msg.sender);
         }
 
-        ParticipantDetails[msg.sender].EtherDeposited
+        ParticipantDetails[msg.sender].EtherDeposited += msg.value;
 
         return(success);
     }
