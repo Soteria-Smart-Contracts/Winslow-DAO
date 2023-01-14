@@ -18,6 +18,7 @@ contract SaleV2{
     uint256 public StartTime; //Unix Time
     uint256 public EndTime;   //Unix Time
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
+    uint256 public MinimumDeposit; //
     uint256 public DAOFoundationFee; //Fee that goes directly to the foundation for further development
     uint256 public RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
     // Details
@@ -60,7 +61,7 @@ contract SaleV2{
 
     function Deposit() public payable returns(bool success){
         require(SaleStatus() == SaleStatuses(1));
-        
+
 
 
         return(success)
