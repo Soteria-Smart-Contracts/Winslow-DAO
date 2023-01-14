@@ -25,7 +25,7 @@ contract SaleV2{
     uint256 TotalRetractionFees; //Total amount of ether received from retraction fees 
 
     enum SaleModes{ 
-        Uncommenced, //Before the sale, allowing users to view the amount 
+        Uncommenced, //Before the sale, allowing users to view the amount of CLD that will sold be
         Ongoing,
         Complete
     }
