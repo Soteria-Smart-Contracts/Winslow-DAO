@@ -59,7 +59,7 @@ contract SaleV2{
     //  During Sale
     //Deposit ETC
 
-    function Deposit() public payable returns(bool success){
+    function DepositEther() public payable returns(bool success){
         require(SaleStatus() == SaleStatuses(1));
         require(msg.value >= MinimumDeposit); 
 
@@ -73,6 +73,8 @@ contract SaleV2{
 
         return(success);
     }
+
+    function WithdrawEther
 
 
     //Withdraw ETC
