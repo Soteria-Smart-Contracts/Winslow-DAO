@@ -24,6 +24,10 @@ contract SaleV2{
     uint256 TotalEtherPool; //Defines the total amount of ether deposited by participators
     uint256 TotalRetractionFees; //Total amount of ether received from retraction fees 
 
+    enum SaleModes{
+        
+    }
+
     struct Participant{
         bool Participated;
         uint256 EtherDeposited;
