@@ -72,7 +72,7 @@ contract SaleV2{
 
     //View Functions
 
-    function SaleStatus()
+    function SaleStatus() public view returns(SaleS)
 
 
 
