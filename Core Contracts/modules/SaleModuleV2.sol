@@ -95,9 +95,8 @@ contract SaleV2{
         require(SaleStatus() == SaleStatuses(2));
         ParticipantDetails[msg.sender].CLDclaimed = true;
 
-        if
 
-        uint256 CLDtoSend = 
+        uint256 CLDtoSend = CLDToBeSold
 
 
 
