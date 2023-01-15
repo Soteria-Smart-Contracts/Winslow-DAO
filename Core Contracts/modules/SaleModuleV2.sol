@@ -115,7 +115,7 @@ contract SaleV2{
     //Internal functions
 
     function TransferProceeds() internal {
-        payable()
+        payable(Core(DAO).TreasuryContract();)
     }
 
     //View Functions
