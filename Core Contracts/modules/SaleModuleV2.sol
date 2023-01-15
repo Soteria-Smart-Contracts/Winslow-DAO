@@ -40,6 +40,7 @@ contract SaleV2{
     }
 
     //TODO: dont forget events on all contracts
+    event 
     
     //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
