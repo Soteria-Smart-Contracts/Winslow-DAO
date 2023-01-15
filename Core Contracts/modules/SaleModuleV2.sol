@@ -24,7 +24,8 @@ contract SaleV2{
     uint256 public RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
     // Details
     uint256 public TotalEtherPool; //Defines the total Amount of ether deposited by participators
-    uint256 public TotalRetractionFeesAccrued; //Total Amount of ether received from retraction fees 
+    uint256 public TotalRetractionFeesAccrued; //Total Amount of ether received from retraction fees
+    bool 
 
     enum SaleStatuses{ 
         Uncommenced, //Before the sale, allowing users to view the Amount of CLD that will sold and additional information
