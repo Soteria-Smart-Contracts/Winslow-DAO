@@ -90,7 +90,7 @@ contract SaleV2{
 
     function ClaimCLD() public returns(bool success, uint256 AmountClaimed){
         require(ParticipantDetails[msg.sender].Participated == true);
-        require(condition);
+        require(ParticipantDetails[msg.sender].CLDWithdrawn);
 
 
     }
