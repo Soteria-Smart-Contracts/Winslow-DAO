@@ -121,9 +121,6 @@ contract SaleV2{
         }
     }
 
-    function Determined
-
-
 
 
 
