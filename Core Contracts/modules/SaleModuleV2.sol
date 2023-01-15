@@ -88,7 +88,7 @@ contract SaleV2{
     }
 
 
-    //Withdraw ETC
+    function
 
     //  Post Sale
     //Withdraw CLD 
