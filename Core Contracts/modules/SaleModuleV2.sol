@@ -40,7 +40,7 @@ contract SaleV2{
     }
 
     //TODO: dont forget events on all contracts
-    event 
+    event EtherDeposited()
     
     //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
