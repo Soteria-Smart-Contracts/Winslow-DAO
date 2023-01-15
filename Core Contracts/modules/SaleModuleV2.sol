@@ -87,7 +87,7 @@ contract SaleV2{
         uint256 Fee = ((Amount * RetractFee) / 10000);
 
         TotalRetractionFeesAccrued += Fee;
-        ParticipantDetails[msg.sender].EtherDeposited -= Amount;
+        ParticipantDetails[msg.sender].EtherDeposited -= (Amount - Fee);
 
         payable(msg.sender).transfer(Amount - Fee);
 
