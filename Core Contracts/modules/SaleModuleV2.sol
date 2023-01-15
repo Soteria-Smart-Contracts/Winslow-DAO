@@ -33,6 +33,7 @@ contract SaleV2{
 
     struct Participant{ 
         bool Participated;
+        bool CLDclaimed;
         uint256 EtherDeposited;
         uint256 CLDWithdrawn;
     }
