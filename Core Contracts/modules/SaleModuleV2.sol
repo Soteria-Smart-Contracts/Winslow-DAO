@@ -43,6 +43,7 @@ contract SaleV2{
     event EtherDeposited(uint256 Amount, address User);
     event EtherWithdrawn(uint256 Amount, uint256 Fee, address User);
     event CLDclaimed(uint256 Amount, address User);
+    event 
     
     //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
@@ -119,6 +120,7 @@ contract SaleV2{
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
         (Core(DAO).Foundation()).transfer(ToFoundation);
+
     }
 
     //View Functions
