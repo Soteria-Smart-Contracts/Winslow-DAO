@@ -115,8 +115,8 @@ contract SaleV2{
     //Internal functions
 
     function TransferProceeds() internal {
+        uint256 ToFoundation = TotalEther;
         uint256 ToTreasury;
-        uint256 ToFoundation;
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
         (Core(DAO).Foundation()).transfer(ToFoundation);
     }
