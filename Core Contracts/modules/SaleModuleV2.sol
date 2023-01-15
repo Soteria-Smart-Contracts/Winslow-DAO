@@ -88,7 +88,7 @@ contract SaleV2{
     }
 
 
-    function
+    function ClaimCLD
 
     //  Post Sale
     //Withdraw CLD 
