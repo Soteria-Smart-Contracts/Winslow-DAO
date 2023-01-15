@@ -43,7 +43,7 @@ contract SaleV2{
     event EtherDeposited(uint256 Amount, address User);
     event EtherWithdrawn(uint256 Amount, uint256 Fee, address User);
     event CLDclaimed(uint256 Amount, address User);
-    event 
+    event ProceedsTransfered()
     
     //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
