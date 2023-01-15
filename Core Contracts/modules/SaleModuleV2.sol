@@ -13,7 +13,6 @@ contract SaleV2{
     //  Core
     address public DAO;
     address public CLD;
-    address public Treasury;
     uint256 public SaleNumber; //This iteration of all CLD sales conducted
     uint256 public StartTime; //Unix Time
     uint256 public EndTime;   //Unix Time
@@ -53,7 +52,6 @@ contract SaleV2{
     constructor(address _DAO, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee){
         require(SaleLength >= 259200 && SaleLength <= 1209600);
         DAO = _DAO;
-        Treasury = Core(DAO).TreasuryContract();
         CLD = Core(DAO).CLDAddress();
         CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract after treasury, additional CLD sent to the sale contract will be lost
         StartTime = block.timestamp + 43200;
