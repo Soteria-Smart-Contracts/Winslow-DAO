@@ -101,7 +101,7 @@ contract SaleV2{
         ParticipantDetails[msg.sender].CLDclaimed = true;
 
         if(ProceedsNotTransfered){
-            
+
         }
 
         uint256 CLDtoSend = ((CLDToBeSold *  ParticipantDetails[msg.sender].EtherDeposited) / TotalEtherPool);
@@ -111,6 +111,10 @@ contract SaleV2{
 
         return(success, CLDtoSend);
     }
+
+    //Internal functions
+
+    function TransferProceeds()
 
     //View Functions
 
