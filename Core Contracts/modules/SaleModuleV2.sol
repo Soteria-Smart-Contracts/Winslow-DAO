@@ -14,9 +14,9 @@ contract SaleV2{
     address public DAO;
     address public CLD;
     address public Treasury;
-    uint256 public CLDToBeSold;
     uint256 public StartTime; //Unix Time
     uint256 public EndTime;   //Unix Time
+    uint256 public CLDToBeSold;
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
     uint256 public MinimumDeposit; //Minimum amount of Ether to be deposited when calling the deposit function
     uint256 public DAOFoundationFee; //Fee that goes directly to the foundation for further development
