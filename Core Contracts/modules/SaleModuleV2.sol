@@ -88,10 +88,8 @@ contract SaleV2{
     }
 
 
-    function ClaimCLD
+    function ClaimCLD() public 
 
-    //  Post Sale
-    //Withdraw CLD 
 
 
 
