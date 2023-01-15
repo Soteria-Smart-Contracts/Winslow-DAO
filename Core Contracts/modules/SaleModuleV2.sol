@@ -89,7 +89,7 @@ contract SaleV2{
         TotalRetractionFeesAccrued += Fee;
         ParticipantDetails[msg.sender].EtherDeposited -= amount;
 
-        ERC20()
+        
 
         return(success);
     }
