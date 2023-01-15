@@ -89,7 +89,7 @@ contract SaleV2{
         TotalRetractionFeesAccrued += Fee;
         ParticipantDetails[msg.sender].EtherDeposited -= Amount;
 
-        (msg.sender).transfer(Amount - Fee);
+        payable(msg.sender).transfer(Amount - Fee);
 
         return(success);
     }
