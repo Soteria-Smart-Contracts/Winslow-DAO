@@ -41,7 +41,7 @@ contract SaleV2{
 
     //TODO: dont forget events on all contracts
     event EtherDeposited(uint256 Amount, address User);
-    event EtherWithdrawn
+    event EtherWithdrawn(uint256 Amount, uint256 Fee, )
     
     //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
