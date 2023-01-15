@@ -88,7 +88,9 @@ contract SaleV2{
     }
 
 
-    function ClaimCLD() public 
+    function ClaimCLD() public returns(bool success, uint256 AmountClaimed){
+        
+    }
 
 
 
