@@ -133,3 +133,13 @@ interface Core {
     function TreasuryContract() external returns(address payable TreasuryAddress);
     function CLDAddress() external view returns(address CLD);
 }
+
+interface ERC20 {
+  function balanceOf(address owner) external view returns (uint256);
+  function allowance(address owner, address spender) external view returns (uint256);
+  function approve(address spender, uint256 value) external returns (bool);
+  function transfer(address to, uint256 value) external returns (bool);
+  function transferFrom(address from, address to, uint256 value) external returns (bool); 
+  function totalSupply() external view returns (uint256);
+  function Burn(uint256 _BurnAmount) external;
+}
