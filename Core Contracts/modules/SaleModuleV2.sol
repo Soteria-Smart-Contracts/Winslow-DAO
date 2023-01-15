@@ -118,7 +118,7 @@ contract SaleV2{
         uint256 ToTreasury;
         uint256 ToFoundation;
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
-        (Core(DAO).Foundation()).transfer(ToTreasury);
+        (Core(DAO).Foundation()).transfer(ToFoundation);
     }
 
     //View Functions
