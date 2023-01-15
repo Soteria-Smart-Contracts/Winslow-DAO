@@ -279,7 +279,6 @@ contract Winslow_Core_V1{
         ERC20(CLDAddress()).Burn(ERC20(CLDAddress()).balanceOf(address(this)));
 
         return(success);
-
     }
     
     //One Time Functions
