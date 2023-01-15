@@ -99,13 +99,10 @@ contract SaleV2{
         uint256 CLDtoSend = ((CLDToBeSold *  ParticipantDetails[msg.sender].EtherDeposited) / TotalEtherPool);
         ParticipantDetails[msg.sender].CLDWithdrawn = CLDtoSend;
 
-        ERC20(CLD).transfer(to, value);
+        ERC20(CLD).transfer(msg.sender, CLDtoSend);
 
         return(success, CLDtoSend);
     }
-
-
-
 
     //View Functions
 
