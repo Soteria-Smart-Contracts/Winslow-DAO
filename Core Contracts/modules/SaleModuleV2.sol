@@ -100,6 +100,8 @@ contract SaleV2{
         uint256 CLDtoSend = ((CLDToBeSold *  ParticipantDetails[msg.sender].EtherDeposited) / TotalEtherPool);
         ParticipantDetails[msg.sender].CLDWithdrawn = CLDtoSend;
 
+        
+
 
     }
 
