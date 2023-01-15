@@ -141,8 +141,8 @@ contract SaleV2{
 }
 
 interface Core {
-    function TreasuryContract() external returns(address payable TreasuryAddress);
-    function FoundationAddress() external
+    function TreasuryContract() external view returns(address payable TreasuryAddress);
+    function FoundationAddress() external view
     function CLDAddress() external view returns(address CLD);
 }
 
