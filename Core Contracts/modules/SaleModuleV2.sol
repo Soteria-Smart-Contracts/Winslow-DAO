@@ -92,8 +92,8 @@ contract SaleV2{
     function ClaimCLD() public returns(bool success, uint256 AmountClaimed){
         require(ParticipantDetails[msg.sender].Participated == true);
         require(ParticipantDetails[msg.sender].CLDclaimed == false);
+        require(SaleStatus() == SaleStatuses(2));
 
-        
 
 
     }
