@@ -117,8 +117,8 @@ contract SaleV2{
     function TransferProceeds() internal {
         uint256 ToTreasury;
         uint256 ToFoundation;
-        payable(Core(DAO).TreasuryContract()).transfer(ToTreasury);
-        payable(Core(DAO).TreasuryContract()).transfer(ToTreasury);
+        (Core(DAO).TreasuryContract()).transfer(ToTreasury);
+        (Core(DAO).Foundation()).transfer(ToTreasury);
     }
 
     //View Functions
