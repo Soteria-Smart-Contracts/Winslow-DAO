@@ -17,17 +17,17 @@ contract SaleV2{
     uint256 public SaleNumber; //This iteration of all CLD sales conducted
     uint256 public StartTime; //Unix Time
     uint256 public EndTime;   //Unix Time
-    uint256 public CLDToBeSold; //Total amount of CLD being offered for sale by the DAO
+    uint256 public CLDToBeSold; //Total Amount of CLD being offered for sale by the DAO
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
-    uint256 public MinimumDeposit; //Minimum amount of Ether to be deposited when calling the deposit function
+    uint256 public MinimumDeposit; //Minimum Amount of Ether to be deposited when calling the deposit function
     uint256 public DAOFoundationFee; //Fee that goes directly to the foundation for further development
     uint256 public RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
     // Details
-    uint256 public TotalEtherPool; //Defines the total amount of ether deposited by participators
-    uint256 public TotalRetractionFeesAccrued; //Total amount of ether received from retraction fees 
+    uint256 public TotalEtherPool; //Defines the total Amount of ether deposited by participators
+    uint256 public TotalRetractionFeesAccrued; //Total Amount of ether received from retraction fees 
 
     enum SaleStatuses{ 
-        Uncommenced, //Before the sale, allowing users to view the amount of CLD that will sold and additional information
+        Uncommenced, //Before the sale, allowing users to view the Amount of CLD that will sold and additional information
         Ongoing,     //While the sale is active, allowing users to deposit or withdraw ETC from the pool 
         Complete     //After the sale is complete, allowing users to withdraw their CLD in which they purchased
     }
@@ -79,17 +79,17 @@ contract SaleV2{
         return(success);
     }
 
-    function WithdrawEther(uint256 amount) public returns(bool success){
+    function WithdrawEther(uint256 Amount) public returns(bool success){
         require(ParticipantDetails[msg.sender].Participated == true);
-        require(amount <= ParticipantDetails[msg.sender].EtherDeposited);
+        require(Amount <= ParticipantDetails[msg.sender].EtherDeposited);
         require(SaleStatus() == SaleStatuses(1));
 
-        uint256 Fee = ((amount * RetractFee) / 10000);
+        uint256 Fee = ((Amount * RetractFee) / 10000);
 
         TotalRetractionFeesAccrued += Fee;
-        ParticipantDetails[msg.sender].EtherDeposited -= amount;
+        ParticipantDetails[msg.sender].EtherDeposited -= Amount;
 
-        (msg.sender).transfer(amount - Fee)
+        (msg.sender).transfer(Amount - Fee)
 
         return(success);
     }
