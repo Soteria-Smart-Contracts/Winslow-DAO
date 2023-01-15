@@ -270,7 +270,7 @@ contract Winslow_Core_V1{
 
 
     // Other Internals
-
+    //TODO: Make the cuts changeable
     function ReceiveProposalCost() internal returns(bool success){
 
         ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, (ProposalCost / 2));
