@@ -120,7 +120,6 @@ contract SaleV2{
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
         (Core(DAO).Foundation()).transfer(ToFoundation);
-
     }
 
     //View Functions
