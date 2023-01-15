@@ -114,7 +114,7 @@ contract SaleV2{
 
     //Internal functions
 
-    function TransferProceeds() internal returns(bool success){
+    function TransferProceeds() internal {
         
     }
 
