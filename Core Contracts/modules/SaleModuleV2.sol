@@ -39,7 +39,7 @@ contract SaleV2{
         uint256 CLDWithdrawn;
     }
 
-    //TODO: dont forget events on all contracts
+    //TODO: dont forget events
     event EtherDeposited(uint256 Amount, address User);
     event EtherWithdrawn(uint256 Amount, uint256 Fee, address User);
     event CLDclaimed(uint256 Amount, address User);
