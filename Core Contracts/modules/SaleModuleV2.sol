@@ -119,7 +119,7 @@ contract SaleV2{
         uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000);
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
-        (Core(DAO).Foundation()).transfer(ToFoundation);
+        (Core(DAO).FoundationAddress()).transfer(ToFoundation);
 
         emit ProceedsTransfered(ToFoundation, ToTreasury);
     }
