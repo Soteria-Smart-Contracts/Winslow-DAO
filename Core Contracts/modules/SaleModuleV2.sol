@@ -117,7 +117,7 @@ contract SaleV2{
 
     function TransferProceeds() internal {
         ProceedsNotTransfered = false;
-        uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000);
+        uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000); //TODO: Make sure this always returns a viable send amount
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
         (Core(DAO).FoundationAddress()).transfer(ToFoundation);
