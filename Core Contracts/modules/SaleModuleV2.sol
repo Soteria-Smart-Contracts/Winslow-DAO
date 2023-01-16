@@ -76,7 +76,7 @@ contract SaleV2{
         ParticipantDetails[msg.sender].EtherDeposited += msg.value;
         TotalEtherPool += msg.value;
         
-        emit EtherDeposited(Amount, User);
+        emit EtherDeposited(msg.value, msg.sender);
         return(success);
     }
 
