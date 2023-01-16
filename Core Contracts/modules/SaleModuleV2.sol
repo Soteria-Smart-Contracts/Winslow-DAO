@@ -112,7 +112,7 @@ contract SaleV2{
 
         ERC20(CLD).transfer(msg.sender, CLDtoSend);
 
-        emit 
+        emit CLDclaimed(CLDtoSend, User);
         return(success, CLDtoSend);
     }
 
