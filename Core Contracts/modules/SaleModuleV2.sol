@@ -92,6 +92,7 @@ contract SaleV2{
 
         payable(msg.sender).transfer(Amount - Fee);
 
+        emit EtherWithdrawn(Amount, Fee, User);
         return(success);
     }
 
