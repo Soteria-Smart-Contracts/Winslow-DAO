@@ -290,6 +290,7 @@ contract Winslow_Core_V1{
 
         TreasuryContract = _TreasuryAddress;
         VotingContract = _VotingAddress;
+        FoundationAddress = _FoundationAddress;
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialContractsSet = true;
         ActiveContract = true;
