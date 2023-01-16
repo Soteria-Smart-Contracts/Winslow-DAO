@@ -121,7 +121,7 @@ contract SaleV2{
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
         (Core(DAO).Foundation()).transfer(ToFoundation);
 
-        emit 
+        emit ProceedsTransfered()
     }
 
     //View Functions
