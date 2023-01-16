@@ -289,13 +289,13 @@ contract Winslow_Core_V1{
         require(InitialContractsSet == false);
 
         TreasuryContract = _TreasuryAddress;
-        VotingContract = VotingAddress;
+        VotingContract = _VotingAddress;
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialContractsSet = true;
         ActiveContract = true;
 
         emit NewTreasurySet(_TreasuryAddress);
-        //TODO: New
+        //TODO: NewVotingSet
     }
 
     receive() external payable{
