@@ -92,7 +92,7 @@ contract SaleV2{
 
         payable(msg.sender).transfer(Amount - Fee);
 
-        emit EtherWithdrawn(Amount, Fee, User);
+        emit EtherWithdrawn(Amount, Fee, msg.sender);
         return(success);
     }
 
@@ -112,6 +112,7 @@ contract SaleV2{
 
         ERC20(CLD).transfer(msg.sender, CLDtoSend);
 
+        emit 
         return(success, CLDtoSend);
     }
 
