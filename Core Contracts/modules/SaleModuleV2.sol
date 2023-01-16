@@ -116,12 +116,13 @@ contract SaleV2{
     //Internal functions
 
     function TransferProceeds() internal {
+        
         uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000);
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
         (Core(DAO).Foundation()).transfer(ToFoundation);
 
-        emit ProceedsTransfered(ToFoundation, ToTreasury)
+        emit ProceedsTransfered(ToFoundation, ToTreasury);
     }
 
     //View Functions
