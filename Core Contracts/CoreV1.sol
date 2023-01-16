@@ -295,7 +295,7 @@ contract Winslow_Core_V1{
         ActiveContract = true;
 
         emit NewTreasurySet(_TreasuryAddress);
-        
+        //TODO: New
     }
 
     receive() external payable{
