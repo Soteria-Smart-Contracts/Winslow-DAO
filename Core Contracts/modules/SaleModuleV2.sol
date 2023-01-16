@@ -5,6 +5,7 @@ This contract provides a factory and sale contract for the Winslow Core to initi
 pragma solidity ^0.8.17;
 
 contract SaleFactoryV2{
+    //TODO: Make factory
 
 }
 
