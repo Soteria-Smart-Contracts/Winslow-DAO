@@ -116,7 +116,6 @@ contract SaleV2{
     //Internal functions
 
     function TransferProceeds() internal {
-        
         uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000);
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
         (Core(DAO).TreasuryContract()).transfer(ToTreasury);
@@ -146,7 +145,7 @@ contract SaleV2{
 
 interface Core {
     function TreasuryContract() external view returns(address payable TreasuryAddress);
-    function FoundationAddress() external view returns(address payable Foundation)
+    function FoundationAddress() external view returns(address payable Foundation);
     function CLDAddress() external view returns(address CLD);
 }
 
