@@ -21,7 +21,8 @@ contract Winslow_Core_V1{
     ProxyProposalArguments internal EmptyProxy;
 
     //Mapping, structs and other declarations
-     
+    
+    //Proposal
     mapping(uint256 => Proposal) public Proposals;
     uint256 MRIdentifier = 0;
 
