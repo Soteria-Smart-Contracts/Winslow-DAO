@@ -15,7 +15,7 @@ contract Winslow_Core_V1{
     address public VotingContract;
     address public FoundationAddress;
     address public InitialSetter;
-    bool public InitialContractsSet = false;
+    bool public InitialContractsSet;
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
     ProxyProposalArguments internal EmptyProxy;
