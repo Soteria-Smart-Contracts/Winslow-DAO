@@ -8,7 +8,7 @@ pragma solidity ^0.8.17;
 
 
 contract Winslow_Core_V1{
-    //Variable Declarations
+    //Variable Declarations       //TODO:Comment this stuff
     string public Version = "V1";
     bool public ActiveContract;
     address public TreasuryContract;
