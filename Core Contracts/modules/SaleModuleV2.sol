@@ -6,7 +6,9 @@ pragma solidity ^0.8.17;
 
 contract SaleFactoryV2{
     address DAO;
-    constructor(_)
+    constructor(_DAOaddr){
+        DAO = _DAOaddr;
+    }
 
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
