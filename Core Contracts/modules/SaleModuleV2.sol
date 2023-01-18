@@ -15,11 +15,7 @@ contract SaleFactoryV2{
         _;
     }
 
-
-
-
-
-
+    
 }
 
 contract SaleV2{
