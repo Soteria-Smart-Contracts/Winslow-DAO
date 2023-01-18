@@ -28,7 +28,7 @@ contract Winslow_Core_V1{
 
     //Token Sales
     mapping(uint256 => Sale) public Sales;
-    
+    bool ActiveSale;
     uint256 public LatestSale;
 
     enum ProposalStatus{
