@@ -23,7 +23,6 @@ contract SaleFactoryV2{
         require(ERC20(CLD).balanceOf(Core(DAO).TreasuryContract()) >= CLDtoSell);
         address NewSaleAddress = address(new SaleV2(DAO, CLDtoSell, SaleLength, FoundationFee, RetractFee, MinimumDeposit));
         
-
         return(NewSaleAddress);
     }
 }
