@@ -72,6 +72,7 @@ contract SaleV2{
         EndTime = StartTime + SaleLength;
         DAOFoundationFee = FoundationFee;
         RetractFee = RetractionFee;
+        MinimumDeposit = MinDeposit;
     }
 
     //  During Sale
