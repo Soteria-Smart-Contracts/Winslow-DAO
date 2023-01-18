@@ -20,7 +20,9 @@ contract SaleFactoryV2{
     }
 
     function CreateNewSale(uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
+        require(ERC20(CLD).balanceOf(Core(DAO).TreasuryContract()) >= CLDtoSell);
         address NewSaleAddress = address(new SaleV2(DAO, CLDtoSell, SaleLength, FoundationFee, RetractFee, MinimumDeposit));
+        
 
         return(NewSaleAddress);
     }
@@ -69,7 +71,6 @@ contract SaleV2{
 
     constructor(address _DAO, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee, uint256 MinDeposit){
         require(SaleLength >= 259200 && SaleLength <= 1209600);
-        require(ERC20(CLD).balanceOf(Core(DAO).TreasuryContract()) >= CLDtoSell);
         DAO = _DAO;
         CLD = Core(DAO).CLDAddress();
         CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract by treasury, additional CLD sent to the sale contract will be lost
