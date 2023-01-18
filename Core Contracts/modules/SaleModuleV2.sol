@@ -15,7 +15,7 @@ contract SaleFactoryV2{
         _;
     }
 
-    function CreateNewSale(type name) {
+    function CreateNewSale() {
         
     }
 }
