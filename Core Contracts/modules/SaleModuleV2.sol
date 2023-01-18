@@ -20,7 +20,7 @@ contract SaleFactoryV2{
     }
 
     function CreateNewSale(uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
-        require(Core);
+        require(ERC20(Core(DAO).TreasuryContract());
         address NewSaleAddress = address(new SaleV2(DAO, CLDtoSell, SaleLength, FoundationFee, RetractFee, MinimumDeposit));
 
         return(NewSaleAddress);
