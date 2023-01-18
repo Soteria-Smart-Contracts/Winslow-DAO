@@ -28,7 +28,6 @@ contract Winslow_Core_V1{
 
     //Token Sales
     mapping(uint256 => address) public SaleContracts;
-    
 
     enum ProposalStatus{
         Security_Verification,
@@ -97,6 +96,8 @@ contract Winslow_Core_V1{
         bool Bool2;
         bool Bool3;
     }
+
+    struct
 
     //TODO: Make Events
     event FallbackToTreasury(uint256 amount);
