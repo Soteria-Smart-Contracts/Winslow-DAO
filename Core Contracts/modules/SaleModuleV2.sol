@@ -5,10 +5,17 @@ This contract provides a factory and sale contract for the Winslow Core to initi
 pragma solidity ^0.8.17;
 
 contract SaleFactoryV2{
+    
+
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
         _;
     } 
+
+
+
+
+
 
 }
 
