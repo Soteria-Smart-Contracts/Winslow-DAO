@@ -24,7 +24,7 @@ contract Winslow_Core_V1{
     
     //Proposals
     mapping(uint256 => Proposal) public Proposals;
-    uint256 public MRIdentifier = 0;
+    uint256 public MRIdentifier;
 
     //Token Sales
     mapping(uint256 => Sale) public Sales;
