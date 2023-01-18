@@ -97,7 +97,7 @@ contract Winslow_Core_V1{
         bool Bool3;
     }
 
-    struct
+    struct Sale{}
 
     //TODO: Make Events
     event FallbackToTreasury(uint256 amount);
