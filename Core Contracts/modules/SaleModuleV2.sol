@@ -10,6 +10,7 @@ contract SaleFactoryV2{
     uint256 RetractFee; //^
     uint256 MinimumDeposit; //^
     uint256 SaleLength; //^
+    uint256 MaximumSupply
     constructor(address _DAOaddr){
         DAO = _DAOaddr;
     }
