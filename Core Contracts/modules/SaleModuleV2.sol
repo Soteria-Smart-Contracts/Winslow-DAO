@@ -20,7 +20,7 @@ contract SaleFactoryV2{
     }
 
     function CreateNewSale(uint256 CLDtoSell) external OnlyDAO returns(bool success){
-        NewSaleAddress 
+        NewSaleAddress = address(new )
     }
 }
 
