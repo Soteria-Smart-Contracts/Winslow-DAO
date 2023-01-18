@@ -7,6 +7,7 @@ pragma solidity ^0.8.17;
 contract SaleFactoryV2{
     address DAO;
     uint256 FoundationFee;
+    uint256
     constructor(address _DAOaddr){
         DAO = _DAOaddr;
     }
