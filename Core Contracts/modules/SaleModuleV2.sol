@@ -9,6 +9,7 @@ contract SaleFactoryV2{
     uint256 FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
     uint256 RetractFee;
     uint256 MinimumDeposit;
+    uint256 SaleLengths;
     constructor(address _DAOaddr){
         DAO = _DAOaddr;
     }
