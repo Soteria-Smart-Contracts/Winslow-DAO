@@ -66,8 +66,6 @@ contract Winslow_Core_V1{
         RemoveSecurityCommiteeMember
     }
 
-    //TODO: Setup public sales
-
     struct Proposal{
         uint256 ProposalID;
         address AddressSlot;            //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal contract
