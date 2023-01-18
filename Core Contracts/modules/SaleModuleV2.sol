@@ -63,7 +63,7 @@ contract SaleV2{
     //List of participants for front-end ranking
     address[] public ParticipantList; 
 
-    constructor(address _DAO, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee){
+    constructor(address _DAO, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee, uint256 MinDeposit){
         require(SaleLength >= 259200 && SaleLength <= 1209600);
         DAO = _DAO;
         CLD = Core(DAO).CLDAddress();
