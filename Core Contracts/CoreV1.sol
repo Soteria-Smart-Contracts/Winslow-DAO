@@ -100,7 +100,8 @@ contract Winslow_Core_V1{
     struct Sale{
         address SaleContract;
         uint256 CLDtobeSold;
-        uint256 
+        uint256 StartTime;
+        uint256 EndTime;
     }
 
     //TODO: Make Events
