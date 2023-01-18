@@ -19,8 +19,8 @@ contract SaleFactoryV2{
         _;
     }
 
-    function CreateNewSale(uint256 CLDtoSell) external OnlyDAO returns(bool success){
-        NewSaleAddress = address(new SaleV2(DAO, CLDtoSell, SaleLength, FoundationFee, RetractFee, MinimumDeposit));
+    function CreateNewSale(uint256 CLDtoSell) external OnlyDAO returns(return){
+        address NewSaleAddress = address(new SaleV2(DAO, CLDtoSell, SaleLength, FoundationFee, RetractFee, MinimumDeposit));
     }
 }
 
