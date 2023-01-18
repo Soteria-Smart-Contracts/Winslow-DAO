@@ -8,6 +8,7 @@ contract SaleFactoryV2{
     address DAO;
     uint256 FoundationFee;
     uint256 RetractFee;
+    uint256 MinimumDeposit
     constructor(address _DAOaddr){
         DAO = _DAOaddr;
     }
