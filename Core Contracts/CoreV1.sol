@@ -26,7 +26,8 @@ contract Winslow_Core_V1{
     mapping(uint256 => Proposal) public Proposals;
     uint256 MRIdentifier = 0;
 
-    //
+    //Token Sales
+    
 
     enum ProposalStatus{
         Security_Verification,
