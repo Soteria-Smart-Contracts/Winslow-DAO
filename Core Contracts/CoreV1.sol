@@ -249,7 +249,7 @@ contract Winslow_Core_V1{
         // TreasuryChange
     function ReplaceTreasury(address NewTreasury) internal returns(bool success){
 
-        Replacements(NewTreasury).SendPredecessor(Predecessor);(TreasuryContract);
+        Replacements(NewTreasury).SendPredecessor(TreasuryContract);
         TreasuryContract = NewTreasury;
 
         return(success);
@@ -258,7 +258,7 @@ contract Winslow_Core_V1{
         // VotingChange
     function ReplaceVoting(address NewVoting) internal returns(bool success){
         
-        Replacements(NewVoting).SendPreviousVoting(VotingContract);
+        Replacements(NewVoting).SendPredecessor(VotingContract);
         VotingContract = NewVoting;
 
         return(success);
