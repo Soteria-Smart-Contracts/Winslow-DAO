@@ -6,7 +6,7 @@ pragma solidity ^0.8.17;
 
 contract SaleFactoryV2{
     address DAO;
-    uint256 FoundationFee; //Defaults to these values, these values must be changed by a proposal
+    uint256 FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
     uint256 RetractFee;
     uint256 MinimumDeposit;
     constructor(address _DAOaddr){
