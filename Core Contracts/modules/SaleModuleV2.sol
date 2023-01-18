@@ -19,7 +19,8 @@ contract SaleFactoryV2{
         _;
     }
 
-    function CreateNewSale(uint256 CLDtoSell,  ) external OnlyDAO returns(bool success){
+    function CreateNewSale(uint256 CLDtoSell) external OnlyDAO returns(bool success){
+        
         
     }
 }
