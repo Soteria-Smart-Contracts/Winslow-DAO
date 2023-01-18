@@ -33,7 +33,7 @@ contract SaleV2{
     //  Core
     address public DAO;
     address public CLD;
-    uint256 public SaleNumber; //This iteration of all CLD sales conducted
+    uint256 public SaleIdentifier; //This iteration of all CLD sales conducted
     uint256 public StartTime; //Unix Time
     uint256 public EndTime;   //Unix Time
     uint256 public CLDToBeSold; //Total Amount of CLD being offered for sale by the DAO
