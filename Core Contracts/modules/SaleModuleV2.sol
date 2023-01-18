@@ -15,7 +15,7 @@ contract SaleFactoryV2{
         _;
     }
 
-    function CreateNewSale() {
+    function CreateNewSale(uint256 CLDtoSell, u) {
         
     }
 }
