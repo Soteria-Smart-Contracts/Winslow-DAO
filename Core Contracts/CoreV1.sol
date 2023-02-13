@@ -282,7 +282,9 @@ contract Winslow_Core_V1{
         require(!ActiveSale);
         LatestSale++;
 
-        NSaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
+        address NewSaleAddress = SaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
+
+        
 
     }
 
