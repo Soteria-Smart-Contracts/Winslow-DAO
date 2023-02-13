@@ -278,14 +278,14 @@ contract Winslow_Core_V1{
     }
         //TODO:
         // StartPublicSale
-    function StartPublicSale(uint256 CLDtoSell) internal returns(bool success){
+    function StartPublicSale(uint256 CLDtoSell) internal returns(bool success, address NewSaleAddress){
         require(!ActiveSale);
         LatestSale++;
 
         address NewSaleAddress = SaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
 
-        
 
+        return(success, NewSaleAddress)
     }
 
 
