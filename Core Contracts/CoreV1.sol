@@ -277,7 +277,9 @@ contract Winslow_Core_V1{
     }
         //TODO:
         // StartPublicSale
-    function StartPublicSale()
+    function StartPublicSale(uint256 CLDtoSell)
+
+    
         // ChangeProposalCost
         // AddSecurityCommiteeMember
         // RemoveSecurityCommiteeMember
