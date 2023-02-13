@@ -159,7 +159,6 @@ contract Winslow_Core_V1{
 
     //  Address Specific State Modifying Function
 
-    //TODO: Sale contract declare complete
 
     //  Internal Functions
 
