@@ -253,6 +253,7 @@ contract Winslow_Core_V1{
         Replacements(NewTreasury).SendPredecessor(TreasuryContract);
         TreasuryContract = NewTreasury;
 
+        emit NewTreasurySet(_TreasuryAddress);
         return(success);
     }
     
