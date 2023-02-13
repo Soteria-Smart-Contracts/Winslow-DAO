@@ -31,9 +31,7 @@ contract Winslow_Core_V1{
     mapping(uint256 => Sale) public Sales;
     bool public ActiveSale; //TODO: Replace with function that checks to see if the most recent sale is still active
     function SaleActive() public view returns(bool){
-        if(block.timestamp >= Sales[LatestSale].EndTime){return true;}else{
-            return false;
-        }
+        if(block.timestamp >= Sales[LatestSale].EndTime){return true;}else{return false}
     }
     uint256 public LatestSale;
 
