@@ -285,7 +285,7 @@ contract Winslow_Core_V1{
         address NewSaleAddress = SaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
 
 
-        return(success, NewSaleAddress)
+        return(success, NewSaleAddress);
     }
 
 
