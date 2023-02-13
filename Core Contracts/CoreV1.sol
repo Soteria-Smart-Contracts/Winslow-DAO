@@ -305,6 +305,7 @@ contract Winslow_Core_V1{
 
         return(success);
     }
+
     
     //One Time Functions
     function SetInitialContracts(address _TreasuryAddress, address _VotingAddress, address _SaleFactory, address _FoundationAddress) external{
