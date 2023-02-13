@@ -5,12 +5,12 @@ This contract provides a factory and sale contract for the Winslow Core to initi
 pragma solidity ^0.8.17;
 
 contract SaleFactoryV2{
-    address DAO;
-    uint256 FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
-    uint256 RetractFee; //^
-    uint256 MinimumDeposit; //^
-    uint256 SaleLength; //^
-    uint256 MaximumSalePercentage; //The maximum percentage of the supply that can be sold at once, to avoid flooding markets/heavy inflation, in Basis Points
+    address public DAO;
+    uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
+    uint256 public RetractFee; //^
+    uint256 public MinimumDeposit; //^
+    uint256 public SaleLength; //^
+    uint256 public MaximumSalePercentage; //The maximum percentage of the supply that can be sold at once, to avoid flooding markets/heavy inflation, in Basis Points
     constructor(address _DAOaddr){
         DAO = _DAOaddr;
     }
