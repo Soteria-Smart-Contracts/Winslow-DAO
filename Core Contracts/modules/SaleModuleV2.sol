@@ -22,7 +22,7 @@ contract SaleFactoryV2{
 
     function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
         uint256 TreasuryCLDBalance = ERC20(Core(DAO).CLDAddress()).balanceOf(Core(DAO).TreasuryContract());
-        require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (TreasuryCLDBalance );
+        require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= ((TreasuryCLDBalance * MaximumSalePercentage) );
         address NewSaleAddress = address(new SaleV2(DAO, SaleID, CLDtoSell, SaleLength, FoundationFee, RetractFee, MinimumDeposit));
         
         return(NewSaleAddress);
