@@ -324,15 +324,15 @@ contract Winslow_Core_V1{
 
 interface Voting{
     function InitializeVoteInstance(uint256 ProposalID, uint256 VotingLength, bool Multi) external returns(uint256 VoteInstanceID);
-
 }
 
 interface Replacements{
     function InheritCore(address Treasury, address Voting, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
     function SendPredecessor(address Predecessor) external returns(bool success);
     function ChangeDAO(address NewDAO) external returns(bool success);
-
 }
+
+interface SaleFactory
 
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
 interface Treasury {
