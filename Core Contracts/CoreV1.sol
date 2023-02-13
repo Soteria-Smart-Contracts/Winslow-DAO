@@ -34,6 +34,9 @@ contract Winslow_Core_V1{
         if(block.timestamp >= Sales[LatestSale].EndTime){
             return true;
         }
+        else{
+            return false;
+        }
     }
     uint256 public LatestSale;
 
