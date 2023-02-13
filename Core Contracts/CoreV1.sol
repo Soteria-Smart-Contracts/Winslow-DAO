@@ -286,7 +286,7 @@ contract Winslow_Core_V1{
         LatestSale++;
 
         address NewSaleAddress = SaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
-        Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, Sale(NewSaleAddress).StartTime(), Sale(NewSaleAddress));
+        Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleContract(NewSaleAddress).StartTime(), SaleContract(NewSaleAddress));
 
         return(success, NewSaleAddress);
     }
@@ -354,7 +354,7 @@ interface SaleFactory{
     function MaximumSalePercentage() external returns(uint256 BasisPointMax);
 }
 
-interface Sale{
+interface SaleContract{
     function StartTime() external returns(uint256 Time);
     function EndTime() external returns(uint256 Time);
 }
