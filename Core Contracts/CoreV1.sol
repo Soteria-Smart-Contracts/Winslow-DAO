@@ -282,7 +282,7 @@ contract Winslow_Core_V1{
         require(!ActiveSale);
         LatestSale++;
 
-        
+        SaleFactory
 
     }
 
