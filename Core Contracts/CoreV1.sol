@@ -157,6 +157,8 @@ contract Winslow_Core_V1{
 
     //  Security Commitee functions
 
+    // Other
+
     //  Internal Functions
 
     function InitializeSimpleProposal(address AddressSlot, uint256 UintSlot, string memory Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
