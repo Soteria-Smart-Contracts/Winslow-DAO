@@ -214,7 +214,7 @@ contract Winslow_Core_V1{
 
     //  Execution Functions
 
-    //  External Simple Proposal Call Functions
+    //  Internal Simple Proposal Call Functions
 
         // AssetSend
     function SendAssets(uint256 ProposalID) internal returns(bool success){
