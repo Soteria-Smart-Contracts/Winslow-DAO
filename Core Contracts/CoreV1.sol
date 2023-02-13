@@ -62,7 +62,7 @@ contract Winslow_Core_V1{
         TreasuryReplacement,
         VotingReplacement,
         CoreReplacement,
-        StartPublicSale, 
+        StartPublicSale,
         ChangeProposalCost,      
         AddSecurityCommiteeMember,
         RemoveSecurityCommiteeMember
