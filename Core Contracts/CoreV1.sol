@@ -315,7 +315,7 @@ contract Winslow_Core_V1{
         ActiveContract = true;
 
         emit NewTreasurySet(_TreasuryAddress);
-        //TODO: NewVotingSet
+        //TODO: NewVotingSet, New Sale Factory Set, New foundation address set
     }
 
     receive() external payable{
