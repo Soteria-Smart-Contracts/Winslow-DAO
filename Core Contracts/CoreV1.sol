@@ -29,7 +29,7 @@ contract Winslow_Core_V1{
 
     //Token Sales
     mapping(uint256 => Sale) public Sales;
-    bool public ActiveSale;
+    bool public ActiveSale; //TODO: Replace with function that checks to see if the most recent sale is still active
     uint256 public LatestSale;
 
     enum ProposalStatus{
