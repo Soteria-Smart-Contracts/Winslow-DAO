@@ -157,7 +157,9 @@ contract Winslow_Core_V1{
 
     //  Security Commitee functions
 
-    //  Address Specific State
+    //  Address Specific State Modifying Function
+
+    
 
     //  Internal Functions
 
