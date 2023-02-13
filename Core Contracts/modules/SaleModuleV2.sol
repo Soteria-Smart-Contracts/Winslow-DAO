@@ -26,6 +26,8 @@ contract SaleFactoryV2{
         
         return(NewSaleAddress);
     }
+
+    //TODO: Be able to change variables using dao proposal
 }
 
 contract SaleV2{
