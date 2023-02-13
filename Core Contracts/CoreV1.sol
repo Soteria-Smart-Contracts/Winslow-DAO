@@ -13,7 +13,7 @@ contract Winslow_Core_V1{
     bool public ActiveContract;
     address public TreasuryContract;
     address public VotingContract;
-    address public SaleFactory;
+    address public SaleFactoryContract;
     address public FoundationAddress;
     address public InitialSetter;
     bool public InitialContractsSet;
@@ -309,7 +309,7 @@ contract Winslow_Core_V1{
 
         TreasuryContract = _TreasuryAddress;
         VotingContract = _VotingAddress;
-        SaleFactory = _SaleFactory;
+        SaleFactoryContract = _SaleFactory;
         FoundationAddress = _FoundationAddress;
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialContractsSet = true;
