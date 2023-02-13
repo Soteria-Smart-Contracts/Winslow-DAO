@@ -157,7 +157,7 @@ contract Winslow_Core_V1{
 
     //  Security Commitee functions
 
-    //  Whiteli
+    //  Address Specific State
 
     //  Internal Functions
 
