@@ -13,6 +13,7 @@ contract Winslow_Core_V1{
     bool public ActiveContract;
     address public TreasuryContract;
     address public VotingContract;
+    address public SaleFactory;
     address public FoundationAddress;
     address public InitialSetter;
     bool public InitialContractsSet;
