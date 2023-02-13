@@ -333,7 +333,7 @@ interface Replacements{
 }
 
 interface SaleFactory{
-    function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external
+    function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external returns(address NewSaleContract);
 }
 
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
