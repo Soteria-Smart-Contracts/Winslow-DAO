@@ -31,8 +31,10 @@ contract SaleFactoryV2{
     //TODO: Be able to change variables using dao proposal
 
     function ChangeFoundationFee(uint256 NewFee) external OnlyDAO returns(bool success){
-        
+        FoundationFee = NewFee;
     }
+
+    function
 
 }
 
