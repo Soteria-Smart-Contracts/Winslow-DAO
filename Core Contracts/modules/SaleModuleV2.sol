@@ -9,7 +9,7 @@ contract SaleFactoryV2{
     uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
     uint256 public RetractFee; //^
     uint256 public MinimumDeposit; //^
-    uint256 public SaleLength; //^
+    uint256 public DefaultSaleLength; //^
     uint256 public MaximumSalePercentage; //The maximum percentage of the supply that can be sold at once, to avoid flooding markets/heavy inflation, in Basis Points
 
     constructor(address _DAOaddr){
@@ -25,7 +25,7 @@ contract SaleFactoryV2{
     function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
         uint256 TreasuryCLDBalance = ERC20(Core(DAO).CLDAddress()).balanceOf(Core(DAO).TreasuryContract());
         require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Core(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
-        address NewSaleAddress = address(new SaleV2(DAO, SaleID, CLDtoSell, SaleLength, FoundationFee, RetractFee, MinimumDeposit));
+        address NewSaleAddress = address(new SaleV2(DAO, SaleID, CLDtoSell, DefaultSaleLength, FoundationFee, RetractFee, MinimumDeposit));
         
         return(NewSaleAddress);
     }
