@@ -291,7 +291,7 @@ contract Winslow_Core_V1{
         Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleContract(NewSaleAddress).StartTime(), SaleContract(NewSaleAddress).EndTime());
 
         //TODO: Send CLD to sale contract
-        require(VerifyReadyForSale(), '');
+        require(VerifyReadyForSale(), 'The sale contract ');
         return(success, NewSaleAddress);
     }
 
