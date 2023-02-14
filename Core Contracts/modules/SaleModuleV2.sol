@@ -79,6 +79,11 @@ contract SaleV2{
         uint256 CLDWithdrawn;
     }
 
+    modifier OnlyDAO{ 
+        require(msg.sender == address(DAO), 'This can only be done by the DAO');
+        _;
+    } 
+
     event EtherDeposited(uint256 Amount, address User);
     event EtherWithdrawn(uint256 Amount, uint256 Fee, address User);
     event CLDclaimed(uint256 Amount, address User);
