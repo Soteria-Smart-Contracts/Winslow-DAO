@@ -30,7 +30,7 @@ contract SaleFactoryV2{
 
     //TODO: Be able to change variables using dao proposal
 
-    function
+    function ChangeFoundationFee
 
 }
 
