@@ -176,7 +176,7 @@ contract SaleV2{
 
     //DAO Only functions
 
-    function VerifyReadyForSale() 
+    function VerifyReadyForSale() external OnlyDAO returns(bool )
 
     //View Functions
 
