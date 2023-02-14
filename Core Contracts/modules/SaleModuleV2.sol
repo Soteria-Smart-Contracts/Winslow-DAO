@@ -177,7 +177,7 @@ contract SaleV2{
     //DAO Only functions
 
     function VerifyReadyForSale() external OnlyDAO returns(bool Ready){
-        
+        require(address(this));
     }
 
     //View Functions
