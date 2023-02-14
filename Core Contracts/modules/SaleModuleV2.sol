@@ -46,6 +46,13 @@ contract SaleFactoryV2{
         return(success);
     }
 
+    function ChangeMinimumDeposit(uint256 NewMaxPercent) external OnlyDAO returns(bool success){
+        require(NewMaxPercent <= 10000);
+        MaximumSalePercentage = NewMaxPercent;
+
+        return(success);
+    }
+
     function ChangeMaxSalePercent(uint256 NewMaxPercent) external OnlyDAO returns(bool success){
         require(NewMaxPercent <= 10000);
         MaximumSalePercentage = NewMaxPercent;
