@@ -53,6 +53,13 @@ contract SaleFactoryV2{
         return(success);
     }
 
+    function ChangeMinimumDeposit(uint256 NewMinDeposit) external OnlyDAO returns(bool success){
+        require(NewMinDeposit > 0); //TODO: Find a good minimum where contract is extremely unlikely to have issues in division
+        MaximumSalePercentage = NewMinDeposit;
+
+        return(success);
+    }
+
     function ChangeMaxSalePercent(uint256 NewMaxPercent) external OnlyDAO returns(bool success){
         require(NewMaxPercent <= 10000);
         MaximumSalePercentage = NewMaxPercent;
