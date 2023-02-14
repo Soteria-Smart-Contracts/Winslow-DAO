@@ -54,7 +54,7 @@ contract SaleFactoryV2{
     }
 
     function ChangeDefaultSaleLength(uint256 NewLength) external OnlyDAO returns(bool success){
-        require(NewLength >= 259200); 
+        require(NewLength >= 259200 ); 
         MaximumSalePercentage = NewMinDeposit;
 
         return(success);
