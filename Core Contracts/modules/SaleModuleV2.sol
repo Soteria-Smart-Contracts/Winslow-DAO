@@ -183,6 +183,7 @@ contract SaleV2{
         return(success, CLDtoSend);
     }
 
+
     //Internal functions
 
     function TransferProceeds() internal {
