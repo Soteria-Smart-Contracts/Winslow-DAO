@@ -177,7 +177,7 @@ contract SaleV2{
     //DAO Only functions
 
     function VerifyReadyForSale() external OnlyDAO returns(bool Ready){
-        require(address(this));
+        require(ERC20(CLD).balanceaddress(this));
     }
 
     //View Functions
