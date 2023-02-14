@@ -37,7 +37,9 @@ contract SaleFactoryV2{
         return(success);
     }
 
-    function ChangeMaxSalePercent()
+    function ChangeMaxSalePercent() external OnlyDAO returns(bool success){
+        
+    }
 
     function ChangeDAO(address newAddr) external OnlyDAO returns(bool success){
         require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
