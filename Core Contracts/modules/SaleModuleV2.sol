@@ -171,7 +171,7 @@ contract SaleV2{
 
     //DAO Only functions
 
-    function VerifyReadyForSale()
+    function VerifyReadyForSale() 
 
     //View Functions
 
