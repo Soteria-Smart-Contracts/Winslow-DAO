@@ -11,9 +11,10 @@ contract SaleFactoryV2{
     uint256 public MinimumDeposit; //^
     uint256 public SaleLength; //^
     uint256 public MaximumSalePercentage; //The maximum percentage of the supply that can be sold at once, to avoid flooding markets/heavy inflation, in Basis Points
-    
+
     constructor(address _DAOaddr){
         DAO = _DAOaddr;
+        //Set default values for variables
     }
 
     modifier OnlyDAO{ 
