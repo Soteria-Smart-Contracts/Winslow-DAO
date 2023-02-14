@@ -33,7 +33,11 @@ contract SaleFactoryV2{
     function ChangeFoundationFee(uint256 NewFee) external OnlyDAO returns(bool success){
         require(NewFee <= 10000);
         FoundationFee = NewFee;
+
+        return(success);
     }
+
+
 
     function ChangeDAO(address newAddr) external OnlyDAO {
         require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
