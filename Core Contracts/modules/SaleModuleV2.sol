@@ -169,6 +169,10 @@ contract SaleV2{
         emit ProceedsTransfered(ToFoundation, ToTreasury);
     }
 
+    //DAO Only functions
+
+    function VerifyReadyForSale()
+
     //View Functions
 
     function SaleStatus() public view returns(SaleStatuses Status){
