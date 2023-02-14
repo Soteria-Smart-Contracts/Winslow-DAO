@@ -54,7 +54,7 @@ contract SaleFactoryV2{
     }
 
     function ChangeDefaultSaleLength(uint256 NewLength) external OnlyDAO returns(bool success){
-        require(NewLength > 600); //Minimum is set at 10 minutes, just to avoid breakage
+        require(NewLength > 600); //Minimum is set at 10 minutes, just to avoid breakage or unwanted burn CLD, but the DAO is free to change it up or down from here
         MaximumSalePercentage = NewMinDeposit;
 
         return(success);
