@@ -37,7 +37,7 @@ contract SaleFactoryV2{
         return(success);
     }
 
-    function ChangeMaxSalePercent() external OnlyDAO returns(bool success){
+    function ChangeMaxSalePercent(uint256 NewMaxPercent) external OnlyDAO returns(bool success){
         
     }
 
