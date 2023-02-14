@@ -291,7 +291,7 @@ contract Winslow_Core_V1{
         Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleContract(NewSaleAddress).StartTime(), SaleContract(NewSaleAddress).EndTime());
 
         //TODO: Send CLD to sale contract
-        require(SaleVerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
+        require(SaleContract(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
         return(success, NewSaleAddress);
     }
 
