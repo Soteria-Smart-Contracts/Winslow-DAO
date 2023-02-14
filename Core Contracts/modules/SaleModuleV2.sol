@@ -38,6 +38,7 @@ contract SaleFactoryV2{
     }
 
     function ChangeMaxSalePercent(uint256 NewMaxPercent) external OnlyDAO returns(bool success){
+        require(NewMaxPercent <= 10000);
         MaximumSalePercentage = NewMaxPercent;
     }
 
