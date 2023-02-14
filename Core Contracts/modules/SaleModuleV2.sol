@@ -221,8 +221,6 @@ contract SaleV2{
         }
     }
 
-    //TODO: Cancel/Emergency sale mode
-
 }
 
 interface Core {
