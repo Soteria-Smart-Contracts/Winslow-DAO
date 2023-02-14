@@ -290,6 +290,7 @@ contract Winslow_Core_V1{
         address NewSaleAddress = SaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
         Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleContract(NewSaleAddress).StartTime(), SaleContract(NewSaleAddress).EndTime());
 
+        //TODO: Send CLD to sale contract
         return(success, NewSaleAddress);
     }
 
