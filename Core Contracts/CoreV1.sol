@@ -290,7 +290,7 @@ contract Winslow_Core_V1{
         address NewSaleAddress = SaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
         Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleContract(NewSaleAddress).StartTime(), SaleContract(NewSaleAddress).EndTime());
 
-        Treasury().TransferERC20(0, CLDtoSell, NewSaleAddress);
+        Treasury(TreasuryContract).TransferERC20(0, CLDtoSell, NewSaleAddress);
 
         require(SaleContract(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
         return(success, NewSaleAddress);
