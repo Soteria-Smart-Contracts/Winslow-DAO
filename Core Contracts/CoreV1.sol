@@ -298,6 +298,10 @@ contract Winslow_Core_V1{
 
 
         // ChangeProposalCost
+
+    
+
+
         // AddSecurityCommiteeMember
         // RemoveSecurityCommiteeMember
 
