@@ -299,7 +299,7 @@ contract Winslow_Core_V1{
 
         // ChangeProposalCost
 
-    function 
+    function ChangeProposalCost(uint256 newCost)
 
 
         // AddSecurityCommiteeMember
