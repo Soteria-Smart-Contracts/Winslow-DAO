@@ -302,6 +302,7 @@ contract Winslow_Core_V1{
     function ChangeProposalCost(uint256 newCost) internal returns(bool success){
         
         
+        return(success);
     }
 
         // AddSecurityCommiteeMember
