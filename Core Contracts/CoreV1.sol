@@ -311,8 +311,8 @@ contract Winslow_Core_V1{
         // ChangeSaleFoundationFee
         // ChangeSaleRetractFee
         // ChangSaleeMinimumDeposit
-        // ChangeDefaultSaleLength
-        // ChangeMaxSalePercent
+        // ChangeSaleDefaultSaleLength
+        // ChangeSaleMaxSalePercent
         // 
 
 
