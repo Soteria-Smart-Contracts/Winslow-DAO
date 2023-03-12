@@ -279,7 +279,7 @@ contract Winslow_Core_V1{
         Replacements(TreasuryContract).ChangeDAO(NewCore);
         Replacements(VotingContract).ChangeDAO(NewCore);
 
-        //TODO: tell 
+        //TODO: tell sale module to switch
 
         return(success);
     }
