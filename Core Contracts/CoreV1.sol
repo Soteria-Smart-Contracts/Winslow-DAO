@@ -271,7 +271,7 @@ contract Winslow_Core_V1{
         return(success);
     }
 
-    //
+    //TODO: ReplaceSaleModule
 
         // CoreReplacement
     function ReplaceCore(address NewCore) internal returns(bool success){
