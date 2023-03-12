@@ -309,8 +309,8 @@ contract Winslow_Core_V1{
         // AddSecurityCommiteeMember
         // RemoveSecurityCommiteeMember
         // ChangeFoundationFee
-        // ChangeFoundationFee
-        // ChangeFoundationFee
+        // ChangeRetractFee
+        // ChangeMinimumDeposit
 
 
     // Other Internals
