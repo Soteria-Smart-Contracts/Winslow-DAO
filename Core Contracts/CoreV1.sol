@@ -271,6 +271,8 @@ contract Winslow_Core_V1{
         return(success);
     }
 
+    //
+
         // CoreReplacement
     function ReplaceCore(address NewCore) internal returns(bool success){
         ActiveContract = false;
@@ -279,7 +281,7 @@ contract Winslow_Core_V1{
         Replacements(TreasuryContract).ChangeDAO(NewCore);
         Replacements(VotingContract).ChangeDAO(NewCore);
 
-        //TODO: tell sale module to switch
+        //TODO: tell sale module to switch contract
 
         return(success);
     }
