@@ -313,6 +313,7 @@ contract Winslow_Core_V1{
         // ChangeMinimumDeposit
         // ChangeDefaultSaleLength
         // ChangeMaxSalePercent
+        // 
 
 
     // Other Internals
