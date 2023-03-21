@@ -18,7 +18,7 @@ contract SaleFactoryV2{
     }
 
     //Events
-    event 
+    event NewSaleCreated(uint256 SaleID)
 
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
