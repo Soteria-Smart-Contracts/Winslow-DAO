@@ -46,9 +46,9 @@ contract SaleFactoryV2{
         return(success);
     }
 
-    function ChangeRetractFee(uint256 NewMaxPercent) external OnlyDAO returns(bool success){
+    function ChangeRetractFee(uint256 NewRetractFee) external OnlyDAO returns(bool success){
         require(NewMaxPercent <= 10000);
-        MaximumSalePercentage = NewMaxPercent;
+        RetractFee = NewMaxPercent;
 
         emit NewDepositRetractFee(NewMaxPercent)
         return(success);
