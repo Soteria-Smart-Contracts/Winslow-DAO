@@ -21,6 +21,7 @@ contract SaleFactoryV2{
     event NewSaleCreated(uint256 SaleID, uint256 SaleAmount, address NewSaleContract);
     event NewFoundationFee(uint256 NewFeePercentBP);
     event NewDepositRetractFee(uint256 NewFeePercentBP);
+    event New
 
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
@@ -50,7 +51,7 @@ contract SaleFactoryV2{
         require(NewRetractFee <= 10000);
         RetractFee = NewRetractFee;
 
-        emit NewDepositRetractFee(NewRetractFee)
+        emit NewDepositRetractFee(NewRetractFee);
         return(success);
     }
 
