@@ -23,6 +23,7 @@ contract SaleFactoryV2{
     event NewDepositRetractFee(uint256 NewFeePercentBP);
     event NewMinimumDeposit(uint256 NewMinDeposit);
     event NewDefaultSaleLength(uint256 NewSaleLen)
+    event NewDAOAddress(uint256 Ne)
 
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
