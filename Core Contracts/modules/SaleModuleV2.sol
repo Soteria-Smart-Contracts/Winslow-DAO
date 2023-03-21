@@ -30,7 +30,7 @@ contract SaleFactoryV2{
         require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Core(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
         address NewSaleAddress = address(new SaleV2(DAO, SaleID, CLDtoSell, DefaultSaleLength, FoundationFee, RetractFee, MinimumDeposit));
         
-        emit NewSaleCreated(SaleID, CLDtoSell, NewSaleAddres);
+        emit NewSaleCreated(SaleID, CLDtoSell, NewSaleAddress);
         return(NewSaleAddress);
     }
 
