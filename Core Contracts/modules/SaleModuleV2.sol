@@ -17,6 +17,9 @@ contract SaleFactoryV2{
         //Set default values for variables
     }
 
+    //Events
+    event 
+
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
         _;
