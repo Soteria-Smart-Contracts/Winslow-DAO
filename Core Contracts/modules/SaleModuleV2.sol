@@ -20,7 +20,7 @@ contract SaleFactoryV2{
     //Events
     event NewSaleCreated(uint256 SaleID, uint256 SaleAmount, address NewSaleContract);
     event NewFoundationFee(uint256 NewFeePercentBP);
-    event NewDepositRetractFee(uint256 NewFeePercent);
+    event NewDepositRetractFee(uint256 NewFeePercentBP);
 
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
@@ -49,7 +49,7 @@ contract SaleFactoryV2{
     function ChangeRetractFee(uint256 NewMaxPercent) external OnlyDAO returns(bool success){
         require(NewMaxPercent <= 10000);
         MaximumSalePercentage = NewMaxPercent;
-
+        
         return(success);
     }
 
