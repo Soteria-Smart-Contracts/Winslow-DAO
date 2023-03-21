@@ -59,6 +59,7 @@ contract SaleFactoryV2{
         require(NewMinDeposit > 0); //TODO: Find a good minimum where contract is extremely unlikely to have issues in division
         MaximumSalePercentage = NewMinDeposit;
 
+        emit(NewMinimumDeposit);
         return(success);
     }
 
