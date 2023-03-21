@@ -78,6 +78,7 @@ contract SaleFactoryV2{
         require(NewMaxPercent <= 10000);
         MaximumSalePercentage = NewMaxPercent;
 
+        emit NewMaxSalePercent()
         return(success);
     }
 
