@@ -18,7 +18,7 @@ contract SaleFactoryV2{
     }
 
     //Events
-    event NewSaleCreated(uint256 SaleID, uint256 SaleAmount, address NewSaleContract)
+    event NewSaleCreated(uint256 SaleID, uint256 SaleAmount, address NewSaleContract);
 
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
@@ -30,6 +30,7 @@ contract SaleFactoryV2{
         require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Core(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
         address NewSaleAddress = address(new SaleV2(DAO, SaleID, CLDtoSell, DefaultSaleLength, FoundationFee, RetractFee, MinimumDeposit));
         
+        emit NewSaleCreated()
         return(NewSaleAddress);
     }
 
