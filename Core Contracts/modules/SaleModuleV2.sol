@@ -41,6 +41,7 @@ contract SaleFactoryV2{
         require(NewFee <= 10000);
         FoundationFee = NewFee;
 
+        NewFoundationFee
         return(success);
     }
 
