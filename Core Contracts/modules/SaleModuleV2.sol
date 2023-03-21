@@ -23,7 +23,7 @@ contract SaleFactoryV2{
     event NewDepositRetractFee(uint256 NewFeePercentBP);
     event NewMinimumDeposit(uint256 NewMinDeposit);
     event NewDefaultSaleLength(uint256 NewSaleLen)
-    event NewDAOAddress(uint256 Ne)
+    event NewDAOAddress(address NewDAO);
 
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
@@ -84,7 +84,8 @@ contract SaleFactoryV2{
         require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
         require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
         DAO = newAddr;    
-        //emit NewDAOAddress(newAddr); TODO: Events
+        
+        emit NewDAOAddress(newAddr); TODO: Events
     }
 
 }
