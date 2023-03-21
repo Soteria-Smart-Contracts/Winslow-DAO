@@ -68,6 +68,7 @@ contract SaleFactoryV2{
         require(NewLength >= 259200 && NewLength <= 1209600); 
         DefaultSaleLength = NewLength;
 
+        emit NewDefaultSaleLength(NewLength);
         return(success);
     }
 
