@@ -23,7 +23,7 @@ contract SaleFactoryV2{
     event NewDepositRetractFee(uint256 NewFeePercentBP);
     event NewMinimumDeposit(uint256 NewMinDeposit);
     event NewDefaultSaleLength(uint256 NewSaleLen);
-    event NewMaxSalePercent(uint256 NewMax)
+    event NewMaxSalePercent(uint256 NewMax);
     event NewDAOAddress(address NewDAO);
 
     modifier OnlyDAO{ 
