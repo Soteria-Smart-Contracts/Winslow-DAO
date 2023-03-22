@@ -220,8 +220,9 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
+        uint256 
         if(EROS(Slot).Multi() ==  true){
-            
+            uint256 
         }
 
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
