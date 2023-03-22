@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 
-contract ErosProposal{
+contract ErosProposal {
     address public DAO = 0x0000000000000000000000000000000000000000;
     bool public Executed;
     bool public Multi = false; //Must Exist or will be rejected by Core
