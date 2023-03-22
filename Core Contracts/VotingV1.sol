@@ -124,7 +124,6 @@ contract Winslow_Voting_V1 {
         VoterInfo[VotingInstance][msg.sender].Voted = true;
         VotingInstances[VotingInstance].Voters.push(msg.sender);
 
-        emit VoteCast()
         return(success);
     }
     
