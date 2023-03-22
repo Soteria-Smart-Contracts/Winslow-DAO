@@ -70,7 +70,13 @@ contract Winslow_Core_V1{
         RemoveSecurityCommiteeMember
     }
 
-    
+    enum MultiOptions{
+        OptionOne,
+        OptionTwo,
+        OptionThree,
+        OptionFour,
+        OptionFive
+    }
 
     struct Proposal{
         uint256 ProposalID;
