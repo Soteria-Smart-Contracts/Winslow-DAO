@@ -125,7 +125,6 @@ contract Winslow_Voting_V1 {
         VotingInstances[VotingInstance].Voters.push(msg.sender);
 
         return(success);
-
     }
     
         //This is set up so that you can vote for or against the proposal, and if yes what of the options you prefer
