@@ -220,7 +220,7 @@ contract Winslow_Core_V1{
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 
+        uint256 OptionCount;
         if(EROS(Slot).Multi() ==  true){
             uint256 
         }
