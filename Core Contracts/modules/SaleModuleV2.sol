@@ -4,7 +4,7 @@ if a new Winslow Core is deployed by changing DAO addresses
 This contract provides a factory and sale contract for the Winslow Core to initiate sales of CLD from the treasury*/
 pragma solidity ^0.8.17;
 
-contract SaleFactoryV2{
+contract SaleFactoryV2 {
     address public DAO;
     uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
     uint256 public RetractFee; //^
@@ -92,7 +92,7 @@ contract SaleFactoryV2{
 
 }
 
-contract SaleV2{
+contract SaleV2 {
     //  Variable, struct, mapping and other Declarations
     //  Core
     address public DAO;
