@@ -93,7 +93,7 @@ contract Winslow_Core_V1{
         uint8 RequestedAssetID;         //Treasury asset identifier for proposals moving funds
         ProxyProposalArguments ProxyArgs; //List of arguments that can be used for proxy proposals, Also used for other data storage for simple proposals
         bool Multi;                     //False for just a regular one option proposal, True for any proposal with more than one option
-        uint8 OptionsAvailable;
+        uint8 OptionsAvailable;         //Number of Options Available if there is more than one, default zero
         bool Executed;                  //Can only be executed once, when finished, proposal exist only as archive
         address Proposer;               //Address who initially created the proposal
     }
