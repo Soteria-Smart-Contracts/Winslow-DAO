@@ -5,7 +5,7 @@ When setting up a new core or voting contract, ensure cross-compatibility and re
 done by the archive contract, voting index and proposal indexes never restart  TODO:Change This*/
 pragma solidity ^0.8.17;
 
-contract Winslow_Treasury_V1{
+contract Winslow_Treasury_V1 {
     //Variable, struct and type declarations
     string public Version = "V1";
     address public DAO;
