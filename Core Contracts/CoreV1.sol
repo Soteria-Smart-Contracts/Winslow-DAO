@@ -431,5 +431,5 @@ interface ERC20 {
 interface EROS {
     function DAO() external view returns(address DAOaddress);
     function Multi() external view returns(bool);
-    function OptionCount()
+    function OptionCount() external view returns(uint8);
 }
