@@ -7,7 +7,7 @@ done by the archive contract, voting index and proposal indexes never restart */
 pragma solidity ^0.8.17;
 
 
-contract Winslow_Core_V1{
+contract Winslow_Core_V1 {
     //Variable Declarations       //TODO:Comment this stuff
     string public Version = "V1";
     bool public ActiveContract;
