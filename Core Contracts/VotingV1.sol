@@ -243,7 +243,7 @@ contract Winslow_Voting_V1 {
         
         ERC20(CLDAddress()).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
 
-        VotingInstances[VotingInstance].IncentivePerVote = ((VotingInstances[VotingInstance].CLDtoIncentive * 10**9) / VotingInstances[VotingInstance].TotalCLDVoted);
+        VotingInstances[VotingInstance].IncentivePerVote = ((VotingInstances[VotingInstance].CLDtoIncentive * 10**9) / VotingInstances[VotingInstance].TotalCLDVoted); //TODO: THis is probably wrong
 
         VotingInstances[VotingInstance].Status = VoteStatus(2);
         ActiveInstances--;
