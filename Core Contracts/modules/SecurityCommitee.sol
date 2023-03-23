@@ -34,6 +34,10 @@ contract Winslow_Security_Commitee_V1{
     } 
 
     //DAO Only Functions
+    
+    function 
+
+
 
     //View Functions
 
