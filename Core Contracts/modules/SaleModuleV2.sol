@@ -5,6 +5,7 @@ This contract provides a factory and sale contract for the Winslow Core to initi
 pragma solidity ^0.8.17;
 
 contract SaleFactoryV2 {
+    string public Version = "V1";
     address public DAO;
     uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
     uint256 public RetractFee; //^
