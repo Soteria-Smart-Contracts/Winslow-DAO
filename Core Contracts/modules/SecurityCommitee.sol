@@ -13,8 +13,9 @@ contract Winslow_Security_Commitee_V1{
     mapping(address => bool) CommiteeMember;
 
     enum ProposalSecurityRating{
+        Excellent,
         Good,
-        
+        Average,
     }
 
     struct ProposalSecurityVote{
