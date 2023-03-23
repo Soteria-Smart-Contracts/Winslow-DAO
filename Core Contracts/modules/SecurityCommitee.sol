@@ -16,6 +16,8 @@ contract Winslow_Security_Commitee_V1{
         Excellent,
         Good,
         Average,
+        Risky,
+        
     }
 
     struct ProposalSecurityVote{
