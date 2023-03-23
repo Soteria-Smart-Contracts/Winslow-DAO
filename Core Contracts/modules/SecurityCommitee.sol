@@ -5,6 +5,7 @@ This contract allows and keeps track of commitee member votes on safety ratings 
 pragma solidity ^0.8.17;
 
 contract Winslow_Security_Commitee_V1{
+    //Declari
     address DAO;
 
     uint256 TotalMembers;
@@ -25,5 +26,7 @@ contract Winslow_Security_Commitee_V1{
         mapping(ProposalSecurityRating => uint256);
         uint256 TotalVotes;
     }
-    
+
+
+    //View Functions
 }
