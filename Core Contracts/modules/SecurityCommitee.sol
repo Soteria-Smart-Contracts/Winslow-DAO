@@ -29,4 +29,6 @@ contract Winslow_Security_Commitee_V1{
 
 
     //View Functions
+
+    function AllMembers()
 }
