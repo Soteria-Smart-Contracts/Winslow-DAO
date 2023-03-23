@@ -25,11 +25,6 @@ contract Winslow_Treasury_V1 {
         _;
     }
 
-    modifier OnlyEros{
-        require(msg.sender == DAO  || HarmoniaDAO(DAO).CheckErosApproval(msg.sender), "The caller is either not the DAO or not approved by the DAO");
-        _;
-    }
-
     //Event Declarations
     event AssetRegistered(address NewToken, uint256 CurrentBalance);
     event AssetLimitChange(uint256 NewLimit);
