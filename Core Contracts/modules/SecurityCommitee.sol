@@ -4,4 +4,6 @@ if a new Winslow Core is deployed by changing DAO addresses
 This contract allows and keeps track of commitee member votes on safety ratings for proposal*/
 pragma solidity ^0.8.17;
 
-contract Winslow_Security_Commitee_V1
+contract Winslow_Security_Commitee_V1{
+    
+}
