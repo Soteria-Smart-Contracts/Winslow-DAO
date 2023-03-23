@@ -6,5 +6,5 @@ pragma solidity ^0.8.17;
 
 contract Winslow_Security_Commitee_V1{
     uint256 TotalMembers;
-    address 
+    address[] 
 }
