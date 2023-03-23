@@ -12,7 +12,11 @@ contract Winslow_Security_Commitee_V1{
     
     mapping(address => bool) CommiteeMember;
 
-    struct ProposalSecurity
+    
+
+    struct ProposalSecurityVote{
+
+    }
 
 
 
