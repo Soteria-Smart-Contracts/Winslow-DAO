@@ -12,6 +12,7 @@ contract Winslow_Security_Commitee_V1{
     address[] public CommiteeMembers;
     
     mapping(address => bool) CommiteeMember;
+    mapping(uint256 =)
 
     enum ProposalSecurityRating{
         Excellent,
