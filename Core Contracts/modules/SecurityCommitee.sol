@@ -16,7 +16,7 @@ contract Winslow_Security_Commitee_V1{
         Excellent,
         Good,
         Average,
-        Unadvisable,
+        Poor,
         Risky,
 
     }
