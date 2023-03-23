@@ -8,5 +8,5 @@ contract Winslow_Security_Commitee_V1{
     uint256 TotalMembers;
     address[] CommiteeMembers;
     
-    mapping(address => bool) 
+    mapping(address => bool) CommiteeMember;
 }
