@@ -27,6 +27,11 @@ contract Winslow_Security_Commitee_V1{
         uint256 TotalVotes;
     }
 
+    modifier OnlyDAO{ 
+        require(msg.sender == address(DAO), 'This can only be done by the DAO');
+        _;
+    } 
+
     //DAO Only Functions
 
     //View Functions
