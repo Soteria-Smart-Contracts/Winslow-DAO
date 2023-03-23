@@ -8,6 +8,7 @@ pragma solidity ^0.8.17;
 
 contract Winslow_Voting_V1 {
     // Contracts and Routing Variables
+    string public Version = "V1";
     address public DAO;
 
     // Percentages in Basis Points
