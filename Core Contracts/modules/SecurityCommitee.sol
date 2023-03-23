@@ -6,9 +6,10 @@ pragma solidity ^0.8.17;
 
 contract Winslow_Security_Commitee_V1{
     //Variable and other Declarations
-    address DAO;
-    uint256 TotalMembers;
-    address[] CommiteeMembers;
+    string public Version = "V1";
+    address public DAO;
+    uint256 public TotalMembers;
+    address[] public CommiteeMembers;
     
     mapping(address => bool) CommiteeMember;
 
