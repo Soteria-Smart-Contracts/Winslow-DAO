@@ -22,7 +22,7 @@ contract Winslow_Security_Commitee_V1{
     }
 
     struct ProposalSecurityVote{
-        
+        mapping(ProposalSecurityRating =)
 
     }
 
