@@ -25,10 +25,5 @@ contract Winslow_Security_Commitee_V1{
         mapping(ProposalSecurityRating => uint256);
         uint256 TotalVotes;
     }
-
-
-
-
-
-
+    
 }
