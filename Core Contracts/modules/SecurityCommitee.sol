@@ -24,7 +24,7 @@ contract Winslow_Security_Commitee_V1{
     }
 
     struct ProposalSecurityVote{
-        mapping(ProposalSecurityRating => uint256);
+        mapping(ProposalSecurityRating => uint256) Ratings;
         uint256 TotalVotes;
     }
 
