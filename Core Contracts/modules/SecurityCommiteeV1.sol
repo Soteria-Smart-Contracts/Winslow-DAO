@@ -35,7 +35,7 @@ contract Winslow_Security_Commitee_V1{
 
     //DAO Only Functions
     
-    function AddMember(address Member) external OnlyDAO returns()
+    function AddMember(address Member) external OnlyDAO returns(bool success)
 
     function RemoveMember(address Member)
 
