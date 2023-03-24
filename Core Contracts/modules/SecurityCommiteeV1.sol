@@ -35,7 +35,7 @@ contract Winslow_Security_Commitee_V1{
 
     //DAO Only Functions
     
-    function AddMember(address NewMember)
+    function AddMember(address Member) 
 
     function RemoveMember(address Member)
 
