@@ -37,7 +37,7 @@ contract Winslow_Security_Commitee_V1{
     
     function AddMember
 
-    function AddMember
+    function RemoveMember()
 
 
 
