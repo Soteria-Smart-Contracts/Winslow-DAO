@@ -334,7 +334,8 @@ contract Winslow_Core_V1 {
 
         // AddSecurityCommiteeMember
         // RemoveSecurityCommiteeMember
-        // ChangeSaleFoundationFee
+    
+    //Sale factory variable change functions
 
     function ChangeSaleFoundationFee(uint256 NewFee) internal returns(bool success){
             
