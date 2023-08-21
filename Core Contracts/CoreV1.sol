@@ -365,7 +365,10 @@ contract Winslow_Core_V1 {
     }
 
     function ChangeSaleMaxSalePercent(uint256 NewMaxPercent) internal returns(bool success){
-            
+                
+        SaleFactory(SaleFactoryContract).ChangeMaxSalePercent(NewMaxPercent);
+        
+        return(success);
     }
     
         // ChangeSaleMaxSalePercent
