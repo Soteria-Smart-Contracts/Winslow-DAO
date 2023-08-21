@@ -372,8 +372,7 @@ contract Winslow_Core_V1 {
         return(success);
     }
     
-        // ChangeSaleMaxSalePercent
-        // 
+    
 
 
     // Other Internals
