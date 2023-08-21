@@ -352,6 +352,7 @@ contract Winslow_Core_V1 {
 
     function ChangeSaleMinimumDeposit(uint256 NewMinDeposit) internal returns(bool success){
         
+    }
 
     
         // ChangSaleeMinimumDeposit
