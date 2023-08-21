@@ -344,7 +344,11 @@ contract Winslow_Core_V1 {
     }
 
     function ChangeSaleRetractFee(uint256 NewRetractFee) internal returns(bool success){
-        
+
+        SaleFactory(SaleFactoryContract).ChangeRetractFee(NewRetractFee);
+
+        return(success);
+    }
 
     
         // ChangeSaleRetractFee
