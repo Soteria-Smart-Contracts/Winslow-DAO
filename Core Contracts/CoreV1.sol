@@ -350,8 +350,10 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
+    function ChangeSaleMinimumDeposit(uint256 NewMinDeposit) internal returns(bool success){
+        
+
     
-        // ChangeSaleRetractFee
         // ChangSaleeMinimumDeposit
         // ChangeSaleDefaultSaleLength
         // ChangeSaleMaxSalePercent
