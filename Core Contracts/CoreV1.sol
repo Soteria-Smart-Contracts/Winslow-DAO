@@ -357,7 +357,12 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
+    function ChangeSaleDefaultSaleLength(uint256 NewLength) internal returns(bool success){
+            
+            SaleFactory(SaleFactoryContract).ChangeDefaultSaleLength(NewLength);
     
+            return(success);
+    }
 
     
         // ChangSaleeMinimumDeposit
