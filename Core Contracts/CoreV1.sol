@@ -364,6 +364,9 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
+    function ChangeSaleMaxSalePercent(uint256 NewMaxPercent) internal returns(bool success){
+            
+    }
     
         // ChangeSaleMaxSalePercent
         // 
