@@ -69,6 +69,7 @@ contract Winslow_Core_V1 {
         ChangeSaleFoundationFee,
         ChangeSaleRetractFee,
         ChangeSaleMinimumDeposit,
+        ChangeSaleDefaultSaleLength,
         AddSecurityCommiteeMember,
         RemoveSecurityCommiteeMember
     }
