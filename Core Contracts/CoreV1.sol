@@ -410,6 +410,7 @@ interface SaleContract{
     function EndTime() external returns(uint256 Time);
     function VerifyReadyForSale() external returns(bool Ready);
     function ChangeFoundationFee(uint256 NewFee) external returns(bool success);
+    function ChangeRetractFee(uint256 NewRetractFee) external returns(bool success);
     
 }
 
