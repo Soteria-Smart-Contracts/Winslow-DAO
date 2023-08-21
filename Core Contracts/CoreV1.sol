@@ -413,7 +413,8 @@ interface SaleContract{
     function ChangeRetractFee(uint256 NewRetractFee) external returns(bool success);
     function ChangeMinimumDeposit(uint256 NewMinDeposit) external returns(bool success);
     function ChangeDefaultSaleLength(uint256 NewLength) external returns(bool success);
-    function ChangeMaxSalePercent(uint256 NewMaxPercent) external returns(bool success)
+    function ChangeMaxSalePercent(uint256 NewMaxPercent) external returns(bool success);
+    
 }
 
 //Only for the first treasury, if the DAO contract is not updated but the treasury is in the future, only Eros proposals will be able to access it due to their flexibility
