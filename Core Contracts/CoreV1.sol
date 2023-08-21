@@ -338,7 +338,7 @@ contract Winslow_Core_V1 {
 
     function ChangeSaleFoundationFee(uint256 NewFee) internal returns(bool success){
             
-        SaleFactory(SaleFactoryContract).MaximumSalePercentage();
+        SaleFactory(SaleFactoryContract).();
         return(success);
 
     }
