@@ -89,7 +89,7 @@ contract SaleFactoryV2 {
         DAO = newAddr;    
 
         emit NewDAOAddress(newAddr);
-        ret
+        return(success);
     }
 
 }
