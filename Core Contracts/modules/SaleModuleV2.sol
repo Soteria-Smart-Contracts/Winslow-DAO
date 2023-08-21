@@ -88,7 +88,8 @@ contract SaleFactoryV2 {
         require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
         DAO = newAddr;    
 
-        emit NewDAOAddress(newAddr);//TODO: Events
+        emit NewDAOAddress(newAddr);
+        ret
     }
 
 }
