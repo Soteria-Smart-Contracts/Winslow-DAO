@@ -343,7 +343,8 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    
+    function ChangeSaleRetractFee(uint256 NewRetractFee) internal returns(bool success){
+        
 
     
         // ChangeSaleRetractFee
