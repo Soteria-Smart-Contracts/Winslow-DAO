@@ -371,9 +371,6 @@ contract Winslow_Core_V1 {
         
         return(success);
     }
-    
-    
-
 
     // Other Internals
     //TODO: Make the cuts changeable via proposal
