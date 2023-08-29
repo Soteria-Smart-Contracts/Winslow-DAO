@@ -6,6 +6,8 @@ When setting up a new core or voting contract, ensure cross-compatibility and re
 done by the archive contract, voting index and proposal indexes never restart */
 pragma solidity ^0.8.17;
 
+import "./TreasuryV1.sol";
+import "./VotingV1.sol";
 
 contract Winslow_Core_V1 {
     //Variable Declarations       //TODO:Comment this stuff
@@ -25,6 +27,7 @@ contract Winslow_Core_V1 {
     
     //Proposals
     mapping(uint256 => Proposal) public Proposals;
+    mapping(uint256 => ProxyProposalArguments) ProxyArgs;
     uint256 public MRIdentifier;
 
     //Token Sales
@@ -84,19 +87,16 @@ contract Winslow_Core_V1 {
     }
 
     struct Proposal{
-        uint256 ProposalID;
         address AddressSlot;            //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal contract
-        string Memo;                    //Short description of what the proposal is and does (Reduce length for gas efficiency)
         ProposalStatus Status;          //Types declared in enum
         SecurityStatus SecurityLevel;   //Types declared in enum
         ProposalTypes ProposalType;     //Types declared in enum
         SimpleProposalTypes SimpleType; //Types declared in enum
         uint256 VotingInstanceID;       //Identifier for the voting instance used for this proposal in the voting contract
-        uint256 ProposalVotingLenght;   //Minimum 24 hours
+        uint256 ProposalVotingLength;   //Minimum 24 hours
         uint256 RequestedEtherAmount;   //Optional, can be zero
         uint256 RequestedAssetAmount;   //Optional, can be zero
         uint8 RequestedAssetID;         //Treasury asset identifier for proposals moving funds
-        ProxyProposalArguments ProxyArgs; //List of arguments that can be used for proxy proposals, Also used for other data storage for simple proposals
         bool Multi;                     //False for just a regular one option proposal, True for any proposal with more than one option
         uint8 OptionsAvailable;         //Number of Options Available if there is more than one, default zero
         bool Executed;                  //Can only be executed once, when finished, proposal exist only as archive
@@ -135,11 +135,11 @@ contract Winslow_Core_V1 {
 
     //Public state-modifing functions
 
-    function SubmitSimpleProposal(address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
+    function SubmitSimpleProposal(address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
 
         require(ReceiveProposalCost());
 
-        InitializeSimpleProposal(AddressSlot, UintSlot, Memo, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        InitializeSimpleProposal(AddressSlot, UintSlot, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
         return(success);
 
@@ -149,18 +149,18 @@ contract Winslow_Core_V1 {
 
         require(ReceiveProposalCost());
 
-        InitializeProxyProposal(Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
+        InitializeProxyProposal(Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
         
         return(success);
 
     }
 
 
-    function SubmitErosProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
+    function SubmitErosProposal(address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
 
         require(ReceiveProposalCost());
 
-        InitializeErosProposal(Slot, Memo, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        InitializeErosProposal(Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
         
         return(success);
 
@@ -179,7 +179,7 @@ contract Winslow_Core_V1 {
 
     //  Internal Functions
 
-    function InitializeSimpleProposal(address AddressSlot, uint256 UintSlot, string memory Memo, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
+    function InitializeSimpleProposal(address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
 
@@ -192,17 +192,18 @@ contract Winslow_Core_V1 {
             require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Treasury(TreasuryContract).RegisteredAssetLimit()); //TODO: problem here, should not be 2 and 3
             ProxyProposalArguments storage ProxyArgsWithSlot = EmptyProxy;
             ProxyArgsWithSlot.UnsignedInt1 = UintSlot;
-            Proposals[NewIdentifier] = Proposal(NewIdentifier, AddressSlot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgsWithSlot, false, 0, false, msg.sender);
+            Proposals[NewIdentifier] = Proposal(AddressSlot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, false, 0, false, msg.sender);
+            ProxyArgs[NewIdentifier] = ProxyArgsWithSlot;
         } 
         else{
-        Proposals[NewIdentifier] = Proposal(NewIdentifier, AddressSlot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, 0, false, msg.sender);
+            Proposals[NewIdentifier] = Proposal(AddressSlot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, false, 0, false, msg.sender);
         }
 
         return(NewIdentifier);
 
     }
 
-    function InitializeProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) internal returns(uint256 identifier){
+    function InitializeProxyProposal(address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) internal returns(uint256 identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         require(Slot != address(0), "ProxyProposals must have a slotted contract");
@@ -211,13 +212,14 @@ contract Winslow_Core_V1 {
         MRIdentifier++;
 
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
-        Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs, false, 0, false, msg.sender);
+        Proposals[NewIdentifier] = Proposal(Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, false, 0, false, msg.sender);
+        ProxyArgs[NewIdentifier] = ProxyArguments;
 
         return(NewIdentifier);
 
     }
 
-    function InitializeErosProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 identifier){
+    function InitializeErosProposal(address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         require(Slot != address(0), "ErosProposals must have a slotted contract");
@@ -228,11 +230,11 @@ contract Winslow_Core_V1 {
         if(EROS(Slot).Multi() ==  true){
             require(EROS(Slot).OptionCount() > 1, 'Eros proposal marked as multiple options true, but less than two options are available');
             uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, true);
-            Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, true, EROS(Slot).OptionCount(), false, msg.sender);
+            Proposals[NewIdentifier] = Proposal(Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, true, EROS(Slot).OptionCount(), false, msg.sender);
         }
         else{
             uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
-            Proposals[NewIdentifier] = Proposal(NewIdentifier, Slot, Memo, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, EmptyProxy, false, 0, false, msg.sender);
+            Proposals[NewIdentifier] = Proposal(Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, false, 0, false, msg.sender);
         }
 
         return(NewIdentifier);
@@ -260,7 +262,7 @@ contract Winslow_Core_V1 {
     function RegisterTreasuryAsset(uint256 ProposalID) internal returns(bool success){
 
         address TokenAddress = Proposals[ProposalID].AddressSlot;
-        uint8 Slot = uint8(Proposals[ProposalID].ProxyArgs.UnsignedInt1); 
+        uint8 Slot = uint8(ProxyArgs[ProposalID].UnsignedInt1); 
         Treasury(TreasuryContract).RegisterAsset(TokenAddress, Slot);
 
         return(success);
@@ -268,7 +270,7 @@ contract Winslow_Core_V1 {
         //ChangeRegisteredAssetLimit
     function ChangeRegisteredAssetLimit(uint256 ProposalID) internal returns(bool success){
         
-        uint8 NewLimit = uint8(Proposals[ProposalID].ProxyArgs.UnsignedInt1); 
+        uint8 NewLimit = uint8(ProxyArgs[ProposalID].UnsignedInt1); 
         Treasury(TreasuryContract).ChangeRegisteredAssetLimit(NewLimit);
         
         return(success);
