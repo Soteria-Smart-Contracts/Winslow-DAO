@@ -397,7 +397,7 @@ contract Winslow_Core_V1 {
         FoundationAddress = _FoundationAddress;
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialContractsSet = true;
-        ActiveContract = true;
+        IsActiveContract = true;
 
         emit NewTreasurySet(_TreasuryAddress);
         //TODO: NewVotingSet, New Sale Factory Set, New foundation address set
