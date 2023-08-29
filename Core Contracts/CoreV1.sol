@@ -129,7 +129,7 @@ contract Winslow_Core_V1 {
 
     constructor(){
         InitialSetter = msg.sender;
-        EmptyProxy = ProxyProposalArguments(0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
+        //EmptyProxy = ProxyProposalArguments(0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
         //TODO: Special proposal in index 0
     }
 
