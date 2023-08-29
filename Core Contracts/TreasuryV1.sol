@@ -1,3 +1,5 @@
+import "./CoreV1.sol";
+
 //SPDX-License-Identifier:UNLICENSE
 /* This contract is able to be replaced by the Winslow Core, and can also continue to be used 
 if a new Winslow Core is deployed by changing DAO addresses
@@ -168,15 +170,6 @@ contract Winslow_Treasury_V1 {
         emit EtherReceived(msg.value, msg.sender, tx.origin); 
     }
 }
-
-interface ERC20 {
-  function balanceOf(address owner) external view returns (uint256);
-  function allowance(address owner, address spender) external view returns (uint256);
-  function approve(address spender, uint value) external returns (bool);
-  function transfer(address to, uint value) external returns (bool);
-  function transferFrom(address from, address to, uint256 value) external returns (bool); 
-  function totalSupply() external view returns (uint);
-} 
 
 interface HarmoniaDAO{
     function CheckErosApproval(address) external view returns(bool);
