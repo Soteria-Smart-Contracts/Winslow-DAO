@@ -259,7 +259,7 @@ contract Winslow_Core_V1 {
 
     //  Execution Functions
 
-    function ExecuteProposal(uint256 ProposalID) public 
+    function ExecuteProposal(uint256 ProposalID) external 
 
     //  Simple Executionting
 
