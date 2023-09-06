@@ -266,6 +266,7 @@ contract Winslow_Core_V1 {
             require(Proposals[ProposalID].Executed == false, "Proposal has already been executed");
     
             Proposals[ProposalID].Executed = true;
+            ProposalInfos[ProposalID].Status = ProposalStatus(3);
     
             if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
                 ExecuteSimpleProposal();
