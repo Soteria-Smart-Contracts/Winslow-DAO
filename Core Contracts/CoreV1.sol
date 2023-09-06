@@ -259,10 +259,12 @@ contract Winslow_Core_V1 {
 
     //  Execution Functions
 
+    function ExecuteProposal()
+
     //  Simple Executionting
 
     function ExecuteSimpleProposal() internal {
-        
+
     }
 
     //  Proxy Executionting
