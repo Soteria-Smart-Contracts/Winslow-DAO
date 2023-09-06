@@ -149,11 +149,11 @@ contract Winslow_Core_V1 {
 
     }
 
-    function SubmitProxyProposal(address Slot, string memory Memo, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArgs) public returns(bool success){
+    function SubmitProxyProposal(address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) public returns(bool success){
 
         require(ReceiveProposalCost());
 
-        InitializeProxyProposal(Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArgs);
+        InitializeProxyProposal(Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArguments);
         
         return(success);
 
@@ -223,7 +223,8 @@ contract Winslow_Core_V1 {
         MRIdentifier++;
 
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
-        Proposals[NewIdentifier] = Proposal(Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(1), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, false, 0, false, msg.sender);
+        ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
+        Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
         ProxyArgs[NewIdentifier] = ProxyArguments;
 
         return(NewIdentifier);
