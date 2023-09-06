@@ -292,8 +292,16 @@ contract Winslow_Core_V1 {
     function ExecuteProxyProposal(uint256 ProposalID) internal {
 
         if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
+        }
+    }
 
     //  Eros Executionting
+
+    function ExecuteErosProposal(uint256 ProposalID) internal {
+
+        if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
+        }
+    }
 
     //  Internal Simple Proposal Call Functions
 
