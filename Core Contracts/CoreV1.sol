@@ -259,7 +259,9 @@ contract Winslow_Core_V1 {
 
     //  Execution Functions
 
-    function ExecuteProposal(uint256 ProposalID) external 
+    function ExecuteProposal(uint256 ProposalID) external returns(bool success){
+        
+    }
 
     //  Simple Executionting
 
