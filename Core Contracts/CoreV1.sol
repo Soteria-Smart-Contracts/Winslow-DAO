@@ -287,6 +287,7 @@ contract Winslow_Core_V1 {
         //TODO: Add all simple proposal types
         
 
+
     }
 
     //  Proxy Executionting
