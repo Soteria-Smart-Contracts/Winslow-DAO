@@ -218,6 +218,8 @@ contract Winslow_Voting_V1 {
         return(Core(DAO).CLDAddress());
     }
 
+    //TODO: Get
+
     //OnlyDAO functions
 
         //Vote Setup
