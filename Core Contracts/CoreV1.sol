@@ -260,7 +260,24 @@ contract Winslow_Core_V1 {
     //  Execution Functions
 
     function ExecuteProposal(uint256 ProposalID) external returns(bool success){
-        
+            
+            require(ProposalInfos[ProposalID].Status == ProposalStatus(2), "Proposal must be in voting status to be executed");
+            require(Voting(VotingContract).GetVoteResult(ProposalInfos[ProposalID].VotingInstanceID) == true, "Proposal must be approved by voting to be executed");
+            require(Proposals[ProposalID].Executed == false, "Proposal has already been executed");
+    
+            Proposals[ProposalID].Executed = true;
+    
+            if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
+                ExecuteSimpleProposal();
+            }
+            else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
+                ExecuteProxyProposal(ProposalID);
+            }
+            else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(2)){
+                ExecuteErosProposal(ProposalID);
+            }
+    
+            return(success);
     }
 
     //  Simple Executionting
