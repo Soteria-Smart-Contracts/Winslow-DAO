@@ -285,7 +285,6 @@ contract Winslow_Core_V1 {
 
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
         //TODO: Add all simple proposal types
-        
 
 
     }
