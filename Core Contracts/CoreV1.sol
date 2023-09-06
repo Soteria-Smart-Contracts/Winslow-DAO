@@ -284,7 +284,6 @@ contract Winslow_Core_V1 {
     //  Simple Executionting
 
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
-        
 
     }
 
