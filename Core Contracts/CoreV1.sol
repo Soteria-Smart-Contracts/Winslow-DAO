@@ -4,10 +4,10 @@ if a new external core modules and contracts are deployed by changing their addr
 providing previous contract information to the new contracts.
 When setting up a new core or voting contract, ensure cross-compatibility and record keeping 
 done by the archive contract, voting index and proposal indexes never restart */
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.19;
 
-import "./TreasuryV1.sol";
-import "./VotingV1.sol";
+//import "./TreasuryV1.sol";
+//import "./VotingV1.sol";
 
 contract Winslow_Core_V1 {
     //Variable Declarations       //TODO:Comment this stuff
@@ -27,6 +27,7 @@ contract Winslow_Core_V1 {
     
     //Proposals
     mapping(uint256 => Proposal) public Proposals;
+    mapping(uint256 => ProposalInfo) public ProposalInfos;
     mapping(uint256 => ProxyProposalArguments) ProxyArgs;
     uint256 public MRIdentifier;
 
@@ -86,19 +87,22 @@ contract Winslow_Core_V1 {
         OptionFive
     }
 
-    struct Proposal{
-        address AddressSlot;            //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal contract
-        ProposalStatus Status;          //Types declared in enum
-        SecurityStatus SecurityLevel;   //Types declared in enum
+    struct ProposalInfo{
         ProposalTypes ProposalType;     //Types declared in enum
         SimpleProposalTypes SimpleType; //Types declared in enum
+        ProposalStatus Status;
         uint256 VotingInstanceID;       //Identifier for the voting instance used for this proposal in the voting contract
-        uint256 ProposalVotingLength;   //Minimum 24 hours
+        uint256 ProposalVotingLength;
+    }
+
+    struct Proposal{
+        address AddressSlot;            //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal contract
+        SecurityStatus SecurityLevel;   //Types declared in enum
         uint256 RequestedEtherAmount;   //Optional, can be zero
         uint256 RequestedAssetAmount;   //Optional, can be zero
         uint8 RequestedAssetID;         //Treasury asset identifier for proposals moving funds
-        bool Multi;                     //False for just a regular one option proposal, True for any proposal with more than one option
         uint8 OptionsAvailable;         //Number of Options Available if there is more than one, default zero
+        bool Multi;                     //False for just a regular one option proposal, True for any proposal with more than one option
         bool Executed;                  //Can only be executed once, when finished, proposal exist only as archive
         address Proposer;               //Address who initially created the proposal
     }
@@ -192,16 +196,23 @@ contract Winslow_Core_V1 {
             require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Treasury(TreasuryContract).RegisteredAssetLimit()); //TODO: problem here, should not be 2 and 3
             ProxyProposalArguments storage ProxyArgsWithSlot = EmptyProxy;
             ProxyArgsWithSlot.UnsignedInt1 = UintSlot;
-            Proposals[NewIdentifier] = Proposal(AddressSlot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, false, 0, false, msg.sender);
+            ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VotingLength);
+            Proposals[NewIdentifier] = Proposal(AddressSlot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
             ProxyArgs[NewIdentifier] = ProxyArgsWithSlot;
         } 
         else{
-            Proposals[NewIdentifier] = Proposal(AddressSlot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(0), SimpleType, VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, false, 0, false, msg.sender);
+            ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VotingLength);
+            Proposals[NewIdentifier] = Proposal(AddressSlot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
+            ProxyArgs[NewIdentifier] = EmptyProxy;
         }
 
         return(NewIdentifier);
 
     }
+
+    
+
+    
 
     function InitializeProxyProposal(address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) internal returns(uint256 identifier){
 
@@ -227,14 +238,18 @@ contract Winslow_Core_V1 {
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
+        uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, true);
+
         if(EROS(Slot).Multi() ==  true){
             require(EROS(Slot).OptionCount() > 1, 'Eros proposal marked as multiple options true, but less than two options are available');
-            uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, true);
-            Proposals[NewIdentifier] = Proposal(Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, true, EROS(Slot).OptionCount(), false, msg.sender);
+            ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
+            Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, EROS(Slot).OptionCount(), true, false, msg.sender);
+            ProxyArgs[NewIdentifier] = EmptyProxy;
         }
         else{
-            uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
-            Proposals[NewIdentifier] = Proposal(Slot, ProposalStatus(0), SecurityStatus(0), ProposalTypes(2), SimpleProposalTypes(0), VotingInstanceID, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, false, 0, false, msg.sender);
+            ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
+            Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
+            ProxyArgs[NewIdentifier] = EmptyProxy;
         }
 
         return(NewIdentifier);
