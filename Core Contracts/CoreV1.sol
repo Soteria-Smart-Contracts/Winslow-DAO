@@ -140,7 +140,7 @@ contract Winslow_Core_V1 {
 
     //Public state-modifing functions
 
-    function SubmitSimpleProposal(string Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
+    function SubmitSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
 
         require(ReceiveProposalCost());
 
@@ -161,7 +161,7 @@ contract Winslow_Core_V1 {
     }
 
 
-    function SubmitErosProposal(string Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
+    function SubmitErosProposal(string memory Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
 
         require(ReceiveProposalCost());
 
