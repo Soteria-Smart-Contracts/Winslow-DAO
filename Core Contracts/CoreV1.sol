@@ -144,7 +144,7 @@ contract Winslow_Core_V1 {
 
         require(ReceiveProposalCost());
 
-        InitializeSimpleProposal(AddressSlot, UintSlot, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        InitializeSimpleProposal(Memo, AddressSlot, UintSlot, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
         return(success);
 
@@ -154,7 +154,7 @@ contract Winslow_Core_V1 {
 
         require(ReceiveProposalCost());
 
-        InitializeProxyProposal(Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArguments);
+        InitializeProxyProposal(Memo, Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID, ProxyArguments);
         
         return(success);
 
@@ -165,7 +165,7 @@ contract Winslow_Core_V1 {
 
         require(ReceiveProposalCost());
 
-        InitializeErosProposal(Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        InitializeErosProposal(Memo, Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
         
         return(success);
 
