@@ -215,7 +215,7 @@ contract Winslow_Core_V1 {
 
     
 
-    function InitializeProxyProposal(address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) internal returns(uint256 identifier){
+    function InitializeProxyProposal(string Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) internal returns(uint256 identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         require(Slot != address(0), "ProxyProposals must have a slotted contract");
@@ -232,7 +232,7 @@ contract Winslow_Core_V1 {
 
     }
 
-    function InitializeErosProposal(address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 identifier){
+    function InitializeErosProposal(string Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         require(Slot != address(0), "ErosProposals must have a slotted contract");
