@@ -244,12 +244,12 @@ contract Winslow_Core_V1 {
 
         if(EROS(Slot).Multi() ==  true){
             require(EROS(Slot).OptionCount() > 1, 'Eros proposal marked as multiple options true, but less than two options are available');
-            ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
             Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, EROS(Slot).OptionCount(), true, false, msg.sender);
             ProxyArgs[NewIdentifier] = EmptyProxy;
         }
         else{
-            ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
             Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
             ProxyArgs[NewIdentifier] = EmptyProxy;
         }
