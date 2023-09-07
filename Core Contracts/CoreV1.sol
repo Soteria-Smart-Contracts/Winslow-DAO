@@ -286,8 +286,49 @@ contract Winslow_Core_V1 {
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
         
 
-        //TODO: Add all simple proposal types
-        
+        if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
+            //Do nothing, this is a placeholder for the first proposal
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(1)){
+            SendAssets(ProposalID);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(2)){
+            RegisterTreasuryAsset(ProposalID);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)){
+            ChangeRegisteredAssetLimit(ProposalID);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(4)){
+            ReplaceTreasury(Proposals[ProposalID].AddressSlot);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(5)){
+            ReplaceVoting(Proposals[ProposalID].AddressSlot);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(6)){
+            ReplaceCore(Proposals[ProposalID].AddressSlot);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
+            StartPublicSale(Proposals[ProposalID].RequestedAssetAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
+            ChangeProposalCost(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)){
+            ChangeSaleFoundationFee(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
+            ChangeSaleRetractFee(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
+            ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
+            ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
+            ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType
 
 
 
