@@ -328,10 +328,7 @@ contract Winslow_Core_V1 {
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
             ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType
-
-
-
+        //Add Security Commitee Member
     }
 
     //  Proxy Executionting
