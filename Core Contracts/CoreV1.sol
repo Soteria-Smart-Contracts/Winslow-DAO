@@ -330,12 +330,13 @@ contract Winslow_Core_V1 {
         }
         //Add Security Commitee Member
         //Remove Security Commitee Member
-        
+
     }
 
     //  Proxy Executionting
 
     function ExecuteProxyProposal(uint256 ProposalID) internal {
+        
 
         
     }
