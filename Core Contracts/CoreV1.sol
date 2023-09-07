@@ -544,6 +544,10 @@ interface SaleFactory{
 
 interface ProxyProposal{
     function ProxyFunctionOne() external returns(bool success);
+    function ProxyFunctionTwo() external returns(bool success);
+    function ProxyFunctionThree() external returns(bool success);
+    function ProxyFunctionFour() external returns(bool success);
+    function ProxyFunctionFive() external returns(bool success);
 }
 
 interface SaleContract{
