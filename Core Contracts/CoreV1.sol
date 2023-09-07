@@ -150,7 +150,7 @@ contract Winslow_Core_V1 {
 
     }
 
-    function SubmitProxyProposal(string Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) public returns(bool success){
+    function SubmitProxyProposal(string memory Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) public returns(bool success){
 
         require(ReceiveProposalCost());
 
@@ -184,7 +184,7 @@ contract Winslow_Core_V1 {
 
     //  Internal Functions
 
-    function InitializeSimpleProposal(string Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
+    function InitializeSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
 
