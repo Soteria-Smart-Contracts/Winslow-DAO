@@ -542,7 +542,7 @@ interface SaleFactory{
     function ChangeMaxSalePercent(uint256 NewMaxPercent) external returns(bool success);
 }
 
-interface
+interface Proxy
 
 interface SaleContract{
     function StartTime() external returns(uint256 Time);
