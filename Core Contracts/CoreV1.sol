@@ -543,7 +543,7 @@ interface SaleFactory{
 }
 
 interface ProxyProposal{
-    function ProxyFunction()
+    function ProxyFunctions()
 }
 
 interface SaleContract{
