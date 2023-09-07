@@ -336,7 +336,7 @@ contract Winslow_Core_V1 {
     //  Proxy Executionting
 
     function ExecuteProxyProposal(uint256 ProposalID) internal {
-        
+
 
         
     }
@@ -541,6 +541,8 @@ interface SaleFactory{
     function ChangeDefaultSaleLength(uint256 NewLength) external returns(bool success);
     function ChangeMaxSalePercent(uint256 NewMaxPercent) external returns(bool success);
 }
+
+interface
 
 interface SaleContract{
     function StartTime() external returns(uint256 Time);
