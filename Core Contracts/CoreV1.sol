@@ -202,7 +202,7 @@ contract Winslow_Core_V1 {
             ProxyArgs[NewIdentifier] = ProxyArgsWithSlot;
         } 
         else{
-            ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VotingLength);
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VotingLength);
             Proposals[NewIdentifier] = Proposal(AddressSlot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
             ProxyArgs[NewIdentifier] = EmptyProxy;
         }
@@ -224,7 +224,7 @@ contract Winslow_Core_V1 {
         MRIdentifier++;
 
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
-        ProposalInfos[NewIdentifier] = ProposalInfo(ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
+        ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
         Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
         ProxyArgs[NewIdentifier] = ProxyArguments;
 
