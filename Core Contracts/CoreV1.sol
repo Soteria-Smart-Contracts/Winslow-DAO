@@ -542,8 +542,8 @@ interface SaleFactory{
     function ChangeMaxSalePercent(uint256 NewMaxPercent) external returns(bool success);
 }
 
-interface Proxy{
-    function Pro
+interface ProxyProposal{
+    function ProxyFunction
 }
 
 interface SaleContract{
