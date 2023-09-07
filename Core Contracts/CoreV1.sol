@@ -329,6 +329,8 @@ contract Winslow_Core_V1 {
             ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
         }
         //Add Security Commitee Member
+        //Remove Security Commitee Member
+        
     }
 
     //  Proxy Executionting
