@@ -88,6 +88,7 @@ contract Winslow_Core_V1 {
     }
 
     struct ProposalInfo{
+        string Memo;                   //Memo for the proposal, can be changed by the DAO
         ProposalTypes ProposalType;     //Types declared in enum
         SimpleProposalTypes SimpleType; //Types declared in enum
         ProposalStatus Status;
