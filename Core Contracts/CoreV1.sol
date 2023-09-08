@@ -75,8 +75,8 @@ contract Winslow_Core_V1 {
         ChangeSaleMinimumDeposit,
         ChangeSaleDefaultSaleLength,
         ChangeSaleMaxSalePercent,
-        AddSecurityCommiteeMember,
-        RemoveSecurityCommiteeMember
+        AddSecurityCommiteeMembers,
+        RemoveSecurityCommiteeMembers
     }
 
     enum MultiOptions{
