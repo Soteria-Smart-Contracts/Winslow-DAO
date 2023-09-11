@@ -437,8 +437,6 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-        // AddSecurityCommiteeMember
-        // RemoveSecurityCommiteeMember
     
     //Sale factory variable change functions
 
