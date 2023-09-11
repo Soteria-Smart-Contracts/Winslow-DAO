@@ -74,7 +74,7 @@ contract Winslow_Core_V1 {
         ChangeSaleRetractFee,
         ChangeSaleMinimumDeposit,
         ChangeSaleDefaultSaleLength,
-        ChangeSaleMaxSalePercent,
+        ChangeSaleMaxSalePercent
     }
 
     enum MultiOptions{
