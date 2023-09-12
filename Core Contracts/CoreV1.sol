@@ -430,7 +430,12 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    function Change
+    function ChangeQuorum(uint256 newQuorum) internal returns(bool success){
+
+        Voting(VotingContract).ChangeDefaultQuorum(newQuorum);
+        
+        return(success);
+    }
 
     
     //Sale factory variable change functions
