@@ -432,7 +432,7 @@ contract Winslow_Core_V1 {
 
     function ChangeQuorum(uint256 newQuorum) internal returns(bool success){
 
-        Voting(VotingContract).ChangeDefaultQuorum(newQuorum);
+        Voting(VotingContract).ChangeQuorum(newQuorum);
         
         return(success);
     }
