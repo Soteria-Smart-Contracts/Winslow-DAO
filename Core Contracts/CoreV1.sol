@@ -423,8 +423,6 @@ contract Winslow_Core_V1 {
     }
 
 
-        // ChangeProposalCost
-
     function ChangeProposalCost(uint256 newCost) internal returns(bool success){
 
         ProposalCost = newCost;
