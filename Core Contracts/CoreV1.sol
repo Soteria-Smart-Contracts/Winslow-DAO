@@ -322,7 +322,7 @@ contract Winslow_Core_V1 {
             ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
-            ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount); //
+            ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount); //Value is stored here in basis points
         }
 
     }
