@@ -321,8 +321,9 @@ contract Winslow_Core_V1 {
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
             ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
         }
-        //Add Security Commitee Member
-        //Remove Security Commitee Member
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
+            ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount);
+        }
 
     }
 
