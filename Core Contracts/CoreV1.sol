@@ -313,7 +313,7 @@ contract Winslow_Core_V1 {
             ChangeSaleRetractFee(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
-            ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
+            ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount); 
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
             ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
