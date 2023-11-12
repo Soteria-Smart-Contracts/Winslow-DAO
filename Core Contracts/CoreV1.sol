@@ -562,7 +562,7 @@ interface ProxyContract{
         bool Bool3;
     }
 
-    function ProxyFunctionOne(ProxyProposalArguments memory) external returns(bool success);
+    function ProxyFunctionOne(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionTwo(ProxyProposalArguments) external returns(bool success);
     function ProxyFunctionThree(ProxyProposalArguments) external returns(bool success);
     function ProxyFunctionFour(ProxyProposalArguments) external returns(bool success);
