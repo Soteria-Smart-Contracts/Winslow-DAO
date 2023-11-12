@@ -281,7 +281,7 @@ contract Winslow_Core_V1 {
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
 
 
-        for (uint8 i = 0; i < Proposals[ProposalID].OptionsAvailable; i++) {
+        for (uint8 SimpleTypeIndex = 0; i < Proposals[ProposalID].OptionsAvailable; i++) {
             if(EROS(Proposals[ProposalID].AddressSlot).OptionCount() > 1){
                 SimpleTypeIndex = i;
             }
