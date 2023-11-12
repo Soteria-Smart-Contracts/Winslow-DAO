@@ -348,9 +348,7 @@ contract Winslow_Core_V1 {
         else if(ProxyArgs[ProposalID].FunctionSelector == 5){
             ProxyProposal(Proposals[ProposalID].AddressSlot).ProxyFunctionFive();
         }
-        
-        //continue to 9
-
+        else 
 
 
 
