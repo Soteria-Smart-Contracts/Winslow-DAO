@@ -213,7 +213,7 @@ contract Winslow_Core_V1 {
     function InitializeProxyProposal(string memory Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) internal returns(uint256 identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
-        require(Slot != address(0) && , "ProxyProposals must have a slotted contract");
+        require(Slot != address(0) && Slot, "ProxyProposals must have a slotted contract");
 
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
