@@ -334,7 +334,7 @@ contract Winslow_Core_V1 {
     function ExecuteProxyProposal(uint256 ProposalID) internal {
 
         if(ProxyArgs[ProposalID].FunctionSelector == 1){
-            ProxyProposal(Proposals[ProposalID].AddressSlot).ProxyFunctionOne();
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne();
         }
        
 
@@ -548,7 +548,7 @@ interface SaleFactory{
     function ChangeMaxSalePercent(uint256 NewMaxPercent) external returns(bool success);
 }
 
-interface ProxyProposal{
+interface ProxyContract{
     function ProxyFunctionOne() external returns(bool success);
     function ProxyFunctionTwo() external returns(bool success);
     function ProxyFunctionThree() external returns(bool success);
