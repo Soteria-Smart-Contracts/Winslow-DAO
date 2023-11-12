@@ -549,11 +549,11 @@ interface SaleFactory{
 }
 
 interface ProxyContract{
-    function ProxyFunctionOne() external returns(bool success);
-    function ProxyFunctionTwo() external returns(bool success);
-    function ProxyFunctionThree() external returns(bool success);
-    function ProxyFunctionFour() external returns(bool success);
-    function ProxyFunctionFive() external returns(bool success);
+    function ProxyFunctionOne(ProxyProposalArguments) external returns(bool success);
+    function ProxyFunctionTwo(ProxyProposalArguments) external returns(bool success);
+    function ProxyFunctionThree(ProxyProposalArguments) external returns(bool success);
+    function ProxyFunctionFour(ProxyProposalArguments) external returns(bool success);
+    function ProxyFunctionFive(ProxyProposalArguments) external returns(bool success);
 }
 
 interface SaleContract{
