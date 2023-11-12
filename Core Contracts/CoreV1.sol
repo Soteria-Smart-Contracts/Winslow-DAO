@@ -549,13 +549,11 @@ interface SaleFactory{
 }
 
 interface ProxyContract{
-    
-
     function ProxyFunctionOne(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionTwo(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionThree(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionFour(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionFive(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionTwo(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionThree(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionFour(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionFive(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
 }
 
 interface SaleContract{
