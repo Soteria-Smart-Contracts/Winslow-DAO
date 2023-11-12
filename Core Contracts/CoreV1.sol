@@ -549,20 +549,9 @@ interface SaleFactory{
 }
 
 interface ProxyContract{
-    struct ProxyProposalArguments{
-        uint8 FunctionSelector;
-        uint256 UnsignedInt1;
-        uint256 UnsignedInt2;
-        uint256 UnsignedInt3; 
-        address Address1;
-        address Address2;
-        address Address3;
-        bool Bool1;
-        bool Bool2;
-        bool Bool3;
-    }
+    
 
-    function ProxyFunctionOne(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionOne(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionTwo(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionThree(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionFour(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
