@@ -185,7 +185,7 @@ contract Winslow_Core_V1 {
     function InitializeSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
-        //require that
+        //require that the simple 
 
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
