@@ -331,7 +331,8 @@ contract Winslow_Core_V1 {
 
     function ExecuteProxyProposal(uint256 ProposalID) internal {
             
-            }
+            if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
+                //Do nothing, this is a placeholder for the first proposal            }
             else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(1)){
                 ProxyProposal(Proposals[ProposalID].AddressSlot).ProxyFunctionOne();
             }
