@@ -349,7 +349,37 @@ contract Winslow_Core_V1 {
         else if(ProxyArgs[ProposalID].FunctionSelector == 5){
             ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFive(ProxyArgs[ProposalID]);
         }
-        
+        else if(ProxyArgs[ProposalID].FunctionSelector == 6){
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionTwo(ProxyArgs[ProposalID]);
+        }
+        else if(ProxyArgs[ProposalID].FunctionSelector == 7){
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionThree(ProxyArgs[ProposalID]);
+        }
+        else if(ProxyArgs[ProposalID].FunctionSelector == 8){
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFour(ProxyArgs[ProposalID]);
+        }
+        else if(ProxyArgs[ProposalID].FunctionSelector == 9){
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFive(ProxyArgs[ProposalID]);
+        }
+        else if(ProxyArgs[ProposalID].FunctionSelector == 10){
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionTwo(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionThree(ProxyArgs[ProposalID]);
+        }
+        else if(ProxyArgs[ProposalID].FunctionSelector == 11){
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionTwo(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFour(ProxyArgs[ProposalID]);
+        }
+        else if(ProxyArgs[ProposalID].FunctionSelector == 12){
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionTwo(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFive(ProxyArgs[ProposalID]);
+        }
+        else if(ProxyArgs[ProposalID].FunctionSelector == 13){
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionThree(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot
        
 
 
