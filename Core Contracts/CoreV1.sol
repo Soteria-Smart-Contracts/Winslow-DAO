@@ -280,9 +280,23 @@ contract Winslow_Core_V1 {
 
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
 
-        uint256 SimpleTypeIndex;
 
-        for 
+        for (uint8 i = 0; i < Proposals[ProposalID].OptionsAvailable; i++) {
+            if(EROS(Proposals[ProposalID].AddressSlot).OptionCount() > 1){
+                SimpleTypeIndex = i;
+            }
+            else{
+                SimpleTypeIndex = 0;
+            }
+            if(EROS(Proposals[ProposalID].AddressSlot).Multi() == true){
+                if(EROS(Proposals[ProposalID].AddressSlot).GetVoteResult(ProposalInfos[ProposalID].VotingInstanceID, SimpleTypeIndex) == true){
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+        }
         
         if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
             //Do nothing, this is a placeholder for the first proposal
