@@ -108,6 +108,7 @@ contract Winslow_Core_V1 {
     }
 
     struct ProxyProposalArguments{
+        uint8 
         uint256 UnsignedInt1;
         uint256 UnsignedInt2;
         uint256 UnsignedInt3; 
@@ -330,7 +331,7 @@ contract Winslow_Core_V1 {
     //  Proxy Executionting
 
     function ExecuteProxyProposal(uint256 ProposalID) internal {
-        
+
 
         
     }
