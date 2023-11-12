@@ -334,7 +334,7 @@ contract Winslow_Core_V1 {
     function ExecuteProxyProposal(uint256 ProposalID) internal {
 
         if(ProxyArgs[ProposalID].FunctionSelector == 1){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne();
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne(ProxyProposalArguments memory ProxyArgs[ProposalID]);
         }
        
 
