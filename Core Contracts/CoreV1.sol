@@ -330,7 +330,23 @@ contract Winslow_Core_V1 {
     //  Proxy Executionting
 
     function ExecuteProxyProposal(uint256 ProposalID) internal {
-        
+            
+            }
+            else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(1)){
+                ProxyProposal(Proposals[ProposalID].AddressSlot).ProxyFunctionOne();
+            }
+            else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(2)){
+                ProxyProposal(Proposals[ProposalID].AddressSlot).ProxyFunctionTwo();
+            }
+            else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)){
+                ProxyProposal(Proposals[ProposalID].AddressSlot).ProxyFunctionThree();
+            }
+            else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(4)){
+                ProxyProposal(Proposals[ProposalID].AddressSlot).ProxyFunctionFour();
+            }
+            else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(5)){
+                ProxyProposal(Proposals[ProposalID].AddressSlot).ProxyFunctionFive();
+            }
         
 
 
