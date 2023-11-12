@@ -336,6 +336,7 @@ contract Winslow_Core_V1 {
         if(ProxyArgs[ProposalID].FunctionSelector == 1){
             ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne(ProxyArgs[ProposalID]);
         }
+        
        
 
 
