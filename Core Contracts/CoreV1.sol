@@ -279,6 +279,8 @@ contract Winslow_Core_V1 {
     //  Simple Executionting
 
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
+
+        uint256 
         
         if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
             //Do nothing, this is a placeholder for the first proposal
