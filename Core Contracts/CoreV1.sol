@@ -563,10 +563,10 @@ interface ProxyContract{
     }
 
     function ProxyFunctionOne(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionTwo(ProxyProposalArguments) external returns(bool success);
-    function ProxyFunctionThree(ProxyProposalArguments) external returns(bool success);
-    function ProxyFunctionFour(ProxyProposalArguments) external returns(bool success);
-    function ProxyFunctionFive(ProxyProposalArguments) external returns(bool success);
+    function ProxyFunctionTwo(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionThree(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionFour(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionFive(ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
 }
 
 interface SaleContract{
