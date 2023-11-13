@@ -236,6 +236,9 @@ contract Winslow_Core_V1 {
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
+        uint256 RequestedEther = 
+        uint256 RequestedAssetAmount
+
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, true);
 
         if(EROS(Slot).Multi() ==  true){
