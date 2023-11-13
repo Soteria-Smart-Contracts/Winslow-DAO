@@ -239,7 +239,8 @@ contract Winslow_Core_V1 {
         uint256 RequestedEther = EROS(Slot).RequestEther();
         uint256 RequestedAssetAmount = EROS(Slot).RequestTokens();
 
-        
+        if()
+
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, true);
 
         if(EROS(Slot).Multi() ==  true){
