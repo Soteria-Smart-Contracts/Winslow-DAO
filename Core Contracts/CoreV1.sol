@@ -619,5 +619,5 @@ interface EROS {
     function Multi() external view returns(bool);
     function OptionCount() external view returns(uint8);
     function RequestEther() external view returns(uint8);
-    function OptionCount() external view returns(uint8);
+    function TokenIdentifier() external view returns(uint8);
 }
