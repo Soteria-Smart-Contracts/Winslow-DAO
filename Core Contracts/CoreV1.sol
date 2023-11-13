@@ -229,6 +229,7 @@ contract Winslow_Core_V1 {
     }
 
     function InitializeErosProposal(address ProposalAddress) internal returns(uint256 identifier){
+        uint256 VotingLength = EROS(ProposalAddress).VoteLength();
 
         require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
         require(ProposalAddress != address(0), "ErosProposals must have a slotted contract");
@@ -237,8 +238,7 @@ contract Winslow_Core_V1 {
         MRIdentifier++;
 
         string Memo = EROS(ProposalAddress).ProposalMemo();
-        uint256 VotingLength = EROS(ProposalAddress).VoteLength();
-        uint256 RequestedEther = EROS(ProposalAddress).RequestEther();
+\        uint256 RequestedEther = EROS(ProposalAddress).RequestEther();
         uint256 RequestedAssetAmount = EROS(ProposalAddress).RequestTokens();
         uint256 RequestedAssetID = EROS(ProposalAddress).TokenIdentifier();
 
