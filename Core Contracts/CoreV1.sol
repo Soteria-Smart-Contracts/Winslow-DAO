@@ -239,7 +239,7 @@ contract Winslow_Core_V1 {
 
         string memory Memo = EROS(ProposalAddress).ProposalMemo();
         uint256 RequestedEther = EROS(ProposalAddress).RequestEther();
-        uint256 RequestedAssetAmount = EROS(ProposalAddress).RequestTokens();
+        uint256 RequestedAssetAmount = EROS(ProposalAddress).RequestedTokens();
         uint256 RequestedAssetID = EROS(ProposalAddress).TokenIdentifier();
 
         if(RequestedAssetAmount > 0){
