@@ -235,8 +235,9 @@ contract Winslow_Core_V1 {
 
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
+        
 
-        uint256 VotingLength = E
+        uint256 VotingLength = EROS(Slot).VoteLength();
         uint256 RequestedEther = EROS(Slot).RequestEther();
         uint256 RequestedAssetAmount = EROS(Slot).RequestTokens();
 
