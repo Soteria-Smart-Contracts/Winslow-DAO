@@ -618,6 +618,6 @@ interface EROS {
     function DAO() external view returns(address DAOaddress);
     function Multi() external view returns(bool);
     function OptionCount() external view returns(uint8);
-    function OptionCount() external view returns(uint8);
+    function RequestEther() external view returns(uint8);
     function OptionCount() external view returns(uint8);
 }
