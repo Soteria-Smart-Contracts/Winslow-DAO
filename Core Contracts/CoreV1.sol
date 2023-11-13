@@ -248,15 +248,15 @@ contract Winslow_Core_V1 {
 
         uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, true);
 
-        if(EROS(Slot).Multi() ==  true){
-            require(EROS(Slot).OptionCount() > 1, 'Eros proposal marked as multiple options true, but less than two options are available');
+        if(EROS(ProposalAddress).Multi() ==  true){
+            require(EROS(ProposalAddress).OptionCount() > 1, 'Eros proposal marked as multiple options true, but less than two options are available');
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
-            Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, EROS(Slot).OptionCount(), true, false, msg.sender);
+            Proposals[NewIdentifier] = Proposal(ProposalAddress, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, EROS(Slot).OptionCount(), true, false, msg.sender);
             ProxyArgs[NewIdentifier] = EmptyProxy;
         }
         else{
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
-            Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
+            Proposals[NewIdentifier] = Proposal(ProposalAddress, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
             ProxyArgs[NewIdentifier] = EmptyProxy;
         }
 
