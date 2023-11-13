@@ -236,6 +236,7 @@ contract Winslow_Core_V1 {
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
+        Voting
         uint256 RequestedEther = EROS(Slot).RequestEther();
         uint256 RequestedAssetAmount = EROS(Slot).RequestTokens();
 
