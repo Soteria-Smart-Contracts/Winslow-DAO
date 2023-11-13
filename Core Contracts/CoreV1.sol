@@ -237,7 +237,7 @@ contract Winslow_Core_V1 {
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        string Memo = EROS(ProposalAddress).ProposalMemo();
+        string memory Memo = EROS(ProposalAddress).ProposalMemo();
         uint256 RequestedEther = EROS(ProposalAddress).RequestEther();
         uint256 RequestedAssetAmount = EROS(ProposalAddress).RequestTokens();
         uint256 RequestedAssetID = EROS(ProposalAddress).TokenIdentifier();
