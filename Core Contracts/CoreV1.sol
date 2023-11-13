@@ -626,4 +626,5 @@ interface EROS {
     function RequestEther() external view returns(uint8);
     function TokenIdentifier() external view returns(uint8);
     function Execute() external returns(bool success);
+    function 
 }
