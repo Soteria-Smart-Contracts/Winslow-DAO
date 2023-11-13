@@ -630,5 +630,5 @@ interface EROS {
     function Execute() external returns(bool success);
     function ProposalMemo() external view returns(string memory);
     function VoteLength() external view returns(uint256);
-    function TokenIdentifier() external view returns(uint256);
+    function RequestTokens() external view returns(uint256);
 }
