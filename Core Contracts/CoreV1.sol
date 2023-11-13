@@ -165,7 +165,7 @@ contract Winslow_Core_V1 {
 
         require(ReceiveProposalCost());
 
-        InitializeErosProposal(Memo, Slot, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        InitializeErosProposal(ProposalAddress);
         
         return(success);
 
