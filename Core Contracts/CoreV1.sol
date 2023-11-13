@@ -240,6 +240,7 @@ contract Winslow_Core_V1 {
         uint256 VotingLength = EROS(ProposalAddress).VoteLength();
         uint256 RequestedEther = EROS(ProposalAddress).RequestEther();
         uint256 RequestedAssetAmount = EROS(ProposalAddress).RequestTokens();
+        uint256 RequestedAssetID = EROS(ProposalAddress).TokenIdentifier();
 
         if(RequestedAssetAmount > 0){
             require(RequestedAssetID > 0 && RequestedAssetID <= 255 && RequestedAssetID <= Treasury(TreasuryContract).RegisteredAssetLimit(), "Requested asset ID must be atleast 1 and be registered in the treasury");
