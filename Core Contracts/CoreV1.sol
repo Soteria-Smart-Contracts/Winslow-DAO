@@ -77,8 +77,8 @@ contract Winslow_Core_V1 {
         ChangeSaleDefaultSaleLength,
         ChangeSaleMaxSalePercent,
         ChangeDefaultQuorum,
-        ChangeFoundationAddress
-        Change
+        ChangeFoundationAddress,
+        ChangeVotingLength
     }
 
     enum MultiOptions{
