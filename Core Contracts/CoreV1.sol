@@ -458,8 +458,8 @@ contract Winslow_Core_V1 {
 
         return(success);
     }
-        //TODO:
-        // StartPublicSale
+
+
     function StartPublicSale(uint256 CLDtoSell) internal returns(bool success, address NewSaleContract){
         require(!SaleActive());
         LatestSale++;
