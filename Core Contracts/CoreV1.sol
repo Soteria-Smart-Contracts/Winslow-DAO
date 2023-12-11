@@ -300,55 +300,39 @@ contract Winslow_Core_V1 {
     //  Simple Executionting
 
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
-        
-        if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
-            //Do nothing, this is a placeholder for the first proposal
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(1)){
+        if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)) {
+            // Do nothing, this is a placeholder for the first proposal
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(1)) {
             SendAssets(ProposalID);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(2)){
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(2)) {
             RegisterTreasuryAsset(ProposalID);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)){
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)) {
             ChangeRegisteredAssetLimit(ProposalID);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(4)){
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(4)) {
             ReplaceTreasury(Proposals[ProposalID].AddressSlot);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(5)){
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(5)) {
             ReplaceVoting(Proposals[ProposalID].AddressSlot);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(6)){
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(6)) {
             ReplaceCore(Proposals[ProposalID].AddressSlot);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)) {
             StartPublicSale(Proposals[ProposalID].RequestedAssetAmount);
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)) {
+            ChangeProposalCost(Proposals[ProposalID].RequestedEther);
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)) {
+            ChangeSaleFoundationFee(Proposals[ProposalID].RequestedEther);
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)) {
+            ChangeSaleRetractFee(Proposals[ProposalID].RequestedEther);
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)) {
+            ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEther);
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)) {
+            ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEther);
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)) {
+            ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEther);
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)) {
+            ChangeQuorum(Proposals[ProposalID].RequestedEther);
+        } else if (ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)) {
+            // Add your code here for SimpleProposalTypes(15)
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
-            ChangeProposalCost(Proposals[ProposalID].RequestedEtherAmount);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)){
-            ChangeSaleFoundationFee(Proposals[ProposalID].RequestedEtherAmount);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
-            ChangeSaleRetractFee(Proposals[ProposalID].RequestedEtherAmount);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
-            ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount); 
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
-            ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
-            ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in basis points
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
-            ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in basis points
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
-        }
-
     }
 
     //  Proxy Executionting
