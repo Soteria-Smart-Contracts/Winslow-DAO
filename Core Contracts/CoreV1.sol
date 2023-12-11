@@ -348,7 +348,6 @@ contract Winslow_Core_V1 {
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
         }
-
     }
 
     //  Proxy Executionting
