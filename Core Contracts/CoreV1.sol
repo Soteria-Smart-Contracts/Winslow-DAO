@@ -194,7 +194,7 @@ contract Winslow_Core_V1 {
 
     //  Internal Functions
 
-    function InitializeSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
+    function InitializeSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
         require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
 
         uint256 NewIdentifier = MRIdentifier++;
