@@ -165,7 +165,7 @@ contract Winslow_Core_V1 {
 
     }
 
-    function SubmitProxyProposal(string memory Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) public returns(bool success){
+    function SubmitProxyProposal(string memory Memo, address Slot, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) public returns(bool success){
 
         require(ReceiveProposalCost());
 
