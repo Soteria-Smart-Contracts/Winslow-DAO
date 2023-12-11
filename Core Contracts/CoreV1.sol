@@ -131,7 +131,7 @@ contract Winslow_Core_V1 {
 
     //TODOs
     //TODO: Consider two day fixed voting length for all proposals
-    //TODO: Prepare 
+    //TODO: Prepare proposal queue functionality where the highest reward proposal is always at the top of the queue
 
 
 
