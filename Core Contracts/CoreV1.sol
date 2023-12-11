@@ -130,7 +130,7 @@ contract Winslow_Core_V1 {
     }
 
     //TODOs
-    //
+    //TODO: Make a community agreed first memo
 
 
 
