@@ -22,7 +22,7 @@ contract Winslow_Core_V1 {
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
     //two days
-    uint256 public VoteLength 
+    uint256 public VoteLength = 
     ProxyProposalArguments internal EmptyProxy;
 
     //Mapping, structs and other declarations
