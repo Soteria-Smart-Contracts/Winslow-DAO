@@ -265,7 +265,6 @@ contract Winslow_Core_V1 {
         }
 
         return(NewIdentifier);
-
     }
 
     //  Execution Functions
