@@ -437,9 +437,9 @@ contract Winslow_Core_V1 {
     }
 
     // ReplaceSaleModule
-    function ReplaceSaleModule(address NewSaleModule) internal returns(bool success){
+    function ReplaceSaleFactory(address NewSaleModule) internal returns(bool success){
 
-        SaleModule = NewSaleModule;
+        SaleFactoryContract = NewSaleModule;
         
         return success;
     }
