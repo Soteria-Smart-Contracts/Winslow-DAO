@@ -438,8 +438,8 @@ contract Winslow_Core_V1 {
 
     //TODO: ReplaceSaleModule
 
-    function ReplaceSale(address NewSale) internal returns(bool success){
-        
+    
+
 
     //replace sale module
 
