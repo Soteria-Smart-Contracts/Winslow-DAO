@@ -179,8 +179,6 @@ contract Winslow_Core_V1 {
         return(Treasury(TreasuryContract).CLDAddress());
     }
 
-    //  Address Specific State Modifying Function
-
 
     //  Internal Functions
 
