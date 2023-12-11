@@ -435,6 +435,8 @@ contract Winslow_Core_V1 {
 
     //TODO: ReplaceSaleModule
 
+    
+
         // CoreReplacement
     function ReplaceCore(address NewCore) internal returns(bool success){
         IsActiveContract = false;
