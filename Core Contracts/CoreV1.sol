@@ -67,6 +67,7 @@ contract Winslow_Core_V1 {
         ChangeRegisteredAssetLimit,
         TreasuryReplacement,
         VotingReplacement,
+        SaleFactoryReplacement,
         CoreReplacement,
         StartPublicSale,
         ChangeProposalCost,
