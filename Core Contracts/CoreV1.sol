@@ -454,8 +454,7 @@ contract Winslow_Core_V1 {
         Replacements(NewCore).InheritCore(TreasuryContract, VotingContract, MRIdentifier, ProposalCost); //TODO: Make sure it transfers all needed info, add sale info
         Replacements(TreasuryContract).ChangeDAO(NewCore);
         Replacements(VotingContract).ChangeDAO(NewCore);
-
-        //TODO: tell sale module to switch contract
+        Replacements(SaleFactoryContract).ChangeDAO(NewCore);
 
         return(success);
     }
