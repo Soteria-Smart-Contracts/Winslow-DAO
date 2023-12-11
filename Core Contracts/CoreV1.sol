@@ -322,10 +322,10 @@ contract Winslow_Core_V1 {
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(6)){
             ReplaceSaleFactory(Proposals[ProposalID].AddressSlot);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes()){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
             ReplaceCore(Proposals[ProposalID].AddressSlot);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
             StartPublicSale(Proposals[ProposalID].RequestedAssetAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
