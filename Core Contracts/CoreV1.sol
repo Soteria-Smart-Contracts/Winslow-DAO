@@ -337,6 +337,8 @@ contract Winslow_Core_V1 {
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
             ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in basis points
         }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
+        }
 
     }
 
