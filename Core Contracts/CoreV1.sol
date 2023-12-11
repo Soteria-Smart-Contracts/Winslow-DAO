@@ -443,7 +443,12 @@ contract Winslow_Core_V1 {
         return success;
     }
 
-    //change found
+    function ChangeFoundationAddress(address NewFoundationAddress) internal returns(bool success){
+
+        FoundationAddress = NewFoundationAddress;
+        
+        return(success);
+    }
 
     
 
