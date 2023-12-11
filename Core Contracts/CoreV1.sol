@@ -220,14 +220,13 @@ contract Winslow_Core_V1 {
     }
 
     function InitializeProxyProposal(string memory Memo, address Slot, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) internal returns(uint256 identifier){
-
         require(Slot != address(0), "ProxyProposals must have a slotted contract");
         require(ProxyArguments.FunctionSelector > 0 && ProxyArguments.FunctionSelector < 9, "Proxy proposal function selector must be between 1 and 9");
 
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VotingLength, false);
+        uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, VoteLength, false);
         ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VotingLength);
         Proposals[NewIdentifier] = Proposal(Slot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
         ProxyArgs[NewIdentifier] = ProxyArguments;
