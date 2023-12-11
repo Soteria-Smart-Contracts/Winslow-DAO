@@ -436,7 +436,8 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    func
+    //create a replace sale module function
+    
 
     
 
