@@ -328,30 +328,27 @@ contract Winslow_Core_V1 {
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
             StartPublicSale(Proposals[ProposalID].RequestedAssetAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)){
             ChangeProposalCost(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
             ChangeSaleFoundationFee(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
             ChangeSaleRetractFee(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
             ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount); 
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
             ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
             ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in basis points
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
             ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in basis points
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
-        }
-
     }
 
     //  Proxy Executionting
