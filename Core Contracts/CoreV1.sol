@@ -447,15 +447,11 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-function ReplaceSaleFactory(address NewSaleFactory) internal returns(bool success) {
-    SaleFactoryContract = NewSaleFactory;
-    return success;
-}
+    function ReplaceSaleFactory(address NewSaleFactory) internal returns(bool success) {
+        SaleFactoryContract = NewSaleFactory;
+        return success;
+    }
 
-
-    
-
-        // CoreReplacement
     function ReplaceCore(address NewCore) internal returns(bool success){
         IsActiveContract = false;
 
