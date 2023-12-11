@@ -132,7 +132,8 @@ contract Winslow_Core_V1 {
     //TODO: Make Events
     event FallbackToTreasury(uint256 amount);
     event NewTreasurySet(address NewTreasury);
-    //create all the events we need and in the following line for each add a comment and the line or lines it should be ins
+    //create all the events we need and in the following line for each add a comment and the line or lines it should be inserted into
+    
 
 
     constructor(){
