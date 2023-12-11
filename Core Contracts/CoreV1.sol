@@ -320,6 +320,9 @@ contract Winslow_Core_V1 {
             ReplaceVoting(Proposals[ProposalID].AddressSlot);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(6)){
+            ReplaceVoting(Proposals[ProposalID].AddressSlot);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(6)){
             ReplaceCore(Proposals[ProposalID].AddressSlot);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
