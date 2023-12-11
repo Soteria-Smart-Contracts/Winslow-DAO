@@ -428,7 +428,6 @@ contract Winslow_Core_V1 {
         return(success);
     }
     
-        // VotingChange
     function ReplaceVoting(address NewVoting) internal returns(bool success){
         
         Replacements(NewVoting).SendPredecessor(VotingContract);
@@ -437,13 +436,14 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    // ReplaceSaleModule
     function ReplaceSaleFactory(address NewSaleModule) internal returns(bool success){
 
         SaleFactoryContract = NewSaleModule;
         
         return success;
     }
+
+    //change found
 
     
 
