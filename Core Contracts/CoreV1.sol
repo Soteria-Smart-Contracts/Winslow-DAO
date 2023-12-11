@@ -150,7 +150,7 @@ contract Winslow_Core_V1 {
         InitialSetter = msg.sender;
         EmptyProxy = ProxyProposalArguments(0, 0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
         //TODO: Special proposal in index 0
-        SubmitSimpleProposal("TODO: Make a community agreed first memo", address(0), 0, SimpleProposalTypes(0), RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        SubmitSimpleProposal("TODO: Make a community agreed first memo", address(0), 0, SimpleProposalTypes(0), 0, 0, 0);
     }
 
     //Public state-modifing functions
