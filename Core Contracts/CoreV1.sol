@@ -438,6 +438,8 @@ contract Winslow_Core_V1 {
 
     //TODO: ReplaceSaleModule
 
+    function Rep
+
     //replace sale module
 
         // CoreReplacement
