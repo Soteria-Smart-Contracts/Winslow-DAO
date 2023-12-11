@@ -236,7 +236,6 @@ contract Winslow_Core_V1 {
     }
 
     function InitializeErosProposal(address ProposalAddress) internal returns(uint256 identifier){
-
         require(ProposalAddress != address(0), "ErosProposals must have a slotted contract");
 
         uint256 NewIdentifier = MRIdentifier++;
