@@ -195,9 +195,7 @@ contract Winslow_Core_V1 {
     //  Internal Functions
 
     function InitializeSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
-
-        require(VotingLength >= 86400 && VotingLength <= 1209600, "Voting must be atleast 24 hours and less than two weeks");
-        require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
+require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
 
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
@@ -213,7 +211,7 @@ contract Winslow_Core_V1 {
             ProxyArgs[NewIdentifier] = ProxyArgsWithSlot;
         } 
         else{
-            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VotingLength);
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VoteLength);
             Proposals[NewIdentifier] = Proposal(AddressSlot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
             ProxyArgs[NewIdentifier] = EmptyProxy;
         }
