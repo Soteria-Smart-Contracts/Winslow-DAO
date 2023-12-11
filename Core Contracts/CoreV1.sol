@@ -162,7 +162,6 @@ contract Winslow_Core_V1 {
 
     }
 
-
     function SubmitErosProposal(address ProposalAddress) public returns(bool success){
 
         require(ReceiveProposalCost());
