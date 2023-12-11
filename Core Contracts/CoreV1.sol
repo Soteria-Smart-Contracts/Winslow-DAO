@@ -139,7 +139,7 @@ contract Winslow_Core_V1 {
         InitialSetter = msg.sender;
         EmptyProxy = ProxyProposalArguments(0, 0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
         //TODO: Special proposal in index 0
-        
+        SubmitSimpleProposal(Memo, AddressSlot, UintSlot, SimpleType, VotingLength, RequestedEther, RequestedAssetAmount, RequestedAssetID);
     }
 
     //Public state-modifing functions
