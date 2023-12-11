@@ -207,7 +207,6 @@ contract Winslow_Core_V1 {
         }
 
         return(NewIdentifier);
-
     }
 
     function InitializeProxyProposal(string memory Memo, address Slot, uint256 VotingLength, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) internal returns(uint256 identifier){
