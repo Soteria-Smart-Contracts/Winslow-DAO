@@ -130,7 +130,8 @@ contract Winslow_Core_V1 {
     }
 
     //TODOs
-    //TODO: Consider two day fixed vo
+    //TODO: Consider two day fixed voting length for all proposals
+    //TODO: Prepare 
 
 
 
