@@ -386,7 +386,11 @@ contract Winslow_Core_V1 {
     //  Eros Executionting
 
     function ExecuteErosProposal(uint256 ProposalID) internal {
-        
+        // Send requested assets out to the eros address
+        SendAssets(ProposalID);
+
+        // Execute the eros proposal
+        ErosContract(Proposals[ProposalID].AddressSlot).ExecuteProposal(ProposalID);
     }
 
     //  Internal Simple Proposal Call Functions
