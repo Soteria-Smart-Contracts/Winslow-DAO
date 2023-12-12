@@ -197,7 +197,7 @@ contract Winslow_Core_V1 {
             ProxyProposalArguments storage ProxyArgsWithSlot = EmptyProxy;
             ProxyArgsWithSlot.UnsignedInt1 = UintSlot;
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VoteLength);
-            Proposals[NewIdentifier] = Proposal(AddressSlot, SecurityStatus(0), RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
+            Proposals[NewIdentifier] = Proposal(AddressSlot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
             ProxyArgs[NewIdentifier] = ProxyArgsWithSlot;
         } 
         else{
