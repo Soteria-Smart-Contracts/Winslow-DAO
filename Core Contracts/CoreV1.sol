@@ -536,6 +536,13 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
+    function ChangeVotingLength(uint256 NewLength) internal returns(bool success){
+                
+        VoteLength = NewLength;
+        
+        return(success);
+    }
+
     // Other Internals
     //TODO: Make the cuts changeable via proposal
     function ReceiveProposalCost() internal returns(bool success){
