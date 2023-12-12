@@ -613,6 +613,11 @@ interface ProxyContract{
     function ProxyFunctionThree(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionFour(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionFive(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionSix(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionSeven(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionEight(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    function ProxyFunctionNine(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
+    
 }
 
 interface SaleContract{
