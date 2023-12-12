@@ -379,7 +379,7 @@ contract Winslow_Core_V1 {
             ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionEight(ProxyArgs[ProposalID]);
         }
         else if(ProxyArgs[ProposalID].FunctionSelector == 9){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFive(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionNine(ProxyArgs[ProposalID]);
         }
     }
 
