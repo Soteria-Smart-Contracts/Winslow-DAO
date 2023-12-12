@@ -390,7 +390,7 @@ contract Winslow_Core_V1 {
         SendAssets(ProposalID);
 
         // Execute the eros proposal
-        EROS(Proposals[ProposalID].AddressSlot).ExecuteProposal(ProposalID);
+        EROS(Proposals[ProposalID].AddressSlot).Execute();
     }
 
     //  Internal Simple Proposal Call Functions
