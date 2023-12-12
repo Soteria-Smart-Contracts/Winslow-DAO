@@ -47,14 +47,6 @@ contract Winslow_Core_V1 {
         Rejected
     }
 
-    enum SecurityStatus{
-        Unconfirmed,
-        Safe,
-        Medium,
-        Severe,
-        Fatal
-    }
-
     enum ProposalTypes{
         Simple,
         Proxy,
@@ -101,7 +93,6 @@ contract Winslow_Core_V1 {
 
     struct Proposal{
         address AddressSlot;            //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal contract
-        SecurityStatus SecurityLevel;   //Types declared in enum
         uint256 RequestedEtherAmount;   //Optional, can be zero
         uint256 RequestedAssetAmount;   //Optional, can be zero
         uint8 RequestedAssetID;         //Treasury asset identifier for proposals moving funds
