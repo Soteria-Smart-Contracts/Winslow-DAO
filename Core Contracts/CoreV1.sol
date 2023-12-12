@@ -617,7 +617,6 @@ interface ProxyContract{
     function ProxyFunctionSeven(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionEight(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionNine(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    
 }
 
 interface SaleContract{
