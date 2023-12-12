@@ -392,8 +392,7 @@ contract Winslow_Core_V1 {
         // Execute the eros proposal
         EROS(Proposals[ProposalID].AddressSlot).Execute();
 
-        //what else needs to be done such as updating the proposal info and proposal struct?
-        //
+        
     }
 
     //  Internal Simple Proposal Call Functions
