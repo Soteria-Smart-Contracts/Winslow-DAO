@@ -370,13 +370,13 @@ contract Winslow_Core_V1 {
             ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFive(ProxyArgs[ProposalID]);
         }
         else if(ProxyArgs[ProposalID].FunctionSelector == 6){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionTwo(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionSix(ProxyArgs[ProposalID]);
         }
         else if(ProxyArgs[ProposalID].FunctionSelector == 7){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionThree(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionSeven(ProxyArgs[ProposalID]);
         }
         else if(ProxyArgs[ProposalID].FunctionSelector == 8){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFour(ProxyArgs[ProposalID]);
+            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionEight(ProxyArgs[ProposalID]);
         }
         else if(ProxyArgs[ProposalID].FunctionSelector == 9){
             ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFive(ProxyArgs[ProposalID]);
