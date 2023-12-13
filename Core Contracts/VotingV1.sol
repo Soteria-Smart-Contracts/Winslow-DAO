@@ -189,7 +189,6 @@ contract Winslow_Voting_V1 {
         emit ProposalIncentivized(msg.sender, VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
         
         return(success);
-
     }
 
     //Post-Vote Functions
