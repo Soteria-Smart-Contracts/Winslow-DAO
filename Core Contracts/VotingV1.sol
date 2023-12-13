@@ -221,6 +221,8 @@ contract Winslow_Voting_V1 {
 
     //TODO: ReturnAllVotedTokens
     function ReturnAllVotedTokens() public {
+
+        for
         
     }
 
