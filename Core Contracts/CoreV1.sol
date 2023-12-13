@@ -589,7 +589,7 @@ contract Winslow_Core_V1 {
 
 interface Voting{
     function InitializeVoteInstance(uint256 ProposalID, uint256 VotingLength, bool Multi) external returns(uint256 VoteInstanceID);
-    function GetVoteResult(uint256 VoteInstanceID) external view returns(bool Result);
+    function GetVoteResult(uint256 VoteInstanceID) external view returns(bool Result, uint8 Multi);
     function ChangeQuorum(uint256 NewQuorumBasisPoints) external returns(bool success);
 }
 
