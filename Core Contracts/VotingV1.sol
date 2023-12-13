@@ -28,7 +28,7 @@ contract Winslow_Voting_V1 {
     mapping(uint256 => mapping(address => VoterDetails)) public VoterInfo;
     mapping(address => uint256[]) public UserVotingHistory;
     //voting history index
-    mapping(uint256 => uint256) public VotingHistoryIndex;
+    mapping
 
     //TODO: Somehow list all active proposals for voting for frontend
 
