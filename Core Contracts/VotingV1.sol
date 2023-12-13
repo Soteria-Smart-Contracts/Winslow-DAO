@@ -221,7 +221,43 @@ contract Winslow_Voting_V1 {
 
     //TODO: ReturnAllVotedTokens
     function ReturnAllVotedTokens() public {
-        
+}
+
+    //Public View Functions
+
+    function CLDAddress() public view returns(address CLD){
+        return(Core(DAO).CLDAddress());
+    }
+
+    //TODO: GetVotingResult
+
+    //OnlyDAO functions
+
+        //Vote Setup
+    function InitializeVoteInstance(uint256 ProposalID, uint256 VotingLength, bool Multi) external OnlyDAO returns(uint256 VoteInstanceID){
+
+        uint256 NewInstanceID = MRInstance++;
+        ActiveInstances++;
+        uint256 PublicVotingStart = block.timestamp + 43200;
+        uint256 PublicVotingEnd = PublicVotingStart + VotingLength;
+        address[] memory Empty;
+
+        VotingInstances[NewInstanceID] = VoteInstance(ProposalID,PublicVotingStart,PublicVotingEnd,VoteStatus(0),Empty,0,Multi,0,0,0,0,0,0,0);
+
+        // emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
+
+        return NewInstanceID;
+    }
+
+    function IsProposalVoteComplete(uint256 ProposalID) public view returns (bool) {
+        for (uint256 i = 0; i < ActiveInstances; i++) {
+            if (VotingInstances[i].ProposalID == ProposalID && VotingInstances[i].Status != VoteStatus(2)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
     }
 
     //Public View Functions
