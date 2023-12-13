@@ -26,7 +26,6 @@ contract Winslow_Voting_V1 {
     mapping(uint256 => MultiVoteCard) public MultiVotes;
     // Map user addresses to their voting information
     mapping(uint256 => mapping(address => VoterDetails)) public VoterInfo;
-    mapping(address => uint256[]) public UserVotingHistory;
 
     mapping(address => uint256[]) public UserUnreturnedVotes;
     mapping(address => mapping(uint256 => uint256)) public UserUnreturnedVotesIndex;
