@@ -201,13 +201,13 @@ contract Winslow_Voting_V1 {
         require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Voting has not ended for this instance");
 
+        
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
 
         uint256 TotalToReturn;
         TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
         TotalToReturn += (((VoterInfo[VotingInstance][msg.sender].VotesLocked * 100) * VotingInstances[VotingInstance].IncentivePerVote) / 10**9);
 
-        
 
         ERC20(CLDAddress()).transfer(msg.sender, TotalToReturn);
 
