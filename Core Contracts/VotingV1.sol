@@ -206,6 +206,7 @@ contract Winslow_Voting_V1 {
         if(UserUnreturnedVotes.length > 1){
             UserUnreturnedVotes[msg.sender][index] = UserUnreturnedVotes[msg.sender][UserUnreturnedVotes[msg.sender].length - 1];
         }
+        UserUnreturnedVotes[msg.sender].pop();
 
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
 
