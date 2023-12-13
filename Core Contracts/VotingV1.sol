@@ -201,36 +201,9 @@ contract Winslow_Voting_V1 {
         require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Voting has not ended for this instance");
 
-function ReturnTokens(uint256 VotingInstance) external {
-    require(VoterInfo[VotingInstance][msg.sender].Voted == true);
-    require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
-    require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Voting has not ended for this instance");
-
-    VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
-
-    uint256 TotalToReturn;
-    TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
-    TotalToReturn += (((VoterInfo[VotingInstance][msg.sender].VotesLocked * 100) * VotingInstances[VotingInstance].IncentivePerVote) / 10**9);
-
-    ERC20(CLDAddress()).transfer(msg.sender, TotalToReturn);
-
-    emit TokensReturned(msg.sender, TotalToReturn, (TotalToReturn - VoterInfo[VotingInstance][msg.sender].VotesLocked));
-
-    // Remove the VotingInstance from UserUnreturnedVotes array
-    uint256 index = UserUnreturnedVotesIndex[msg.sender][VotingInstance];
-    if (index < UserUnreturnedVotes[msg.sender].length - 1) {
-        // Swap the last element with the element to be removed
         UserUnreturnedVotes[msg.sender][index] = UserUnreturnedVotes[msg.sender][UserUnreturnedVotes[msg.sender].length - 1];
         UserUnreturnedVotesIndex[msg.sender][UserUnreturnedVotes[msg.sender][index]] = index;
-    }
-    UserUnreturnedVotes[msg.sender].pop();
-    delete UserUnreturnedVotesIndex[msg.sender][VotingInstance];
-
-    // Handle if there is only one item in the array
-    if (UserUnreturnedVotes[msg.sender].length == 1) {
-        UserUnreturnedVotes[msg.sender].pop();
-    }
-}
+        
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
 
         uint256 TotalToReturn;
