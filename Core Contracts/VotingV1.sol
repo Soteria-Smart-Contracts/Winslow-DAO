@@ -220,7 +220,7 @@ contract Winslow_Voting_V1 {
     } 
 
     //TODO: ReturnAllVotedTokens
-    function ReturnAllVotedTokens
+    function ReturnAllVotedTokens() externa
 
     //Public View Functions
 
