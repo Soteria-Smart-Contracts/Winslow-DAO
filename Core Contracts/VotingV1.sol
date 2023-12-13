@@ -196,7 +196,7 @@ contract Winslow_Voting_V1 {
 
     //Post-Vote Functions
 
-    function ReturnTokens(uint256 VotingInstance) external { //For returning your tokens for a specific instance after voting, with the incentive payout
+    function ReturnTokens(uint256 VotingInstance) public { //For returning your tokens for a specific instance after voting, with the incentive payout
         require(VoterInfo[VotingInstance][msg.sender].Voted == true);
         require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Voting has not ended for this instance");
@@ -220,7 +220,7 @@ contract Winslow_Voting_V1 {
     } 
 
     //TODO: ReturnAllVotedTokens
-    function ReturnAllVotedTokens() externa
+    function ReturnAllVotedTokens() external
 
     //Public View Functions
 
