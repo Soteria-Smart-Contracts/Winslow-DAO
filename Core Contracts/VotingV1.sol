@@ -201,9 +201,9 @@ contract Winslow_Voting_V1 {
         require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Voting has not ended for this instance");
 
+        index 
         UserUnreturnedVotes[msg.sender][index] = UserUnreturnedVotes[msg.sender][UserUnreturnedVotes[msg.sender].length - 1];
         UserUnreturnedVotesIndex[msg.sender][UserUnreturnedVotes[msg.sender][index]] = index;
-        
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
 
         uint256 TotalToReturn;
