@@ -207,7 +207,7 @@ contract Winslow_Voting_V1 {
             UserUnreturnedVotes[msg.sender][index] = UserUnreturnedVotes[msg.sender][UserUnreturnedVotes[msg.sender].length - 1];
             UserUnreturnedVotesIndex[msg.sender][UserUnreturnedVotes[msg.sender][index]] = index;
         } else{
-            delete UserUnreturnedVotes[msg.sender];
+            UserUnreturnedVotesIndex[msg.sender][UserUnreturnedVotes[msg.sender][index]] = 0;
         }
         UserUnreturnedVotes[msg.sender].pop();
 
