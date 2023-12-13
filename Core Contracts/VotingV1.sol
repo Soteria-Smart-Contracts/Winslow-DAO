@@ -208,7 +208,6 @@ contract Winslow_Voting_V1 {
         ERC20(CLDAddress()).transfer(msg.sender, TotalToReturn);
 
         emit TokensReturned(msg.sender, TotalToReturn, (TotalToReturn - VoterInfo[VotingInstance][msg.sender].VotesLocked));
-
     } 
 
     //TODO: ReturnAllVotedTokens
