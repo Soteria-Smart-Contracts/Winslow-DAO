@@ -209,6 +209,7 @@ contract Winslow_Voting_V1 {
         } else{
             UserUnreturnedVotesIndex[msg.sender][index] = 0;
         }
+        
         UserUnreturnedVotes[msg.sender].pop();
 
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
