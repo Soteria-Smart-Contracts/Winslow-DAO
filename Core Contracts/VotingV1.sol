@@ -203,13 +203,8 @@ contract Winslow_Voting_V1 {
 
         uint256 index = UserUnreturnedVotesIndex[msg.sender][VotingInstance];
 
-        if(UserUnreturnedVotes[msg.sender].length > 1){
-            UserUnreturnedVotes[msg.sender][index] = UserUnreturnedVotes[msg.sender][UserUnreturnedVotes[msg.sender].length - 1];
-            UserUnreturnedVotesIndex[msg.sender][UserUnreturnedVotes[msg.sender][index]] = index;
-        } else{
-            UserUnreturnedVotesIndex[msg.sender][index] = 0;
-        }
-        
+        UserUnreturnedVotes[msg.sender][index] = UserUnreturnedVotes[msg.sender][UserUnreturnedVotes[msg.sender].length - 1];
+        UserUnreturnedVotesIndex[msg.sender][UserUnreturnedVotes[msg.sender][index]] = index;
         UserUnreturnedVotes[msg.sender].pop();
 
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
