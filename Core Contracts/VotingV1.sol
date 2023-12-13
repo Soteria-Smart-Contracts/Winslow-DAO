@@ -25,8 +25,8 @@ contract Winslow_Voting_V1 {
     
     mapping(uint256 => MultiVoteCard) public MultiVotes;
     // Map user addresses to their voting information
-    mapping (uint256 => mapping (address => VoterDetails)) public VoterInfo;
-    mapping (address => uint256) public UserVotingPower;
+    mapping(uint256 => mapping(address => VoterDetails)) public VoterInfo;
+    mapping(address => uint256[]) public UserVotingPower;
 
     //TODO: Somehow list all active proposals for voting for frontend
 
