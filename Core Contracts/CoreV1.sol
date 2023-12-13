@@ -127,6 +127,7 @@ contract Winslow_Core_V1 {
     //TODO: Review Multi Functionality
     //TODO: Review voteresult
     //TODO: Review default quorum
+    //TODO: Review Voting lenght make sure 2 days thing is properly implemented
     //TODO: Lots of testing
 
 
