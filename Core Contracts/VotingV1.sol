@@ -225,6 +225,11 @@ function ReturnTokens(uint256 VotingInstance) external {
     }
     UserUnreturnedVotes[msg.sender].pop();
     delete UserUnreturnedVotesIndex[msg.sender][VotingInstance];
+
+    // Handle if there is only one item in the array
+    if (UserUnreturnedVotes[msg.sender].length == 1) {
+        UserUnreturnedVotes[msg.sender].pop();
+    }
 }
         VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
 
