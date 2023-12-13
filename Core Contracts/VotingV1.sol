@@ -238,6 +238,8 @@ contract Winslow_Voting_V1 {
 
     //TODO: GetVotingResult
 
+    
+
     //OnlyDAO functions
 
         //Vote Setup
