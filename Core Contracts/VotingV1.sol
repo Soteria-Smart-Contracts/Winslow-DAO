@@ -129,7 +129,7 @@ contract Winslow_Voting_V1 {
         VoterInfo[VotingInstance][msg.sender].VotesLocked += amount;
         VoterInfo[VotingInstance][msg.sender].Voted = true;
         VotingInstances[VotingInstance].Voters.push(msg.sender);
-        
+        UserVotingHistory.
 
         return(success);
     }
