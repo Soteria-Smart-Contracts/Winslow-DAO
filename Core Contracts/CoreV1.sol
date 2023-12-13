@@ -383,6 +383,7 @@ contract Winslow_Core_V1 {
 
         else{
             EROS(Proposals[ProposalID].AddressSlot).Execute();
+        }
 
         
     }
