@@ -44,6 +44,7 @@ contract Winslow_Voting_V1 {
         address[] Voters;        //List of users that have voted that also can be called for total number of voters
         uint256 TotalCLDVoted;   //Total of CLD used in this instance for voting
         bool MultiVote;          //Determines if this instance supports multivote
+        uint8 MaxMulti;
         uint256 YEAvotes;        //Votes to approve
         uint256 NAYvotes;        //Votes to refuse
         uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for voting incentives, burning and execution reward
