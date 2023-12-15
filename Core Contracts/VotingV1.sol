@@ -369,4 +369,5 @@ interface Core {
     function TreasuryContract() external returns(address payable TreasuryAddress);
     function CLDAddress() external view returns(address CLD);
     function ProposalCost() external view returns(uint256 Cost);
+    function VoteLength() external view returns(uint256 Length);
 }
