@@ -267,7 +267,7 @@ contract Winslow_Voting_V1 {
                 Multi = 2;
             }
             if(MultiVotes[_VoteInstance].OptionThree > HighestVote){
-                HighestVote = Multi;
+                HighestVote = MultiV
             }
             if(MultiVotes[_VoteInstance].OptionFour > HighestVote){
                 HighestVote = Multi;
