@@ -277,6 +277,7 @@ contract Winslow_Voting_V1 {
         uint256 EarliestStartTime = block.timestamp + 86400;
         address[] memory Empty;
         uint256 InititalRewardPool = (Core(DAO).ProposalCost() / 2);
+        Max
 
         VotingInstances[NewInstanceID] = VoteInstance(ProposalID,EarliestStartTime,0,VoteStatus(0),Empty,0,Multi,0,0,InititalRewardPool,0,0,0,0);
         VotingQueue.push(NewInstanceID);
