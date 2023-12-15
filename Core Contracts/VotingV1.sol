@@ -270,7 +270,7 @@ contract Winslow_Voting_V1 {
     //OnlyDAO functions
 
         //Vote Setup
-    function InitializeVoteInstance(uint256 ProposalID, bool Multi) external OnlyDAO returns(uint256 VoteInstanceID){
+    function InitializeVoteInstance(uint256 ProposalID, bool Multi, uint256 ) external OnlyDAO returns(uint256 VoteInstanceID){
 
         uint256 NewInstanceID = MRInstance++;
         ActiveInstances++;
