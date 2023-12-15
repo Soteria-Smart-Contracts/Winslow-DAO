@@ -315,7 +315,7 @@ contract Winslow_Voting_V1 {
         VotingQueue.pop();
         VotingQueueIndex[HighestIncentiveProposal] = 0;
 
-        VotingInstances[HighestIncentiveProposal].VoteEnds = block.timestamp + 86400;
+        VotingInstances[HighestIncentiveProposal].VoteEnds = block.timestamp + Core(DAO).VoteLength();
 
         return(CurrentOngoingVote);
     }
