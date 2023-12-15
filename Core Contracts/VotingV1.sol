@@ -12,6 +12,7 @@ contract Winslow_Voting_V1 {
     // Contracts and Routing Variables
     string public Version = "V1";
     address public DAO;
+    uint256 public Quo
 
     // Percentages in Basis Points
     uint256 public ExecutorCut;
