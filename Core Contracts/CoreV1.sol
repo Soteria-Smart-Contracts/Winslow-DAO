@@ -551,8 +551,7 @@ contract Winslow_Core_V1 {
 
         ERC20(CLDAddress()).transferFrom(msg.sender, VotingContract, (ProposalCost / 2));
 
-        ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, (ProposalCost / 2));
-        ERC20(CLDAddress()).Burn(ERC20(CLDAddress()).balanceOf(address(this)));
+        ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, ERC20(CLDAddress()).balanceOf(address(this)));
 
         return(success);
     }
