@@ -37,7 +37,7 @@ contract Winslow_Voting_V1 {
 
     struct VoteInstance {
         uint256 ProposalID;      //DAO Proposal for voting instance
-        uint256 VoteStarts;      //Unix Time, u
+        uint256 VoteStarts;      //Unix Time, also used to store the debate period end time
         uint256 VoteEnds;        //Unix Time
         VoteStatus Status;       //Using VoteStatus enum
         address[] Voters;        //List of users that have voted that also can be called for total number of voters
