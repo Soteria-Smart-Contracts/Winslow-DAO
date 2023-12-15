@@ -260,12 +260,8 @@ contract Winslow_Voting_V1 {
         }
 
         if(VotingInstances[_VoteInstance].MultiVote == true){
-            Multi = 1;
-        } else {
-            Multi = 0;
-        }
+            
 
-        
 
         return(Result, Multi);
     }
