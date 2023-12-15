@@ -247,7 +247,7 @@ contract Winslow_Voting_V1 {
 
     function GetVotingResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
         require(block.timestamp >= VotingInstances[_VoteInstance].VoteEnds, "VotingSystemV1.GetVotingResult: The current vote is not over");
-
+        uint8 Multi = 0;
         //if the total votes does not meet the quorum, the vote fails and returns false
         if(VotingInstances[_VoteInstance].TotalCLDVoted < Quorum){
             return(false, 0);
