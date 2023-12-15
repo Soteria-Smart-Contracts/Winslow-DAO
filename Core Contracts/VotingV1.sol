@@ -267,7 +267,6 @@ contract Winslow_Voting_V1 {
 
     //Status Changes
     function EndVoting(uint256 VotingInstance) internal {
-        require(VotingInstances[VotingInstance].Status == VoteStatus(1), "VotingSystemV1.ExecuteProposal: Proposal already executed!");
         require(VotingInstances[VotingInstance].Voters.length > 0, "VotingSystemV1.ExecuteProposal: Can't execute proposals without voters!");
 
         ERC20(CLDAddress()).Burn(VotingInstances[VotingInstance].CLDToBurn);
