@@ -297,6 +297,7 @@ contract Winslow_Voting_V1 {
 
         //loop through the queue to find the proposal with the highest incentive, begin it and remove it from the queue
         uint256 HighestIncentive = 0;
+        uint256 Highest
         for(uint256 i = 0; i < VotingQueue.length; i++){
             if(VotingInstances[VotingQueue[i]].TotalIncentive > HighestIncentive){
                 HighestIncentive = VotingInstances[VotingQueue[i]].TotalIncentive;
