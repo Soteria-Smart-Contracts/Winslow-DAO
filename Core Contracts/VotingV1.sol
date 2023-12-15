@@ -330,5 +330,5 @@ contract Winslow_Voting_V1 {
 interface Core {
     function TreasuryContract() external returns(address payable TreasuryAddress);
     function CLDAddress() external view returns(address CLD);
-    function ProposalCost
+    function ProposalCost() external view returns(uint256 Cost);
 }
