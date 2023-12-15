@@ -305,6 +305,8 @@ contract Winslow_Voting_V1 {
             }
         }
 
+        
+
 
 
         // CurrentOngoingVote = VotingQueue[0];
