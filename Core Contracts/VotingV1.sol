@@ -259,7 +259,8 @@ contract Winslow_Voting_V1 {
         }
 
         if(VotingInstances[_VoteInstance].MultiVote == true){
-            //loop 
+            for(AllM)
+        }
 
 
         return(Result, Multi);
@@ -270,7 +271,7 @@ contract Winslow_Voting_V1 {
     //OnlyDAO functions
 
         //Vote Setup
-    function InitializeVoteInstance(uint256 ProposalID, bool Multi, uint256 MaxMulti) external OnlyDAO returns(uint256 VoteInstanceID){
+    function InitializeVoteInstance(uint256 ProposalID, bool Multi, uint8 MaxMulti) external OnlyDAO returns(uint256 VoteInstanceID){
 
         uint256 NewInstanceID = MRInstance++;
         ActiveInstances++;
@@ -278,7 +279,7 @@ contract Winslow_Voting_V1 {
         address[] memory Empty;
         uint256 InititalRewardPool = (Core(DAO).ProposalCost() / 2);
 
-        VotingInstances[NewInstanceID] = VoteInstance(ProposalID,EarliestStartTime,0,VoteStatus(0),Empty,0,Multi,0,0,InititalRewardPool,0,0,0,0);
+        VotingInstances[NewInstanceID] = VoteInstance(ProposalID,EarliestStartTime,0,VoteStatus(0),Empty,0,Multi,MaxMulti,0,0,InititalRewardPool,0,0,0,0);
         VotingQueue.push(NewInstanceID);
         VotingQueueIndex[NewInstanceID] = VotingQueue.length - 1;
 
