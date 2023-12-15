@@ -259,6 +259,7 @@ contract Winslow_Voting_V1 {
         }
 
         if(VotingInstances[_VoteInstance].MultiVote == true){
+            
             for(uint8 i = 0; i < VotingInstances[_VoteInstance].MaxMulti; i++){
                 if(MultiVotes[_VoteInstance] > MultiVotes[_VoteInstance][Multi]){
                     Multi = i;
