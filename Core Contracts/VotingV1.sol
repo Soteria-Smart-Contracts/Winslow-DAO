@@ -304,15 +304,15 @@ contract Winslow_Voting_V1 {
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
 
         if(VotingQueue.length > 1){
-            VotingQueue[VotingQueueIndex[HighestIncentiveProposal]] = VotingQueue[VotingQueue.length - 1];
-            VotingQueueIndex[VotingQueue[VotingQueue.length - 1]] = VotingQueueIndex[HighestIncentiveProposal];
+            VotingQueue[VotingQueueIndex[CurrentOngoingVote]] = VotingQueue[VotingQueue.length - 1];
+            VotingQueueIndex[VotingQueue[VotingQueue.length - 1]] = VotingQueueIndex[CurrentOngoingVote];
         }
         VotingQueue.pop();
-        VotingQueueIndex[HighestIncentiveProposal] = 0;
+        VotingQueueIndex[CurrentOngoingVote] = 0;
 
-        VotingInstances[HighestIncentiveProposal].VoteStarts = block.timestamp;
-        VotingInstances[HighestIncentiveProposal].VoteEnds = block.timestamp + Core(DAO).VoteLength();
-        VotingInstances[HighestIncentiveProposal].Status = VoteStatus(1);
+        VotingInstances[CurrentOngoingVote].VoteStarts = block.timestamp;
+        VotingInstances[CurrentOngoingVote].VoteEnds = block.timestamp + Core(DAO).VoteLength();
+        VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
 
         return(CurrentOngoingVote);
     }
