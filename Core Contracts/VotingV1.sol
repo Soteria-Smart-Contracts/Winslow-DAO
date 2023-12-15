@@ -286,7 +286,7 @@ contract Winslow_Voting_V1 {
     //start next voting instance
     function BeginNextVote() external returns(uint256 VotingInstance){
         require(VotingQueue.length > 0, "VotingSystemV1.BeginNextVote: There are no proposals in the queue");
-        require(VotingInstances[VotingQueue[0]].Status == VoteStatus(0), "VotingSystemV1.BeginNextVote: The first proposal in the queue is not ready to be voted on");
+        //check 
         require(block.timestamp >= VotingInstances[VotingQueue[0]].VoteStarts, "VotingSystemV1.BeginNextVote: The first proposal in the queue is not ready to be voted on");
 
         CurrentOngoingVote = VotingQueue[0];
