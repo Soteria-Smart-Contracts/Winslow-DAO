@@ -22,8 +22,8 @@ contract Winslow_Voting_V1 {
     uint256 MRInstance; // Most recent [poll/voting] instance tracker for new initializations
     uint256 ActiveInstances;
 
-        uint256[] public VotingQueue;
-
+    uint256[] public VotingQueue;
+    mapping(uint256 => uint256) public VotingQueueIndex;
     
     mapping(uint256 => MultiVoteCard) public MultiVotes;
     // Map user addresses to their voting information
