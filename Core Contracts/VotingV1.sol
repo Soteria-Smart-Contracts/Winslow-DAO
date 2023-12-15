@@ -22,7 +22,7 @@ contract Winslow_Voting_V1 {
     uint256 MRInstance; // Most recent [poll/voting] instance tracker for new initializations
     uint256 ActiveInstances;
 
-    uint256 publuc Current
+    uint256 public CurrentOngoingVote;
     uint256[] public VotingQueue;
     mapping(uint256 => uint256) public VotingQueueIndex;
     
