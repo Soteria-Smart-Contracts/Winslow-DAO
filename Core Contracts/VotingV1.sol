@@ -243,7 +243,7 @@ contract Winslow_Voting_V1 {
 
     //TODO: GetVotingResult
 
-    function GetVotingResult() public view returns(bool Result, )
+    function GetVotingResult() public view returns(bool Result, uint8 Multi)
 
 
 
