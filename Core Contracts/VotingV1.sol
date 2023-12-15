@@ -265,6 +265,8 @@ contract Winslow_Voting_V1 {
             Multi = 0;
         }
 
+        
+
         return(Result, Multi);
     }
 
