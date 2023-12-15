@@ -247,6 +247,8 @@ contract Winslow_Voting_V1 {
         require(CurrentOngoingVote != 0, "VotingSystemV1.GetVotingResult: There is no current vote");
         require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.GetVotingResult: The current vote is not over");
 
+        
+
         if(VotingInstances[CurrentOngoingVote].YEAvotes > VotingInstances[CurrentOngoingVote].NAYvotes){
             Result = true;
         } else {
