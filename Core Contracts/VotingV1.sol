@@ -284,7 +284,7 @@ contract Winslow_Voting_V1 {
     }
 
     //start next voting instance
-    function BeginNextVote() external returns(uint256 VotingInstance){
+    function BeginNextVote() public returns(uint256 VotingInstance){
         require(VotingQueue.length > 0, "VotingSystemV1.BeginNextVote: There are no proposals in the queue");
         //check if the current vote is over, or if there is no current vote as it is the first
         if(CurrentOngoingVote != 0){
