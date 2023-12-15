@@ -284,7 +284,7 @@ contract Winslow_Voting_V1 {
     }
 
     //start next voting instance
-    
+    function BeginNextVote() 
 
         //Post results to archive contract function
 
