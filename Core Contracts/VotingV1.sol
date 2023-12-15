@@ -243,7 +243,7 @@ contract Winslow_Voting_V1 {
 
     //TODO: GetVotingResult
 
-    
+    function GetVotingResult()
 
 
 
