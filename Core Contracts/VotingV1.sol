@@ -295,7 +295,7 @@ contract Winslow_Voting_V1 {
         }
         require(block.timestamp >= VotingInstances[VotingQueue[0]].VoteStarts, "VotingSystemV1.BeginNextVote: The first proposal in the queue is not ready to be voted on");
 
-        //loop 
+        //loop through the queue to find the proposal with the hi
 
 
         // CurrentOngoingVote = VotingQueue[0];
