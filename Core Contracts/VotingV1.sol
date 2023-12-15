@@ -245,7 +245,7 @@ contract Winslow_Voting_V1 {
 
     //TODO: GetVotingResult
 
-    function GetVotingResult(uint256 VoteInstance) public view returns(bool Result, uint8 Multi){
+    function GetVotingResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
         require(block.timestamp >= VotingInstances[VoteInstance].VoteEnds, "VotingSystemV1.GetVotingResult: The current vote is not over");
 
         //if 
