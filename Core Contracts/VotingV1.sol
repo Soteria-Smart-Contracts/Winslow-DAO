@@ -289,7 +289,9 @@ contract Winslow_Voting_V1 {
         //check if the current vote is over, or if there is no current vote as it is the first
         if(CurrentOngoingVote != 0){
             require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.BeginNextVote: The current vote is not over");
-            if
+            if(VotingInstances[CurrentOngoingVote].Status == VoteStatus(1)){
+                EndVoting(CurrentOngoingVote);
+            }
         }
         require(block.timestamp >= VotingInstances[VotingQueue[0]].VoteStarts, "VotingSystemV1.BeginNextVote: The first proposal in the queue is not ready to be voted on");
 
