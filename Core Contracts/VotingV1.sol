@@ -244,18 +244,17 @@ contract Winslow_Voting_V1 {
     //TODO: GetVotingResult
 
     function GetVotingResult(uint256 VoteInstance) public view returns(bool Result, uint8 Multi){
-        require(CurrentOngoingVote != 0, "VotingSystemV1.GetVotingResult: There is no current vote");
         require(block.timestamp >= VotingInstances[VoteInstance].VoteEnds, "VotingSystemV1.GetVotingResult: The current vote is not over");
 
 
 
-        if(VotingInstances[CurrentOngoingVote].YEAvotes > VotingInstances[CurrentOngoingVote].NAYvotes){
+        if(VotingInstances[VoteInstance].YEAvotes > VotingInstances[VoteInstance].NAYvotes){
             Result = true;
         } else {
             Result = false;
         }
 
-        if(VotingInstances[CurrentOngoingVote].MultiVote == true){
+        if(VotingInstances[VoteInstance].MultiVote == true){
             Multi = 1;
         } else {
             Multi = 0;
