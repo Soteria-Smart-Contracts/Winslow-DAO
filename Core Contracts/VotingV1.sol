@@ -292,7 +292,6 @@ contract Winslow_Voting_V1 {
             require(VotingInstances[CurrentOngoingVote].Status == VoteStatus(2), "VotingSystemV1.BeginNextVote: The current vote has not been executed");
         }
         require(block.timestamp >= VotingInstances[VotingQueue[0]].VoteStarts, "VotingSystemV1.BeginNextVote: The first proposal in the queue is not ready to be voted on");
-        EndVoting(CurrentOngoingVote);
 
         CurrentOngoingVote = VotingQueue[0];
         VotingInstances[VotingQueue[0]].Status = VoteStatus(1);
