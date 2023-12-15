@@ -305,6 +305,8 @@ contract Winslow_Voting_V1 {
             }
         }
 
+        CurrentOngoingVote = HighestIncentiveProposal;
+        VotingInstances[HighestIncentiveProposal].Status = VoteStatus(1);
         
 
 
