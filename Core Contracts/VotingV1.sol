@@ -315,7 +315,7 @@ contract Winslow_Voting_V1 {
         VotingQueue.pop();
         VotingQueueIndex[HighestIncentiveProposal] = 0;
 
-        
+        VotingInstances[HighestIncentiveProposal].VoteEnds = block.timestamp + 86400;
 
         return(CurrentOngoingVote);
     }
