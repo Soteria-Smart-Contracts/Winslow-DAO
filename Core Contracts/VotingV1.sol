@@ -294,12 +294,12 @@ contract Winslow_Voting_V1 {
             }
         }
         require(block.timestamp >= VotingInstances[VotingQueue[0]].VoteStarts, "VotingSystemV1.BeginNextVote: The first proposal in the queue is not ready to be voted on");
-
-        CurrentOngoingVote = VotingQueue[0];
-        VotingInstances[VotingQueue[0]].Status = VoteStatus(1);
-        VotingQueue[0] = VotingQueue[VotingQueue.length - 1];
-        VotingQueueIndex[VotingQueue[0]] = 0;
-        VotingQueue.pop();
+        
+        // CurrentOngoingVote = VotingQueue[0];
+        // VotingInstances[VotingQueue[0]].Status = VoteStatus(1);
+        // VotingQueue[0] = VotingQueue[VotingQueue.length - 1];
+        // VotingQueueIndex[VotingQueue[0]] = 0;
+        // VotingQueue.pop();
 
         return(CurrentOngoingVote);
     }
