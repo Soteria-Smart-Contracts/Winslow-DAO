@@ -316,7 +316,7 @@ contract Winslow_Voting_V1 {
 
         VotingInstances[HighestIncentiveProposal].VoteStarts = block.timestamp;
         VotingInstances[HighestIncentiveProposal].VoteEnds = block.timestamp + Core(DAO).VoteLength();
-        VotingInstances
+        VotingInstances[HighestIncentiveProposal].TotalIncentive = 0;
 
         return(CurrentOngoingVote);
     }
