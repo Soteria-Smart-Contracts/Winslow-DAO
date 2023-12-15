@@ -250,7 +250,7 @@ contract Winslow_Voting_V1 {
 
         //if the total votes does not meet the quorum, the vote fails and returns false
         if(VotingInstances[_VoteInstance].TotalCLDVoted < Quorum){
-            return(false;
+            return(false, 0);
         } 
 
         if(VotingInstances[_VoteInstance].YEAvotes > VotingInstances[_VoteInstance].NAYvotes){
