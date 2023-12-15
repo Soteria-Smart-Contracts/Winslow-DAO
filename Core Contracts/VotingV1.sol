@@ -293,13 +293,12 @@ contract Winslow_Voting_V1 {
                 EndVoting(CurrentOngoingVote);
             }
         }
-        require(block.timestamp >= VotingInstances[VotingQueue[0]].VoteStarts, "VotingSystemV1.BeginNextVote: The first proposal in the queue is not ready to be voted on");
 
         //loop through the queue to find the proposal with the highest incentive, begin it and remove it from the queue
         uint256 HighestIncentive = 0;
         uint256 HighestIncentiveProposal;
         for(uint256 i = 0; i < VotingQueue.length; i++){
-            if(VotingInstances[VotingQueue[i]].TotalIncentive > HighestIncentive){
+            if(VotingInstances[VotingQueue[i]].TotalIncentive > HighestIncentive ){
                 HighestIncentive = VotingInstances[VotingQueue[i]].TotalIncentive;
                 HighestIncentiveProposal = VotingQueue[i];
             }
