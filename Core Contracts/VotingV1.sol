@@ -283,6 +283,9 @@ contract Winslow_Voting_V1 {
         //Post results
     }
 
+    //start next voting instance
+    
+
         //Post results to archive contract function
 
     function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) external OnlyDAO returns (bool success) {
