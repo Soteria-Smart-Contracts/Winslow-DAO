@@ -257,7 +257,7 @@ contract Winslow_Voting_V1 {
         return(NewInstanceID);
     }
 
-        //Status Changes
+    //Status Changes
     function EndVoting(uint256 VotingInstance) external OnlyDAO {
 
         require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ExecuteProposal: Voting is not over");      
