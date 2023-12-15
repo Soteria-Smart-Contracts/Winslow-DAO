@@ -12,7 +12,7 @@ contract Winslow_Voting_V1 {
     // Contracts and Routing Variables
     string public Version = "V1";
     address public DAO;
-    uint256 public Quorum = 1500000000000000000000; //
+    uint256 public Quorum = 1500000000000000000000; //Default quorum to be changed in initial proposals
 
     // Percentages in Basis Points
     uint256 public ExecutorCut;
