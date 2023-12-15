@@ -284,7 +284,9 @@ contract Winslow_Voting_V1 {
     }
 
     //start next voting instance
-    function BeginNextVote() 
+    function BeginNextVote() external returns(uint256 VotingInstance){
+        
+    }
 
         //Post results to archive contract function
 
