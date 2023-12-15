@@ -298,7 +298,7 @@ contract Winslow_Voting_V1 {
         uint256 HighestIncentive = 0;
         uint256 HighestIncentiveProposal;
         for(uint256 i = 0; i < VotingQueue.length; i++){
-            if(VotingInstances[VotingQueue[i]].TotalIncentive > HighestIncentive && VotingInstances[VotingQueue[i]].VoteStart > block.timestamp){
+            if(VotingInstances[VotingQueue[i]].TotalIncentive > HighestIncentive && VotingInstances[VotingQueue[i]].VoteStarts > block.timestamp){
                 HighestIncentive = VotingInstances[VotingQueue[i]].TotalIncentive;
                 HighestIncentiveProposal = VotingQueue[i];
             }
