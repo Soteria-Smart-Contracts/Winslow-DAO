@@ -264,7 +264,7 @@ contract Winslow_Core_V1 {
     function ExecuteProposal(uint256 ProposalID) external returns(bool success){
             require(msg.sender == VotingContract, "Only the voting contract can execute proposals");
             require(ProposalInfos[ProposalID].Status == ProposalStatus(2), "Proposal must be in voting status to be executed");
-            
+            (bool Result, uint8 Multi) = Voting(VotingContract).GetVoteResult(ProposalInfos[ProposalID].VotingInstanceID);
             require(Voting(VotingContract).GetVoteResult(ProposalInfos[ProposalID].VotingInstanceID) == true, "Proposal must be approved by voting to be executed");
             require(Proposals[ProposalID].Executed == false, "Proposal has already been executed");
     
