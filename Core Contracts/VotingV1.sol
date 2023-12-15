@@ -226,14 +226,12 @@ contract Winslow_Voting_V1 {
     } 
 
     function ReturnAllVotedTokens() public {
-
         for(uint256 i = 0; i < UserUnreturnedVotes[msg.sender].length; i++){
             uint256 VotingInstance = UserUnreturnedVotes[msg.sender][i];
             if(VotingInstances[VotingInstance].Status == VoteStatus(2) && VoterInfo[VotingInstance][msg.sender].CLDReturned == false){
                 ReturnTokens(VotingInstance);
             }
         }
-        
     }
 
     //Public View Functions
