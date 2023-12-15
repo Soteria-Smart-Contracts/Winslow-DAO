@@ -259,7 +259,7 @@ contract Winslow_Voting_V1 {
         }
 
         if(VotingInstances[_VoteInstance].MultiVote == true){
-            
+            //loop 
 
 
         return(Result, Multi);
