@@ -586,7 +586,6 @@ contract Winslow_Voting_V1 {
     mapping(address => uint256[]) public UserUnreturnedVotes;
     mapping(address => mapping(uint256 => uint256)) public UserUnreturnedVotesIndex;
 
-    //TODO: Somehow list all active proposals for Winslow_Voting_V1 for frontend
 
     struct VoteInstance {
         uint256 ProposalID;      //DAO Proposal for Winslow_Voting_V1 instance
