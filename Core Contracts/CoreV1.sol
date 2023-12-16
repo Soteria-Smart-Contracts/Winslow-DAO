@@ -546,7 +546,14 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    //One time function to set the g
+    //One time function to set the factory contract address
+    function SetFactoryContract(address NewFactory) external returns(bool success){
+        require(msg.sender == FactorySetter);
+        SaleFactoryContract = NewFactory;
+        FactorySetter = address(0);
+
+        return(success);
+    }
     
     //Receive and fallbacks
     receive() external payable{
