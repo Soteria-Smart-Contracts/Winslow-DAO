@@ -133,7 +133,7 @@ contract Winslow_Core_V1 {
 
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = SaleFactory; //Contract is too big to deploy in constructor, must be deployed separately and address passed in
+        SaleFactoryContract = address(0); //Contract is too big to deploy in constructor, must be deployed separately and address passed in
         FactorySetter = msg.sender;
 
         IsActiveContract = true;
