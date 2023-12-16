@@ -926,7 +926,7 @@ contract Winslow_Voting_V1 {
     function ChangeDAO(address newAddr) external OnlyDAO {
         require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
         require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
-        DAO = newAddr;    
+        DAO = payable(newAddr);    
         emit NewDAOAddress(newAddr);
     }
     
