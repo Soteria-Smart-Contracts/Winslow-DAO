@@ -450,7 +450,7 @@ contract Winslow_Core_V1 {
 
     function ChangeFoundationAddress(address NewFoundationAddress) internal returns(bool success){
 
-        FoundationAddress = NewFoundationAddress;
+        FoundationAddress = payable(NewFoundationAddress);
         
         return(success);
     }
