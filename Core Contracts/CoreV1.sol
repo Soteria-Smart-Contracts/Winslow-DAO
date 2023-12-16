@@ -971,8 +971,7 @@ contract SaleFactoryV2 {
         FoundationFee = 100; //1%
         RetractFee = 100; //1%
         MinimumDeposit = 100000000000000000; //0.1 ETC
-         //2 hours
-        DefaultSaleLength = 
+        DefaultSaleLength = 7200;
     }
 
     //Events
