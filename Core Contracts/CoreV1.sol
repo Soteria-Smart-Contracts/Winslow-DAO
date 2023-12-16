@@ -1101,7 +1101,7 @@ contract SaleV2 {
         SaleIdentifier = SaleID;
         CLD = Winslow_Core_V1(DAO).CLDAddress();
         CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract by treasury, additional CLD sent to the sale contract will be lost
-        StartTime = block.timestamp + 43200;
+        StartTime = block.timestamp + 900; //TODO: Reset to 12 hours before deployment
         EndTime = StartTime + SaleLength;
         DAOFoundationFee = FoundationFee;
         RetractFee = RetractionFee;
