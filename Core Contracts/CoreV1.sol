@@ -95,7 +95,7 @@ contract Winslow_Core_V1 {
         address AddressSlot;            //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal contract
         uint256 RequestedEtherAmount;   //Optional, can be zero
         uint256 RequestedAssetAmount;   //Optional, can be zero
-        uint8 RequestedAssetID;         //Treasury asset identifier for proposals moving funds
+        uint8 RequestedAssetID;         //Winslow_Treasury_V1 asset identifier for proposals moving funds
         uint8 OptionsAvailable;         //Number of Options Available if there is more than one, default zero
         bool Multi;                     //False for just a regular one option proposal, True for any proposal with more than one option
         bool Executed;                  //Can only be executed once, when finished, proposal exist only as archive
@@ -180,7 +180,7 @@ contract Winslow_Core_V1 {
     //  Public view functions
 
     function CLDAddress() public view returns(address CLD){
-        return(Treasury(TreasuryContract).CLDAddress());
+        return(Winslow_Treasury_V1(TreasuryContract).CLDAddress());
     }
 
 
@@ -195,7 +195,7 @@ contract Winslow_Core_V1 {
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events or new sales
         uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, false);
         if(SimpleType == SimpleProposalTypes(2)){
-            require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Treasury(TreasuryContract).RegisteredAssetLimit());
+            require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Winslow_Treasury_V1(TreasuryContract).RegisteredAssetLimit());
             ProxyProposalArguments storage ProxyArgsWithSlot = EmptyProxy;
             ProxyArgsWithSlot.UnsignedInt1 = UintSlot;
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VoteLength);
@@ -239,7 +239,7 @@ contract Winslow_Core_V1 {
         uint8 RequestedAssetID = EROS(ProposalAddress).TokenIdentifier();
 
         if(RequestedAssetAmount > 0){
-            require(RequestedAssetID > 0 && RequestedAssetID <= 255 && RequestedAssetID <= Treasury(TreasuryContract).RegisteredAssetLimit(), "Requested asset ID must be atleast 1 and be registered in the treasury");
+            require(RequestedAssetID > 0 && RequestedAssetID <= 255 && RequestedAssetID <= Winslow_Treasury_V1(TreasuryContract).RegisteredAssetLimit(), "Requested asset ID must be atleast 1 and be registered in the Winslow_Treasury_V1");
         }
 
         if(EROS(ProposalAddress).Multi() == true){
@@ -400,10 +400,10 @@ contract Winslow_Core_V1 {
     function SendAssets(uint256 ProposalID) internal returns(bool success){
 
         if(Proposals[ProposalID].RequestedEtherAmount > 0){
-            Treasury(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, payable(Proposals[ProposalID].AddressSlot));
+            Winslow_Treasury_V1(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, payable(Proposals[ProposalID].AddressSlot));
         }
         if(Proposals[ProposalID].RequestedAssetAmount > 0){
-            Treasury(TreasuryContract).TransferERC20(Proposals[ProposalID].RequestedAssetID, Proposals[ProposalID].RequestedAssetAmount, Proposals[ProposalID].AddressSlot);
+            Winslow_Treasury_V1(TreasuryContract).TransferERC20(Proposals[ProposalID].RequestedAssetID, Proposals[ProposalID].RequestedAssetAmount, Proposals[ProposalID].AddressSlot);
         }
 
         return(success);
@@ -414,7 +414,7 @@ contract Winslow_Core_V1 {
 
         address TokenAddress = Proposals[ProposalID].AddressSlot;
         uint8 Slot = uint8(ProxyArgs[ProposalID].UnsignedInt1); 
-        Treasury(TreasuryContract).RegisterAsset(TokenAddress, Slot);
+        Winslow_Treasury_V1(TreasuryContract).RegisterAsset(TokenAddress, Slot);
 
         return(success);
     }
@@ -422,7 +422,7 @@ contract Winslow_Core_V1 {
     function ChangeRegisteredAssetLimit(uint256 ProposalID) internal returns(bool success){
         
         uint8 NewLimit = uint8(ProxyArgs[ProposalID].UnsignedInt1); 
-        Treasury(TreasuryContract).ChangeRegisteredAssetLimit(NewLimit);
+        Winslow_Treasury_V1(TreasuryContract).ChangeRegisteredAssetLimit(NewLimit);
         
         return(success);
     }
@@ -478,7 +478,7 @@ contract Winslow_Core_V1 {
         address NewSaleAddress = SaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
         Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleContract(NewSaleAddress).StartTime(), SaleContract(NewSaleAddress).EndTime());
 
-        Treasury(TreasuryContract).TransferERC20(0, CLDtoSell, NewSaleAddress);
+        Winslow_Treasury_V1(TreasuryContract).TransferERC20(0, CLDtoSell, NewSaleAddress);
 
         require(SaleContract(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
         return(success, NewSaleAddress);
@@ -952,7 +952,7 @@ contract Winslow_Voting_V1 {
 }
 
 interface Replacements{
-    function InheritCore(address Treasury, address Winslow_Voting_V1, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
+    function InheritCore(address Winslow_Treasury_V1, address Winslow_Voting_V1, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
     function SendPredecessor(address Predecessor) external returns(bool success);
     function ChangeDAO(address NewDAO) external returns(bool success);
 }
