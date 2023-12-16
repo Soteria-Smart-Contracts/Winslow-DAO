@@ -968,7 +968,9 @@ contract SaleFactoryV2 {
 
     constructor(){
         DAO = msg.sender;
-        //Set default values for variables
+        FoundationFee = 100; //1%
+        RetractFee = 100; //1%
+        MinimumDeposit = 100000000000000000; //0.1 ETH
     }
 
     //Events
