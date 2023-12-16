@@ -138,7 +138,7 @@ contract Winslow_Core_V1 {
 
         TreasuryContract = address(new Winslow_Treasury_V1());
         VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = _SaleFactory;
+        SaleFactoryContract = address(new SaleFactoryV2());
         FoundationAddress = _FoundationAddress;
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
         InitialContractsSet = true;
