@@ -461,7 +461,7 @@ contract Winslow_Core_V1 {
     function ReplaceCore(address NewCore) internal returns(bool success){
         IsActiveContract = false;
 
-        Replacements(NewCore).InheritCore(TreasuryContract, VotingContract, MRIdentifier, ProposalCost); //TODO: Make sure it transfers all needed info, add sale info
+        Replacements(NewCore).InheritCore(TreasuryContract, VotingContract, MRIdentifier, ProposalCost);
         Replacements(TreasuryContract).ChangeDAO(NewCore);
         Replacements(VotingContract).ChangeDAO(NewCore);
         Replacements(SaleFactoryContract).ChangeDAO(NewCore);
