@@ -475,7 +475,7 @@ contract Winslow_Core_V1 {
         require(!SaleActive());
         LatestSale++;
 
-        address NewSaleAddress = SaleFactory(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
+        address NewSaleAddress = SaleFactoryV2(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
         Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleContract(NewSaleAddress).StartTime(), SaleContract(NewSaleAddress).EndTime());
 
         Winslow_Treasury_V1(TreasuryContract).TransferERC20(0, CLDtoSell, NewSaleAddress);
@@ -502,35 +502,35 @@ contract Winslow_Core_V1 {
 
     function ChangeSaleFoundationFee(uint256 NewFee) internal returns(bool success){
             
-        SaleFactory(SaleFactoryContract).ChangeFoundationFee(NewFee);
+        SaleFactoryV2(SaleFactoryContract).ChangeFoundationFee(NewFee);
 
         return(success);
     }
 
     function ChangeSaleRetractFee(uint256 NewRetractFee) internal returns(bool success){
 
-        SaleFactory(SaleFactoryContract).ChangeRetractFee(NewRetractFee);
+        SaleFactoryV2(SaleFactoryContract).ChangeRetractFee(NewRetractFee);
 
         return(success);
     }
 
     function ChangeSaleMinimumDeposit(uint256 NewMinDeposit) internal returns(bool success){
 
-        SaleFactory(SaleFactoryContract).ChangeMinimumDeposit(NewMinDeposit);
+        SaleFactoryV2(SaleFactoryContract).ChangeMinimumDeposit(NewMinDeposit);
     
         return(success);
     }
 
     function ChangeSaleDefaultSaleLength(uint256 NewLength) internal returns(bool success){
             
-        SaleFactory(SaleFactoryContract).ChangeDefaultSaleLength(NewLength);
+        SaleFactoryV2(SaleFactoryContract).ChangeDefaultSaleLength(NewLength);
     
         return(success);
     }
 
     function ChangeSaleMaxSalePercent(uint256 NewMaxPercent) internal returns(bool success){
                 
-        SaleFactory(SaleFactoryContract).ChangeMaxSalePercent(NewMaxPercent);
+        SaleFactoryV2(SaleFactoryContract).ChangeMaxSalePercent(NewMaxPercent);
         
         return(success);
     }
