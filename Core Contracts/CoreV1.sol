@@ -806,7 +806,7 @@ contract Winslow_Voting_V1 {
             Result = false;
         }
 
-        if(VotingInstances[_VoteInstance].MultiVote == true){
+        if(VotingInstances[_VoteInstance].MaxMulti > 0){
             uint256 HighestVote;
             if(MultiVotes[_VoteInstance].OptionOne > HighestVote){
                 HighestVote = MultiVotes[_VoteInstance].OptionOne;
