@@ -133,7 +133,7 @@ contract Winslow_Core_V1 {
         SubmitSimpleProposal("TODO: Make a community agreed first memo", address(0), 0, SimpleProposalTypes(0), 0, 0, 0);
         FoundationAddress = 0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce; //TODO: Change this to the community agreed foundation address
 
-        TreasuryContract = address(new Winslow_Treasury_V1());
+        TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
         SaleFactoryContract = address(new SaleFactoryV2());
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
