@@ -783,7 +783,7 @@ contract Winslow_Voting_V1 {
         return(Winslow_Core_V1(DAO).CLDAddress());
     }
 
-    function GetVotingInstance(uint256 _VoteInstance) public view returns(uint256 ProposalID, uint256 VoteStarts, uint256 VoteEnds, VoteStatus Status, address[] memory Voters, uint256 TotalCLDVoted, uint8 MaxMulti, uint256 YEAvotes, uint256 NAYvotes, uint256 TotalIncentive, uint256 IncentivePerVote, uint256 CLDtoIncentive, uint256 CLDToBurn, uint256 CLDToExecutioner){
+    function GetVotingInstance(uint256 _VoteInstance) public view returns(VoteInstance memory Instance){
         return(VoteInstance[_VoteInstance]);
     }
 
