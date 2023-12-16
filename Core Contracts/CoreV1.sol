@@ -998,8 +998,6 @@ contract SaleFactoryV2 {
         return(NewSaleAddress);
     }
 
-    //TODO: Be able to change variables using dao proposal
-
     function ChangeFoundationFee(uint256 NewFee) external OnlyDAO returns(bool success){
         require(NewFee <= 10000);
         FoundationFee = NewFee;
@@ -1017,7 +1015,7 @@ contract SaleFactoryV2 {
     }
 
     function ChangeMinimumDeposit(uint256 NewMinDeposit) external OnlyDAO returns(bool success){
-        require(NewMinDeposit > 0); //TODO: Find a good minimum where contract is extremely unlikely to have issues in division
+        require(NewMinDeposit > 1000000000000000);
         MinimumDeposit = NewMinDeposit;
 
         emit NewMinimumDeposit(NewMinDeposit);
