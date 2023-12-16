@@ -657,8 +657,8 @@ contract Winslow_Voting_V1 {
     } 
 
     constructor(address DAOAddr, uint8 _ExecusCut, uint8 _BurnCut){
-        ExecutorCut = _ExecusCut; //TODO: 
-        BurnCut = _BurnCut;
+        ExecutorCut = 200; //TODO: Temporary numbers for testing
+        BurnCut = 200;
         DAO = msg.sender;
     }
 
