@@ -650,7 +650,7 @@ contract Winslow_Voting_V1 {
     } 
 
     constructor(){
-        ExecutorCut = 200; //TODO: Temporary numbers for testing
+        ExecutorCut = 200; //TODO: Change this to the community agreed upon value for dep
         BurnCut = 200;
         DAO = msg.sender;
     }
