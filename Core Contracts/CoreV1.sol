@@ -131,6 +131,7 @@ contract Winslow_Core_V1 {
         InitialSetter = msg.sender;
         EmptyProxy = ProxyProposalArguments(0, 0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
         SubmitSimpleProposal("TODO: Make a community agreed first memo", address(0), 0, SimpleProposalTypes(0), 0, 0, 0);
+        FoundationAddress = 0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce; //TODO: Change this to the community agreed foundation address
 
         TreasuryContract = address(new Winslow_Treasury_V1());
         VotingContract = address(new Winslow_Voting_V1());
