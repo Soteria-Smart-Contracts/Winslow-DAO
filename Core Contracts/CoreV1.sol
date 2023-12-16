@@ -1043,7 +1043,7 @@ contract SaleFactoryV2 {
 contract SaleV2 {
     //  Variable, struct, mapping and other Declarations
     //  Winslow_Core_V1
-    address public DAO;
+    address payable public DAO;
     address public CLD;
     uint256 public SaleIdentifier; //This iteration of all CLD sales conducted
     uint256 public StartTime; //Unix Time
