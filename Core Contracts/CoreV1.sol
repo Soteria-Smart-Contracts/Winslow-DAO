@@ -2,8 +2,8 @@
 /* This contract is able to be replaced by itself, and can also continue to be used 
 if a new external core modules and contracts are deployed by changing their addresses and
 providing previous contract information to the new contracts.
-When setting up a new core or voting contract, ensure cross-compatibility and record keeping 
-done by the archive contract, voting index and proposal indexes never restart */
+When setting up a new core or Winslow_Voting_V1 contract, ensure cross-compatibility and record keeping 
+done by the archive contract, Winslow_Voting_V1 index and proposal indexes never restart */
 pragma solidity ^0.8.19;
 
 //import "./TreasuryV1.sol";
@@ -42,7 +42,7 @@ contract Winslow_Core_V1 {
     enum ProposalStatus{
         Security_Verification,
         Pre_Voting,
-        Voting,
+        Winslow_Voting_V1,
         Executed,
         Rejected
     }
@@ -87,7 +87,7 @@ contract Winslow_Core_V1 {
         ProposalTypes ProposalType;     //Types declared in enum
         SimpleProposalTypes SimpleType; //Types declared in enum
         ProposalStatus Status;
-        uint256 VotingInstanceID;       //Identifier for the voting instance used for this proposal in the voting contract
+        uint256 VotingInstanceID;       //Identifier for the Winslow_Voting_V1 instance used for this proposal in the Winslow_Voting_V1 contract
         uint256 ProposalVotingLength;
     }
 
@@ -193,7 +193,7 @@ contract Winslow_Core_V1 {
         MRIdentifier++;
 
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events or new sales
-        uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, false);
+        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, false);
         if(SimpleType == SimpleProposalTypes(2)){
             require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Treasury(TreasuryContract).RegisteredAssetLimit());
             ProxyProposalArguments storage ProxyArgsWithSlot = EmptyProxy;
@@ -218,7 +218,7 @@ contract Winslow_Core_V1 {
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, false);
+        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, false);
         ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
         Proposals[NewIdentifier] = Proposal(Slot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
         ProxyArgs[NewIdentifier] = ProxyArguments;
@@ -243,7 +243,7 @@ contract Winslow_Core_V1 {
         }
 
         if(EROS(ProposalAddress).Multi() == true){
-            uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, true);
+            uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, true);
             require(EROS(ProposalAddress).OptionCount() > 1, 'Eros proposal marked as multiple options true, but less than two options are available');
 
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
@@ -251,7 +251,7 @@ contract Winslow_Core_V1 {
             ProxyArgs[NewIdentifier] = EmptyProxy;
         }
         else{
-            uint256 VotingInstanceID = Voting(VotingContract).InitializeVoteInstance(NewIdentifier, false);
+            uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, false);
 
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
             Proposals[NewIdentifier] = Proposal(ProposalAddress, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
@@ -264,10 +264,10 @@ contract Winslow_Core_V1 {
     //  Execution Functions
 
     function ExecuteProposal(uint256 ProposalID) external returns(bool success){
-            require(msg.sender == VotingContract, "Only the voting contract can execute proposals");
-            require(ProposalInfos[ProposalID].Status == ProposalStatus(2), "Proposal must be in voting status to be executed");
-            (bool Result, uint8 Multi) = Voting(VotingContract).GetVoteResult(ProposalInfos[ProposalID].VotingInstanceID);
-            require(Result == true, "Proposal must be approved by voting to be executed");
+            require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can execute proposals");
+            require(ProposalInfos[ProposalID].Status == ProposalStatus(2), "Proposal must be in Winslow_Voting_V1 status to be executed");
+            (bool Result, uint8 Multi) = Winslow_Voting_V1(VotingContract).GetVoteResult(ProposalInfos[ProposalID].VotingInstanceID);
+            require(Result == true, "Proposal must be approved by Winslow_Voting_V1 to be executed");
             require(Proposals[ProposalID].Executed == false, "Proposal has already been executed");
     
             Proposals[ProposalID].Executed = true;
@@ -493,7 +493,7 @@ contract Winslow_Core_V1 {
 
     function ChangeQuorum(uint256 newQuorum) internal returns(bool success){
 
-        Voting(VotingContract).ChangeQuorum(newQuorum);
+        Winslow_Voting_V1(VotingContract).ChangeQuorum(newQuorum);
         
         return(success);
     }
@@ -576,7 +576,7 @@ contract Winslow_Voting_V1 {
 
     // Proposals being tracked by id here
     mapping(uint256 => VoteInstance) public VotingInstances;
-    uint256 MRInstance; // Most recent [poll/voting] instance tracker for new initializations
+    uint256 MRInstance; // Most recent [poll/Winslow_Voting_V1] instance tracker for new initializations
     uint256 ActiveInstances;
 
     uint256 public CurrentOngoingVote;
@@ -584,26 +584,26 @@ contract Winslow_Voting_V1 {
     mapping(uint256 => uint256) public VotingQueueIndex;
     
     mapping(uint256 => MultiVoteCard) public MultiVotes;
-    // Map user addresses to their voting information
+    // Map user addresses to their Winslow_Voting_V1 information
     mapping(uint256 => mapping(address => VoterDetails)) public VoterInfo;
 
     mapping(address => uint256[]) public UserUnreturnedVotes;
     mapping(address => mapping(uint256 => uint256)) public UserUnreturnedVotesIndex;
 
-    //TODO: Somehow list all active proposals for voting for frontend
+    //TODO: Somehow list all active proposals for Winslow_Voting_V1 for frontend
 
     struct VoteInstance {
-        uint256 ProposalID;      //DAO Proposal for voting instance
+        uint256 ProposalID;      //DAO Proposal for Winslow_Voting_V1 instance
         uint256 VoteStarts;      //Unix Time, also used to store the debate period end time
         uint256 VoteEnds;        //Unix Time
         VoteStatus Status;       //Using VoteStatus enum
         address[] Voters;        //List of users that have voted that also can be called for total number of voters
-        uint256 TotalCLDVoted;   //Total of CLD used in this instance for voting
+        uint256 TotalCLDVoted;   //Total of CLD used in this instance for Winslow_Voting_V1
         bool MultiVote;          //Determines if this instance supports multivote
         uint8 MaxMulti;      //Max number of options for multivote
         uint256 YEAvotes;        //Votes to approve
         uint256 NAYvotes;        //Votes to refuse
-        uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for voting incentives, burning and execution reward
+        uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for Winslow_Voting_V1 incentives, burning and execution reward
         uint256 IncentivePerVote;//Total amount of CLD per 0.01 CLD voted
         uint256 CLDtoIncentive;  //Total amount of CLD to be shared amongst voters
         uint256 CLDToBurn;       //Total amount of CLD to be burned on proposal execution
@@ -669,11 +669,11 @@ contract Winslow_Voting_V1 {
 
     function CastVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice) external returns(bool success){
         require(VotingInstances[VotingInstance].MultiVote == false);
-        require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or have not given the proper allowance to voting");
+        require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or have not given the proper allowance to Winslow_Voting_V1");
         require(VoteChoice == Vote(0) || VoteChoice == Vote(1), "VotingSystemV1.CastVote: You must either vote YEA or NAY");
         require(amount >= 10000000000000000, "VotingSystemV1.CastVote: The minimum CLD per vote is 0.01"); //For incentive payout reasons
         require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastVote: You may only cast a single vote per address per proposal"); //This may be changed in V2
-        require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastVote: This instance is not currently in voting");
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastVote: This instance is not currently in Winslow_Voting_V1");
 
         if(VotingInstances[VotingInstance].Voters.length == 0){
             VotingInstances[VotingInstance].Status = VoteStatus(1);
@@ -699,11 +699,11 @@ contract Winslow_Voting_V1 {
         //This is set up so that you can vote for or against the proposal, and if yes what of the options you prefer
     function CastMultiVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice, MultiOptions OptionChoice) external returns(bool success){ 
         require(VotingInstances[VotingInstance].MultiVote == true);
-        require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastMultiVote: You do not have enough CLD to vote this amount or have not given the proper allowance to voting");
+        require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastMultiVote: You do not have enough CLD to vote this amount or have not given the proper allowance to Winslow_Voting_V1");
         require(VoteChoice == Vote(0) || VoteChoice == Vote(1), "VotingSystemV1.CastMultiVote: You must either vote YEA or NAY");
         require(amount >= 10000000000000000, "VotingSystemV1.CastMultiVote: The minimum CLD per vote is 0.01"); //For incentive payout reasons
         require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastMultiVote: You may only cast a single vote per address per proposal"); //This may be changed in V2
-        require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastMultiVote: This instance is not currently in voting");
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastMultiVote: This instance is not currently in Winslow_Voting_V1");
         require(uint8(OptionChoice) <= VotingInstances[VotingInstance].MaxMulti, "VotingSystemV1.CastMultiVote: You have selected an option that is not available for this instance");
         require(CurrentOngoingVote == VotingInstance, "VotingSystemV1.CastMultiVote: This is not the current ongoing vote");
 
@@ -747,7 +747,7 @@ contract Winslow_Voting_V1 {
     function IncentivizeProposal(uint256 VotingInstance, uint256 amount) public returns(bool success){
         require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal or you may not have given this contract enough allowance");
         require(VotingInstances[VotingInstance].Status == VoteStatus(0), 'VotingSystemV1.IncentivizeProposal: This proposal has ended');
-        require(block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.IncentivizeProposal: The voting period has ended, save for the next proposal!");
+        require(block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.IncentivizeProposal: The Winslow_Voting_V1 period has ended, save for the next proposal!");
 
         VotingInstances[VotingInstance].TotalIncentive += amount;
 
@@ -759,10 +759,10 @@ contract Winslow_Voting_V1 {
 
     //Post-Vote Functions
 
-    function ReturnTokens(uint256 VotingInstance) public { //For returning your tokens for a specific instance after voting, with the incentive payout
+    function ReturnTokens(uint256 VotingInstance) public { //For returning your tokens for a specific instance after Winslow_Voting_V1, with the incentive payout
         require(VoterInfo[VotingInstance][msg.sender].Voted == true);
         require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
-        require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Voting has not ended for this instance");
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Winslow_Voting_V1 has not ended for this instance");
 
         uint256 index = UserUnreturnedVotesIndex[msg.sender][VotingInstance];
 
@@ -878,7 +878,7 @@ contract Winslow_Voting_V1 {
         //Post results
     }
 
-    //start next voting instance
+    //start next Winslow_Voting_V1 instance
     function BeginNextVote() public returns(uint256 VotingInstance){
         require(VotingQueue.length > 0, "VotingSystemV1.BeginNextVote: There are no proposals in the queue");
         //check if the current vote is over, or if there is no current vote as it is the first
@@ -957,7 +957,7 @@ contract Winslow_Voting_V1 {
 }
 
 interface Replacements{
-    function InheritCore(address Treasury, address Voting, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
+    function InheritCore(address Treasury, address Winslow_Voting_V1, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
     function SendPredecessor(address Predecessor) external returns(bool success);
     function ChangeDAO(address NewDAO) external returns(bool success);
 }
