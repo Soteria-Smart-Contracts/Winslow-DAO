@@ -277,7 +277,7 @@ contract Winslow_Core_V1 {
             else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
                 ExecuteProxyProposal(ProposalID);
             }
-            else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(2)){
+            else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(2) ){
                 ExecuteErosProposal(ProposalID);
             }
     
