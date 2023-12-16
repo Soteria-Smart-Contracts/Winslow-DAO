@@ -594,7 +594,6 @@ contract Winslow_Voting_V1 {
         VoteStatus Status;       //Using VoteStatus enum
         address[] Voters;        //List of users that have voted that also can be called for total number of voters
         uint256 TotalCLDVoted;   //Total of CLD used in this instance for Winslow_Voting_V1
-        bool MultiVote;          //Determines if this instance supports multivote
         uint8 MaxMulti;      //Max number of options for multivote
         uint256 YEAvotes;        //Votes to approve
         uint256 NAYvotes;        //Votes to refuse
