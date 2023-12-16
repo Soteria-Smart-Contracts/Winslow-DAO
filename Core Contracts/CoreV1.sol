@@ -14,7 +14,7 @@ contract Winslow_Core_V1 {
     string public Version = "V1";
     bool public IsActiveContract;
     address payable public TreasuryContract;
-    address public VotingContract;
+    address payable public VotingContract; 
     address public SaleFactoryContract;
     address public FoundationAddress;
     address public InitialSetter;
