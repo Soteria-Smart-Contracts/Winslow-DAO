@@ -457,7 +457,7 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-
+    //TODO: Test replacements
     function ReplaceCore(address NewCore) internal returns(bool success){
         IsActiveContract = false;
 
