@@ -6,8 +6,8 @@ When setting up a new Winslow_Core_V1 or Winslow_Voting_V1 contract, ensure cros
 done by the archive contract, Winslow_Voting_V1 index and proposal indexes never restart */
 pragma solidity ^0.8.19;
 
-//import "./TreasuryV1.sol";
-//import "./VotingV1.sol";
+    //TODO: Events overview and update
+
 
 contract Winslow_Core_V1 {
     //Variable Declarations       //TODO:Comment this stuff
@@ -122,7 +122,6 @@ contract Winslow_Core_V1 {
         uint256 EndTime;
     }
 
-    //TODO: Make Events
     event FallbackToTreasury(uint256 amount);
     event NewTreasurySet(address NewTreasury);
     //create all the events we need and in the following line for each add a comment and the line or lines it should be inserted into
