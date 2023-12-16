@@ -149,7 +149,7 @@ contract Winslow_Voting_V1 {
         require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastMultiVote: You may only cast a single vote per address per proposal"); //This may be changed in V2
         require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastMultiVote: This instance is not currently in voting");
         //TODO: require voting choice is in list of options for this instance
-        require(Mul);
+        require(uint8(OptionChoice));
         require(CurrentOngoingVote == VotingInstance, "VotingSystemV1.CastMultiVote: This is not the current ongoing vote");
 
         if(VotingInstances[VotingInstance].Voters.length == 0){
