@@ -793,7 +793,7 @@ contract Winslow_Voting_V1 {
         return(VotingInstances[_VoteInstance].ProposalID, VotingInstances[_VoteInstance].VoteStarts, VotingInstances[_VoteInstance].VoteEnds, VotingInstances[_VoteInstance].Status, VotingInstances[_VoteInstance].Voters, VotingInstances[_VoteInstance].TotalCLDVoted, VotingInstances[_VoteInstance].MultiVote, VotingInstances[_VoteInstance].MaxMulti, VotingInstances[_VoteInstance].YEAvotes, VotingInstances[_VoteInstance].NAYvotes, VotingInstances[_VoteInstance].TotalIncentive, VotingInstances[_VoteInstance].IncentivePerVote, VotingInstances[_VoteInstance].CLDtoIncentive, VotingInstances[_VoteInstance].CLDToBurn, VotingInstances[_VoteInstance].CLDToExecutioner);
     }
 
-    function GetVotingResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
+    function GetVoteResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
         require(block.timestamp >= VotingInstances[_VoteInstance].VoteEnds, "VotingSystemV1.GetVotingResult: The current vote is not over");
 
         //if the total votes does not meet the quorum, the vote fails and returns false
