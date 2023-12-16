@@ -427,7 +427,7 @@ contract Winslow_Core_V1 {
     function ReplaceTreasury(address NewTreasury) internal returns(bool success){
 
         Replacements(NewTreasury).SendPredecessor(TreasuryContract);
-        TreasuryContract = payble(NewTreasury;
+        TreasuryContract = payable(NewTreasury);
 
         emit NewTreasurySet(NewTreasury);
         return(success);
