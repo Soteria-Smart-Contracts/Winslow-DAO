@@ -388,16 +388,6 @@ contract Winslow_Voting_V1 {
             VotingInstances[VotingInstance].CLDtoIncentive = VotingInstances[VotingInstance].TotalIncentive - (VotingInstances[VotingInstance].CLDToBurn + VotingInstances[VotingInstance].CLDToExecutioner);
     }
 
-    receive() external payable{
-        emit FallbackToTreasury(address(this).balance);
-        payable(Core(DAO).TreasuryContract()).transfer(address(this).balance);
-    }
-
-    fallback() external payable{
-        emit FallbackToTreasury(address(this).balance);
-        payable(Core(DAO).TreasuryContract()).transfer(address(this).balance);
-    }
-
 }
 
 
