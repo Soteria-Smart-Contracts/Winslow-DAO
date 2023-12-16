@@ -916,7 +916,7 @@ contract Winslow_Voting_V1 {
     }
 
     function ChangeQuorum(uint256 newQuorum) external OnlyDAO returns(bool success){
-        require(new);
+        require(newQuorum > 250000000000000000000); //
 
         Quorum = newQuorum;
         
