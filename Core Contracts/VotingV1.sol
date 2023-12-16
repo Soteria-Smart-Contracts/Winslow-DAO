@@ -149,6 +149,7 @@ contract Winslow_Voting_V1 {
         require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastMultiVote: You may only cast a single vote per address per proposal"); //This may be changed in V2
         require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastMultiVote: This instance is not currently in voting");
         //TODO: require voting choice is in list of options for this instance
+        require(Mul);
         require(CurrentOngoingVote == VotingInstance, "VotingSystemV1.CastMultiVote: This is not the current ongoing vote");
 
         if(VotingInstances[VotingInstance].Voters.length == 0){
@@ -243,7 +244,7 @@ contract Winslow_Voting_V1 {
     function GetVotingInstance(uint256 _VoteInstance) public view returns(uint256 ProposalID, uint256 VoteStarts, uint256 VoteEnds, VoteStatus Status, address[] memory Voters, uint256 TotalCLDVoted, bool MultiVote, uint8 MaxMulti, uint256 YEAvotes, uint256 NAYvotes, uint256 TotalIncentive, uint256 IncentivePerVote, uint256 CLDtoIncentive, uint256 CLDToBurn, uint256 CLDToExecutioner){
         return(VotingInstances[_VoteInstance].ProposalID, VotingInstances[_VoteInstance].VoteStarts, VotingInstances[_VoteInstance].VoteEnds, VotingInstances[_VoteInstance].Status, VotingInstances[_VoteInstance].Voters, VotingInstances[_VoteInstance].TotalCLDVoted, VotingInstances[_VoteInstance].MultiVote, VotingInstances[_VoteInstance].MaxMulti, VotingInstances[_VoteInstance].YEAvotes, VotingInstances[_VoteInstance].NAYvotes, VotingInstances[_VoteInstance].TotalIncentive, VotingInstances[_VoteInstance].IncentivePerVote, VotingInstances[_VoteInstance].CLDtoIncentive, VotingInstances[_VoteInstance].CLDToBurn, VotingInstances[_VoteInstance].CLDToExecutioner);
     }
-    
+
     function GetVotingResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
         require(block.timestamp >= VotingInstances[_VoteInstance].VoteEnds, "VotingSystemV1.GetVotingResult: The current vote is not over");
 
