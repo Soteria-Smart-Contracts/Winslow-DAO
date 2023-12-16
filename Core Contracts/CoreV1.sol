@@ -214,7 +214,7 @@ contract Winslow_Core_V1 {
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, false);
+        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, false, 0);
         ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
         Proposals[NewIdentifier] = Proposal(Slot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
         ProxyArgs[NewIdentifier] = ProxyArguments;
