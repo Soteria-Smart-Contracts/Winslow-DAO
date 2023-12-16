@@ -784,7 +784,7 @@ contract Winslow_Voting_V1 {
     }
 
     function GetVotingInstance(uint256 _VoteInstance) public view returns(VoteInstance memory Instance){
-        return(VoteInstances[_VoteInstance]);
+        return(V[_VoteInstance]);
     }
 
     function GetVoteResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
@@ -793,7 +793,7 @@ contract Winslow_Voting_V1 {
         //if the total votes does not meet the quorum, the vote fails and returns false
         if(VotingInstances[_VoteInstance].TotalCLDVoted < Quorum){
             return(false, 0);
-        } 
+        }
 
         if(VotingInstances[_VoteInstance].YEAvotes > VotingInstances[_VoteInstance].NAYvotes){
             Result = true;
