@@ -950,7 +950,7 @@ interface Replacements{
 
 contract SaleFactoryV2 {
     string public Version = "V1";
-    address public DAO;
+    address payable public DAO;
     uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
     uint256 public RetractFee; //^
     uint256 public MinimumDeposit; //^
@@ -959,7 +959,7 @@ contract SaleFactoryV2 {
 
     constructor(){
         //TODO: Update Variables before deployment
-        DAO = msg.sender;
+        DAO = payable(msg.sender;
         FoundationFee = 100; //1%
         RetractFee = 100; //1%
         MinimumDeposit = 10000000000000000; //0.001 ETC
