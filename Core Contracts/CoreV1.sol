@@ -116,7 +116,7 @@ contract Winslow_Core_V1 {
     }
 
     struct Sale{
-        address SaleContract;
+        address SaleV2;
         uint256 CLDSaleAmount;
         uint256 StartTime;
         uint256 EndTime;
@@ -476,11 +476,11 @@ contract Winslow_Core_V1 {
         LatestSale++;
 
         address NewSaleAddress = SaleFactoryV2(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
-        Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleContract(NewSaleAddress).StartTime(), SaleContract(NewSaleAddress).EndTime());
+        Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleV2(NewSaleAddress).StartTime(), SaleV2(NewSaleAddress).EndTime());
 
         Winslow_Treasury_V1(TreasuryContract).TransferERC20(0, CLDtoSell, NewSaleAddress);
 
-        require(SaleContract(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
+        require(SaleV2(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
         return(success, NewSaleAddress);
     }
 
