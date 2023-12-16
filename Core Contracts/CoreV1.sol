@@ -970,7 +970,8 @@ contract SaleFactoryV2 {
         DAO = msg.sender;
         FoundationFee = 100; //1%
         RetractFee = 100; //1%
-        MinimumDeposit = 100000000000000000; //0.1 ETH
+        MinimumDeposit = 100000000000000000; //0.1 ETC
+        
     }
 
     //Events
