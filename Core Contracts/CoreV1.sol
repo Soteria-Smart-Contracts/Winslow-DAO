@@ -1244,7 +1244,7 @@ contract Winslow_Treasury_V1 {
 
     //Code executed on deployment
     constructor(address DAOcontract, address CLDcontract){
-        DAO = DAOcontract;
+        DAO = msg.sender;
         RegisteredAssetLimit = 5;
         RegisteredAssets[0] = (Token(CLDcontract, true));
         AssetRegistryMap[CLDcontract] = true;
