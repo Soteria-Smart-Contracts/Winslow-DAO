@@ -1,7 +1,7 @@
 //SPDX-License-Identifier:UNLICENSE
-/* This contract is able to be replaced by the Winslow Core, and can also continue to be used 
-if a new Winslow Core is deployed by changing DAO addresses
-This contract provides a factory and sale contract for the Winslow Core to initiate sales of CLD from the treasury*/
+/* This contract is able to be replaced by the Winslow Winslow_Core_V1, and can also continue to be used 
+if a new Winslow Winslow_Core_V1 is deployed by changing DAO addresses
+This contract provides a factory and sale contract for the Winslow Winslow_Core_V1 to initiate sales of CLD from the treasury*/
 pragma solidity ^0.8.17;
 
 contract SaleFactoryV2 {
@@ -33,8 +33,8 @@ contract SaleFactoryV2 {
     }
 
     function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
-        uint256 TreasuryCLDBalance = ERC20(Core(DAO).CLDAddress()).balanceOf(Core(DAO).TreasuryContract());
-        require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Core(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
+        uint256 TreasuryCLDBalance = ERC20(Winslow_Core_V1(DAO).CLDAddress()).balanceOf(Winslow_Core_V1(DAO).TreasuryContract());
+        require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Winslow_Core_V1(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
         address NewSaleAddress = address(new SaleV2(DAO, SaleID, CLDtoSell, DefaultSaleLength, FoundationFee, RetractFee, MinimumDeposit));
         
         emit NewSaleCreated(SaleID, CLDtoSell, NewSaleAddress);
@@ -96,7 +96,7 @@ contract SaleFactoryV2 {
 
 contract SaleV2 {
     //  Variable, struct, mapping and other Declarations
-    //  Core
+    //  Winslow_Core_V1
     address public DAO;
     address public CLD;
     uint256 public SaleIdentifier; //This iteration of all CLD sales conducted
@@ -144,7 +144,7 @@ contract SaleV2 {
         require(SaleLength >= 259200 && SaleLength <= 1209600);
         DAO = _DAO;
         SaleIdentifier = SaleID;
-        CLD = Core(DAO).CLDAddress();
+        CLD = Winslow_Core_V1(DAO).CLDAddress();
         CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract by treasury, additional CLD sent to the sale contract will be lost
         StartTime = block.timestamp + 43200;
         EndTime = StartTime + SaleLength;
@@ -215,8 +215,8 @@ contract SaleV2 {
         ProceedsNotTransfered = false;
         uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000); //TODO: Make sure this always returns a viable send amount aka wont break the contract
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
-        (Core(DAO).TreasuryContract()).transfer(ToTreasury);
-        (Core(DAO).FoundationAddress()).transfer(ToFoundation);
+        (Winslow_Core_V1(DAO).TreasuryContract()).transfer(ToTreasury);
+        (Winslow_Core_V1(DAO).FoundationAddress()).transfer(ToFoundation);
 
         emit ProceedsTransfered(ToFoundation, ToTreasury);
     }
@@ -248,7 +248,7 @@ contract SaleV2 {
 
 }
 
-interface Core {
+interface Winslow_Core_V1 {
     function TreasuryContract() external view returns(address payable TreasuryAddress);
     function FoundationAddress() external view returns(address payable Foundation);
     function CLDAddress() external view returns(address CLD);
