@@ -125,7 +125,7 @@ contract Winslow_Core_V1 {
     //create all the events we need and in the following line for each add a comment and the line or lines it should be inserted into
 
 
-    constructor(address ){
+    constructor(address SaleFactory){
         EmptyProxy = ProxyProposalArguments(0, 0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
         SubmitSimpleProposal("TODO: Make a community agreed first memo", address(0), 0, SimpleProposalTypes(0), 0, 0, 0);
         FoundationAddress = payable(0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce); //TODO: Change this to the community agreed foundation address
