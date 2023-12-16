@@ -132,7 +132,7 @@ contract Winslow_Core_V1 {
 
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = SaleFactory;
+        SaleFactoryContract = SaleFactory; //Contract is too big to de
         IsActiveContract = true;
     }
 
