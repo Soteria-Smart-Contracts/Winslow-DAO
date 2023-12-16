@@ -21,7 +21,7 @@ contract Winslow_Core_V1 {
     bool public InitialContractsSet;
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
-    uint256 public VoteLength = 172800; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met
+    uint256 public VoteLength = 600; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met
     ProxyProposalArguments internal EmptyProxy;
 
     //Mapping, structs and other declarations
