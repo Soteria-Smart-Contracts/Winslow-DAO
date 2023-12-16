@@ -1201,7 +1201,6 @@ contract SaleV2 {
 
 }
 
-
 interface ProxyContract{
     function ProxyFunctionOne(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
     function ProxyFunctionTwo(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
