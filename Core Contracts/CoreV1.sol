@@ -122,12 +122,6 @@ contract Winslow_Core_V1 {
         uint256 EndTime;
     }
 
-    //TODOs
-    //TODO: Prepare proposal queue functionality where the highest reward proposal is always at the top of the queue and the next to be voted on
-    //TODO: Review Multi Functionality
-    //TODO: Review voteresult
-    //TODO: Review default quorum
-    //TODO: Review Voting lenght make sure 2 days thing is properly implemented
     //TODO: Lots of testing
 
 
