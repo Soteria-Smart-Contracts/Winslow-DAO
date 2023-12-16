@@ -385,7 +385,7 @@ contract Winslow_Core_V1 {
 
         // Execute the eros proposal
         if(Proposals[ProposalID].Multi == true){
-            EROS(Proposals[ProposalID].AddressSlot).ExecuteMulti(uint8(ProxyArgs[ProposalID].UnsignedInt1));
+            EROS(Proposals[ProposalID].AddressSlot).ExecuteMulti(Multi);
         }
 
         else{
