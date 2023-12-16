@@ -14,7 +14,7 @@ contract Winslow_Core_V1 {
     string public Version = "V1";
     bool public IsActiveContract;
     address payable public TreasuryContract;
-    address payable public VotingContract; 
+    address public VotingContract; 
     address public SaleFactoryContract;
     address public FoundationAddress;
     address public InitialSetter;
@@ -930,16 +930,6 @@ contract Winslow_Voting_V1 {
             VotingInstances[VotingInstance].CLDToExecutioner = ((VotingInstances[VotingInstance].TotalIncentive * ExecutorCut) / 10000);
 
             VotingInstances[VotingInstance].CLDtoIncentive = VotingInstances[VotingInstance].TotalIncentive - (VotingInstances[VotingInstance].CLDToBurn + VotingInstances[VotingInstance].CLDToExecutioner);
-    }
-
-    receive() external payable{
-        emit FallbackToTreasury(address(this).balance);
-        payable(Winslow_Core_V1(DAO).TreasuryContract()).transfer(address(this).balance);
-    }
-
-    fallback() external payable{
-        emit FallbackToTreasury(address(this).balance);
-        payable(Winslow_Core_V1(DAO).TreasuryContract()).transfer(address(this).balance);
     }
 
 }
