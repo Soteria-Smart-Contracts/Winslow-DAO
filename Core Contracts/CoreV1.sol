@@ -1246,7 +1246,7 @@ contract Winslow_Treasury_V1 {
     constructor(){
         DAO = msg.sender;
         RegisteredAssetLimit = 5;
-        RegisteredAssets[0] = (Token(CLDcontract, true));
+        RegisteredAssets[0] = (Token(CLDcontract, true)); //TODO: Update CLD contract to correct address before deployment
         AssetRegistryMap[CLDcontract] = true;
     }
 
