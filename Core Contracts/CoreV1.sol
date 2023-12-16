@@ -784,7 +784,7 @@ contract Winslow_Voting_V1 {
     }
 
     function GetVotingInstance(uint256 _VoteInstance) public view returns(uint256 ProposalID, uint256 VoteStarts, uint256 VoteEnds, VoteStatus Status, address[] memory Voters, uint256 TotalCLDVoted, uint8 MaxMulti, uint256 YEAvotes, uint256 NAYvotes, uint256 TotalIncentive, uint256 IncentivePerVote, uint256 CLDtoIncentive, uint256 CLDToBurn, uint256 CLDToExecutioner){
-        return(VoteInstance[]);
+        return(VoteInstance[_VoteInstance]);
     }
 
     function GetVoteResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
