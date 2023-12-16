@@ -550,7 +550,7 @@ contract Winslow_Core_V1 {
     function SetFactoryContract(address NewFactory) external returns(bool success){
         require(msg.sender == FactorySetter);
         SaleFactoryContract = NewFactory;
-        FactorySetter = address(0);
+        FactorySetter = address(0); //This functionality is safe since
 
         return(success);
     }
