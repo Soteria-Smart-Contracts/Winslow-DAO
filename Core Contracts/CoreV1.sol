@@ -784,7 +784,7 @@ contract Winslow_Voting_V1 {
     }
 
     function GetVotingInstance(uint256 _VoteInstance) public view returns(VoteInstance memory Instance){
-        return(V[_VoteInstance]);
+        return(VotingInstances[_VoteInstance]);
     }
 
     function GetVoteResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
