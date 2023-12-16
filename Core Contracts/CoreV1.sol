@@ -1,8 +1,8 @@
 //SPDX-License-Identifier:UNLICENSE
 /* This contract is able to be replaced by itself, and can also continue to be used 
-if a new external core modules and contracts are deployed by changing their addresses and
+if a new external Winslow_Core_V1 modules and contracts are deployed by changing their addresses and
 providing previous contract information to the new contracts.
-When setting up a new core or Winslow_Voting_V1 contract, ensure cross-compatibility and record keeping 
+When setting up a new Winslow_Core_V1 or Winslow_Voting_V1 contract, ensure cross-compatibility and record keeping 
 done by the archive contract, Winslow_Voting_V1 index and proposal indexes never restart */
 pragma solidity ^0.8.19;
 
@@ -793,7 +793,7 @@ contract Winslow_Voting_V1 {
     //Public View Functions
 
     function CLDAddress() public view returns(address CLD){
-        return(Core(DAO).CLDAddress());
+        return(Winslow_Core_V1(DAO).CLDAddress());
     }
 
     function GetVotingInstance(uint256 _VoteInstance) public view returns(uint256 ProposalID, uint256 VoteStarts, uint256 VoteEnds, VoteStatus Status, address[] memory Voters, uint256 TotalCLDVoted, bool MultiVote, uint8 MaxMulti, uint256 YEAvotes, uint256 NAYvotes, uint256 TotalIncentive, uint256 IncentivePerVote, uint256 CLDtoIncentive, uint256 CLDToBurn, uint256 CLDToExecutioner){
@@ -850,7 +850,7 @@ contract Winslow_Voting_V1 {
         ActiveInstances++;
         uint256 EarliestStartTime = block.timestamp + 86400;
         address[] memory Empty;
-        uint256 InititalRewardPool = (Core(DAO).ProposalCost() / 2);
+        uint256 InititalRewardPool = (Winslow_Core_V1(DAO).ProposalCost() / 2);
 
         VotingInstances[NewInstanceID] = VoteInstance(ProposalID,EarliestStartTime,0,VoteStatus(0),Empty,0,Multi,MaxMulti,0,0,InititalRewardPool,0,0,0,0);
         VotingQueue.push(NewInstanceID);
@@ -906,7 +906,7 @@ contract Winslow_Voting_V1 {
         VotingQueueIndex[CurrentOngoingVote] = 0;
 
         VotingInstances[CurrentOngoingVote].VoteStarts = block.timestamp;
-        VotingInstances[CurrentOngoingVote].VoteEnds = block.timestamp + Core(DAO).VoteLength();
+        VotingInstances[CurrentOngoingVote].VoteEnds = block.timestamp + Winslow_Core_V1(DAO).VoteLength();
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
 
         return(CurrentOngoingVote);
@@ -941,12 +941,12 @@ contract Winslow_Voting_V1 {
 
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
-        payable(Core(DAO).TreasuryContract()).transfer(address(this).balance);
+        payable(Winslow_Core_V1(DAO).TreasuryContract()).transfer(address(this).balance);
     }
 
     fallback() external payable{
         emit FallbackToTreasury(address(this).balance);
-        payable(Core(DAO).TreasuryContract()).transfer(address(this).balance);
+        payable(Winslow_Core_V1(DAO).TreasuryContract()).transfer(address(this).balance);
     }
 
 }
