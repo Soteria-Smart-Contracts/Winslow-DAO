@@ -170,7 +170,3 @@ contract Winslow_Treasury_V1 {
         emit EtherReceived(msg.value, msg.sender, tx.origin); 
     }
 }
-
-interface HarmoniaDAO{
-    function CheckErosApproval(address) external view returns(bool);
-}
