@@ -369,7 +369,6 @@ contract Winslow_Voting_V1 {
         return true;
     }
 
-//  TODO: Set up Core to be able to switch itself to another core withought changing the voting or treasury
     function ChangeDAO(address newAddr) external OnlyDAO {
         require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
         require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
