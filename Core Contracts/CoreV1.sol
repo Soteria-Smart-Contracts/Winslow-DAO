@@ -842,8 +842,6 @@ contract Winslow_Voting_V1 {
         return(Result, Multi);
     }
 
-
-
     //OnlyDAO functions
 
         //Vote Setup
