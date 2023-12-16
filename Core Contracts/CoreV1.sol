@@ -967,7 +967,7 @@ contract SaleFactoryV2 {
     uint256 public MaximumSalePercentage; //^The maximum percentage of the supply that can be sold at once, to avoid flooding markets/heavy inflation, in Basis Points
 
     constructor(){
-        //TODO: Update Variables before
+        //TODO: Update Variables before deployment
         DAO = msg.sender;
         FoundationFee = 100; //1%
         RetractFee = 100; //1%
