@@ -122,9 +122,6 @@ contract Winslow_Core_V1 {
         uint256 EndTime;
     }
 
-    //TODO: Lots of testing
-
-
     //TODO: Make Events
     event FallbackToTreasury(uint256 amount);
     event NewTreasurySet(address NewTreasury);
