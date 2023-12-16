@@ -545,6 +545,8 @@ contract Winslow_Core_V1 {
 
         return(success);
     }
+
+    //One time function to set the g
     
     //Receive and fallbacks
     receive() external payable{
