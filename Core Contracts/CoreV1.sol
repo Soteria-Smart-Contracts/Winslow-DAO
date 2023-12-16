@@ -6,11 +6,11 @@ When setting up a new Winslow_Core_V1 or Winslow_Voting_V1 contract, ensure cros
 done by the archive contract, Winslow_Voting_V1 index and proposal indexes never restart */
 pragma solidity ^0.8.19;
 
-    //TODO: Events overview and update
+//TODO: Events overview and update
 
 
 contract Winslow_Core_V1 {
-    //Variable Declarations       //TODO:Comment this stuff
+    //Variable Declarations       
     string public Version = "V1";
     bool public IsActiveContract;
     address public TreasuryContract;
