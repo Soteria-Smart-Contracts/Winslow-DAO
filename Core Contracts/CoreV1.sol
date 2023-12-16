@@ -552,25 +552,7 @@ contract Winslow_Core_V1 {
 
         return(success);
     }
-
     
-    //One Time Functions
-    function SetInitialContracts(address _TreasuryAddress, address _VotingAddress, address _SaleFactory, address _FoundationAddress) internal{
-
-        require(msg.sender == InitialSetter);
-        require(InitialContractsSet == false);
-
-        TreasuryContract = _TreasuryAddress;
-        VotingContract = _VotingAddress;
-        SaleFactoryContract = _SaleFactory;
-        FoundationAddress = _FoundationAddress;
-        InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
-        InitialContractsSet = true;
-        IsActiveContract = true;
-
-        emit NewTreasurySet(_TreasuryAddress);
-        //TODO: NewVotingSet, New Sale Factory Set, New foundation address set
-    }
 
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
