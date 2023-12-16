@@ -137,7 +137,7 @@ contract Winslow_Core_V1 {
         SubmitSimpleProposal("TODO: Make a community agreed first memo", address(0), 0, SimpleProposalTypes(0), 0, 0, 0);
 
         TreasuryContract = _TreasuryAddress;
-        VotingContract = _VotingAddress;
+        VotingContract = new Winslow_Voting_V1();
         SaleFactoryContract = _SaleFactory;
         FoundationAddress = _FoundationAddress;
         InitialSetter = address(0); //Once the reasury address has been set for the first time, it can only be set again via proposal 
