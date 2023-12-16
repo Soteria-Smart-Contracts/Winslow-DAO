@@ -477,7 +477,6 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-
     function StartPublicSale(uint256 CLDtoSell) internal returns(bool success, address NewSaleContract){
         require(!SaleActive());
         LatestSale++;
@@ -490,7 +489,6 @@ contract Winslow_Core_V1 {
         require(SaleContract(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
         return(success, NewSaleAddress);
     }
-
 
     function ChangeProposalCost(uint256 newCost) internal returns(bool success){
 
@@ -505,7 +503,6 @@ contract Winslow_Core_V1 {
         
         return(success);
     }
-
     
     //Sale factory variable change functions
 
