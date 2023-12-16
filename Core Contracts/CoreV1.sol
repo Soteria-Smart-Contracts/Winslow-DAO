@@ -959,7 +959,7 @@ contract SaleFactoryV2 {
 
     constructor(){
         //TODO: Update Variables before deployment
-        DAO = payable(msg.sender;
+        DAO = payable(msg.sender);
         FoundationFee = 100; //1%
         RetractFee = 100; //1%
         MinimumDeposit = 10000000000000000; //0.001 ETC
@@ -1032,7 +1032,7 @@ contract SaleFactoryV2 {
     function ChangeDAO(address newAddr) external OnlyDAO returns(bool success){
         require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
         require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
-        DAO = newAddr;    
+        DAO = payable(newAddr);    
 
         emit NewDAOAddress(newAddr);
         return(success);
