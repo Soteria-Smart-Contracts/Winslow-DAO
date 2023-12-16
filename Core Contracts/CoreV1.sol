@@ -553,7 +553,7 @@ contract Winslow_Core_V1 {
         return(success);
     }
     
-
+    //Receive and fallbacks
     receive() external payable{
         emit FallbackToTreasury(address(this).balance);
         payable(TreasuryContract).transfer(address(this).balance);
