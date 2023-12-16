@@ -563,7 +563,7 @@ contract Winslow_Core_V1 {
 contract Winslow_Voting_V1 {
     // Contracts and Routing Variables
     string public Version = "V1";
-    address public DAO;
+    address payable public DAO;
     uint256 public Quorum = 1500000000000000000000; //Default quorum to be changed in initial proposals
 
     // Percentages in Basis Points
@@ -652,7 +652,7 @@ contract Winslow_Voting_V1 {
     constructor(){
         ExecutorCut = 200; //TODO: Change this to the community agreed upon value for production
         BurnCut = 200;
-        DAO = msg.sender;
+        DAO = payable(msg.sender;
     }
 
     //Pre-Vote Functions (Incentivize is available pre and during vote)
