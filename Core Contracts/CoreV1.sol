@@ -1088,7 +1088,7 @@ contract SaleV2 {
 
     constructor(address _DAO, uint256 SaleID, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee, uint256 MinDeposit){
         require(SaleLength >= 259200 && SaleLength <= 1209600);
-        DAO = _DAO;
+        DAO = payable(_DAO);
         SaleIdentifier = SaleID;
         CLD = Winslow_Core_V1(DAO).CLDAddress();
         CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract by treasury, additional CLD sent to the sale contract will be lost
