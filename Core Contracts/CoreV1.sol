@@ -189,7 +189,7 @@ contract Winslow_Core_V1 {
         MRIdentifier++;
 
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events or new sales
-        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, false, 0);
+        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
         if(SimpleType == SimpleProposalTypes(2)){
             require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Winslow_Treasury_V1(TreasuryContract).RegisteredAssetLimit());
             ProxyProposalArguments storage ProxyArgsWithSlot = EmptyProxy;
@@ -214,7 +214,7 @@ contract Winslow_Core_V1 {
         uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
 
-        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, false, 0);
+        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
         ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
         Proposals[NewIdentifier] = Proposal(Slot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
         ProxyArgs[NewIdentifier] = ProxyArguments;
