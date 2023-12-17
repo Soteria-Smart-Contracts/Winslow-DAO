@@ -9,7 +9,7 @@ contract WinslowDAOcompact{
         uint256 Yay;
         uint256 Nay;
         bool passed;
-        bool exece
+        bool executed;
         address[] voters;
     }
 
@@ -42,7 +42,8 @@ contract WinslowDAOcompact{
     }
 
     function ExecuteProposal(uint256 proposalId) public{
-        require(Proposals[proposalId].passed == false, "This proposal has already been executed");
+        require(Proposals[proposalId].executed == false, "This proposal has already been executed");
+        
         
         if(Proposals[proposalId].Yay > Proposals[proposalId].Nay){
             Proposals[proposalId].passed = true;
