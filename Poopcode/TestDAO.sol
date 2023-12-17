@@ -10,6 +10,7 @@ contract WinslowDAOcompact{
         uint256 Nay;
         bool passed;
         bool executed;
+
         address[] voters;
     }
 
