@@ -2,6 +2,7 @@
 pragma solidity ^0.8.17;
 
 contract WinslowDAOcompact{
+    address 
 
     struct Proposal{
         string Memo;
@@ -24,6 +25,7 @@ contract WinslowDAOcompact{
 
     function Vote(uint256 proposalId, bool vote, uint256 Amount) public{
         require(Voted[msg.sender][proposalId] == false, "You have already voted on this proposal");
+        require(E);
         Voted[msg.sender][proposalId] = true;
         if(vote){
             Proposals[proposalId].Yay++;
