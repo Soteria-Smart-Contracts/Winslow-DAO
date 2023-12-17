@@ -52,7 +52,9 @@ contract WinslowDAOcompact{
 
         for(uint256 i = 0; i < Proposals[proposalId].voters.length; i++){
             address Voter = Proposals[proposalId].voters[i];
-            uint256 Amount = VoteAmount[Voter][proposalId];        }
+            uint256 Amount = VoteAmount[Voter][proposalId];    
+                ERC20(WinslowTokenAddress).transfer(Voter, Amount);    
+            }
     }
 
     function GetProposalInfo(uint256 proposalId) public view returns(string memory, uint256, uint256, bool, bool){
