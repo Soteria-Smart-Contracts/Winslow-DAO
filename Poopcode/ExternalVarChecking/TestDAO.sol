@@ -4,9 +4,10 @@ pragma solidity ^0.8.17;
 contract WinslowDAOcompact{
 
     struct Proposal{
+        string Memo;
         uint256 ID;
         uint256 Yay;
-        string Nay;
+        uint256 Nay;
         uint256 startTime;
         uint256 endTime;
         bool executed;
