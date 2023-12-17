@@ -11,5 +11,6 @@ contract WinslowDAOcompact{
         address[] voters;
     }
 
-    
+    mapping(uint256 => Proposal) public Proposals;
+    uint256 public ProposalCount = 0;
 }
