@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 contract WinslowDAOcompact{
-    address 
+    address public WinslowTokenAddress;
 
     struct Proposal{
         string Memo;
@@ -25,7 +25,7 @@ contract WinslowDAOcompact{
 
     function Vote(uint256 proposalId, bool vote, uint256 Amount) public{
         require(Voted[msg.sender][proposalId] == false, "You have already voted on this proposal");
-        require(E);
+        require(ERC20(WinslowTokenAddress).allowance(msg.sender, address(this)) >= Amount, "You have not approved enough tokens");
         Voted[msg.sender][proposalId] = true;
         if(vote){
             Proposals[proposalId].Yay++;
