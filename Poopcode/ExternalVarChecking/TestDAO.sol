@@ -10,5 +10,6 @@ contract WinslowDAOcompact{
         bool passed;
         address[] voters;
     }
-}
 
+    
+}
