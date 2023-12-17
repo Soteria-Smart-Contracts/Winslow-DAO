@@ -55,16 +55,6 @@ contract WinslowDAOcompact{
         }
     }
 
-
-
-
-
-
-
-
-
-
-
 }
 
 interface ERC20 {
