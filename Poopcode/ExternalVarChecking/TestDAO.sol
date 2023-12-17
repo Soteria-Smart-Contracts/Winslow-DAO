@@ -7,8 +7,7 @@ contract WinslowDAOcompact{
         string Memo;
         uint256 Yay;
         uint256 Nay;
-
-        bool executed;
+        
         bool passed;
         mapping(address => bool) voters;
     }
