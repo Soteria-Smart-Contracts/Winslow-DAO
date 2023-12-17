@@ -14,7 +14,7 @@ contract WinslowDAOcompact{
 
     mapping(uint256 => Proposal) public Proposals;
     mapping(address => mapping(uint256 => bool)) public Voted;
-    mapping(address => mapping(uint256 => bool)) public Voted;
+    mapping(address => mapping(uint256 => uint256)) public VoteAmount;
     uint256 public ProposalCount = 0;
 
 
@@ -28,12 +28,15 @@ contract WinslowDAOcompact{
         require(Voted[msg.sender][proposalId] == false, "You have already voted on this proposal");
         require(ERC20(WinslowTokenAddress).transferFrom(msg.sender, address(this), Amount), "Error transferring tokens");
 
+        VoteAmount[msg.sender][proposalId] = Amount;
+
         Voted[msg.sender][proposalId] = true;
         if(vote){
             Proposals[proposalId].Yay += Amount;
         }else{
             Proposals[proposalId].Nay += Amount;
         }
+        
         Proposals[proposalId].voters.push(msg.sender);
     }
 
