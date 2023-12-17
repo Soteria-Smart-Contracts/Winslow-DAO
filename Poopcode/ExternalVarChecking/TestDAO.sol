@@ -14,6 +14,7 @@ contract WinslowDAOcompact{
 
     mapping(uint256 => Proposal) public Proposals;
     mapping(address => mapping(uint256 => bool)) public Voted;
+    mapping(address => mapping(uint256 => bool)) public Voted;
     uint256 public ProposalCount = 0;
 
 
