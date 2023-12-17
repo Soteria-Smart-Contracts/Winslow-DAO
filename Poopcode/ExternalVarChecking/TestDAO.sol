@@ -13,4 +13,22 @@ contract WinslowDAOcompact{
 
     mapping(uint256 => Proposal) public Proposals;
     uint256 public ProposalCount = 0;
+
+
+    function CreateProposal(string memory memo) public returns(uint256){
+        ProposalCount++;
+        Proposals[ProposalCount].Memo = memo;
+        return ProposalCount;
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
