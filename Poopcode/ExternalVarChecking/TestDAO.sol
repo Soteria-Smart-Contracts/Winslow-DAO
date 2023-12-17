@@ -55,7 +55,7 @@ contract WinslowDAOcompact{
             uint256 Amount = VoteAmount[Voter][proposalId];    
             ERC20(WinslowTokenAddress).transfer(Voter, Amount);  
 
-            //set vot  
+            VoteAmount[Voter][proposalId] = 0;  
         }
     }
 
