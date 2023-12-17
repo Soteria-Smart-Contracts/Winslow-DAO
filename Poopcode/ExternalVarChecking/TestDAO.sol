@@ -21,6 +21,8 @@ contract WinslowDAOcompact{
         return ProposalCount;
     }
 
+    
+
 
 
 
