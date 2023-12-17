@@ -30,6 +30,7 @@ contract WinslowDAOcompact{
     function Vote(uint256 proposalId, bool vote, uint256 Amount) public{
         require(Voted[msg.sender][proposalId] == false, "You have already voted on this proposal");
         require(ERC20(WinslowTokenAddress).transferFrom(msg.sender, address(this), Amount), "Error transferring tokens");
+        require(block.timestamp < Proposals[proposalId].VoteEnd, "This proposal has expired");
 
         VoteAmount[msg.sender][proposalId] = Amount;
 
@@ -45,6 +46,7 @@ contract WinslowDAOcompact{
 
     function ExecuteProposal(uint256 proposalId) public{
         require(Proposals[proposalId].executed == false, "This proposal has already been executed");
+        require(block.timestamp > Proposals[proposalId].VoteEnd, "This proposal has not yet expired");
         
         if(Proposals[proposalId].Yay > Proposals[proposalId].Nay){
             Proposals[proposalId].passed = true;
