@@ -55,6 +55,10 @@ contract WinslowDAOcompact{
         }
     }
 
+    //view get proposal info
+
+    func
+
 }
 
 interface ERC20 {
