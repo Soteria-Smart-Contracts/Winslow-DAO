@@ -42,9 +42,10 @@ contract WinslowDAOcompact{
 
     function ExecuteProposal(uint256 proposalId) public{
         require(Proposals[proposalId].passed == false, "This proposal has already been executed");
-        require(Proposals[proposalId].Yay > Proposals[proposalId].Nay, "This proposal did not pass");
+        
+        if(Proposals[proposalId].Yay > Proposals[proposalId].Nay){
+            Proposals[proposalId].passed = true;
 
-        Proposals[proposalId].passed = true;
 
         for(uint256 i = 0; i < Proposals[proposalId].voters.length; i++){
             ERC20(WinslowTokenAddress).transfer(Proposals[proposalId].voters[i], VoteAmount[Proposals[proposalId].voters[i]][proposalId]);
