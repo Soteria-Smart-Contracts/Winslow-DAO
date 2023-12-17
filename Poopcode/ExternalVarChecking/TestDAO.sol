@@ -22,7 +22,16 @@ contract WinslowDAOcompact{
         return ProposalCount;
     }
 
-    
+    function Vote(uint256 proposalId, bool vote) public{
+        require(Voted[msg.sender][proposalId] == false, "You have already voted on this proposal");
+        Voted[msg.sender][proposalId] = true;
+        if(vote){
+            Proposals[proposalId].Yay++;
+        }else{
+            Proposals[proposalId].Nay++;
+        }
+        Proposals[proposalId].voters.push(msg.sender);
+    }
 
 
 
