@@ -9,6 +9,7 @@ contract WinslowDAOcompact{
         uint256 Yay;
         uint256 Nay;
         bool passed;
+        bool exece
         address[] voters;
     }
 
@@ -45,7 +46,6 @@ contract WinslowDAOcompact{
         
         if(Proposals[proposalId].Yay > Proposals[proposalId].Nay){
             Proposals[proposalId].passed = true;
-
 
         for(uint256 i = 0; i < Proposals[proposalId].voters.length; i++){
             ERC20(WinslowTokenAddress).transfer(Proposals[proposalId].voters[i], VoteAmount[Proposals[proposalId].voters[i]][proposalId]);
