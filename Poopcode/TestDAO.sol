@@ -10,7 +10,7 @@ contract WinslowDAOcompact{
         uint256 Nay;
         bool passed;
         bool executed;
-
+        uint256 VoteEnd;
         address[] voters;
     }
 
@@ -23,6 +23,7 @@ contract WinslowDAOcompact{
     function CreateProposal(string memory memo) public returns(uint256){
         ProposalCount++;
         Proposals[ProposalCount].Memo = memo;
+        Proposals[ProposalCount].VoteEnd = block.timestamp + 604800; // 1 week
         return ProposalCount;
     }
 
