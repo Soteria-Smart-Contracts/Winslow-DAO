@@ -23,8 +23,7 @@ contract WinslowDAOcompact{
     function CreateProposal(string memory memo) public returns(uint256){
         ProposalCount++;
         Proposals[ProposalCount].Memo = memo;
-        //vote end is 12 hours from now
-        Proposals[ProposalCount].VoteEnd = block.timestamp + 
+        Proposals[ProposalCount].VoteEnd = block.timestamp + 43200;
         return ProposalCount;
     }
 
