@@ -27,13 +27,11 @@ contract WinslowDAOcompact{
         require(Voted[msg.sender][proposalId] == false, "You have already voted on this proposal");
         require(ERC20(WinslowTokenAddress).transferFrom(msg.sender, address(this), Amount);, "You have not approved enough tokens");
 
-
-
         Voted[msg.sender][proposalId] = true;
         if(vote){
-            Proposals[proposalId].Yay++;
+            Proposals[proposalId].Yay += Amount;
         }else{
-            Proposals[proposalId].Nay++;
+            Proposals[proposalId].Nay += Amount;
         }
         Proposals[proposalId].voters.push(msg.sender);
     }
