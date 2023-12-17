@@ -55,9 +55,9 @@ contract WinslowDAOcompact{
         }
     }
 
-    //view get proposal info
-
-    func
+    function GetProposalInfo(uint256 proposalId) public view returns(string memory, uint256, uint256, bool, bool){
+        return(Proposals[proposalId].Memo, Proposals[proposalId].Yay, Proposals[proposalId].Nay, Proposals[proposalId].passed, Proposals[proposalId].executed);
+    }
 
 }
 
