@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 contract WinslowDAOcompact{
-    address public WinslowTokenAddress;
+    address public WinslowTokenAddress = 0xd683198d0a223Bc25ad6c199A86E08a4fcF3a77a;
 
     struct Proposal{
         string Memo;
