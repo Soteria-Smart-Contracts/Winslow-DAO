@@ -5,8 +5,8 @@ contract WinslowDAOcompact{
 
     struct Proposal{
         uint256 ID;
-        uint256 YesVotes;
-        string description;
+        uint256 Yay;
+        string Nay;
         uint256 startTime;
         uint256 endTime;
         bool executed;
