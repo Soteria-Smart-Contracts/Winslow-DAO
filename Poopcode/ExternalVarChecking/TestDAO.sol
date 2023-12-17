@@ -12,7 +12,7 @@ contract WinslowDAOcompact{
     }
 
     mapping(uint256 => Proposal) public Proposals;
-    mapping(address => mapping()) public Balance;
+    mapping(address => mapping(uint256 => bool)) public Voted;
     uint256 public ProposalCount = 0;
 
 
@@ -22,19 +22,7 @@ contract WinslowDAOcompact{
         return ProposalCount;
     }
 
-    function Vote(uint256 proposalId, bool vote) public{
-        require(Proposals[proposalId].passed == false, "Proposal already passed");
-        require(Proposals[proposalId].Yay + Proposals[proposalId].Nay < Proposals[proposalId].voters.length, "Proposal already passed");
-        if(vote){
-            Proposals[proposalId].Yay++;
-        }else{
-            Proposals[proposalId].Nay++;
-        }
-        Proposals[proposalId].voters.push(msg.sender);
-        if(Proposals[proposalId].Yay > Proposals[proposalId].Nay){
-            Proposals[proposalId].passed = true;
-        }
-    }
+    
 
 
 
