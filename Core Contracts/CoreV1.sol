@@ -365,7 +365,9 @@ contract Winslow_Core_V1 {
             FoundationAddress = payable(Proposals[ProposalID].AddressSlot);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(17)){
-            ChangeVotingLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
+            ChangeVotingLength(Proposals[ProposalID].RequestedEtherAmount);
+            //Value is stored in RequestedEtherAmount in seconds
+            VoteLength = NewLength;
         }
     }
 
