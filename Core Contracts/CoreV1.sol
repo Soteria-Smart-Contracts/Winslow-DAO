@@ -328,7 +328,8 @@ contract Winslow_Core_V1 {
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
             require(!SaleActive());
-            //cld to sell is re
+            //cld to sell is requested asset amount
+            
             LatestSale++;
 
             address NewSaleAddress = SaleFactoryV2(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
