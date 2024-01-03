@@ -178,21 +178,6 @@ contract Winslow_Core_V1 {
         return(NewIdentifier);
     }
 
-    function InitializeProxyProposal(string memory Memo, address Slot, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID, ProxyProposalArguments memory ProxyArguments) internal returns(uint256 identifier){
-        require(Slot != address(0), "ProxyProposals must have a slotted contract");
-        require(ProxyArguments.FunctionSelector > 0 && ProxyArguments.FunctionSelector < 9, "Proxy proposal function selector must be between 1 and 9");
-
-        uint256 NewIdentifier = MRIdentifier++;
-        MRIdentifier++;
-
-        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
-        ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
-        Proposals[NewIdentifier] = Proposal(Slot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
-        ProxyArgs[NewIdentifier] = ProxyArguments;
-
-        return(NewIdentifier);
-
-    }
 
     function InitializeErosProposal(address ProposalAddress) internal returns(uint256 identifier){
         require(ProposalAddress != address(0), "ErosProposals must have a slotted contract");
