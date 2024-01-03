@@ -362,7 +362,7 @@ contract Winslow_Core_V1 {
             Winslow_Voting_V1(VotingContract).ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(16)){
-            ChangeFoundationAddress(Proposals[ProposalID].AddressSlot);
+            FoundationAddress = payable(Proposals[ProposalID].AddressSlot);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(17)){
             ChangeVotingLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
