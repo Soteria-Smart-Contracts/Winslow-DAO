@@ -251,7 +251,7 @@ contract Winslow_Core_V1 {
             Winslow_Treasury_V1(TreasuryContract).RegisterAsset(TokenAddress, Slot);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)){
-            uint8 NewLimit = uint8(ProxyArgs[ProposalID].UnsignedInt1); 
+            uint8 NewLimit = uint8(Proposals[ProposalID].RequestedEtherAmount); 
             Winslow_Treasury_V1(TreasuryContract).ChangeRegisteredAssetLimit(NewLimit);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(4)){
