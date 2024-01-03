@@ -407,7 +407,12 @@ contract Winslow_Core_V1 {
 
     function ExecuteErosProposal(uint256 ProposalID, uint8 Multi) internal {
         // Send requested assets out to the eros address
-        SendAssets(ProposalID);
+        if(Proposals[ProposalID].RequestedEtherAmount > 0){
+            Winslow_Treasury_V1(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, payable(Proposals[ProposalID].AddressSlot));
+        }
+        if(Proposals[ProposalID].RequestedAssetAmount > 0){
+            Winslow_Treasury_V1(TreasuryContract).TransferERC20(Proposals[ProposalID].RequestedAssetID, Proposals[ProposalID].RequestedAssetAmount, Proposals[ProposalID].AddressSlot);
+        }
 
         if(Proposals[ProposalID].Multi == true){
             EROS(Proposals[ProposalID].AddressSlot).ExecuteMulti(Multi);
