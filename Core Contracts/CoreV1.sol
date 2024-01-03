@@ -351,6 +351,33 @@ contract Winslow_Core_V1 {
             ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
             //move logic here and not to another function
 
+            }
+                    else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
+                        ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
+                    }
+                    else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
+                        ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in basis points
+                    }
+                    else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
+                        ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in basis points
+                    }
+                    else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(16)){
+                        ChangeFoundationAddress(Proposals[ProposalID].AddressSlot);
+                    }
+                    else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(17)){
+                        ChangeVotingLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
+                    }
+                    else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(18)){
+                        // move logic here and not to another function
+                    }
+                }
+
+                //  Proxy Executionting
+
+                function ExecuteProxyProposal(uint256 ProposalID) internal {
+
+                    if(ProxyArgs[ProposalID].FunctionSelector == 1){
+                        ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne(ProxyArgs[ProposalID]);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
             ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
