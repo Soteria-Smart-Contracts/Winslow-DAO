@@ -20,7 +20,6 @@ contract Winslow_Core_V1 {
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
     uint256 public VoteLength = 600; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met TODO: Change back to 172800 for production
-    ProxyProposalArguments internal EmptyProxy;
     address public FactorySetter;
 
     //Mapping, structs and other declarations
@@ -28,7 +27,6 @@ contract Winslow_Core_V1 {
     //Proposals
     mapping(uint256 => Proposal) public Proposals;
     mapping(uint256 => ProposalInfo) public ProposalInfos;
-    mapping(uint256 => ProxyProposalArguments) ProxyArgs;
     uint256 public MRIdentifier;
 
     //Token Sales
