@@ -422,7 +422,6 @@ contract Winslow_Core_V1 {
             EROS(Proposals[ProposalID].AddressSlot).Execute();
         }
     }
-    //Internal Functions
 
     // Other Internals
     function ReceiveProposalCost() internal returns(bool success){
