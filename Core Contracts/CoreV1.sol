@@ -348,8 +348,8 @@ contract Winslow_Core_V1 {
             SaleFactoryV2(SaleFactoryContract).ChangeRetractFee(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
-            ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount); 
-            
+            ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
+            //move logic here
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
             ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
