@@ -37,7 +37,7 @@ contract Winslow_Core_V1 {
     uint256 public LatestSale;
 
     enum ProposalStatus{
-        Security_Verification, //TODO: Delete se
+        Security_Verification, //TODO: Delete security verification status
         Pre_Voting,
         Winslow_Voting_V1,
         Executed,
