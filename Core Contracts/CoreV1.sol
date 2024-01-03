@@ -99,19 +99,6 @@ contract Winslow_Core_V1 {
         address Proposer;               //Address who initially created the proposal
     }
 
-    struct ProxyProposalArguments{
-        uint8 FunctionSelector;
-        uint256 UnsignedInt1;
-        uint256 UnsignedInt2;
-        uint256 UnsignedInt3; 
-        address Address1;
-        address Address2;
-        address Address3;
-        bool Bool1;
-        bool Bool2;
-        bool Bool3;
-    }
-
     struct Sale{
         address SaleV2;
         uint256 CLDSaleAmount;
@@ -125,7 +112,6 @@ contract Winslow_Core_V1 {
 
 
     constructor(){
-        EmptyProxy = ProxyProposalArguments(0, 0 ,0 ,0 ,address(0) ,address(0), address(0), false, false, false);
         FoundationAddress = payable(0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce); //TODO: Change this to the community agreed foundation address
 
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
