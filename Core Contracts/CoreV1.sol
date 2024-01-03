@@ -315,7 +315,7 @@ contract Winslow_Core_V1 {
             VotingContract = NewVoting;
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(6)){
-            ReplaceSaleFactory(Proposals[ProposalID].AddressSlot);
+            SaleFactoryContract = NewSaleModule;
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
             ReplaceCore(Proposals[ProposalID].AddressSlot);
