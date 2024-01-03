@@ -319,6 +319,7 @@ contract Winslow_Core_V1 {
             SaleFactoryContract = NewSaleModule;
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
+            address NewCore = Proposals[ProposalID].AddressSlot;
             IsActiveContract = false;
             Replacements(NewCore).InheritCore(TreasuryContract, VotingContract, MRIdentifier, ProposalCost);
             Replacements(TreasuryContract).ChangeDAO(NewCore);
