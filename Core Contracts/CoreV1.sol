@@ -295,7 +295,9 @@ contract Winslow_Core_V1 {
             }
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(2)){
-            RegisterTreasuryAsset(ProposalID);
+            address TokenAddress = Proposals[ProposalID].AddressSlot;
+            uint8 Slot = uint8(ProxyArgs[ProposalID].UnsignedInt1); 
+            Winslow_Treasury_V1(TreasuryContract).RegisterAsset(TokenAddress, Slot);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)){
             ChangeRegisteredAssetLimit(ProposalID);
