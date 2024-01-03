@@ -327,7 +327,15 @@ contract Winslow_Core_V1 {
             Replacements(SaleFactoryContract).ChangeDAO(NewCore);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
-            StartPublicSale(Proposals[ProposalID].RequestedAssetAmount);
+            require(!SaleActive());
+            LatestSale++;
+
+            address NewSaleAddress = SaleFactoryV2(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
+            Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleV2(NewSaleAddress).StartTime(), SaleV2(NewSaleAddress).EndTime());
+
+            Winslow_Treasury_V1(TreasuryContract).TransferERC20(0, CLDtoSell, NewSaleAddress);
+
+            require(SaleV2(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)){
             ChangeProposalCost(Proposals[ProposalID].RequestedEtherAmount);
