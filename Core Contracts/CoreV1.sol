@@ -296,7 +296,7 @@ contract Winslow_Core_V1 {
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(2)){
             address TokenAddress = Proposals[ProposalID].AddressSlot;
-            uint8 Slot = uint8(ProxyArgs[ProposalID].UnsignedInt1);  //Fix when deleting proxy 
+            uint8 Slot = uint8(ProxyArgs[ProposalID].UnsignedInt1);  //TODO: Fix when deleting proxy proposals
             Winslow_Treasury_V1(TreasuryContract).RegisterAsset(TokenAddress, Slot);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)){
