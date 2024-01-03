@@ -354,7 +354,7 @@ contract Winslow_Core_V1 {
             SaleFactoryV2(SaleFactoryContract).ChangeDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
-            ChangeSaleMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in basis points
+            //Value is stored in RequestedEtherAmount in basis points
             SaleFactoryV2(SaleFactoryContract).ChangeMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
