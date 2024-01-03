@@ -360,7 +360,7 @@ contract Winslow_Core_V1 {
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
             ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount); 
             //Value is stored in RequestedEtherAmount in basis points
-            
+            Winslow_Voting_V1(VotingContract).ChangeQuorum();
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(16)){
             ChangeFoundationAddress(Proposals[ProposalID].AddressSlot);
