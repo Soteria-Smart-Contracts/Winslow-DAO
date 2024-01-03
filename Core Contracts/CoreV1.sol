@@ -346,6 +346,7 @@ contract Winslow_Core_V1 {
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
             ChangeSaleRetractFee(Proposals[ProposalID].RequestedEtherAmount);
+            //guess what goes ne
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
             ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount); 
