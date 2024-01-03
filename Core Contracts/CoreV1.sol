@@ -349,7 +349,9 @@ contract Winslow_Core_V1 {
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
             ChangeSaleMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
-            //move logic here
+            //move logic here and not to another function
+
+            
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
             ChangeSaleDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount); //Value is stored in RequestedEtherAmount in seconds
