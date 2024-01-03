@@ -310,6 +310,7 @@ contract Winslow_Core_V1 {
             emit NewTreasurySet(NewTreasury);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(5)){
+            address NewVoting = Proposals[ProposalID].AddressSlot;
             Replacements(NewVoting).SendPredecessor(VotingContract);
             VotingContract = NewVoting;
         }
