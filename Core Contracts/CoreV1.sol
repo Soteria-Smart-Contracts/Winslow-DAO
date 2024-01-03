@@ -433,7 +433,7 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    //One time function to set the factory contract address
+    //One time function to set the factory contract address //TODO: see if you still need this later
     function SetFactoryContract(address NewFactory) external returns(bool success){
         require(msg.sender == FactorySetter);
         SaleFactoryContract = NewFactory;
