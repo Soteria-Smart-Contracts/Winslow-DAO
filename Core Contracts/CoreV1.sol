@@ -165,7 +165,7 @@ contract Winslow_Core_V1 {
             require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Winslow_Treasury_V1(TreasuryContract).RegisteredAssetLimit());
             ProxyProposalArguments storage ProxyArgsWithSlot = EmptyProxy;
             ProxyArgsWithSlot.UnsignedInt1 = UintSlot;
-            //set requested ether to ui
+            //set requested ether to uint slot insted of
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VoteLength);
             Proposals[NewIdentifier] = Proposal(AddressSlot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
             ProxyArgs[NewIdentifier] = ProxyArgsWithSlot;
