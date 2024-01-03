@@ -323,36 +323,6 @@ contract Winslow_Core_V1 {
 
     //  Proxy Executionting
 
-    function ExecuteProxyProposal(uint256 ProposalID) internal {
-
-        if(ProxyArgs[ProposalID].FunctionSelector == 1){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionOne(ProxyArgs[ProposalID]);
-        }
-        else if(ProxyArgs[ProposalID].FunctionSelector == 2){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionTwo(ProxyArgs[ProposalID]);
-        }
-        else if(ProxyArgs[ProposalID].FunctionSelector == 3){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionThree(ProxyArgs[ProposalID]);
-        }
-        else if(ProxyArgs[ProposalID].FunctionSelector == 4){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFour(ProxyArgs[ProposalID]);
-        }
-        else if(ProxyArgs[ProposalID].FunctionSelector == 5){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionFive(ProxyArgs[ProposalID]);
-        }
-        else if(ProxyArgs[ProposalID].FunctionSelector == 6){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionSix(ProxyArgs[ProposalID]);
-        }
-        else if(ProxyArgs[ProposalID].FunctionSelector == 7){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionSeven(ProxyArgs[ProposalID]);
-        }
-        else if(ProxyArgs[ProposalID].FunctionSelector == 8){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionEight(ProxyArgs[ProposalID]);
-        }
-        else if(ProxyArgs[ProposalID].FunctionSelector == 9){
-            ProxyContract(Proposals[ProposalID].AddressSlot).ProxyFunctionNine(ProxyArgs[ProposalID]);
-        }
-    }
 
     //  Eros Executionting
 
