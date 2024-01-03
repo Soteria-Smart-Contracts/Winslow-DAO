@@ -339,7 +339,7 @@ contract Winslow_Core_V1 {
             require(SaleV2(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)){
-            ChangeProposalCost(Proposals[ProposalID].RequestedEtherAmount);
+            ProposalCost = newCost;
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
             ChangeSaleFoundationFee(Proposals[ProposalID].RequestedEtherAmount);
