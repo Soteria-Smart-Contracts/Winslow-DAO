@@ -1005,18 +1005,6 @@ contract SaleV2 {
 
 }
 
-interface ProxyContract{
-    function ProxyFunctionOne(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionTwo(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionThree(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionFour(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionFive(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionSix(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionSeven(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionEight(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-    function ProxyFunctionNine(Winslow_Core_V1.ProxyProposalArguments memory ExecutionArguments) external returns(bool success);
-}
-
 contract Winslow_Treasury_V1 {
     //Variable, struct and type declarations
     string public Version = "V1";
