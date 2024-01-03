@@ -304,7 +304,9 @@ contract Winslow_Core_V1 {
             Winslow_Treasury_V1(TreasuryContract).ChangeRegisteredAssetLimit(NewLimit);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(4)){
-            ReplaceTreasury(Proposals[ProposalID].AddressSlot);
+            Replacements(NewTreasury).SendPredecessor(TreasuryContract);
+            TreasuryContract = payable(NewTreasury);
+            emit NewTreasurySet(NewTreasury);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(5)){
             ReplaceVoting(Proposals[ProposalID].AddressSlot);
