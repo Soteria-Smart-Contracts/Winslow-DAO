@@ -319,7 +319,11 @@ contract Winslow_Core_V1 {
             SaleFactoryContract = NewSaleModule;
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
-            ReplaceCore(Proposals[ProposalID].AddressSlot);
+            IsActiveContract = false;
+            Replacements(NewCore).InheritCore(TreasuryContract, VotingContract, MRIdentifier, ProposalCost);
+            Replacements(TreasuryContract).ChangeDAO(NewCore);
+            Replacements(VotingContract).ChangeDAO(NewCore);
+            Replacements(SaleFactoryContract).ChangeDAO(NewCore);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
             StartPublicSale(Proposals[ProposalID].RequestedAssetAmount);
