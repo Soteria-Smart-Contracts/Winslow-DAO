@@ -156,8 +156,8 @@ contract Winslow_Core_V1 {
     function InitializeSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
         require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
 
-        uint256 NewIdentifier = MRIdentifier++;
         MRIdentifier++;
+        uint256 NewIdentifier = MRIdentifier;
 
         //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events or new sales
         uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
