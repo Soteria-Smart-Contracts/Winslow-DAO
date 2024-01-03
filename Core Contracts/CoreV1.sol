@@ -163,7 +163,7 @@ contract Winslow_Core_V1 {
         uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
         if(SimpleType == SimpleProposalTypes(2)){
             require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Winslow_Treasury_V1(TreasuryContract).RegisteredAssetLimit());
-            Proposals[ProposalID].RequestedEtherAmount = UintSlot;
+            Proposals[NewIdentifier].RequestedEtherAmount = UintSlot;
             //set requested ether to uint slot insted of proxy args
 
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VoteLength);
