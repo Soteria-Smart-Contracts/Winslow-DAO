@@ -20,7 +20,6 @@ contract Winslow_Core_V1 {
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
     uint256 public VoteLength = 600; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met TODO: Change back to 172800 for production
-    address public FactorySetter;
 
     //Mapping, structs and other declarations
     
@@ -116,7 +115,7 @@ contract Winslow_Core_V1 {
 
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = address(0); //Contract is too big to deploy in constructor, must be deployed separately and address passed in
+        SaleFactoryContract = address(new SaleFactoryV2());
 
         IsActiveContract = true;
     }
