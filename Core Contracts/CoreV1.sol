@@ -117,7 +117,6 @@ contract Winslow_Core_V1 {
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
         SaleFactoryContract = address(0); //Contract is too big to deploy in constructor, must be deployed separately and address passed in
-        FactorySetter = msg.sender;
 
         IsActiveContract = true;
     }
@@ -348,15 +347,6 @@ contract Winslow_Core_V1 {
         ERC20(CLDAddress()).transferFrom(msg.sender, VotingContract, (ProposalCost / 2));
 
         ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, ERC20(CLDAddress()).balanceOf(address(this)));
-
-        return(success);
-    }
-
-    //One time function to set the factory contract address //TODO: see if you still need this later
-    function SetFactoryContract(address NewFactory) external returns(bool success){
-        require(msg.sender == FactorySetter);
-        SaleFactoryContract = NewFactory;
-        FactorySetter = address(0); //This functionality is safe since the factory setter is only used once then set to 0
 
         return(success);
     }
