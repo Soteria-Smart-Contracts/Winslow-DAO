@@ -702,8 +702,7 @@ contract Winslow_Voting_V1 {
             }
         }
 
-        //require that the next proposal earliest start unix is less than the current time
-        
+        require(VotingInstances[HighestIncentiveProposal].VoteStarts <= block.timestamp, "VotingSystemV1.BeginNextVote: The next proposal is not ready to be voted on");
 
         CurrentOngoingVote = HighestIncentiveProposal;
 
