@@ -227,8 +227,6 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    //reject proposal function
-
     function RejectProposal(uint256 ProposalID) external returns(bool success){
         require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can reject proposals");
         require(ProposalInfos[ProposalID].Status == ProposalStatus(1), "Proposal status must be voting to be rejected");
