@@ -702,7 +702,7 @@ contract Winslow_Voting_V1 {
             }
         }
 
-        //require that the next proposal 
+        //require that the next proposal earli
 
         CurrentOngoingVote = HighestIncentiveProposal;
 
