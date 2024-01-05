@@ -728,7 +728,7 @@ contract Winslow_Voting_V1 {
     }
 
     function ChangeQuorum(uint256 newQuorum) external OnlyDAO returns(bool success){
-        require(newQuorum > 250000000000000000000); //Minimum quorum is 250 tokens for minimal security but should be adjusted to the community's liking and will likely never be close to this
+        require(newQuorum > 8400000000000000000000); //Minimum quorum is 8400 tokens for minimal security but should be adjusted to the community's liking and will likely never be close to this
 
         Quorum = newQuorum;
         
