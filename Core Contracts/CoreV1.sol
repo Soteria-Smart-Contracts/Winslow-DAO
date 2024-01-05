@@ -702,7 +702,7 @@ contract Winslow_Voting_V1 {
             }
         }
 
-        //require that the highest incentive proposal is greater than 0, if not then there are no proposals in the queue that are ready to be voted on
+        //require that the highest incentive proposal 
 
         CurrentOngoingVote = HighestIncentiveProposal;
 
