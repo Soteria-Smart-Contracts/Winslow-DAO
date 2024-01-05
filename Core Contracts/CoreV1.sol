@@ -236,7 +236,6 @@ contract Winslow_Core_V1 {
         require(Result == false, "Proposal must be rejected by Winslow_Voting_V1 to be rejected");
         require(Proposals[ProposalID].Executed == false, "Proposal has already been executed");
 
-        Proposals[ProposalID].Executed = true;
         ProposalInfos[ProposalID].Status = ProposalStatus(3);
 
         return(success);
