@@ -653,7 +653,7 @@ contract Winslow_Voting_V1 {
 
         uint256 NewInstanceID = MRInstance++;
         ActiveInstances++;
-        uint256 EarliestStartTime = block.timestamp + 600; //TODO: Return to 24 hours or 
+        uint256 EarliestStartTime = block.timestamp + 600; //TODO: Return to 24 hours or (amount in seconds here: 86400)
         address[] memory Empty;
         uint256 InititalRewardPool = (Winslow_Core_V1(DAO).ProposalCost() / 2);
 
