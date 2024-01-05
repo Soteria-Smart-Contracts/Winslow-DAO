@@ -8,7 +8,6 @@ pragma solidity ^0.8.19;
 
 //TODO: Events overview and update
 
-
 contract Winslow_Core_V1 {
     //Variable Declarations       
     string public Version = "V1";
