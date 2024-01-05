@@ -219,9 +219,9 @@ contract Winslow_Core_V1 {
         Proposals[ProposalID].Executed = Result;
 
         if(Result == true){
-            
+            ProposalInfos[ProposalID].Status = ProposalStatus(2);
+
         }
-        ProposalInfos[ProposalID].Status = ProposalStatus(2);
     
         if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
             ExecuteSimpleProposal(ProposalID);
