@@ -192,13 +192,13 @@ contract Winslow_Core_V1 {
             require(EROS(ProposalAddress).OptionCount() > 1, 'Eros proposal marked as multiple options true, but less than two options are available');
             uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, EROS(ProposalAddress).OptionCount());
 
-            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
             Proposals[NewIdentifier] = Proposal(ProposalAddress, RequestedEther, RequestedAssetAmount, RequestedAssetID, EROS(ProposalAddress).OptionCount(), true, false, msg.sender);
         }
         else{
             uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
 
-            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(2), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
             Proposals[NewIdentifier] = Proposal(ProposalAddress, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
         }
 
@@ -220,7 +220,7 @@ contract Winslow_Core_V1 {
             if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
                 ExecuteSimpleProposal(ProposalID);
             }
-            else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(2)){
+            else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
                 ExecuteErosProposal(ProposalID, Multi);
             }
     
