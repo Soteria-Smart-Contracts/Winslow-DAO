@@ -445,8 +445,9 @@ contract Winslow_Voting_V1 {
         VotingIncomplete,
         VotingActive,
         VotingComplete
-    }
+    } 
 
+    event InstanceCreated()
     event VoteCast(address Voter, uint256 VotingInstance, string option, uint256 votesCasted);
     event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
     event TokensReturned(address Voter, uint256 TotalSent, uint256 IncentiveShare);
