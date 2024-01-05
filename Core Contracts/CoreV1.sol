@@ -207,7 +207,7 @@ contract Winslow_Core_V1 {
 
     //  Execution Functions
 
-    //create a handle proposal function that does the same job as exe
+    //create a handle proposal function that does the same job as execute or reject so that the voting 
 
     function ExecuteProposal(uint256 ProposalID) external returns(bool success){
         require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can execute proposals");
