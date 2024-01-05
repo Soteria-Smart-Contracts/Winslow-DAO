@@ -471,7 +471,7 @@ contract Winslow_Voting_V1 {
     //Active Vote Functions
 
     function CastVote(uint256 amount, Vote VoteChoice) external returns(bool success){
-        VotingInstance = CurrentOngoingVote;
+        uint256 VotingInstance = CurrentOngoingVote;
         require(VotingInstances[VotingInstance].MaxMulti == 0);
         require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or have not given the proper allowance to Winslow_Voting_V1");
         require(VoteChoice == Vote(0) || VoteChoice == Vote(1), "VotingSystemV1.CastVote: You must either vote YEA or NAY");
