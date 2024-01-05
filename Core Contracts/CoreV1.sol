@@ -342,7 +342,7 @@ contract Winslow_Core_V1 {
         }
     }
 
-    
+    //function that only the voting can call to set a proposal status to executed or rejected
 
     // Other Internals
     function ReceiveProposalCost() internal returns(bool success){
