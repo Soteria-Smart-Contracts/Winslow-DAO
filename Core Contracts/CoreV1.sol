@@ -661,7 +661,7 @@ contract Winslow_Voting_V1 {
         VotingQueueIndex[NewInstanceID] = VotingQueue.length - 1;
 
         _updateTaxesAndIndIncentive(NewInstanceID);
-        emit ProposalCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
+        emit InstanceCreated(Proposer, ProposalID, block.timestamp, block.timestamp + Time);
         return(NewInstanceID);
     }
 
