@@ -692,7 +692,7 @@ contract Winslow_Voting_V1 {
 
         //execute or reject the proposal on the core contract
         
-        if(VotingInstances[CurrentOngoingVote].YEAvotes > VotingInstances[CurrentOngoingVote].NAYvotes){
+        if(){
              Winslow_Core_V1(DAO).ExecuteProposal(VotingInstances[CurrentOngoingVote].ProposalID);
         }
         else{
