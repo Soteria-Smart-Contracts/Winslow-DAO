@@ -501,7 +501,8 @@ contract Winslow_Voting_V1 {
     }
     
         //This is set up so that you can vote for or against the proposal, and if yes what of the options you prefer
-    function CastMultiVote(uint256 amount, uint256 VotingInstance, Vote VoteChoice, MultiOptions OptionChoice) external returns(bool success){ 
+    function CastMultiVote(uint256 amount, Vote VoteChoice, MultiOptions OptionChoice) external returns(bool success){ 
+                uint256 VotingInstance = CurrentOngoingVote;
         require(VotingInstances[VotingInstance].MaxMulti > 0);
         require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastMultiVote: You do not have enough CLD to vote this amount or have not given the proper allowance to Winslow_Voting_V1");
         require(VoteChoice == Vote(0) || VoteChoice == Vote(1), "VotingSystemV1.CastMultiVote: You must either vote YEA or NAY");
