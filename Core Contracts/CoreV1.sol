@@ -691,14 +691,13 @@ contract Winslow_Voting_V1 {
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(2);
 
         //execute or reject the proposal on the core contract
-        if(VotingInstances[CurrentOngoingVote].Status == VoteStatus(2)){
-            if(VotingInstances[CurrentOngoingVote].YEAvotes > VotingInstances[CurrentOngoingVote].NAYvotes){
+        
+        if(VotingInstances[CurrentOngoingVote].YEAvotes > VotingInstances[CurrentOngoingVote].NAYvotes){
                 Winslow_Core_V1(DAO).ExecuteProposal(VotingInstances[CurrentOngoingVote].ProposalID);
-            }
+        }
             else{
                 Winslow_Core_V1(DAO).RejectProposal(VotingInstances[CurrentOngoingVote].ProposalID);
             }
-        }
 
         //loop through the queue to find the proposal with the highest incentive, begin it and remove it from the queue
         uint256 HighestIncentive = 0;
