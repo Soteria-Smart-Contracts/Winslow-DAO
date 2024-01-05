@@ -324,7 +324,6 @@ contract Winslow_Core_V1 {
         }
     }
 
-
     //  Eros Executionting
 
     function ExecuteErosProposal(uint256 ProposalID, uint8 Multi) internal {
