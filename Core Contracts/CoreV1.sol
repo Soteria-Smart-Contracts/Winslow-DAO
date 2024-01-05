@@ -702,7 +702,8 @@ contract Winslow_Voting_V1 {
             }
         }
 
-        //require that the next proposal earli
+        //require that the next proposal earliest start unix is less than the current time
+        
 
         CurrentOngoingVote = HighestIncentiveProposal;
 
