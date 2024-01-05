@@ -342,8 +342,12 @@ contract Winslow_Core_V1 {
         }
     }
 
-    //function that only the voting can call to set a proposal status voting when voting starts
-    
+    function SetProposalVoting(uint256 ProposalID) external returns(bool success){
+        require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can set proposal status to voting");
+        require(ProposalInfos[ProposalID].Status == ProposalStatus(0), "Proposal status must be pre-voting to be set to voting");
+        ProposalInfos[ProposalID].Status = ProposalStatus(1);
+        return(success);
+    }
 
     // Other Internals
     function ReceiveProposalCost() internal returns(bool success){
