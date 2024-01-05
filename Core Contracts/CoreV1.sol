@@ -209,7 +209,25 @@ contract Winslow_Core_V1 {
 
     //create a handle proposal function that does the same job as execute or reject so that the voting contract can call it without having to check the status of the proposal
 
-    fun
+    function HandleProposal(uint256 ProposalID) external returns(bool success){
+        require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can execute proposals");
+        require(ProposalInfos[ProposalID].Status == ProposalStatus(1), "Proposal status must be voting to be executed");
+        (bool Result, uint8 Multi) = Winslow_Voting_V1(VotingContract).GetVoteResult(ProposalInfos[ProposalID].VotingInstanceID);
+        require(Result == true, "Proposal must be approved by Winslow_Voting_V1 to be executed");
+        require(Proposals[ProposalID].Executed == false, "Proposal has already been executed");
+    
+        Proposals[ProposalID].Executed = true;
+        ProposalInfos[ProposalID].Status = ProposalStatus(2);
+    
+        if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
+            ExecuteSimpleProposal(ProposalID);
+        }
+        else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
+            ExecuteErosProposal(ProposalID, Multi);
+        }
+    
+        return(success);
+    }
 
     function ExecuteProposal(uint256 ProposalID) external returns(bool success){
         require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can execute proposals");
