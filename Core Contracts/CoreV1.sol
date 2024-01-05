@@ -220,16 +220,15 @@ contract Winslow_Core_V1 {
 
         if(Result == true){
             ProposalInfos[ProposalID].Status = ProposalStatus(2);
-        }
-        else{
-            ProposalInfos[ProposalID].Status = ProposalStatus(3);
-        }
-    
-        if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
+            if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
             ExecuteSimpleProposal(ProposalID);
         }
         else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
             ExecuteErosProposal(ProposalID, Multi);
+        }
+        }
+        else{
+            ProposalInfos[ProposalID].Status = ProposalStatus(3);
         }
     
         return(success);
