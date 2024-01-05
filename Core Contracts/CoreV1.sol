@@ -688,6 +688,7 @@ contract Winslow_Voting_V1 {
             require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.BeginNextVote: The current vote is not over");
             EndVoting(CurrentOngoingVote);
         }
+        VotingInstances[CurrentOngoingVote].Status = VoteStatus(2)
 
         //execute or reject the proposal on the core contract
         if(VotingInstances[CurrentOngoingVote].Status == VoteStatus(2)){
