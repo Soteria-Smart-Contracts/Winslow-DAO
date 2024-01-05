@@ -691,7 +691,8 @@ contract Winslow_Voting_V1 {
             }
         }
 
-        //execute or 
+        //execute or reject the proposal on the core contract
+        
 
         //loop through the queue to find the proposal with the highest incentive, begin it and remove it from the queue
         uint256 HighestIncentive = 0;
