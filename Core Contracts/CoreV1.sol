@@ -207,8 +207,6 @@ contract Winslow_Core_V1 {
 
     //  Execution Functions
 
-    //create a handle proposal function that does the same job as execute or reject so that the voting contract can call it without having to check the status of the proposal
-
     function HandleEndedProposal(uint256 ProposalID) external returns(bool success){
         require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can execute proposals");
         require(ProposalInfos[ProposalID].Status == ProposalStatus(1), "Proposal status must be voting to be executed");
