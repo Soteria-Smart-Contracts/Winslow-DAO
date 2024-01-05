@@ -690,7 +690,7 @@ contract Winslow_Voting_V1 {
         }
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(2);
 
-        //execute or reject the proposal on the core contract
+        //execute or reject the proposal on the core contract by calling the function on the core contract
         
 
         //loop through the queue to find the proposal with the highest incentive, begin it and remove it from the queue
