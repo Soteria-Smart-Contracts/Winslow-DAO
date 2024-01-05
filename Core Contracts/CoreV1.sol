@@ -43,7 +43,6 @@ contract Winslow_Core_V1 {
 
     enum ProposalTypes{
         Simple,
-        Proxy, //TODO: remove proxy
         Eros
     }
 
