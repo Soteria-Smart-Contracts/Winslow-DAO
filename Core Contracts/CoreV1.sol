@@ -121,7 +121,7 @@ contract Winslow_Core_V1 {
 
     function SubmitSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
 
-        require(ReceiveProposalCost());
+        ReceiveProposalCost();
 
         InitializeSimpleProposal(Memo, AddressSlot, UintSlot, SimpleType, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
@@ -131,7 +131,7 @@ contract Winslow_Core_V1 {
 
     function SubmitErosProposal(address ProposalAddress) public returns(bool success){
 
-        require(ReceiveProposalCost());
+        ReceiveProposalCost();
 
         InitializeErosProposal(ProposalAddress);
         
@@ -352,7 +352,7 @@ contract Winslow_Core_V1 {
 
         ERC20(CLDAddress()).transferFrom(msg.sender, VotingContract, (ProposalCost / 2));
 
-        ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, ERC20(CLDAddress()).balanceOf(address(this)));
+        ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, (ProposalCost / 2));
 
         return(success);
     }
@@ -755,12 +755,6 @@ contract Winslow_Voting_V1 {
 
 }
 
-interface Replacements{
-    function InheritCore(address Winslow_Treasury_V1, address Winslow_Voting_V1, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
-    function SendPredecessor(address Predecessor) external returns(bool success);
-    function ChangeDAO(address NewDAO) external returns(bool success);
-}
-
 contract SaleFactoryV2 {
     string public Version = "V1";
     address payable public DAO;
@@ -1039,8 +1033,8 @@ contract Winslow_Treasury_V1 {
     constructor(){
         DAO = msg.sender;
         RegisteredAssetLimit = 5;
-        RegisteredAssets[0] = (Token(0xd683198d0a223Bc25ad6c199A86E08a4fcF3a77a, true)); //TODO: Update CLD contract to correct address before deployment
-        AssetRegistryMap[0xd683198d0a223Bc25ad6c199A86E08a4fcF3a77a] = true;
+        RegisteredAssets[0] = (Token(0x0C9986e9A0d4d3A16752fc6129afD8690B8dB6B9, true)); //TODO: Update CLD contract to correct address before deployment
+        AssetRegistryMap[0x0C9986e9A0d4d3A16752fc6129afD8690B8dB6B9] = true;
     }
 
     //Public callable functions
@@ -1191,4 +1185,10 @@ interface EROS {
     function ProposalMemo() external view returns(string memory);
     function VoteLength() external view returns(uint256);
     function RequestTokens() external view returns(uint256);
+}
+
+interface Replacements{
+    function InheritCore(address Winslow_Treasury_V1, address Winslow_Voting_V1, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
+    function SendPredecessor(address Predecessor) external returns(bool success);
+    function ChangeDAO(address NewDAO) external returns(bool success);
 }
