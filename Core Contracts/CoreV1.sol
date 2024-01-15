@@ -381,8 +381,8 @@ contract Winslow_Voting_V1 {
 
     // Proposals being tracked by id here
     mapping(uint256 => VoteInstance) public VotingInstances;
-    uint256 MRInstance; // Most recent [poll/Winslow_Voting_V1] instance tracker for new initializations
-    uint256 ActiveInstances;
+    uint256 public MRInstance; // Most recent [poll/Winslow_Voting_V1] instance tracker for new initializations
+    uint256 public ActiveInstances;
 
     uint256 public CurrentOngoingVote;
     uint256[] public VotingQueue;
@@ -649,9 +649,10 @@ contract Winslow_Voting_V1 {
     //OnlyDAO functions
 
     function InitializeVoteInstance(uint256 ProposalID, uint8 MaxMulti) external OnlyDAO returns(uint256 VoteInstanceID){
-
-        uint256 NewInstanceID = MRInstance++;
+        MRInstance++;
         ActiveInstances++;
+
+        uint256 NewInstanceID = MRInstance;
         uint256 EarliestStartTime = block.timestamp + 600; //TODO: Return to 24 hours or (amount in seconds here: 86400)
         address[] memory Empty;
         uint256 InititalRewardPool = (Winslow_Core_V1(DAO).ProposalCost() / 2);
@@ -685,21 +686,20 @@ contract Winslow_Voting_V1 {
         if(CurrentOngoingVote != 0){
             require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.BeginNextVote: The current vote is not over");
             EndVoting(CurrentOngoingVote);
+            VotingInstances[CurrentOngoingVote].Status = VoteStatus(2);
+            Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID);
         }
-        VotingInstances[CurrentOngoingVote].Status = VoteStatus(2);
-
-        Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID);
 
         //loop through the queue to find the proposal with the highest incentive, begin it and remove it from the queue
         uint256 HighestIncentive = 0;
         uint256 HighestIncentiveProposal;
         for(uint256 i = 0; i < VotingQueue.length; i++){ //we check vote starts here because we want to ensure that the debate period is over
-            if(VotingInstances[VotingQueue[i]].TotalIncentive > HighestIncentive && VotingInstances[VotingQueue[i]].VoteStarts > block.timestamp){
+            if(VotingInstances[VotingQueue[i]].TotalIncentive >= HighestIncentive && VotingInstances[VotingQueue[i]].VoteStarts > block.timestamp){
                 HighestIncentive = VotingInstances[VotingQueue[i]].TotalIncentive;
                 HighestIncentiveProposal = VotingQueue[i];
             }
         }
-
+        require(HighestIncentiveProposal != 0, "");
         require(VotingInstances[HighestIncentiveProposal].VoteStarts <= block.timestamp, "VotingSystemV1.BeginNextVote: The next proposal is not ready to be voted on");
 
         CurrentOngoingVote = HighestIncentiveProposal;
