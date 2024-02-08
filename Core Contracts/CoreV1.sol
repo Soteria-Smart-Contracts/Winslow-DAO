@@ -794,14 +794,6 @@ contract SaleFactoryV2 {
         return(NewSaleAddress);
     }
 
-    function ChangeFoundationFee(uint256 NewFee) external OnlyDAO returns(bool success){
-        require(NewFee <= 10000);
-        FoundationFee = NewFee;
-
-        emit NewFoundationFee(NewFee);
-        return(success);
-    }
-
     function ChangeRetractFee(uint256 NewRetractFee) external OnlyDAO returns(bool success){
         require(NewRetractFee <= 10000);
         RetractFee = NewRetractFee;
