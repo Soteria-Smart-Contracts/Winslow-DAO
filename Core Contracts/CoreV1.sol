@@ -955,7 +955,7 @@ contract SaleV2 {
         ProceedsNotTransfered = false;
         (Winslow_Core_V1(DAO).TreasuryContract()).transfer(TotalEtherPool);
 
-        emit ProceedsTransfered(ToFoundation, ToTreasury);
+        emit ProceedsTransfered(ToTreasury);
     }
 
     //DAO Only functions
