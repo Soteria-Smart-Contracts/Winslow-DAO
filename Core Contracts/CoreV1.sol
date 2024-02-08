@@ -56,7 +56,6 @@ contract Winslow_Core_V1 {
         CoreReplacement,
         StartPublicSale,
         ChangeProposalCost,
-        ChangeSaleFoundationFee,
         ChangeSaleRetractFee,
         ChangeSaleMinimumDeposit,
         ChangeSaleDefaultSaleLength,
