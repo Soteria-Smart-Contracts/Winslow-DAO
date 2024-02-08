@@ -715,6 +715,7 @@ contract Winslow_Voting_V1 {
         VotingInstances[CurrentOngoingVote].VoteStarts = block.timestamp;
         VotingInstances[CurrentOngoingVote].VoteEnds = block.timestamp + Winslow_Core_V1(DAO).VoteLength();
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
+        OngoingVote = true;
 
         return(CurrentOngoingVote);
     }
