@@ -759,8 +759,7 @@ contract Winslow_Voting_V1 {
 contract SaleFactoryV2 {
     string public Version = "V1";
     address payable public DAO;
-    uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
-    uint256 public RetractFee; //^
+    uint256 public RetractFee; ////Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
     uint256 public MinimumDeposit; //^
     uint256 public DefaultSaleLength; //^
     uint256 public MaximumSalePercentage; //^The maximum percentage of the supply that can be sold at once, to avoid flooding markets/heavy inflation, in Basis Points
