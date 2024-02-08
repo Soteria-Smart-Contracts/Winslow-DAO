@@ -289,21 +289,21 @@ contract Winslow_Core_V1 {
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
             SaleFactoryV2(SaleFactoryContract).ChangeRetractFee(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
             SaleFactoryV2(SaleFactoryContract).ChangeMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
             SaleFactoryV2(SaleFactoryContract).ChangeDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
             //Value is stored in RequestedEtherAmount in basis points
             SaleFactoryV2(SaleFactoryContract).ChangeMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
             //Value is stored in RequestedEtherAmount in basis points
             Winslow_Voting_V1(VotingContract).ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(16)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
             //Value is stored in RequestedEtherAmount in seconds
             VoteLength = Proposals[ProposalID].RequestedEtherAmount;
         }
