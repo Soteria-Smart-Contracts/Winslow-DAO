@@ -882,7 +882,7 @@ contract SaleV2 {
     //List of participants for front-end ranking
     address[] public ParticipantList; 
 
-    constructor(address _DAO, uint256 SaleID, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee, uint256 MinDeposit){
+    constructor(address _DAO, uint256 SaleID, uint256 CLDtoSell, uint256 SaleLength, uint256 RetractionFee, uint256 MinDeposit){
         require(SaleLength >= 259200 && SaleLength <= 1209600);
         DAO = payable(_DAO);
         SaleIdentifier = SaleID;
@@ -890,7 +890,6 @@ contract SaleV2 {
         CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract by treasury, additional CLD sent to the sale contract will be lost
         StartTime = block.timestamp + 900; //TODO: Reset to 12 hours before deployment
         EndTime = StartTime + SaleLength;
-        DAOFoundationFee = FoundationFee;
         RetractFee = RetractionFee;
         MinimumDeposit = MinDeposit;
     }
@@ -954,7 +953,6 @@ contract SaleV2 {
 
     function TransferProceeds() internal {
         ProceedsNotTransfered = false;
-        uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000); 
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
         (Winslow_Core_V1(DAO).TreasuryContract()).transfer(ToTreasury);
         (Winslow_Core_V1(DAO).FoundationAddress()).transfer(ToFoundation);
