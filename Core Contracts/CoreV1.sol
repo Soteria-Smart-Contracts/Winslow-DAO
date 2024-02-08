@@ -953,9 +953,7 @@ contract SaleV2 {
 
     function TransferProceeds() internal {
         ProceedsNotTransfered = false;
-        uint256 ToTreasury = (TotalEtherPool - ToFoundation);
-        (Winslow_Core_V1(DAO).TreasuryContract()).transfer(ToTreasury);
-        (Winslow_Core_V1(DAO).FoundationAddress()).transfer(ToFoundation);
+        (Winslow_Core_V1(DAO).TreasuryContract()).transfer(TotalEtherPool);
 
         emit ProceedsTransfered(ToFoundation, ToTreasury);
     }
