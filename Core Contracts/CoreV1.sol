@@ -374,7 +374,7 @@ contract Winslow_Voting_V1 {
     string public Version = "V1";
     address payable public DAO;
     uint256 public Quorum = 1500000000000000000000; //Default quorum to be changed in initial proposals
-    bool public First
+    bool public FirstProposalComplete;
 
     // Percentages in Basis Points
     uint256 public ExecutorCut;
