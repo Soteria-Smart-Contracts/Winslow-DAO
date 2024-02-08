@@ -767,7 +767,6 @@ contract SaleFactoryV2 {
     constructor(){
         //TODO: Update Variables before deployment
         DAO = payable(msg.sender);
-        FoundationFee = 100; //1%
         RetractFee = 100; //1%
         MinimumDeposit = 10000000000000000; //0.001 ETC
         DefaultSaleLength = 7200;
