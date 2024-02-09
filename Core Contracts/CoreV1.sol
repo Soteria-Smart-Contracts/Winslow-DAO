@@ -374,7 +374,7 @@ contract Winslow_Voting_V1 {
     string public Version = "V1";
     address payable public DAO;
     uint256 public Quorum = 1500000000000000000000; //Default quorum to be changed in initial proposals
-    bool public FirstProp
+    bool public OngoingVote;
 
     // Percentages in Basis Points
     uint256 public ExecutorCut;
@@ -684,7 +684,7 @@ contract Winslow_Voting_V1 {
     function BeginNextVote() public returns(uint256 VotingInstance){
         require(VotingQueue.length > 0, "VotingSystemV1.BeginNextVote: There are no proposals in the queue");
         //check if the current vote is over, or if there is no current vote as it is the first
-        if(CurrentOngoingVote != 0){
+        if(OngoingVote){
             require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.BeginNextVote: The current vote is not over");
             EndVoting(CurrentOngoingVote);
             VotingInstances[CurrentOngoingVote].Status = VoteStatus(2);
@@ -715,6 +715,7 @@ contract Winslow_Voting_V1 {
         VotingInstances[CurrentOngoingVote].VoteStarts = block.timestamp;
         VotingInstances[CurrentOngoingVote].VoteEnds = block.timestamp + Winslow_Core_V1(DAO).VoteLength();
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
+        OngoingVote = true;
 
         return(CurrentOngoingVote);
     }
