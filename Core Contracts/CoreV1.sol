@@ -1,870 +1,1168 @@
-// SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier:UNLICENSE
+/* This contract is able to be replaced by itself, and can also continue to be used 
+if a new external Winslow_Core_V1 modules and contracts are deployed by changing their addresses and
+providing previous contract information to the new contracts.
+When setting up a new Winslow_Core_V1 or Winslow_Voting_V1 contract, ensure cross-compatibility and record keeping 
+done by the archive contract, Winslow_Voting_V1 index and proposal indexes never restart */
+pragma solidity ^0.8.19;
 
-pragma solidity 0.8.19;
+//TODO: Events overview and update
 
-contract PlotsCoreV1 {
-    //Variable and pointer Declarations
-    address payable public Treasury;
-    address payable public FeeReceiver;
-    uint256 public RewardFee;
-    uint256 public LockedValue;
-    address public LendContract;
-    address[] public ListedCollections;
-    mapping(address => bool) public ListedCollectionsMap;
-    mapping(address => uint256) public ListedCollectionsIndex;
-    address[] public AvailableLoanContracts;
-    mapping(address => uint256) public AvailableLoanContractsIndex;
-    mapping(address => mapping(uint256 => address)) public LoanContractByToken;
-    mapping(address => bool) public IsLoanContract;
-    mapping(address => mapping(address => uint256)) BorrowerRewardPayoutTracker;
-    mapping(address => mapping(address => uint256)) OwnerRewardPayoutTracker;
-    mapping(address => address[]) public RewardTokenClaimants;
-    mapping(address => Payout[]) public RewardTokenPayouts; 
+contract Winslow_Core_V1 {
+    //Variable Declarations       
+    string public Version = "V1";
+    bool public IsActiveContract;
+    address payable public TreasuryContract;
+    address public VotingContract; 
+    address public SaleFactoryContract;
+    address payable public FoundationAddress;
+    uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
+    uint256 public SaleCount;
+    uint256 public VoteLength = 600; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met TODO: Change back to 172800 for production
 
-    enum ListingType{
-        Ownership,
-        Usage
+    //Mapping, structs and other declarations
+    
+    //Proposals
+    mapping(uint256 => Proposal) public Proposals;
+    mapping(uint256 => ProposalInfo) public ProposalInfos;
+    uint256 public MRIdentifier;
+
+    //Token Sales
+    mapping(uint256 => Sale) public Sales;
+    function SaleActive() public view returns(bool){
+        if(block.timestamp >= Sales[LatestSale].EndTime){return true;}else{return false;}
+    }
+    uint256 public LatestSale;
+
+    enum ProposalStatus{
+        Pre_Voting,
+        Winslow_Voting_V1,
+        Executed,
+        Rejected
     }
 
-    enum LengthOption{ 
-        ThreeMonths,
-        SixMonths
+    enum ProposalTypes{
+        Simple,
+        Eros
     }
 
-    enum OwnershipPercent{
-        Zero,
-        Ten,
-        TwentyFive
+    enum SimpleProposalTypes{
+        NotApplicable,
+        AssetSend,
+        AssetRegister,
+        ChangeRegisteredAssetLimit,
+        TreasuryReplacement,
+        VotingReplacement,
+        SaleFactoryReplacement,
+        CoreReplacement,
+        StartPublicSale,
+        ChangeProposalCost,
+        ChangeSaleFoundationFee,
+        ChangeSaleRetractFee,
+        ChangeSaleMinimumDeposit,
+        ChangeSaleDefaultSaleLength,
+        ChangeSaleMaxSalePercent,
+        ChangeDefaultQuorum,
+        ChangeFoundationAddress,
+        ChangeVotingLength
+    }
+
+    enum MultiOptions{
+        OptionOne,
+        OptionTwo,
+        OptionThree,
+        OptionFour,
+        OptionFive
+    }
+
+    struct ProposalInfo{
+        string Memo;                   //Memo for the proposal, can be changed by the DAO
+        ProposalTypes ProposalType;     //Types declared in enum
+        SimpleProposalTypes SimpleType; //Types declared in enum
+        ProposalStatus Status;
+        uint256 VotingInstanceID;       //Identifier for the Winslow_Voting_V1 instance used for this proposal in the Winslow_Voting_V1 contract
+        uint256 ProposalVotingLength;
+    }
+
+    struct Proposal{
+        address AddressSlot;            //To set an address either as a receiver, ProxyReceiver for approval of Eros proposal contract
+        uint256 RequestedEtherAmount;   //Optional, can be zero
+        uint256 RequestedAssetAmount;   //Optional, can be zero
+        uint8 RequestedAssetID;         //Winslow_Treasury_V1 asset identifier for proposals moving funds
+        uint8 OptionsAvailable;         //Number of Options Available if there is more than one, default zero
+        bool Multi;                     //False for just a regular one option proposal, True for any proposal with more than one option
+        bool Executed;                  //Can only be executed once, when finished, proposal exist only as archive
+        address Proposer;               //Address who initially created the proposal
+    }
+
+    struct Sale{
+        address SaleV2;
+        uint256 CLDSaleAmount;
+        uint256 StartTime;
+        uint256 EndTime;
+    }
+
+    event FallbackToTreasury(uint256 amount);
+    event NewTreasurySet(address NewTreasury);
+    //create all the events we need and in the following line for each add a comment and the line or lines it should be inserted into
+
+
+    constructor(){
+        FoundationAddress = payable(0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce); //TODO: Change this to the community agreed foundation address
+
+        TreasuryContract = payable(address(new Winslow_Treasury_V1()));
+        VotingContract = address(new Winslow_Voting_V1());
+        SaleFactoryContract = address(new SaleFactoryV2());
+
+        IsActiveContract = true;
+    }
+
+    //Public state-modifing functions
+
+    function SubmitSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
+
+        ReceiveProposalCost();
+
+        InitializeSimpleProposal(Memo, AddressSlot, UintSlot, SimpleType, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+
+        return(success);
+
+    }
+
+    function SubmitErosProposal(address ProposalAddress) public returns(bool success){
+
+        ReceiveProposalCost();
+
+        InitializeErosProposal(ProposalAddress);
+        
+        return(success);
+
+    }
+
+    //  Public view functions
+
+    function CLDAddress() public view returns(address CLD){
+        return(Winslow_Treasury_V1(TreasuryContract).CLDAddress());
+    }
+
+
+    //  Internal Functions
+
+    function InitializeSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
+        require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
+
+        MRIdentifier++;
+        uint256 NewIdentifier = MRIdentifier;
+
+        //All simple proposals must have a slotted address for sending or action, but may be 0 in certain cases such as burn events or new sales
+        uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
+        if(SimpleType == SimpleProposalTypes(2)){
+            require(UintSlot > 0 && UintSlot <= 255 && UintSlot <= Winslow_Treasury_V1(TreasuryContract).RegisteredAssetLimit());
+            Proposals[NewIdentifier].RequestedEtherAmount = UintSlot;
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VoteLength);
+            Proposals[NewIdentifier] = Proposal(AddressSlot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
+        } 
+        else{
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID, VoteLength);
+            Proposals[NewIdentifier] = Proposal(AddressSlot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
+        }
+
+        return(NewIdentifier);
+    }
+
+
+    function InitializeErosProposal(address ProposalAddress) internal returns(uint256 identifier){
+        require(ProposalAddress != address(0), "ErosProposals must have a slotted contract");
+
+        uint256 NewIdentifier = MRIdentifier++;
+        MRIdentifier++;
+
+        string memory Memo = EROS(ProposalAddress).ProposalMemo();
+        uint256 RequestedEther = EROS(ProposalAddress).RequestEther();
+        uint256 RequestedAssetAmount = EROS(ProposalAddress).RequestTokens();
+        uint8 RequestedAssetID = EROS(ProposalAddress).TokenIdentifier();
+
+        if(RequestedAssetAmount > 0){
+            require(RequestedAssetID > 0 && RequestedAssetID <= 255 && RequestedAssetID <= Winslow_Treasury_V1(TreasuryContract).RegisteredAssetLimit(), "Requested asset ID must be atleast 1 and be registered in the Winslow_Treasury_V1");
+        }
+
+        if(EROS(ProposalAddress).Multi() == true){
+            require(EROS(ProposalAddress).OptionCount() > 1, 'Eros proposal marked as multiple options true, but less than two options are available');
+            uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, EROS(ProposalAddress).OptionCount());
+
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
+            Proposals[NewIdentifier] = Proposal(ProposalAddress, RequestedEther, RequestedAssetAmount, RequestedAssetID, EROS(ProposalAddress).OptionCount(), true, false, msg.sender);
+        }
+        else{
+            uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
+
+            ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID, VoteLength);
+            Proposals[NewIdentifier] = Proposal(ProposalAddress, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
+        }
+
+        return(NewIdentifier);
+    }
+
+    //  Execution Functions
+
+    function HandleEndedProposal(uint256 ProposalID) external returns(bool success){
+        require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can execute proposals");
+        require(ProposalInfos[ProposalID].Status == ProposalStatus(1), "Proposal status must be voting to be executed");
+        (bool Result, uint8 Multi) = Winslow_Voting_V1(VotingContract).GetVoteResult(ProposalInfos[ProposalID].VotingInstanceID);
+        require(Proposals[ProposalID].Executed == false, "Proposal has already been executed");
+    
+        Proposals[ProposalID].Executed = Result;
+
+        if(Result == true){
+            ProposalInfos[ProposalID].Status = ProposalStatus(2);
+            if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
+                ExecuteSimpleProposal(ProposalID);
+            }
+            else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
+                ExecuteErosProposal(ProposalID, Multi);
+            }
+        }
+        else{
+            ProposalInfos[ProposalID].Status = ProposalStatus(3);
+        }
+    
+        return(success);
+    }
+
+    //  Simple Executionting
+
+    function ExecuteSimpleProposal(uint256 ProposalID) internal {
+        
+        if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
+            //Do nothing, this is a placeholder for the first proposal
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(1)){
+            if(Proposals[ProposalID].RequestedEtherAmount > 0){
+                Winslow_Treasury_V1(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, payable(Proposals[ProposalID].AddressSlot));
+            }
+            if(Proposals[ProposalID].RequestedAssetAmount > 0){
+                Winslow_Treasury_V1(TreasuryContract).TransferERC20(Proposals[ProposalID].RequestedAssetID, Proposals[ProposalID].RequestedAssetAmount, Proposals[ProposalID].AddressSlot);
+            }
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(2)){
+            address TokenAddress = Proposals[ProposalID].AddressSlot;
+            uint8 Slot = uint8(Proposals[ProposalID].RequestedEtherAmount);  //TODO: Fix when deleting proxy proposals
+            Winslow_Treasury_V1(TreasuryContract).RegisterAsset(TokenAddress, Slot);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)){
+            uint8 NewLimit = uint8(Proposals[ProposalID].RequestedEtherAmount); 
+            Winslow_Treasury_V1(TreasuryContract).ChangeRegisteredAssetLimit(NewLimit);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(4)){
+            address NewTreasury = Proposals[ProposalID].AddressSlot;
+            Replacements(NewTreasury).SendPredecessor(TreasuryContract);
+            TreasuryContract = payable(NewTreasury);
+            emit NewTreasurySet(NewTreasury);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(5)){
+            address NewVoting = Proposals[ProposalID].AddressSlot;
+            Replacements(NewVoting).SendPredecessor(VotingContract);
+            VotingContract = NewVoting;
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(6)){
+            address NewSaleModule = Proposals[ProposalID].AddressSlot;
+            SaleFactoryContract = NewSaleModule;
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(7)){
+            address NewCore = Proposals[ProposalID].AddressSlot;
+            IsActiveContract = false;
+            Replacements(NewCore).InheritCore(TreasuryContract, VotingContract, MRIdentifier, ProposalCost);
+            Replacements(TreasuryContract).ChangeDAO(NewCore);
+            Replacements(VotingContract).ChangeDAO(NewCore);
+            Replacements(SaleFactoryContract).ChangeDAO(NewCore);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(8)){
+            require(!SaleActive());
+            uint256 CLDtoSell = Proposals[ProposalID].RequestedAssetAmount;
+            LatestSale++;
+
+            address NewSaleAddress = SaleFactoryV2(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
+            Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleV2(NewSaleAddress).StartTime(), SaleV2(NewSaleAddress).EndTime());
+
+            Winslow_Treasury_V1(TreasuryContract).TransferERC20(0, CLDtoSell, NewSaleAddress);
+
+            require(SaleV2(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)){
+            ProposalCost = Proposals[ProposalID].RequestedEtherAmount;
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
+            SaleFactoryV2(SaleFactoryContract).ChangeFoundationFee(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
+            SaleFactoryV2(SaleFactoryContract).ChangeRetractFee(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
+            SaleFactoryV2(SaleFactoryContract).ChangeMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
+            SaleFactoryV2(SaleFactoryContract).ChangeDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
+            //Value is stored in RequestedEtherAmount in basis points
+            SaleFactoryV2(SaleFactoryContract).ChangeMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
+            //Value is stored in RequestedEtherAmount in basis points
+            Winslow_Voting_V1(VotingContract).ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(16)){
+            FoundationAddress = payable(Proposals[ProposalID].AddressSlot);
+        }
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(17)){
+            //Value is stored in RequestedEtherAmount in seconds
+            VoteLength = Proposals[ProposalID].RequestedEtherAmount;
+        }
+    }
+
+    //  Eros Executionting
+
+    function ExecuteErosProposal(uint256 ProposalID, uint8 Multi) internal {
+        // Send requested assets out to the eros address
+        if(Proposals[ProposalID].RequestedEtherAmount > 0){
+            Winslow_Treasury_V1(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, payable(Proposals[ProposalID].AddressSlot));
+        }
+        if(Proposals[ProposalID].RequestedAssetAmount > 0){
+            Winslow_Treasury_V1(TreasuryContract).TransferERC20(Proposals[ProposalID].RequestedAssetID, Proposals[ProposalID].RequestedAssetAmount, Proposals[ProposalID].AddressSlot);
+        }
+
+        if(Proposals[ProposalID].Multi == true){
+            EROS(Proposals[ProposalID].AddressSlot).ExecuteMulti(Multi);
+        }
+
+        else{
+            EROS(Proposals[ProposalID].AddressSlot).Execute();
+        }
+    }
+
+    function SetProposalVoting(uint256 ProposalID) external returns(bool success){
+        require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can set proposal status to voting");
+        require(ProposalInfos[ProposalID].Status == ProposalStatus(0), "Proposal status must be pre-voting to be set to voting");
+        ProposalInfos[ProposalID].Status = ProposalStatus(1);
+        return(success);
+    }
+
+    // Other Internals
+    function ReceiveProposalCost() internal returns(bool success){
+
+        ERC20(CLDAddress()).transferFrom(msg.sender, VotingContract, (ProposalCost / 2));
+
+        ERC20(CLDAddress()).transferFrom(msg.sender, TreasuryContract, (ProposalCost / 2));
+
+        return(success);
     }
     
-    struct Listing{
-        address Lister;
-        address Collection;
-        uint256 TokenId;
-        ListingType OwnershipOption;
+    //Receive and fallbacks
+    receive() external payable{
+        emit FallbackToTreasury(address(this).balance);
+        payable(TreasuryContract).transfer(address(this).balance);
     }
 
-    struct Payout{
-        address Token;
-        uint256 Amount;
-        uint256 Time;
+    fallback() external payable{
+        emit FallbackToTreasury(address(this).balance);
+        payable(TreasuryContract).transfer(address(this).balance);
+    }
+}
+
+contract Winslow_Voting_V1 {
+    // Contracts and Routing Variables
+    string public Version = "V1";
+    address payable public DAO;
+    uint256 public Quorum = 1500000000000000000000; //Default quorum to be changed in initial proposals
+    bool public FirstProp
+
+    // Percentages in Basis Points
+    uint256 public ExecutorCut;
+    uint256 public BurnCut;
+
+    // Proposals being tracked by id here
+    mapping(uint256 => VoteInstance) public VotingInstances;
+    uint256 public MRInstance; // Most recent [poll/Winslow_Voting_V1] instance tracker for new initializations
+    uint256 public ActiveInstances;
+
+    uint256 public CurrentOngoingVote;
+    uint256[] public VotingQueue;
+    mapping(uint256 => uint256) public VotingQueueIndex;
+    
+    mapping(uint256 => MultiVoteCard) public MultiVotes;
+    // Map user addresses to their Winslow_Voting_V1 information
+    mapping(uint256 => mapping(address => VoterDetails)) public VoterInfo;
+
+    mapping(address => uint256[]) public UserUnreturnedVotes;
+    mapping(address => mapping(uint256 => uint256)) public UserUnreturnedVotesIndex;
+
+
+    struct VoteInstance {
+        uint256 ProposalID;      //DAO Proposal for Winslow_Voting_V1 instance
+        uint256 VoteStarts;      //Unix Time, also used to store the debate period end time
+        uint256 VoteEnds;        //Unix Time
+        VoteStatus Status;       //Using VoteStatus enum
+        address[] Voters;        //List of users that have voted that also can be called for total number of voters
+        uint256 TotalCLDVoted;   //Total of CLD used in this instance for Winslow_Voting_V1
+        uint8 MaxMulti;      //Max number of options for multivote
+        uint256 YEAvotes;        //Votes to approve
+        uint256 NAYvotes;        //Votes to refuse
+        uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for Winslow_Voting_V1 incentives, burning and execution reward
+        uint256 IncentivePerVote;//Total amount of CLD per 0.01 CLD voted
+        uint256 CLDtoIncentive;  //Total amount of CLD to be shared amongst voters
+        uint256 CLDToBurn;       //Total amount of CLD to be burned on proposal execution
+        uint256 CLDToExecutioner;//Total amount of CLD to be sent to the address that pays the gas for executing the proposal
     }
 
-    mapping(address => bool) public Admins;
-    modifier OnlyAdmin(){
-        require(Admins[msg.sender], "Only Admin");
+    struct MultiVoteCard{
+        uint256 OptionOne;
+        uint256 OptionTwo;
+        uint256 OptionThree;
+        uint256 OptionFour;
+        uint256 OptionFive;
+    }
+
+    struct VoterDetails {
+        uint256 VotesLocked;
+        bool CLDReturned;
+        bool Voted;
+    }
+
+    enum Vote{
+        YEA,
+        NAY
+    }
+
+    enum MultiOptions{
+        OptionOne,
+        OptionTwo,
+        OptionThree,
+        OptionFour,
+        OptionFive
+    }
+
+    enum VoteStatus{
+        VotingIncomplete,
+        VotingActive,
+        VotingComplete
+    } 
+
+    event InstanceCreated(address Proposer, uint256 ProposalID, uint256 Timestamp);
+    event VoteCast(address Voter, uint256 VotingInstance, string option, uint256 votesCasted);
+    event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
+    event TokensReturned(address Voter, uint256 TotalSent, uint256 IncentiveShare);
+    event NewDAOAddress(address NewAddress);
+    event FallbackToTreasury(uint256 amount);
+ 
+    modifier OnlyDAO{ 
+        require(msg.sender == address(DAO), 'This can only be done by the DAO');
         _;
+    } 
+
+    constructor(){
+        ExecutorCut = 200; //TODO: Change this to the community agreed upon value for production
+        BurnCut = 200;
+        DAO = payable(msg.sender);
     }
 
-    mapping(address => mapping(uint256 => address)) public OwnershipByPurchase;
-
-    mapping(address => Listing[]) public ListingsByCollection;
-    mapping(address => mapping(uint256 => uint256)) public ListingsByCollectionIndex;
-    mapping(address => mapping(uint256 => bool)) public ListedBool;
-    mapping(address => Listing[]) public ListingsByUser;
-    mapping(address => mapping(address => mapping(uint256 => uint256))) public ListingsByUserIndex;
-
-    mapping(address => address[]) public AllUserLoans; //Outgoing loans
-    mapping(address => mapping(address => uint256)) public AllUserLoansIndex;
-
-    mapping(address => address[]) public AllUserBorrows; //Incoming loans
-    mapping(address => mapping(address => uint256)) public AllUserBorrowsIndex;
-
-
-    constructor(address [] memory _admins, address payable _feeReceiver){
-        Treasury = payable(new PlotsTreasuryV1());
-        LendContract = address(new PlotsLendV1());
-        FeeReceiver = _feeReceiver;
-
-        for(uint256 i = 0; i < _admins.length; i++){
-            Admins[_admins[i]] = true;
-        }
-        Admins[msg.sender] = true;
-        Admins[Treasury] = true;
-    }
-
-
-    function BorrowToken(address Collection, uint256 TokenId, LengthOption Duration, OwnershipPercent Ownership) public payable {
-        require(ListedCollectionsMap[Collection] == true, "Collection N/Listed");
-        uint256 TokenIndex = ListingsByCollectionIndex[Collection][TokenId];
-        require(ListingsByCollection[Collection][TokenIndex].Lister != address(0), "Token N/Listed");
-
-        address LoanContract;
-        if(AvailableLoanContracts.length > 0){
-            LoanContract = AvailableLoanContracts[AvailableLoanContracts.length - 1];
-            AvailableLoanContractsIndex[LoanContract] = 0;
-            AvailableLoanContracts.pop();
-        }
-        else{
-            LoanContract = address(new NFTLoan());
-            IsLoanContract[LoanContract] = true;
-        }
-
-        uint256 TokenValue = 0;
-        uint256 DurationUnix = (uint8(Duration) + 1) * 60; //TODO: CHANGE LEGNTH BACK TO 90 DAYS BEFORE MAINNET DEPLOYMENT
-        address Origin;
-        
-        if(ListingsByCollection[Collection][TokenIndex].OwnershipOption == ListingType.Ownership){
-            TokenValue = PlotsTreasuryV1(Treasury).GetTokenValueFloorAdjusted(Collection, TokenId);
-            uint256 Fee = (TokenValue * 20) / 1000;
-            uint256 BorrowCost = Fee;
-            if(Ownership == OwnershipPercent.Ten){
-                BorrowCost += (TokenValue * 10) / 100;
-            }
-            else if(Ownership == OwnershipPercent.TwentyFive){
-                BorrowCost += (TokenValue * 25) / 100;
-            }
-            require(msg.value >= BorrowCost, "Not enough ether sent");
-            PlotsTreasuryV1(Treasury).SendToLoan(LoanContract, Collection, TokenId);
-
-            FeeReceiver.transfer(Fee);
-            payable(Treasury).transfer(address(this).balance);
-            LockedValue += BorrowCost - Fee;
-            Origin = Treasury;
-        }
-        else if(PlotsLendV1(LendContract).GetTokenLocation(Collection, TokenId) == LendContract){
-            require(Ownership == OwnershipPercent.Zero);
-            PlotsLendV1(LendContract).SendToLoan(LoanContract, Collection, TokenId);
-            RemoveListingFromUser(ListingsByCollection[Collection][TokenIndex].Lister, Collection, TokenId);
-            Origin = LendContract;
-        }
-        else if(ERC721(Collection).ownerOf(TokenId) == Treasury){
-            require(Ownership == OwnershipPercent.Zero);
-            PlotsTreasuryV1(Treasury).SendToLoan(LoanContract, Collection, TokenId);
-            Origin = Treasury;
-        }
-        else{
-            revert("Invalid token");
-        }
-
-        LoanContractByToken[Collection][TokenId] = LoanContract;
-        AddLoanToBorrowerAndLender(msg.sender, ListingsByCollection[Collection][TokenIndex].Lister, LoanContract);
-        NFTLoan(LoanContract).BeginLoan(Ownership, ListingsByCollection[Collection][TokenIndex].Lister , msg.sender, Collection, TokenId, DurationUnix, TokenValue, Origin);
-        RemoveListingFromCollection(Collection, TokenId);
-        OwnershipByPurchase[Collection][TokenId] = msg.sender;
-        ListedBool[Collection][TokenId] = false;
-    }
-
-    function CloseLoan(address LoanContract, bool relist) public{
-        require(
-            IsLoanContract[LoanContract] == true &&
-            NFTLoan(LoanContract).Borrower() == msg.sender || NFTLoan(LoanContract).Owner() == msg.sender || Admins[msg.sender] &&
-            NFTLoan(LoanContract).LoanEndTime() <= block.timestamp || Admins[msg.sender] || NFTLoan(LoanContract).Borrower() == msg.sender &&
-            NFTLoan(LoanContract).Active(),
-            "Invalid loan"
-        );
-
-        address Collection = NFTLoan(LoanContract).TokenCollection();
-        uint256 TokenId = NFTLoan(LoanContract).TokenID();
-        address Borrower = NFTLoan(LoanContract).Borrower();
-        address Lender = NFTLoan(LoanContract).Owner();
-        address Origin = NFTLoan(LoanContract).Origin();
-        uint256 OwnershipPercentage;
-        uint256 CollateralValue;
-
-        if(NFTLoan(LoanContract).OwnershipType() == OwnershipPercent.Ten){
-            OwnershipPercentage = 10;
-        }
-        else if(NFTLoan(LoanContract).OwnershipType() == OwnershipPercent.TwentyFive){
-            OwnershipPercentage = 25;
-        }
-
-        if(Origin == LendContract){
-            OwnershipPercentage = 0;
-            CollateralValue = 0;
-            NFTLoan(LoanContract).EndLoan();
-            PlotsLendV1(LendContract).ReturnedFromLoan(Collection, TokenId);
-        }
-        else if(Origin == Treasury && NFTLoan(LoanContract).OwnershipType() != OwnershipPercent.Zero){
-            CollateralValue = (PlotsTreasuryV1(Treasury).GetTokenValueFloorAdjusted(Collection, TokenId) * OwnershipPercentage) / 100;
-            LockedValue -= NFTLoan(LoanContract).InitialValue() * OwnershipPercentage / 100;
-            NFTLoan(LoanContract).EndLoan();
-            PlotsTreasuryV1(Treasury).ReturnedFromLoan(Collection, TokenId);
-            PlotsTreasuryV1(Treasury).SendEther(payable(Borrower), CollateralValue);
-        }
-        else if(Origin == Treasury && NFTLoan(LoanContract).OwnershipType() == OwnershipPercent.Zero){
-            NFTLoan(LoanContract).EndLoan();
-            PlotsTreasuryV1(Treasury).ReturnedFromLoan(Collection, TokenId);
-        }
-        else{
-            revert("Invalid loan");
-        }
-
-        LoanContractByToken[Collection][TokenId] = address(0);
-        OwnershipByPurchase[Collection][TokenId] = address(0);
-        AvailableLoanContracts.push(LoanContract);
-        AvailableLoanContractsIndex[LoanContract] = AvailableLoanContracts.length - 1;
-        RemoveLoanFromBorrowerAndLender(Borrower, Lender, LoanContract);
-
-        if(relist == true){
-            require(Lender == msg.sender || Lender == Treasury, "Not owner of token");
-            AddListingToCollection(Collection, TokenId, Listing(Lender, Collection, TokenId, ListingType.Usage));
-            if(Lender != Treasury){
-                AddListingToUser(Lender, Collection, TokenId, Listing(Lender, Collection, TokenId, ListingType.Usage));
-            }
-            ListedBool[Collection][TokenId] = true;
-        }
-    }
-
-    function RenewLoan(address LoanContract, LengthOption Duration) public payable {
-        require(NFTLoan(LoanContract).OwnershipType() != OwnershipPercent.Zero && NFTLoan(LoanContract).Borrower() == msg.sender && NFTLoan(LoanContract).Active(), "Invalid loan conditions");
-        uint256 DurationUnix = (uint8(Duration) + 1) * 60;
-        NFTLoan(LoanContract).RenewLoan(DurationUnix);
-    }
-
-    // Listings ---------------------------------------------------------------------------------
-
-    function ListToken(address Collection, uint256 TokenId) public{
-        require(ListedCollectionsMap[Collection] == true && ListedBool[Collection][TokenId] == false, "Collection not listed or token already listed");
-        
-
-        if(Admins[msg.sender]){
-            require(ERC721(Collection).ownerOf(TokenId) == Treasury, "Token not owned by treasury");
-            AddListingToCollection(Collection, TokenId, Listing(Treasury, Collection, TokenId, ListingType.Ownership));
-
-        }
-        else{
-            require(ERC721(Collection).ownerOf(TokenId) == LendContract && PlotsLendV1(LendContract).GetTokenDepositor(Collection, TokenId) == msg.sender, "Invalid ownership or token not owned by lending contract");
-            AddListingToCollection(Collection, TokenId, Listing(msg.sender, Collection, TokenId, ListingType.Usage));
-            AddListingToUser(msg.sender, Collection, TokenId, Listing(msg.sender, Collection, TokenId, ListingType.Usage));
-        }
-
-        ListedBool[Collection][TokenId] = true;
-    }
-
-    function DelistToken(address Collection, uint256 TokenId) public{
-        require(ListedCollectionsMap[Collection] == true && ListingsByCollection[Collection][ListingsByCollectionIndex[Collection][TokenId]].Lister != address(0), "Collection not listed or token not listed");
+    //Pre-Vote Functions (Incentivize is available pre and during vote)
     
-        if(ListingsByCollection[Collection][ListingsByCollectionIndex[Collection][TokenId]].Lister == Treasury){
-            require(Admins[msg.sender], "Only Admin");
+
+    //Active Vote Functions
+
+    function CastVote(uint256 amount, Vote VoteChoice) external returns(bool success){
+        uint256 VotingInstance = CurrentOngoingVote;
+        require(VotingInstances[VotingInstance].MaxMulti == 0);
+        require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastVote: You do not have enough CLD to vote this amount or have not given the proper allowance to Winslow_Voting_V1");
+        require(VoteChoice == Vote(0) || VoteChoice == Vote(1), "VotingSystemV1.CastVote: You must either vote YEA or NAY");
+        require(amount >= 10000000000000000, "VotingSystemV1.CastVote: The minimum CLD per vote is 0.01"); //For incentive payout reasons
+        require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastVote: You may only cast a single vote per address per proposal"); //This may be changed in V2
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastVote: This instance is not currently in Winslow_Voting_V1");
+
+        if(VotingInstances[VotingInstance].Voters.length == 0){
+            VotingInstances[VotingInstance].Status = VoteStatus(1);
         }
-        else{
-            require(ListingsByCollection[Collection][ListingsByCollectionIndex[Collection][TokenId]].Lister == msg.sender, "Not owner of listing");
-            RemoveListingFromUser(msg.sender, Collection, TokenId);
-        }
 
-        RemoveListingFromCollection(Collection, TokenId);
-        ListedBool[Collection][TokenId] = false;
-    }
-
-    function ManageTokens(address[] memory Collections, uint256[] memory TokenIds, bool isList) public {
-        require(Collections.length == TokenIds.length, "Arrays not same length");
-        for(uint256 i = 0; i < Collections.length; i++){
-            if (isList) {
-                ListToken(Collections[i], TokenIds[i]);
-            } else {
-                DelistToken(Collections[i], TokenIds[i]);
-            }
-        }
-    }
-
-    //claim multiple rewards at once function, input an array of loan contracts and reward tokens
-    function ClaimRewards(address[] memory LoanContracts, address[] memory RewardTokens) public{
-        require(LoanContracts.length == RewardTokens.length, "Arrays not same length");
-        for(uint256 i = 0; i < LoanContracts.length; i++){
-            NFTLoan(LoanContracts[i]).DisperseRewards(RewardTokens[i]);
-        }
-    }
-
-    //get list of all collections  
-    function GetCollections() public view returns(address[] memory){
-        return ListedCollections;
-    }
-
-    function GetCollectionListings(address _collection) public view returns(Listing[] memory){
-        return ListingsByCollection[_collection];
-    }
-
-    function IsListed(address Collection, uint256 TokenId) public view returns(bool){
-        return ListedBool[Collection][TokenId];
-    }
-
-    function GetSingularListing(address _collection, uint256 _tokenId) public view returns(Listing memory){
-        return ListingsByCollection[_collection][ListingsByCollectionIndex[_collection][_tokenId]];
-    }
-
-    function GetOwnershipByPurchase(address Collection, uint256 TokenId) public view returns(address){
-        uint256 Expiry = NFTLoan(LoanContractByToken[Collection][TokenId]).LoanEndTime();
-        if(Expiry > block.timestamp){
-            return address(0);
-        }
-        else{
-            return OwnershipByPurchase[Collection][TokenId];
-        }
-    }
-
-    function GetRewardTokenClaimants(address Token) public view returns(address[] memory){
-        return RewardTokenClaimants[Token];
-    }
-
-    function GetRewardTokenPayouts(address User) public view returns(Payout[] memory){
-        return RewardTokenPayouts[User];
-    }
-    
-    function GetUserLoans(address _user) public view returns(address[] memory){
-        return AllUserLoans[_user];
-    }
-
-    function GetUserBorrows(address _user) public view returns(address[] memory){
-        return AllUserBorrows[_user];
-    }
-
-    function GetUserListings(address user) public view returns (Listing[] memory){
-        return ListingsByUser[user];
-    }
-
-    function GetListedCollectionWithPrices(address _collection) public view returns(Listing[] memory, uint256[] memory Prices){
-        uint256[] memory _prices = new uint256[](ListingsByCollection[_collection].length);
-        for(uint256 i = 0; i < ListingsByCollection[_collection].length; i++){
-            if(ListingsByCollection[_collection][i].OwnershipOption == ListingType.Ownership){
-                _prices[i] = PlotsTreasuryV1(Treasury).GetTokenValueFloorAdjusted(_collection, ListingsByCollection[_collection][i].TokenId);
-            }
-            else{
-                _prices[i] = 0;
-            }
-        }
-        return (GetCollectionListings(_collection), _prices);
-    }
-
-    //Internal Functions
-
-    function AddListingToCollection(address _collection, uint256 _tokenId, Listing memory _listing) internal{
-        ListingsByCollection[_collection].push(_listing);
-        ListingsByCollectionIndex[_collection][_tokenId] = ListingsByCollection[_collection].length - 1;
-    }
-
-    function RemoveListingFromCollection(address _collection, uint256 _tokenId) internal{
-        ListingsByCollection[_collection][ListingsByCollectionIndex[_collection][_tokenId]] = ListingsByCollection[_collection][ListingsByCollection[_collection].length - 1];
-        ListingsByCollectionIndex[_collection][ListingsByCollection[_collection][ListingsByCollectionIndex[_collection][_tokenId]].TokenId] = ListingsByCollectionIndex[_collection][_tokenId];
-        ListingsByCollection[_collection].pop();
-
-        ListingsByCollectionIndex[_collection][_tokenId] = 0;
-    }
-
-    function AddListingToUser(address _user, address _collection, uint256 _tokenId, Listing memory _listing) internal{
-        ListingsByUser[_user].push(_listing);
-        ListingsByUserIndex[_user][_collection][_tokenId] = ListingsByUser[_user].length - 1;
-    }
-
-    function RemoveListingFromUser(address _user, address _collection, uint256 _tokenId) internal{
-        ListingsByUser[_user][ListingsByUserIndex[_user][_collection][_tokenId]] = ListingsByUser[_user][ListingsByUser[_user].length - 1];
-        ListingsByUserIndex[_user][_collection][ListingsByUser[_user][ListingsByUserIndex[_user][_collection][_tokenId]].TokenId] = ListingsByUserIndex[_user][_collection][_tokenId];
-        ListingsByUser[_user].pop();
-
-        ListingsByUserIndex[_user][_collection][_tokenId] = 0;
-    }
-
-    //add loan to a borrower and a lender with just the loan address IN ONE function
-    function AddLoanToBorrowerAndLender(address Borrower, address Lender, address _loan) internal{
-        AllUserLoans[Lender].push(_loan);
-        AllUserLoansIndex[Lender][_loan] = AllUserLoans[Lender].length - 1;
-
-        AllUserBorrows[Borrower].push(_loan);
-        AllUserBorrowsIndex[Borrower][_loan] = AllUserBorrows[Borrower].length - 1;
-    }
-
-    //remove loan from a borrower and a lender with just the loan address IN ONE function
-    function RemoveLoanFromBorrowerAndLender(address Borrower, address Lender, address _loan) internal{
-        AllUserLoans[Lender][AllUserLoansIndex[Lender][_loan]] = AllUserLoans[Lender][AllUserLoans[Lender].length - 1];
-        AllUserLoansIndex[Lender][AllUserLoans[Lender][AllUserLoansIndex[Lender][_loan]]] = AllUserLoansIndex[Lender][_loan];
-        AllUserLoans[Lender].pop();
-        AllUserLoansIndex[Lender][_loan] = 0;
-
-        AllUserBorrows[Borrower][AllUserBorrowsIndex[Borrower][_loan]] = AllUserBorrows[Borrower][AllUserBorrows[Borrower].length - 1];
-        AllUserBorrowsIndex[Borrower][AllUserBorrows[Borrower][AllUserBorrowsIndex[Borrower][_loan]]] = AllUserBorrowsIndex[Borrower][_loan];
-        AllUserBorrows[Borrower].pop();
-        AllUserBorrowsIndex[Borrower][_loan] = 0;
-    }
-
-    function ChangeFeeReceiver(address payable NewReceiver) public OnlyAdmin{
-        FeeReceiver = NewReceiver;
-    }
-
-    function ChangeRewardFee(uint256 NewFee) public OnlyAdmin{
-        require(NewFee <= 1500, "Fee must be less than 15%");
-        RewardFee = NewFee;
-    }
-
-    function ModifyCollection(address _collection, bool addRemove) public OnlyAdmin {
-        if (addRemove) {
-            ListedCollections.push(_collection);
-            ListedCollectionsIndex[_collection] = ListedCollections.length - 1;
-            ListedCollectionsMap[_collection] = true;
+        if(VoteChoice == Vote(0)) {
+            VotingInstances[VotingInstance].YEAvotes += amount;
+            emit VoteCast(msg.sender, VotingInstance, "YEA", amount);
         } else {
-            uint256 index = ListedCollectionsIndex[_collection];
-            ListedCollections[index] = ListedCollections[ListedCollections.length - 1];
-            ListedCollectionsIndex[ListedCollections[index]] = index;
-            ListedCollections.pop();
-            delete ListedCollectionsIndex[_collection];
-            delete ListedCollectionsMap[_collection];
-        }
-    }
-
-    //function update payout tracker only callable by loan contracts (isloancontract mapping), input for a user and a token and amount
-    function UpdateBorrowerPayoutTracker(address User, address Token, uint256 Amount) public{
-        require(IsLoanContract[msg.sender] == true, "Only Loan Contracts");
-
-        if(BorrowerRewardPayoutTracker[User][Token] == 0){
-            RewardTokenClaimants[Token].push(User);
+            VotingInstances[VotingInstance].NAYvotes += amount;
+            emit VoteCast(msg.sender, VotingInstance, "NEA", amount);
         }
 
-        RewardTokenPayouts[User].push(Payout(Token, Amount, block.timestamp));
-
-        BorrowerRewardPayoutTracker[User][Token] += Amount;
-    }
-
-    function UpdateOwnerPayoutTracker(address User, address Token, uint256 Amount) public{
-        require(IsLoanContract[msg.sender] == true, "Only Loan Contracts");
-
-        if(OwnerRewardPayoutTracker[User][Token] == 0){
-            RewardTokenClaimants[Token].push(User);
-        }
-
-        RewardTokenPayouts[User].push(Payout(Token, Amount, block.timestamp));
-
-        OwnerRewardPayoutTracker[User][Token] += Amount;
-    }
-}
-
-contract PlotsTreasuryV1{
-    //Variable and pointer Declarations
-    address public PlotsCoreContract;
-    address public VLND;
-
-    //mapping of all collections to a floor price
-    mapping(address => uint256) public CollectionFloorPrice;
-    mapping(address => mapping(uint256 => uint256)) public TokenFloorFactor;
-    mapping(address => mapping(uint256 => address)) public TokenLocation;
-
-    mapping(address => uint256[]) public AllTokensByCollection;
-    mapping(address => mapping(uint256 => uint256)) public AllTokensByCollectionIndex;
-
-    mapping(address => uint256) public CollectionLockedValue;
-
-
-    modifier OnlyCore(){
-        require(msg.sender == address(PlotsCoreContract), "Only Core");
-        _;
-    }
-
-    //only admin modifier using the core contract
-    modifier OnlyAdmin(){
-        require(PlotsCoreV1(PlotsCoreContract).Admins(msg.sender) == true || msg.sender == PlotsCoreContract, "Only Admin");
-        _;
-    }
-
-    constructor(){
-        PlotsCoreContract = msg.sender;
-    }
-
-    function BuyVLND(uint256 minOut) public payable{
-        uint256 TotalValue = GetTotalValue() - msg.value;
-        uint256 VLNDInCirculation = GetVLNDInCirculation();
-        VLNDInCirculation = VLNDInCirculation / 10 ** 18;
-
-        uint256 VLNDPrice = TotalValue / VLNDInCirculation;
-        uint256 Amount = (msg.value * 10**18) / VLNDPrice;
-
-        require(Amount >= minOut, "Amount must be greater than or equal to minOut");
-
-        ERC20(VLND).transfer(msg.sender, Amount);
+        VoterInfo[VotingInstance][msg.sender].VotesLocked += amount;
+        VoterInfo[VotingInstance][msg.sender].Voted = true;
+        VotingInstances[VotingInstance].Voters.push(msg.sender);
+        UserUnreturnedVotes[msg.sender].push(VotingInstance);
+        UserUnreturnedVotesIndex[msg.sender][VotingInstance] = UserUnreturnedVotes[msg.sender].length - 1;
+        
+        return(success);
     }
     
-    function SellVLND(uint256 Amount, uint256 minOut) public {
-        uint256 VLNDPrice = GetVLNDPrice();
-        uint256 Value = (Amount * VLNDPrice) / 10 ** 18;
+        //This is set up so that you can vote for or against the proposal, and if yes what of the options you prefer
+    function CastMultiVote(uint256 amount, Vote VoteChoice, MultiOptions OptionChoice) external returns(bool success){ 
+        uint256 VotingInstance = CurrentOngoingVote;
+        require(VotingInstances[VotingInstance].MaxMulti > 0);
+        require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.CastMultiVote: You do not have enough CLD to vote this amount or have not given the proper allowance to Winslow_Voting_V1");
+        require(VoteChoice == Vote(0) || VoteChoice == Vote(1), "VotingSystemV1.CastMultiVote: You must either vote YEA or NAY");
+        require(amount >= 10000000000000000, "VotingSystemV1.CastMultiVote: The minimum CLD per vote is 0.01"); //For incentive payout reasons
+        require(!VoterInfo[VotingInstance][msg.sender].Voted, "VotingSystemV1.CastMultiVote: You may only cast a single vote per address per proposal"); //This may be changed in V2
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteStarts && block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.CastMultiVote: This instance is not currently in Winslow_Voting_V1");
+        require(uint8(OptionChoice) <= VotingInstances[VotingInstance].MaxMulti, "VotingSystemV1.CastMultiVote: You have selected an option that is not available for this instance");
+        require(CurrentOngoingVote == VotingInstance, "VotingSystemV1.CastMultiVote: This is not the current ongoing vote");
 
-        require(((address(this).balance - PlotsCoreV1(PlotsCoreContract).LockedValue()) - Value) >= ((GetTotalValue() * 5) / 100), "Not enough ether in treasury, must leave 5%");
-        require(Value >= minOut, "Value must be greater than or equal to minOut");
-
-        ERC20(VLND).transferFrom(msg.sender, address(this), Amount);
-        payable(msg.sender).transfer(Value);
-    }
-
-    function DepositNFT(address Collection, uint256 TokenId, uint256 EtherCost) public OnlyAdmin {
-        require(ERC721(Collection).ownerOf(TokenId) == msg.sender, "Not owner of token");
-        ERC721(Collection).transferFrom(msg.sender, address(this), TokenId);
-
-        TokenFloorFactor[Collection][TokenId] = ((EtherCost * 1000) / CollectionFloorPrice[Collection]);
-        TokenLocation[Collection][TokenId] = address(this);
-
-        AddTokenToCollection(Collection, TokenId);
-        CollectionLockedValue[Collection] += EtherCost;
-    }
-
-    function DepositNFTs(address[] memory Collections, uint256[] memory TokenIds, uint256[] memory EtherCosts) public OnlyAdmin {
-        require(Collections.length == TokenIds.length && Collections.length == EtherCosts.length, "Arrays not same length");
-        for(uint256 i = 0; i < Collections.length; i++){
-            DepositNFT(Collections[i], TokenIds[i], EtherCosts[i]);
-        }
-    }
-
-    function WithdrawNFT(address Collection, uint256 TokenId) public OnlyAdmin {
-        require(ERC721(Collection).ownerOf(TokenId) == address(this), "Not owner of token");
-        ERC721(Collection).transferFrom(address(this), msg.sender, TokenId);
-
-        //check if listed, if so remove listing
-        if(PlotsCoreV1(PlotsCoreContract).IsListed(Collection, TokenId) == true){
-            PlotsCoreV1(PlotsCoreContract).DelistToken(Collection, TokenId);
+        if(VotingInstances[VotingInstance].Voters.length == 0){
+            VotingInstances[VotingInstance].Status = VoteStatus(1);
         }
 
-        CollectionLockedValue[Collection] -= GetTokenValueFloorAdjusted(Collection, TokenId);
-        TokenFloorFactor[Collection][TokenId] = 0;
-        RemoveTokenFromCollection(Collection, TokenId);
-    }
-
-    function WithdrawNFTs(address[] memory Collections, uint256[] memory TokenIds) public OnlyAdmin {
-        require(Collections.length == TokenIds.length, "Arrays not same length");
-        for(uint256 i = 0; i < Collections.length; i++){
-            WithdrawNFT(Collections[i], TokenIds[i]);
+        if(VoteChoice == Vote(0)) {
+            VotingInstances[VotingInstance].YEAvotes += amount;
+            emit VoteCast(msg.sender, VotingInstance, "YEA", amount);
+        } else {
+            VotingInstances[VotingInstance].NAYvotes += amount;
+            emit VoteCast(msg.sender, VotingInstance, "NEA", amount);
         }
+
+        if (OptionChoice == MultiOptions(0)){ //Options number is -1 because of how enums work
+            MultiVotes[VotingInstance].OptionOne += amount;
+        }
+        if (OptionChoice == MultiOptions(1)){
+            MultiVotes[VotingInstance].OptionTwo += amount;
+        }
+        if (OptionChoice == MultiOptions(2)){
+            MultiVotes[VotingInstance].OptionThree += amount;
+        }
+        if (OptionChoice == MultiOptions(3)){
+            MultiVotes[VotingInstance].OptionFour += amount;
+        }
+        if (OptionChoice == MultiOptions(4)){
+            MultiVotes[VotingInstance].OptionFive += amount;
+        }
+
+        VoterInfo[VotingInstance][msg.sender].VotesLocked += amount;
+        VoterInfo[VotingInstance][msg.sender].Voted = true;
+        VotingInstances[VotingInstance].Voters.push(msg.sender);
+        UserUnreturnedVotes[msg.sender].push(VotingInstance);
+        UserUnreturnedVotesIndex[msg.sender][VotingInstance] = UserUnreturnedVotes[msg.sender].length - 1;
+
+        return(success);
     }
 
-    function SendEther(address payable Recipient, uint256 Amount) public OnlyAdmin {
-        require((address(this).balance - PlotsCoreV1(PlotsCoreContract).LockedValue()) >= Amount, "Not enough ether in treasury");
-        Recipient.transfer(Amount);
+    function IncentivizeProposal(uint256 VotingInstance, uint256 amount) public returns(bool success){
+        require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal or you may not have given this contract enough allowance");
+        require(VotingInstances[VotingInstance].Status == VoteStatus(0) || VotingInstances[VotingInstance].Status == VoteStatus(1), 'VotingSystemV1.IncentivizeProposal: This proposal has ended');
+        require(block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.IncentivizeProposal: The Winslow_Voting_V1 period has ended, save for the next proposal!");
+
+        VotingInstances[VotingInstance].TotalIncentive += amount;
+
+        _updateTaxesAndIndIncentive(VotingInstance);
+        emit ProposalIncentivized(msg.sender, VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
+        
+        return(success);
     }
 
-    function SendERC20(address Token, address Recipient, uint256 Amount) public OnlyAdmin {
-        ERC20(Token).transfer(Recipient, Amount);
-    }
+    //Post-Vote Functions
 
-    //allow admin to set floor price for multiple collections at once, with an array with the collections and an array with the floor prices
-    function SetFloorPrice(address[] memory Collections, uint256[] memory FloorPrices) public OnlyAdmin{
-        require(Collections.length == FloorPrices.length, "Arrays not same length");
-        for(uint256 i = 0; i < Collections.length; i++){
-            require(PlotsCoreV1(PlotsCoreContract).ListedCollectionsMap(Collections[i]) == true, "Collection not listed");
-            CollectionFloorPrice[Collections[i]] = FloorPrices[i];
+    function ReturnTokens(uint256 VotingInstance) public { //For returning your tokens for a specific instance after Winslow_Voting_V1, with the incentive payout
+        require(VoterInfo[VotingInstance][msg.sender].Voted == true);
+        require(VoterInfo[VotingInstance][msg.sender].CLDReturned == false);
+        require(block.timestamp >= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.ReturnTokens: Winslow_Voting_V1 has not ended for this instance");
 
-            CollectionLockedValue[Collections[i]] = 0;
-            for(uint256 j = 0; j < AllTokensByCollection[Collections[i]].length; j++){
-                CollectionLockedValue[Collections[i]] += GetTokenValueFloorAdjusted(Collections[i], AllTokensByCollection[Collections[i]][j]);
+        uint256 index = UserUnreturnedVotesIndex[msg.sender][VotingInstance];
+
+        UserUnreturnedVotes[msg.sender][index] = UserUnreturnedVotes[msg.sender][UserUnreturnedVotes[msg.sender].length - 1];
+        UserUnreturnedVotesIndex[msg.sender][UserUnreturnedVotes[msg.sender][index]] = index;
+        UserUnreturnedVotes[msg.sender].pop();
+
+        VoterInfo[VotingInstance][msg.sender].CLDReturned = true;
+
+        uint256 TotalToReturn;
+        TotalToReturn += VoterInfo[VotingInstance][msg.sender].VotesLocked;
+        TotalToReturn += (((VoterInfo[VotingInstance][msg.sender].VotesLocked) * VotingInstances[VotingInstance].IncentivePerVote) / 10**9);
+
+        ERC20(CLDAddress()).transfer(msg.sender, TotalToReturn);
+
+        emit TokensReturned(msg.sender, TotalToReturn, (TotalToReturn - VoterInfo[VotingInstance][msg.sender].VotesLocked));
+    } 
+
+    function ReturnAllVotedTokens() public {
+        for(uint256 i = 0; i < UserUnreturnedVotes[msg.sender].length; i++){
+            uint256 VotingInstance = UserUnreturnedVotes[msg.sender][i];
+            if(VotingInstances[VotingInstance].Status == VoteStatus(2) && VoterInfo[VotingInstance][msg.sender].CLDReturned == false){
+                ReturnTokens(VotingInstance);
             }
         }
     }
 
-    function SetVLND(address _vlnd) public OnlyAdmin{
-        require(VLND == address(0), "VLND already set");
-        VLND = _vlnd;
+    //Public View Functions
+
+    function CLDAddress() public view returns(address CLD){
+        return(Winslow_Core_V1(DAO).CLDAddress());
     }
 
-    //OnlyCore Functions
-
-    function SendToLoan(address LoanContract, address Collection, uint256 TokenID) external OnlyCore{
-        ERC721(Collection).transferFrom(address(this), LoanContract, TokenID);
-
-        TokenLocation[Collection][TokenID] = LoanContract;
+    function GetVotingInstance(uint256 _VoteInstance) public view returns(VoteInstance memory Instance){
+        return(VotingInstances[_VoteInstance]);
     }
 
-    //return from loan (transferfrom the token location back to the treeasury, set token location to this)
-    function ReturnedFromLoan(address Collection, uint256 TokenID) external OnlyCore(){
-        require(ERC721(Collection).ownerOf(TokenID) == address(this), "Token not in treasury");
-        
-        TokenLocation[Collection][TokenID] = address(this);
-    }
+    function GetVoteResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
+        require(block.timestamp >= VotingInstances[_VoteInstance].VoteEnds, "VotingSystemV1.GetVotingResult: The current vote is not over");
 
-    //internals
-
-    //add token to collection array
-    function AddTokenToCollection(address Collection, uint256 TokenId) internal{
-        AllTokensByCollection[Collection].push(TokenId);
-        AllTokensByCollectionIndex[Collection][TokenId] = AllTokensByCollection[Collection].length - 1;
-    }
-
-    //remove token from collection array
-
-    function RemoveTokenFromCollection(address Collection, uint256 TokenId) internal{
-        AllTokensByCollection[Collection][AllTokensByCollectionIndex[Collection][TokenId]] = AllTokensByCollection[Collection][AllTokensByCollection[Collection].length - 1];
-        AllTokensByCollectionIndex[Collection][AllTokensByCollection[Collection][AllTokensByCollectionIndex[Collection][TokenId]]] = AllTokensByCollectionIndex[Collection][TokenId];
-        AllTokensByCollection[Collection].pop();
-    }
-
-    //views 
-
-    //get total value of the treasury by looping through all collections and getting the locked value
-    function GetTotalValue() public view returns(uint256){
-        uint256 TotalValue;
-        address[] memory ListedCollections = PlotsCoreV1(PlotsCoreContract).GetCollections();  
-        for(uint256 i = 0; i < ListedCollections.length; i++){
-            TotalValue += CollectionLockedValue[ListedCollections[i]];
+        //if the total votes does not meet the quorum, the vote fails and returns false
+        if(VotingInstances[_VoteInstance].TotalCLDVoted < Quorum){
+            return(false, 0);
         }
-        TotalValue += (address(this).balance - PlotsCoreV1(PlotsCoreContract).LockedValue());
-        return TotalValue;
+
+        if(VotingInstances[_VoteInstance].YEAvotes > VotingInstances[_VoteInstance].NAYvotes){
+            Result = true;
+        } else {
+            Result = false;
+        }
+
+        if(VotingInstances[_VoteInstance].MaxMulti > 0){
+            uint256 HighestVote;
+            if(MultiVotes[_VoteInstance].OptionOne > HighestVote){
+                HighestVote = MultiVotes[_VoteInstance].OptionOne;
+                Multi = 1;
+            }
+            if(MultiVotes[_VoteInstance].OptionTwo > HighestVote){
+                HighestVote = MultiVotes[_VoteInstance].OptionTwo;
+                Multi = 2;
+            }
+            if(MultiVotes[_VoteInstance].OptionThree > HighestVote){
+                HighestVote = MultiVotes[_VoteInstance].OptionThree;
+                Multi = 3;
+            }
+            if(MultiVotes[_VoteInstance].OptionFour > HighestVote){
+                HighestVote = MultiVotes[_VoteInstance].OptionFour;
+                Multi = 4;
+            }
+            if(MultiVotes[_VoteInstance].OptionFive > HighestVote){
+                HighestVote = MultiVotes[_VoteInstance].OptionFive;
+                Multi = 5;
+            }
+        }
+
+
+        return(Result, Multi);
     }
 
-    function GetFloorPrice(address Collection) public view returns(uint256){
-        return CollectionFloorPrice[Collection];
+    //OnlyDAO functions
+
+    function InitializeVoteInstance(uint256 ProposalID, uint8 MaxMulti) external OnlyDAO returns(uint256 VoteInstanceID){
+        MRInstance++;
+        ActiveInstances++;
+
+        uint256 NewInstanceID = MRInstance;
+        uint256 EarliestStartTime = block.timestamp + 600; //TODO: Return to 24 hours or (amount in seconds here: 86400)
+        address[] memory Empty;
+        uint256 InititalRewardPool = (Winslow_Core_V1(DAO).ProposalCost() / 2);
+
+        VotingInstances[NewInstanceID] = VoteInstance(ProposalID,EarliestStartTime,0,VoteStatus(0),Empty,0,MaxMulti,0,0,InititalRewardPool,0,0,0,0);
+        VotingQueue.push(NewInstanceID);
+        VotingQueueIndex[NewInstanceID] = VotingQueue.length - 1;
+
+        _updateTaxesAndIndIncentive(NewInstanceID);
+        emit InstanceCreated(tx.origin, ProposalID, block.timestamp);
+        return(NewInstanceID);
     }
 
-    function GetFloorFactor(address Collection, uint256 TokenId) public view returns(uint256){
-        return TokenFloorFactor[Collection][TokenId];
+    //Status Changes
+    function EndVoting(uint256 VotingInstance) internal {
+
+        ERC20(CLDAddress()).Burn(VotingInstances[VotingInstance].CLDToBurn);
+        
+        ERC20(CLDAddress()).transfer(msg.sender, VotingInstances[VotingInstance].CLDToExecutioner);
+
+        VotingInstances[VotingInstance].IncentivePerVote = ((VotingInstances[VotingInstance].CLDtoIncentive * 10**9) / VotingInstances[VotingInstance].TotalCLDVoted);
+
+        VotingInstances[VotingInstance].Status = VoteStatus(2);
+        ActiveInstances--;
     }
 
-    function GetTokenValueFloorAdjusted(address Collection, uint256 TokenId) public view returns(uint256){
-        return((CollectionFloorPrice[Collection] * TokenFloorFactor[Collection][TokenId]) / 1000);
+    //start next Winslow_Voting_V1 instance
+    function BeginNextVote() public returns(uint256 VotingInstance){
+        require(VotingQueue.length > 0, "VotingSystemV1.BeginNextVote: There are no proposals in the queue");
+        //check if the current vote is over, or if there is no current vote as it is the first
+        if(CurrentOngoingVote != 0){
+            require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.BeginNextVote: The current vote is not over");
+            EndVoting(CurrentOngoingVote);
+            VotingInstances[CurrentOngoingVote].Status = VoteStatus(2);
+            Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID);
+        }
+
+        //loop through the queue to find the proposal with the highest incentive, begin it and remove it from the queue
+        uint256 HighestIncentive = 0;
+        uint256 HighestIncentiveProposal;
+        for(uint256 i = 0; i < VotingQueue.length; i++){ //we check vote starts here because we want to ensure that the debate period is over
+            if(VotingInstances[VotingQueue[i]].TotalIncentive >= HighestIncentive && VotingInstances[VotingQueue[i]].VoteStarts > block.timestamp){
+                HighestIncentive = VotingInstances[VotingQueue[i]].TotalIncentive;
+                HighestIncentiveProposal = VotingQueue[i];
+            }
+        }
+        require(HighestIncentiveProposal != 0, "");
+        require(VotingInstances[HighestIncentiveProposal].VoteStarts <= block.timestamp, "VotingSystemV1.BeginNextVote: The next proposal is not ready to be voted on");
+
+        CurrentOngoingVote = HighestIncentiveProposal;
+
+        if(VotingQueue.length > 1){
+            VotingQueue[VotingQueueIndex[CurrentOngoingVote]] = VotingQueue[VotingQueue.length - 1];
+            VotingQueueIndex[VotingQueue[VotingQueue.length - 1]] = VotingQueueIndex[CurrentOngoingVote];
+        }
+        VotingQueue.pop();
+        VotingQueueIndex[CurrentOngoingVote] = 0;
+
+        VotingInstances[CurrentOngoingVote].VoteStarts = block.timestamp;
+        VotingInstances[CurrentOngoingVote].VoteEnds = block.timestamp + Winslow_Core_V1(DAO).VoteLength();
+        VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
+
+        return(CurrentOngoingVote);
     }
 
-    //get the price of VLND in ether by dividing the total value of the treasury by the circulating supply of vlnd whcih is all vlnd minus the vlnd in the treasury, to get an exchange rate and avoid overflow, get the price of an entire vlnd and not just one wei
-    function GetVLNDPrice() public view returns(uint256){
-        uint256 TotalValue = GetTotalValue();
-        uint256 VLNDInCirculation = GetVLNDInCirculation();
-        VLNDInCirculation = VLNDInCirculation / 10 ** 18;
+    function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) external OnlyDAO returns (bool success) {
+        require(NewExecCut > 0 && NewExecCut <= 10000);
+        require(NewExecCut > 0 && NewExecCut <= 10000);
 
-        return(TotalValue / VLNDInCirculation);
+        ExecutorCut = NewExecCut;
+        BurnCut = NewBurnCut;
+
+        return true;
     }
 
-    //get vlnd in circulation by subtracting the vlnd in the treasury from the total supply
-    function GetVLNDInCirculation() public view returns(uint256){
-        return(ERC20(VLND).totalSupply() - ERC20(VLND).balanceOf(address(this)));
+    function ChangeQuorum(uint256 newQuorum) external OnlyDAO returns(bool success){
+        require(newQuorum > 8400000000000000000000); //Minimum quorum is 8400 tokens (0.02% of total supply) for minimal security but should be adjusted to the community's liking and will likely never be close to this
+
+        Quorum = newQuorum;
+        
+        return(success);
+    }
+
+    function ChangeDAO(address newAddr) external OnlyDAO {
+        require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
+        require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
+        DAO = payable(newAddr);    
+        emit NewDAOAddress(newAddr);
     }
     
-    receive() external payable{}
+    //Internal functions
+
+    function _updateTaxesAndIndIncentive(uint256 VotingInstance) internal  {    
+            VotingInstances[VotingInstance].CLDToBurn = ((VotingInstances[VotingInstance].TotalIncentive * BurnCut) / 10000);
+
+            VotingInstances[VotingInstance].CLDToExecutioner = ((VotingInstances[VotingInstance].TotalIncentive * ExecutorCut) / 10000);
+
+            VotingInstances[VotingInstance].CLDtoIncentive = VotingInstances[VotingInstance].TotalIncentive - (VotingInstances[VotingInstance].CLDToBurn + VotingInstances[VotingInstance].CLDToExecutioner);
+    }
 
 }
 
-contract PlotsLendV1{
-    //Variable and pointer Declarations
-    address public PlotsCoreContract;
+contract SaleFactoryV2 {
+    string public Version = "V1";
+    address payable public DAO;
+    uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
+    uint256 public RetractFee; //^
+    uint256 public MinimumDeposit; //^
+    uint256 public DefaultSaleLength; //^
+    uint256 public MaximumSalePercentage; //^The maximum percentage of the supply that can be sold at once, to avoid flooding markets/heavy inflation, in Basis Points
 
     constructor(){
-        PlotsCoreContract = msg.sender;
+        //TODO: Update Variables before deployment
+        DAO = payable(msg.sender);
+        FoundationFee = 100; //1%
+        RetractFee = 100; //1%
+        MinimumDeposit = 10000000000000000; //0.001 ETC
+        DefaultSaleLength = 7200;
     }
 
-    struct Token{
-        address Collection;
-        uint256 TokenId;
-    }
+    //Events
+    event NewSaleCreated(uint256 SaleID, uint256 SaleAmount, address NewSaleContract);
+    event NewFoundationFee(uint256 NewFeePercentBP);
+    event NewDepositRetractFee(uint256 NewFeePercentBP);
+    event NewMinimumDeposit(uint256 NewMinDeposit);
+    event NewDefaultSaleLength(uint256 NewSaleLen);
+    event NewMaxSalePercent(uint256 NewMax);
+    event NewDAOAddress(address NewDAO);
 
-    modifier OnlyCore(){
-        require(msg.sender == address(PlotsCoreContract), "Only Core");
+    modifier OnlyDAO{ 
+        require(msg.sender == address(DAO), 'This can only be done by the DAO');
         _;
     }
 
-    mapping(address => mapping(uint256 => address)) public TokenDepositor;
-    mapping(address => mapping(uint256 => address)) public TokenLocation;
-
-    //all deposited tokens array mapping
-    mapping(address => Token[]) public AllUserTokens;
-    mapping(address => mapping(address => mapping(uint256 => uint256))) public AllUserTokensIndex;
-
-    //allow a user to deposit a token into the lending contract from any collection that is listed on the core contract
-    function DepositToken(address Collection, uint256 TokenId) public{
-        require(ERC721(Collection).ownerOf(TokenId) == msg.sender, "Not owner of token");
-        ERC721(Collection).transferFrom(msg.sender, address(this), TokenId);
-
-        TokenDepositor[Collection][TokenId] = msg.sender;
-        TokenLocation[Collection][TokenId] = address(this);
-        AllUserTokens[msg.sender].push(Token(Collection, TokenId));
-        AllUserTokensIndex[msg.sender][Collection][TokenId] = AllUserTokens[msg.sender].length - 1;
+    function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
+        uint256 TreasuryCLDBalance = ERC20(Winslow_Core_V1(DAO).CLDAddress()).balanceOf(Winslow_Core_V1(DAO).TreasuryContract());
+        require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Winslow_Core_V1(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
+        address NewSaleAddress = address(new SaleV2(DAO, SaleID, CLDtoSell, DefaultSaleLength, FoundationFee, RetractFee, MinimumDeposit));
+        
+        emit NewSaleCreated(SaleID, CLDtoSell, NewSaleAddress);
+        return(NewSaleAddress);
     }
 
-    function DepositTokens(address[] memory Collections, uint256[] memory TokenIds) public{
-        require(Collections.length == TokenIds.length, "Arrays not same length");
-        for(uint256 i = 0; i < Collections.length; i++){
-            DepositToken(Collections[i], TokenIds[i]);
-        }
+    function ChangeFoundationFee(uint256 NewFee) external OnlyDAO returns(bool success){
+        require(NewFee <= 10000);
+        FoundationFee = NewFee;
+
+        emit NewFoundationFee(NewFee);
+        return(success);
     }
 
-    function WithdrawToken(address Collection, uint256 TokenId) public{
-        require(TokenDepositor[Collection][TokenId] == msg.sender, "Not owner of token");
-        require(TokenLocation[Collection][TokenId] == address(this), "Token not in lending contract");
-        require(!PlotsCoreV1(PlotsCoreContract).IsListed(Collection, TokenId), "Token should not be listed");
+    function ChangeRetractFee(uint256 NewRetractFee) external OnlyDAO returns(bool success){
+        require(NewRetractFee <= 10000);
+        RetractFee = NewRetractFee;
 
-        ERC721(Collection).transferFrom(address(this), msg.sender, TokenId);
-
-        TokenDepositor[Collection][TokenId] = address(0);
-        TokenLocation[Collection][TokenId] = address(0);
-
-        uint256 lastIndex = AllUserTokens[msg.sender].length - 1;
-        uint256 currentIndex = AllUserTokensIndex[msg.sender][Collection][TokenId];
-
-        if(currentIndex != lastIndex) {
-            AllUserTokens[msg.sender][currentIndex] = AllUserTokens[msg.sender][lastIndex];
-            AllUserTokensIndex[msg.sender][Collection][AllUserTokens[msg.sender][currentIndex].TokenId] = currentIndex;
-        }
-        AllUserTokens[msg.sender].pop();
-        AllUserTokensIndex[msg.sender][Collection][TokenId] = 0;
+        emit NewDepositRetractFee(NewRetractFee);
+        return(success);
     }
 
-    function WithdrawTokens(address[] memory Collections, uint256[] memory TokenIds) public{
-        require(Collections.length == TokenIds.length, "Arrays not same length");
-        for(uint256 i = 0; i < Collections.length; i++){
-            WithdrawToken(Collections[i], TokenIds[i]);
-        }
+    function ChangeMinimumDeposit(uint256 NewMinDeposit) external OnlyDAO returns(bool success){
+        require(NewMinDeposit > 1000000000000000);
+        MinimumDeposit = NewMinDeposit;
+
+        emit NewMinimumDeposit(NewMinDeposit);
+        return(success);
     }
 
-    //send and return from loan functions
+    function ChangeDefaultSaleLength(uint256 NewLength) external OnlyDAO returns(bool success){
+        require(NewLength >= 259200 && NewLength <= 1209600); 
+        DefaultSaleLength = NewLength;
 
-    function SendToLoan(address LoanContract, address Collection, uint256 TokenID) external OnlyCore{
-        ERC721(Collection).transferFrom(address(this), LoanContract, TokenID);
-
-        TokenLocation[Collection][TokenID] = LoanContract;
+        emit NewDefaultSaleLength(NewLength);
+        return(success);
     }
 
-    function ReturnedFromLoan(address Collection, uint256 TokenID) external OnlyCore{        
-        TokenLocation[Collection][TokenID] = address(this);
+    function ChangeMaxSalePercent(uint256 NewMaxPercent) external OnlyDAO returns(bool success){
+        require(NewMaxPercent <= 10000);
+        MaximumSalePercentage = NewMaxPercent;
+
+        emit NewMaxSalePercent(NewMaxPercent);
+        return(success);
     }
 
-    //View Functions 
+    function ChangeDAO(address newAddr) external OnlyDAO returns(bool success){
+        require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
+        require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
+        DAO = payable(newAddr);    
 
-    function GetUserTokens(address _user) public view returns(Token[] memory){
-        return AllUserTokens[_user];
+        emit NewDAOAddress(newAddr);
+        return(success);
     }
 
-    function GetTokenDepositor(address Collection, uint256 TokenId) public view returns(address){
-        return TokenDepositor[Collection][TokenId];
-    }
-
-    function GetTokenLocation(address Collection, uint256 TokenId) public view returns(address){
-        return TokenLocation[Collection][TokenId];
-    }
 }
 
-contract NFTLoan{
-    address public Manager;
-    address public TokenCollection;
-    uint256 public TokenID;
+contract SaleV2 {
+    //  Variable, struct, mapping and other Declarations
+    //  Winslow_Core_V1
+    address payable public DAO;
+    address public CLD;
+    uint256 public SaleIdentifier; //This iteration of all CLD sales conducted
+    uint256 public StartTime; //Unix Time
+    uint256 public EndTime;   //Unix Time
+    uint256 public CLDToBeSold; //Total Amount of CLD being offered for sale by the DAO
+    //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
+    uint256 public MinimumDeposit; //Minimum Amount of Ether to be deposited when calling the deposit function
+    uint256 public DAOFoundationFee; //Fee that goes directly to the foundation for further development
+    uint256 public RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
+    // Details
+    uint256 public TotalEtherPool; //Defines the total Amount of ether deposited by participators
+    uint256 public TotalRetractionFeesAccrued; //Total Amount of ether received from retraction fees
+    bool public ProceedsNotTransfered = true; //Defaulted to true so that the if statement costs 0 gas after transfered for the first time
 
-    address public Owner;
-    address public Borrower;
-    address public Origin;
-    PlotsCoreV1.OwnershipPercent public OwnershipType;
-    uint256 public LoanEndTime;
-    uint256 public InitialValue;
+    enum SaleStatuses{ 
+        Uncommenced, //Before the sale, allowing users to view the Amount of CLD that will sold and additional information
+        Ongoing,     //While the sale is active, allowing users to deposit or withdraw ETC from the pool 
+        Complete     //After the sale is complete, allowing users to withdraw their CLD in which they purchased
+    }
 
-    uint256 public BorrowerRewardShare; //In Basis Points, zero if no loan exists for this token
+    struct Participant{ 
+        bool Participated;
+        bool CLDclaimed;
+        uint256 EtherDeposited;
+        uint256 CLDWithdrawn;
+    }
 
-    //Use Counter for statistics
-    uint256 public UseCounter;
-    bool public Active;
-
-
-    modifier OnlyManager(){
-        require(msg.sender == Manager, "Only Manager");
+    modifier OnlyDAO{ 
+        require(msg.sender == address(DAO), 'This can only be done by the DAO');
         _;
+    } 
+
+    event EtherDeposited(uint256 Amount, address User);
+    event EtherWithdrawn(uint256 Amount, uint256 Fee, address User);
+    event CLDclaimed(uint256 Amount, address User);
+    event ProceedsTransfered(uint256 ToTreasury, uint256 ToFoundation);
+    
+    //Mapping for participants
+    mapping(address => Participant) public ParticipantDetails; 
+    //List of participants for front-end ranking
+    address[] public ParticipantList; 
+
+    constructor(address _DAO, uint256 SaleID, uint256 CLDtoSell, uint256 SaleLength, uint256 FoundationFee, uint256 RetractionFee, uint256 MinDeposit){
+        require(SaleLength >= 259200 && SaleLength <= 1209600);
+        DAO = payable(_DAO);
+        SaleIdentifier = SaleID;
+        CLD = Winslow_Core_V1(DAO).CLDAddress();
+        CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract by treasury, additional CLD sent to the sale contract will be lost
+        StartTime = block.timestamp + 900; //TODO: Reset to 12 hours before deployment
+        EndTime = StartTime + SaleLength;
+        DAOFoundationFee = FoundationFee;
+        RetractFee = RetractionFee;
+        MinimumDeposit = MinDeposit;
     }
 
-    constructor(){
-        Manager = msg.sender;
-    }
+    //  During Sale
+    //Deposit ETC
 
-    function BeginLoan(PlotsCoreV1.OwnershipPercent Ownership, address TokenOwner, address TokenBorrower, address Collection, uint256 TokenId, uint256 Duration, uint256 InitialVal, address TokenOrigin) public OnlyManager {
-        require(ERC721(Collection).ownerOf(TokenId) == address(this), "Token not in loan");
+    function DepositEther() public payable returns(bool success){
+        require(SaleStatus() == SaleStatuses(1));
+        require(msg.value >= MinimumDeposit); 
 
-        TokenCollection = Collection;
-        TokenID = TokenId;
-        Owner = TokenOwner;
-        Borrower = TokenBorrower;
-        OwnershipType = Ownership;
-        LoanEndTime = block.timestamp + Duration;
-        InitialValue = InitialVal;
-        Origin = TokenOrigin;
-
-        if(Ownership == PlotsCoreV1.OwnershipPercent.Zero){
-            BorrowerRewardShare = 3000;
+        if(ParticipantDetails[msg.sender].Participated = false){
+            ParticipantDetails[msg.sender].Participated = true;
+            ParticipantList.push(msg.sender);
         }
-        else if(Ownership == PlotsCoreV1.OwnershipPercent.Ten){
-            BorrowerRewardShare = 5000;
-        }
-        else if(Ownership == PlotsCoreV1.OwnershipPercent.TwentyFive){
-            BorrowerRewardShare = 6500;
-        }
 
-        Active = true;
-    }
-
-    //renew loan function, only manager, extend loan end time by duration input
-    function RenewLoan(uint256 Duration) public OnlyManager {
-        require(msg.sender == Manager, "Only Loans Or Treasury Contract can interact with this contract");
-        require(Active == true, "Loan not active");
-        LoanEndTime += Duration;
-    }
-
-    function EndLoan() public OnlyManager {
-        require(msg.sender == Manager, "Only Loans Or Treasury Contract can interact with this contract");
-        ERC721(TokenCollection).transferFrom(address(this), Origin, TokenID);
+        ParticipantDetails[msg.sender].EtherDeposited += msg.value;
+        TotalEtherPool += msg.value;
         
-        TokenCollection = address(0);
-        InitialValue = 0;
-        LoanEndTime = 0;
-        TokenID = 0;
-        Owner = address(0);
-        Borrower = address(0);
-        OwnershipType = PlotsCoreV1.OwnershipPercent.Zero;
-        BorrowerRewardShare = 0;
-        UseCounter++;
-        Active = false;
+        emit EtherDeposited(msg.value, msg.sender);
+        return(success);
     }
 
-    function DisperseRewards(address RewardToken) public {
-        require(msg.sender == Owner || msg.sender == Borrower || msg.sender == Manager, "Only Owner or Borrower can disperse rewards");
-        uint256 RewardBalance = ERC20(RewardToken).balanceOf(address(this));
-        require(RewardBalance > 0, "No rewards to disperse");
-        //check core contract for fee percentage and fee receiver, calculate fee and send to fee receiver
-        uint256 Fee = (RewardBalance * PlotsCoreV1(Manager).RewardFee()) / 10000;
-        ERC20(RewardToken).transfer(PlotsCoreV1(Manager).FeeReceiver(), Fee);
-        RewardBalance -= Fee;
+    function WithdrawEther(uint256 Amount) public returns(bool success){
+        require(ParticipantDetails[msg.sender].Participated == true);
+        require(Amount <= ParticipantDetails[msg.sender].EtherDeposited);
+        require(SaleStatus() == SaleStatuses(1));
 
-        uint256 OwnerReward = (RewardBalance * (10000 - BorrowerRewardShare)) / 10000;
+        uint256 Fee = ((Amount * RetractFee) / 10000);
 
-        PlotsCoreV1(Manager).UpdateOwnerPayoutTracker(Owner, RewardToken, OwnerReward);
-        PlotsCoreV1(Manager).UpdateBorrowerPayoutTracker(Borrower, RewardToken, RewardBalance - OwnerReward);
+        TotalRetractionFeesAccrued += Fee;
+        ParticipantDetails[msg.sender].EtherDeposited -= (Amount - Fee);
+
+        payable(msg.sender).transfer(Amount - Fee);
+
+        emit EtherWithdrawn(Amount, Fee, msg.sender);
+        return(success);
+    }
+
+
+    function ClaimCLD() public returns(bool success, uint256 AmountClaimed){
+        require(ParticipantDetails[msg.sender].Participated == true);
+        require(ParticipantDetails[msg.sender].CLDclaimed == false);
+        require(SaleStatus() == SaleStatuses(2));
+        ParticipantDetails[msg.sender].CLDclaimed = true;
+
+        if(ProceedsNotTransfered){
+            TransferProceeds();
+        }
+
+        uint256 CLDtoSend = ((CLDToBeSold *  ParticipantDetails[msg.sender].EtherDeposited) / TotalEtherPool);
+        ParticipantDetails[msg.sender].CLDWithdrawn = CLDtoSend;
+
+        ERC20(CLD).transfer(msg.sender, CLDtoSend);
+
+        emit CLDclaimed(CLDtoSend, msg.sender);
+        return(success, CLDtoSend);
+    }
+
+    //Internal functions
+
+    function TransferProceeds() internal {
+        ProceedsNotTransfered = false;
+        uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000); 
+        uint256 ToTreasury = (TotalEtherPool - ToFoundation);
+        (Winslow_Core_V1(DAO).TreasuryContract()).transfer(ToTreasury);
+        (Winslow_Core_V1(DAO).FoundationAddress()).transfer(ToFoundation);
+
+        emit ProceedsTransfered(ToFoundation, ToTreasury);
+    }
+
+    //DAO Only functions
+
+    function VerifyReadyForSale() external OnlyDAO view returns(bool Ready){
+        require(ERC20(CLD).balanceOf(address(this)) == CLDToBeSold);
         
-        ERC20(RewardToken).transfer(Owner, OwnerReward);
-        ERC20(RewardToken).transfer(Borrower, ERC20(RewardToken).balanceOf(address(this)));
+        return(Ready);
     }
 
-    //create a view function that will return the unclaimed reward tokens for a user with the output depending on if the user is the owner or borrower, in a similar fashion to dispense rewards
-    function GetUnclaimedRewards(address RewardToken, address User) public view returns(uint256){
-        uint256 RewardBalance = ERC20(RewardToken).balanceOf(address(this));
-        if(RewardBalance == 0){
-            return 0;
-        }
-        uint256 Fee = (RewardBalance * PlotsCoreV1(Manager).RewardFee()) / 10000;
-        RewardBalance -= Fee;
+    //View Functions
 
-        uint256 OwnerReward = (RewardBalance * (10000 - BorrowerRewardShare)) / 10000;
-
-        if(User == Owner){
-            return OwnerReward;
+    function SaleStatus() public view returns(SaleStatuses Status){
+        if(block.timestamp < StartTime){
+            return(SaleStatuses(0));
         }
-        else if(User == Borrower){
-            return RewardBalance - OwnerReward;
+        if(block.timestamp > StartTime && block.timestamp < EndTime){
+            return(SaleStatuses(1));
+        }
+        if(block.timestamp > EndTime){
+            return(SaleStatuses(2));
         }
         else{
-            return 0;
-        }
-    }
-
-    //update borrower reward share (only manager)
-    function UpdateBorrowerRewardShare(PlotsCoreV1.OwnershipPercent Ownership) public OnlyManager {
-        require(Ownership != OwnershipType, "Ownership already set to this");
-
-        BorrowerRewardShare = 0;
-
-        OwnershipType = Ownership;
-
-        if(Ownership == PlotsCoreV1.OwnershipPercent.Ten){
-            BorrowerRewardShare = 5000;
-        }
-        else if(Ownership == PlotsCoreV1.OwnershipPercent.TwentyFive){
-            BorrowerRewardShare = 6500;
+            revert("Error on getting sale status");
         }
     }
 
 }
 
+contract Winslow_Treasury_V1 {
+    //Variable, struct and type declarations
+    string public Version = "V1";
+    address public DAO;
+    uint8 public RegisteredAssetLimit;
 
+    mapping(address => bool) public AssetRegistryMap;
+    mapping(uint8 => Token) public RegisteredAssets;
 
-interface ERC721 {
-    function balanceOf(address _owner) external view returns (uint256);
-    function ownerOf(uint256 _tokenId) external view returns (address);
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable;
-    function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
-    function approve(address _approved, uint256 _tokenId) external payable;
-    function setApprovalForAll(address _operator, bool _approved) external;
-    function getApproved(uint256 _tokenId) external view returns (address);
-    function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+    struct Token{ 
+        address TokenAddress;
+        bool Filled;
+    }
+
+    //Modifier declarations
+    modifier OnlyDAO{ 
+        require(msg.sender == DAO, 'This can only be done by the DAO');
+        _;
+    }
+
+    //Event Declarations
+    event AssetRegistered(address NewToken, uint256 CurrentBalance);
+    event AssetLimitChange(uint256 NewLimit);
+    event NewDAOAddress(address NewAddress);
+    event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
+    event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
+    event ERC20Sent(uint256 Amount, address Receiver, address TxOrigin);
+    event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
+
+    //Code executed on deployment
+    constructor(){
+        DAO = msg.sender;
+        RegisteredAssetLimit = 5;
+        RegisteredAssets[0] = (Token(0x0C9986e9A0d4d3A16752fc6129afD8690B8dB6B9, true)); //TODO: Update CLD contract to correct address before deployment
+        AssetRegistryMap[0x0C9986e9A0d4d3A16752fc6129afD8690B8dB6B9] = true;
+    }
+
+    //Public callable functions
+    function ReceiveRegisteredAsset(uint8 AssetID, uint amount) external {
+        ERC20(RegisteredAssets[AssetID].TokenAddress).transferFrom(msg.sender, address(this), amount);
+    }
+
+        //CLD Claim
+    function UserAssetClaim(uint256 CLDamount) public returns(bool success){
+        AssetClaim(CLDamount, msg.sender, payable(msg.sender));
+
+        return(success);
+    }
+
+    function AssetClaim(uint256 CLDamount, address From, address payable To) public returns(bool success){
+        uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this)));
+        //Supply within the DAO does not count as backed
+        ERC20(RegisteredAssets[0].TokenAddress).transferFrom(From, address(this), CLDamount);
+
+        uint8 CurrentID = 1;
+        while(CurrentID <= RegisteredAssetLimit){
+            //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
+            if(RegisteredAssets[CurrentID].Filled == true){
+                uint256 ToSend = GetAssetToSend(CLDamount, CurrentID, SupplyPreTransfer);
+                ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend);
+                emit ERC20Sent(ToSend, To, tx.origin);
+            }
+            CurrentID++;
+        }
+
+        To.transfer(GetEtherToSend(CLDamount, SupplyPreTransfer));
+
+        return(success);
+    }
+
+    //DAO and Eros Proposal only access functions
+    function TransferETH(uint256 amount, address payable receiver) external OnlyDAO { 
+        receiver.transfer(amount);
+
+        emit EtherSent(amount, receiver, tx.origin);
+    }
+
+    function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO { 
+        ERC20(RegisteredAssets[AssetID].TokenAddress).transfer(receiver, amount);
+
+        emit ERC20Sent(amount, receiver, tx.origin);
+    }
+
+    //Asset Registry management
+    function RegisterAsset(address tokenAddress, uint8 slot) external OnlyDAO { 
+        require(slot <= RegisteredAssetLimit && slot != 0);
+        require(AssetRegistryMap[tokenAddress] == false);
+        if(RegisteredAssets[slot].Filled == true){
+            //Careful, if registered asset is replaced but not empty in contract, funds will be inaccesible
+            AssetRegistryMap[RegisteredAssets[slot].TokenAddress] = false;
+        }
+        if(tokenAddress == address(0)){
+           RegisteredAssets[slot] = Token(address(0), false); 
+        }
+        else{
+        RegisteredAssets[slot] =  Token(tokenAddress, true); 
+        AssetRegistryMap[tokenAddress] = true;
+        }
+
+        emit AssetRegistered(RegisteredAssets[slot].TokenAddress, ERC20(RegisteredAssets[slot].TokenAddress).balanceOf(address(this)));
+    }
+
+    //Setting modification functions
+    function ChangeRegisteredAssetLimit(uint8 NewLimit) external OnlyDAO{
+        //If assets are registered above the limit and the limit is changed, assets will still be registered so clear slots beforehand
+
+        RegisteredAssetLimit = NewLimit;
+        
+        emit AssetLimitChange(NewLimit);
+    }
+
+    function ChangeDAO(address newAddr) external OnlyDAO{
+        require(DAO != newAddr, "VotingSystemV1.ChangeDAO: New DAO address can't be the same as the old one");
+        require(address(newAddr) != address(0), "VotingSystemV1.ChangeDAO: New DAO can't be the zero address");
+        DAO = newAddr;    
+        emit NewDAOAddress(newAddr);
+    }
+
+    //Public viewing functions 
+    function IsRegistered(address TokenAddress) public view returns(bool){
+        return(AssetRegistryMap[TokenAddress]);
+    }
+
+    function CLDAddress() public view returns(address CLD){
+        return(RegisteredAssets[0].TokenAddress);
+    }
+
+    function GetBackingValueEther(uint256 CLDamount) public view returns(uint256 EtherBacking){
+        uint256 DecimalReplacer = (10**10);
+        uint256 DAObalance = ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this));
+        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - DAObalance);
+        return(((CLDamount * ((address(this).balance * DecimalReplacer) / Supply)) / DecimalReplacer));
+    }
+
+    function GetBackingValueAsset(uint256 CLDamount, uint8 AssetID) public view returns(uint256 AssetBacking){
+        require(AssetID > 0 && AssetID <= RegisteredAssetLimit && RegisteredAssets[AssetID].Filled == true, "Asset Cannot be CLD or a nonexistant slot");
+        uint256 DecimalReplacer = (10**10);
+        uint256 DAObalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
+        uint256 Supply = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this)));
+        return(((CLDamount * ((DAObalance * DecimalReplacer) / Supply)) / DecimalReplacer));
+    }
+
+    function GetEtherToSend(uint256 CLDamount, uint256 PreSupply) internal view returns(uint256 EtherBacking){
+        uint256 DecimalReplacer = (10**10);
+        return(((CLDamount * ((address(this).balance * DecimalReplacer) / PreSupply)) / DecimalReplacer));
+    }
+
+    function GetAssetToSend(uint256 CLDamount, uint8 AssetID, uint256 PreSupply) internal view returns(uint256 AssetBacking){
+        require(AssetID > 0 && AssetID <= RegisteredAssetLimit && RegisteredAssets[AssetID].Filled == true, "Asset Cannot be CLD or a nonexistant slot");
+        uint256 DecimalReplacer = (10**10);
+        uint256 DAOAssetBalance = ERC20(RegisteredAssets[AssetID].TokenAddress).balanceOf(address(this));
+        return(((CLDamount * ((DAOAssetBalance * DecimalReplacer) / PreSupply)) / DecimalReplacer));
+    }
+
+    //Fallback Functions
+    receive() external payable{
+        emit EtherReceived(msg.value, msg.sender, tx.origin); 
+    }
+
+    fallback() external payable{
+        emit EtherReceived(msg.value, msg.sender, tx.origin); 
+    }
 }
 
 interface ERC20 {
@@ -875,4 +1173,23 @@ interface ERC20 {
   function transferFrom(address from, address to, uint256 value) external returns (bool); 
   function totalSupply() external view returns (uint256);
   function Burn(uint256 _BurnAmount) external;
+}
+
+interface EROS {
+    function DAO() external view returns(address DAOaddress);
+    function Multi() external view returns(bool);
+    function OptionCount() external view returns(uint8);
+    function RequestEther() external view returns(uint8);
+    function TokenIdentifier() external view returns(uint8);
+    function Execute() external returns(bool success);
+    function ExecuteMulti(uint8 OptionToExecute) external returns(bool success);
+    function ProposalMemo() external view returns(string memory);
+    function VoteLength() external view returns(uint256);
+    function RequestTokens() external view returns(uint256);
+}
+
+interface Replacements{
+    function InheritCore(address Winslow_Treasury_V1, address Winslow_Voting_V1, uint256 LatestProposal, uint256 ProposalCost) external returns(bool success);
+    function SendPredecessor(address Predecessor) external returns(bool success);
+    function ChangeDAO(address NewDAO) external returns(bool success);
 }
