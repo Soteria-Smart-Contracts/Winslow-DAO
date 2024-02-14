@@ -141,7 +141,6 @@ contract Winslow_Core_V1 {
 
     function SetAuxiliaryContracts(address Treasury, address Voting) public returns(bool success){
         require(TreasuryContract == address(0) && VotingContract == address(0) && SaleFactoryContract == address(0), "Auxiliary contracts have already been deployed");
-        require(msg.sender == AuxDeployerContract, "Only the auxiliary deployer contract can set the auxiliary contracts");
 
         TreasuryContract = payable(Treasury);
         VotingContract = Voting;
