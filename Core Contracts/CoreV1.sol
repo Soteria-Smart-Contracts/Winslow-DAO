@@ -1188,6 +1188,7 @@ contract WinslowDAODeployer{
 
 contract AuxilliaryDeployer{
     address public DAO;
+    uint8 p
 
     constructor(address _DAO){
         DAO = _DAO;
