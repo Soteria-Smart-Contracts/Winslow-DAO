@@ -138,7 +138,7 @@ contract Winslow_Core_V1 {
 
     }
 
-    function DeployAuxiliaryContracts() public returns(bool success){
+    function SetAuxiliaryContracts() public returns(bool success){
         require(TreasuryContract == address(0) && VotingContract == address(0) && SaleFactoryContract == address(0), "Auxiliary contracts have already been deployed");
 
         SaleFactoryContract = address(new SaleFactoryV2());
