@@ -135,7 +135,11 @@ contract Winslow_Core_V1 {
 
     }
 
-    function DeployAuxi
+    function DeployAuxiliaryContracts() public returns(bool success){
+        TreasuryContract = payable(address(new Winslow_Treasury_V1()));
+        VotingContract = address(new Winslow_Voting_V1());
+        SaleFactoryContract = address(new SaleFactoryV2());
+    }
 
     //  Public view functions
 
