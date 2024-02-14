@@ -1179,6 +1179,8 @@ contract Winslow_Treasury_V1 {
 
 contract WinslowDAODeployer{
     address public DAO;
+    address public TreasuryDeployer;
+    address public VotingDeployer;
 
     constructor(){
         DAO = msg.sender;
