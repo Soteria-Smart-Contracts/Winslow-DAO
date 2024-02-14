@@ -1208,6 +1208,7 @@ contract WinslowTreasuryDeployer{
 
 contract WinslowVotingDeployer{
     address public DAO;
+    bool 
 
     constructor(address _DAO){
         DAO = _DAO;
