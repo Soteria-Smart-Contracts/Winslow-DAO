@@ -1184,6 +1184,7 @@ contract WinslowAuxiliaryDeployer{
 
     constructor(){
         DAO = msg.sender;
+        
     }
 
     function DeployAuxiliaryContracts() external {
