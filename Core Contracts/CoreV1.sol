@@ -1188,7 +1188,7 @@ contract WinslowDAODeployer{
 
 contract AuxilliaryDeployer{
     address public DAO;
-    uint8 p
+    uint8 public ID;
 
     constructor(address _DAO){
         DAO = _DAO;
