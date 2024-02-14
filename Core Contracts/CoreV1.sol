@@ -1181,7 +1181,7 @@ contract WinslowDAODeployer{
     address public DAO;
 
     constructor(){
-        DAO = ms
+        DAO = msg.sender;
     }
 
 }
