@@ -1188,7 +1188,7 @@ contract WinslowAuxiliaryDeployer{
     }
 
     function DeployAuxiliaryContracts() external {
-        Winslow_Core_V1(DAO).SetAuxiliaryContracts(WinslowTr, VotingDeployer);
+        Winslow_Core_V1(DAO).SetAuxiliaryContracts(WinslowTreasuryDeployer(TreasuryDeployer), VotingDeployer);
     }
 
 }
