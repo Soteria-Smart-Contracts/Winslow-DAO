@@ -16,7 +16,7 @@ contract Winslow_Core_V1 {
     address public VotingContract; 
     address public SaleFactoryContract;
     address payable public FoundationAddress;
-    address public DeployerContract;
+    address public AuxDeployerContract;
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
     uint256 public VoteLength = 600; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met TODO: Change back to 172800 for production
@@ -111,7 +111,7 @@ contract Winslow_Core_V1 {
     constructor(){
         FoundationAddress = payable(0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce); //TODO: Change this to the community agreed foundation address
 
-        DeployerContract = address(new WinslowAuxiliaryDeployer());
+        AuxDeployerContract = address(new WinslowAuxiliaryDeployer());
         SaleFactoryContract = address(new SaleFactoryV2());
 
         IsActiveContract = true;
