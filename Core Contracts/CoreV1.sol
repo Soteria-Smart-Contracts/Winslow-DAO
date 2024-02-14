@@ -1195,6 +1195,7 @@ contract WinslowDAODeployer{
 
 contract WinslowTreasuryDeployer{
     address public DAO;
+    bool public Deployed;
 
     constructor(address _DAO){
         DAO = _DAO;
@@ -1216,6 +1217,7 @@ contract WinslowVotingDeployer{
 
     function DeployVoting() external returns(address Voting){
         
+        Deployed = true;
         return(address(new Winslow_Voting_V1()));
     }
 
