@@ -110,10 +110,6 @@ contract Winslow_Core_V1 {
     constructor(){
         FoundationAddress = payable(0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce); //TODO: Change this to the community agreed foundation address
 
-        TreasuryContract = payable(address(new Winslow_Treasury_V1()));
-        VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = address(new SaleFactoryV2());
-
         IsActiveContract = true;
     }
 
@@ -137,6 +133,16 @@ contract Winslow_Core_V1 {
         
         return(success);
 
+    }
+
+    function DeployAuxiliaryContracts() public returns(bool success){
+        require(TreasuryContract == address(0) && VotingContract == address(0) && SaleFactoryContract == address(0), "Auxiliary contracts have already been deployed");
+
+        TreasuryContract = payable(address(new Winslow_Treasury_V1()));
+        VotingContract = address(new Winslow_Voting_V1());
+        SaleFactoryContract = address(new SaleFactoryV2());
+
+        return(success);
     }
 
     //  Public view functions
