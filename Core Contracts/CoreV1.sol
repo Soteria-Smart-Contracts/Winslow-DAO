@@ -1216,7 +1216,7 @@ contract WinslowVotingDeployer{
     }
 
     function DeployVoting() external returns(address Voting){
-        
+        require(Deployed == false);
         Deployed = true;
         return(address(new Winslow_Voting_V1()));
     }
