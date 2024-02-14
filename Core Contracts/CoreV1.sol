@@ -135,6 +135,8 @@ contract Winslow_Core_V1 {
 
     }
 
+    function DeployAuxi
+
     //  Public view functions
 
     function CLDAddress() public view returns(address CLD){
