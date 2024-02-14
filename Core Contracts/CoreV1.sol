@@ -470,10 +470,10 @@ contract Winslow_Voting_V1 {
         _;
     } 
 
-    constructor(){
+    constructor(address _DAO){
         ExecutorCut = 200; //TODO: Change this to the community agreed upon value for production
         BurnCut = 200;
-        DAO = payable(msg.sender);
+        DAO = payable(_DAO);
     }
 
     //Pre-Vote Functions (Incentivize is available pre and during vote)
