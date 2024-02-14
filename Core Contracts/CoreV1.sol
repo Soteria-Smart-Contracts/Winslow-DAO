@@ -1189,7 +1189,7 @@ contract WinslowDAODeployer{
 
 }
 
-contract AuxilliaryDeployer{
+contract TreasuryDeployer{
     address public DAO;
     uint8 public ID;
 
