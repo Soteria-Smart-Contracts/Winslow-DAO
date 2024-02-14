@@ -1189,9 +1189,18 @@ contract WinslowDAODeployer{
 
 }
 
-contract TreasuryDeployer{
+contract WinslowTreasuryDeployer{
     address public DAO;
     uint8 public ID;
+
+    constructor(address _DAO){
+        DAO = _DAO;
+    }
+
+}
+
+contract WinslowVotingDeployer{
+    address public DAO;
 
     constructor(address _DAO){
         DAO = _DAO;
