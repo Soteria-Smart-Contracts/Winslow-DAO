@@ -1173,7 +1173,7 @@ contract Winslow_Treasury_V1 {
     }
 }
 
-//create a auxiliary deployer
+//create a auxiliary deployer contract 
 
 interface ERC20 {
   function balanceOf(address owner) external view returns (uint256);
