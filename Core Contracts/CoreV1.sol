@@ -1177,12 +1177,12 @@ contract Winslow_Treasury_V1 {
 }
 
 contract WinslowAuxiliaryDeployer{
-    address public DAO;
+    address public payable DAO;
     address public TreasuryDeployer;
     address public VotingDeployer;
 
     constructor(){
-        DAO = msg.sender;
+        DAO = payable(msg.sender);
         TreasuryDeployer = address(new WinslowTreasuryDeployer(DAO));
         VotingDeployer = address(new WinslowVotingDeployer(DAO));
     }
