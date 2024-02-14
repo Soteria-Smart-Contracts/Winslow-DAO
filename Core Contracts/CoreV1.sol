@@ -1043,7 +1043,7 @@ contract Winslow_Treasury_V1 {
     event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
 
     //Code executed on deployment
-    constructor(){
+    constructor(address _DAO){
         DAO = msg.sender;
         RegisteredAssetLimit = 5;
         RegisteredAssets[0] = (Token(0x0C9986e9A0d4d3A16752fc6129afD8690B8dB6B9, true)); //TODO: Update CLD contract to correct address before deployment
