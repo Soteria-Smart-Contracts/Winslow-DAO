@@ -1187,9 +1187,11 @@ contract WinslowAuxiliaryDeployer{
         VotingDeployer = address(new WinslowVotingDeployer(DAO));
     }
 
-    function DeployAuxiliaryContracts() external {
+    function DeployAuxiliaryContracts() external returns(address {
         require(msg.sender == DAO, "WinslowAuxiliaryDeployer.DeployAuxiliaryContracts: Only the DAO can deploy auxiliary contracts");
         Winslow_Core_V1(DAO).SetAuxiliaryContracts(WinslowTreasuryDeployer(TreasuryDeployer).DeployTreasury(), WinslowVotingDeployer(VotingDeployer).DeployVoting());
+
+        return
     }
 
 }
