@@ -1204,7 +1204,7 @@ contract WinslowTreasuryDeployer{
     function DeployTreasury() external returns(address Treasury){
         require(Deployed == false);
         Deployed = true;
-        return(address(new Winslow_Treasury_V1()));
+        return(payable(address(new Winslow_Treasury_V1())));
     }
 
 }
