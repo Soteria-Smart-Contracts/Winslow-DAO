@@ -1204,7 +1204,7 @@ contract WinslowTreasuryDeployer{
     function DeployTreasury() external returns(address Treasury){
         require(Deployed == false);
         Deployed = true;
-        return(payable(address(new Winslow_Treasury_V1())));
+        return(payable(address(new Winslow_Treasury_V1(DAO))));
     }
 
 }
@@ -1220,7 +1220,7 @@ contract WinslowVotingDeployer{
     function DeployVoting() external returns(address Voting){
         require(Deployed == false);
         Deployed = true;
-        return(address(new Winslow_Voting_V1()));
+        return(address(new Winslow_Voting_V1(DAO)));
     }
 
 }
