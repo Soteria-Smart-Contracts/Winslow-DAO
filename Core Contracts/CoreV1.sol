@@ -1191,7 +1191,7 @@ contract WinslowAuxiliaryDeployer{
         TreasuryDeployer = address(new WinslowTreasuryDeployer(DAO));
         VotingDeployer = address(new WinslowVotingDeployer(DAO));
 
-        SetAuxiliaryContracts
+        Win
     }
 
 }
