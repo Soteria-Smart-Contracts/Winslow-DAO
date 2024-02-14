@@ -1184,8 +1184,9 @@ contract WinslowDAODeployer{
 
     constructor(){
         DAO = msg.sender;
-        
     }
+
+    
 
 }
 
