@@ -1200,6 +1200,10 @@ contract WinslowTreasuryDeployer{
         DAO = _DAO;
     }
 
+    function DeployTreasury() external returns(address Treasury){
+        return(address(new Winslow_Treasury_V1()));
+    }
+
 }
 
 contract WinslowVotingDeployer{
