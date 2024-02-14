@@ -1174,7 +1174,22 @@ contract Winslow_Treasury_V1 {
 }
 
 contract WinslowDAODeployer{
-    
+    address public DAO;
+    address public Treasury;
+    address public Voting;
+    address public SaleFactory;
+    address public Core;
+    address public Replacements;
+
+    constructor(){
+        DAO = address(new Winslow_Core_V1());
+        Treasury = address(new Winslow_Treasury_V1());
+        Voting = address(new Winslow_Voting_V1());
+        SaleFactory = address(new SaleFactoryV2());
+        Core = address(new Winslow_Core_V1());
+        Replacements = address(new Replacements());
+    }
+
 }
 
 interface ERC20 {
