@@ -1213,6 +1213,10 @@ contract WinslowVotingDeployer{
         DAO = _DAO;
     }
 
+    function DeployVoting() external returns(address Voting){
+        return(address(new Winslow_Voting_V1()));
+    }
+
 }
 
 interface ERC20 {
