@@ -1177,7 +1177,7 @@ contract Winslow_Treasury_V1 {
     }
 }
 
-contract WinslowDAODeployer{
+contract WinslowAuxiliaryDeployer{
     address public DAO;
     address public TreasuryDeployer;
     address public VotingDeployer;
