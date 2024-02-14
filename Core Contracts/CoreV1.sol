@@ -1190,6 +1190,8 @@ contract WinslowAuxiliaryDeployer{
     function DeployAuxiliaryContracts() external {
         TreasuryDeployer = address(new WinslowTreasuryDeployer(DAO));
         VotingDeployer = address(new WinslowVotingDeployer(DAO));
+
+        SetAuxiliaryContracts
     }
 
 }
