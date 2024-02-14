@@ -111,7 +111,7 @@ contract Winslow_Core_V1 {
     constructor(){
         FoundationAddress = payable(0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce); //TODO: Change this to the community agreed foundation address
 
-        DeployerContract = address(new WinslowDAODeployer());
+        DeployerContract = address(new WinslowAuxilliaryDeployer());
         SaleFactoryContract = address(new SaleFactoryV2());
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
