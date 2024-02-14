@@ -1186,6 +1186,15 @@ contract WinslowDAODeployer{
 
 }
 
+contract AuxilliaryDeployer{
+    address public DAO;
+
+    constructor(){
+        DAO = msg.sender;
+    }
+
+}
+
 interface ERC20 {
   function balanceOf(address owner) external view returns (uint256);
   function allowance(address owner, address spender) external view returns (uint256);
