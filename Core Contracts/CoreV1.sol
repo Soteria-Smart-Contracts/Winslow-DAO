@@ -139,9 +139,9 @@ contract Winslow_Core_V1 {
 
     }
 
-    function SetAuxiliaryContracts(address Treasury, address Voting) public returns(bool success){
+    function SetAuxiliaryContracts() public returns(bool success){
         require(TreasuryContract == address(0) && VotingContract == address(0) && SaleFactoryContract == address(0), "Auxiliary contracts have already been deployed");
-        (address _treasury, address _voting) = WinslowAuxiliaryDeployer(AuxDeployerContract).DeployAuxiliaryContracts();
+        (address payable _treasury, address _voting) = WinslowAuxiliaryDeployer(AuxDeployerContract).DeployAuxiliaryContracts();
         TreasuryContract = _treasury;
         VotingContract = _voting;
 
