@@ -136,6 +136,8 @@ contract Winslow_Core_V1 {
     }
 
     function DeployAuxiliaryContracts() public returns(bool success){
+        require(condition);
+
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
         SaleFactoryContract = address(new SaleFactoryV2());
