@@ -16,7 +16,6 @@ contract Winslow_Core_V1 {
     address public VotingContract; 
     address public SaleFactoryContract;
     address payable public FoundationAddress;
-    address public AuxDeployerContract;
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
     uint256 public VoteLength = 600; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met TODO: Change back to 172800 for production
@@ -111,7 +110,8 @@ contract Winslow_Core_V1 {
     constructor(){
         FoundationAddress = payable(0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce); //TODO: Change this to the community agreed foundation address
 
-        AuxDeployerContract = address(new WinslowAuxiliaryDeployer());
+        TreasuryContract = payable(address(new Winslow_Treasury_V1()));
+        VotingContract = address(new Winslow_Voting_V1());
         SaleFactoryContract = address(new SaleFactoryV2());
 
         IsActiveContract = true;
@@ -137,15 +137,6 @@ contract Winslow_Core_V1 {
         
         return(success);
 
-    }
-
-    function SetAuxiliaryContracts() public returns(bool success){
-        require(TreasuryContract == address(0) && VotingContract == address(0) && SaleFactoryContract == address(0), "Auxiliary contracts have already been deployed");
-        (address payable _treasury, address _voting) = WinslowAuxiliaryDeployer(AuxDeployerContract).DeployAuxiliaryContracts();
-        TreasuryContract = _treasury;
-        VotingContract = _voting;
-
-        return(success);
     }
 
     //  Public view functions
@@ -468,10 +459,10 @@ contract Winslow_Voting_V1 {
         _;
     } 
 
-    constructor(address _DAO){
+    constructor(){
         ExecutorCut = 200; //TODO: Change this to the community agreed upon value for production
         BurnCut = 200;
-        DAO = payable(_DAO);
+        DAO = payable(msg.sender);
     }
 
     //Pre-Vote Functions (Incentivize is available pre and during vote)
@@ -1041,8 +1032,8 @@ contract Winslow_Treasury_V1 {
     event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
 
     //Code executed on deployment
-    constructor(address _DAO){
-        DAO = _DAO;
+    constructor(){
+        DAO = msg.sender;
         RegisteredAssetLimit = 5;
         RegisteredAssets[0] = (Token(0x0C9986e9A0d4d3A16752fc6129afD8690B8dB6B9, true)); //TODO: Update CLD contract to correct address before deployment
         AssetRegistryMap[0x0C9986e9A0d4d3A16752fc6129afD8690B8dB6B9] = true;
@@ -1173,57 +1164,6 @@ contract Winslow_Treasury_V1 {
     fallback() external payable{
         emit EtherReceived(msg.value, msg.sender, tx.origin); 
     }
-}
-
-contract WinslowAuxiliaryDeployer{
-    address payable public  DAO;
-    address public TreasuryDeployer;
-    address public VotingDeployer;
-
-    constructor(){
-        DAO = payable(msg.sender);
-        TreasuryDeployer = address(new WinslowTreasuryDeployer(DAO));
-        VotingDeployer = address(new WinslowVotingDeployer(DAO));
-    }
-
-    function DeployAuxiliaryContracts() external returns(address payable Treasury, address Voting){
-        require(msg.sender == DAO, "WinslowAuxiliaryDeployer.DeployAuxiliaryContracts: Only the DAO can deploy auxiliary contracts");
-
-        return(payable(WinslowTreasuryDeployer(TreasuryDeployer).DeployTreasury()), WinslowVotingDeployer(VotingDeployer).DeployVoting());
-    }
-
-}
-
-contract WinslowTreasuryDeployer{
-    address public DAO;
-    bool public Deployed;
-
-    constructor(address _DAO){
-        DAO = _DAO;
-    }
-
-    function DeployTreasury() external returns(address Treasury){
-        require(Deployed == false);
-        Deployed = true;
-        return(payable(address(new Winslow_Treasury_V1(DAO))));
-    }
-
-}
-
-contract WinslowVotingDeployer{
-    address public DAO;
-    bool public Deployed;
-
-    constructor(address _DAO){
-        DAO = _DAO;
-    }
-
-    function DeployVoting() external returns(address Voting){
-        require(Deployed == false);
-        Deployed = true;
-        return(address(new Winslow_Voting_V1(DAO)));
-    }
-
 }
 
 interface ERC20 {
