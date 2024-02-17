@@ -36,7 +36,7 @@ contract Winslow_Core_V1 {
 
     enum ProposalStatus{
         Pre_Voting,
-        Winslow_Voting_V1,
+        Voting,
         Executed,
         Rejected
     }
