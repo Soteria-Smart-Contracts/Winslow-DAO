@@ -458,7 +458,6 @@ contract Winslow_Voting_V1 {
     event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
     event TokensReturned(address Voter, uint256 TotalSent, uint256 IncentiveShare);
     event NewDAOAddress(address NewAddress);
-    event FallbackToTreasury(uint256 amount);
  
     modifier OnlyDAO{ 
         require(msg.sender == address(DAO), 'This can only be done by the DAO');
