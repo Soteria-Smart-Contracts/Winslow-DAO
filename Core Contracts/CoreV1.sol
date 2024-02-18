@@ -216,7 +216,6 @@ contract Winslow_Core_V1 {
         if(Result == true){
             ProposalInfos[ProposalID].Status = ProposalStatus(2);
             if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
-                //try catch so that if the execution fails, the dao is not stuck
                 ExecuteSimpleProposal(ProposalID);
             }
             else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
