@@ -220,6 +220,8 @@ contract Winslow_Core_V1 {
             else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
                 ExecuteErosProposal(ProposalID, Multi);
             }
+
+            emit SucceededExecution(ProposalID);
         }
         else{
             ProposalInfos[ProposalID].Status = ProposalStatus(3);
