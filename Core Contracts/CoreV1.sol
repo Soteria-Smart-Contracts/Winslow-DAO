@@ -81,7 +81,6 @@ contract Winslow_Core_V1 {
         SimpleProposalTypes SimpleType; //Types declared in enum
         ProposalStatus Status;
         uint256 VotingInstanceID;       //Identifier for the Winslow_Voting_V1 instance used for this proposal in the Winslow_Voting_V1 contract
-        uint256 ProposalVotingLength;
     }
 
     struct Proposal{
