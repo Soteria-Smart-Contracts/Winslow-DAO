@@ -234,6 +234,8 @@ contract Winslow_Core_V1 {
         require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can set proposal status to failed");
         require(ProposalInfos[ProposalID].Status == ProposalStatus(1), "Proposal status must be voting to be set to failed");
         ProposalInfos[ProposalID].Status = ProposalStatus(3);
+
+        emit FailedExecution(ProposalID);
         return(success);
     }
 
