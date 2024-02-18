@@ -229,7 +229,6 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    //create a function that allows voting to set a proposal satus to failed in case the execution fails
     function ExecutionFailed(uint256 ProposalID) external returns(bool success){
         require(msg.sender == VotingContract, "Only the Winslow_Voting_V1 contract can set proposal status to failed");
         require(ProposalInfos[ProposalID].Status == ProposalStatus(1), "Proposal status must be voting to be set to failed");
