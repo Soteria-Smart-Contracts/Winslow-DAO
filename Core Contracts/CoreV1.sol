@@ -685,9 +685,9 @@ contract Winslow_Voting_V1 {
         VotingInstances[VotingInstance].Status = VoteStatus(2);
         ActiveInstances--;
 
-        //get vote re
+        //get vote result for emitting event
 
-        emit VotingEnded(VotingInstance);
+        emit VotingEnded();
     }
 
     //start next Winslow_Voting_V1 instance
