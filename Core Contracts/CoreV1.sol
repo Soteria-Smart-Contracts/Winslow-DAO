@@ -216,6 +216,7 @@ contract Winslow_Core_V1 {
         if(Result == true){
             ProposalInfos[ProposalID].Status = ProposalStatus(2);
             if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(0)){
+                //try catch so 
                 ExecuteSimpleProposal(ProposalID);
             }
             else if(ProposalInfos[ProposalID].ProposalType == ProposalTypes(1)){
@@ -330,7 +331,7 @@ contract Winslow_Core_V1 {
         if(Proposals[ProposalID].RequestedAssetAmount > 0){
             Winslow_Treasury_V1(TreasuryContract).TransferERC20(Proposals[ProposalID].RequestedAssetID, Proposals[ProposalID].RequestedAssetAmount, Proposals[ProposalID].AddressSlot);
         }
-        
+
         if(Proposals[ProposalID].Multi == true){
             EROS(Proposals[ProposalID].AddressSlot).ExecuteMulti(Multi);
         }
