@@ -686,8 +686,9 @@ contract Winslow_Voting_V1 {
         ActiveInstances--;
 
         //get vote result for emitting event
+        (bool Result, uint8 Multi) = GetVoteResult(VotingInstance);
 
-        emit VotingEnded();
+        emit 
     }
 
     //start next Winslow_Voting_V1 instance
