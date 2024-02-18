@@ -693,9 +693,8 @@ contract Winslow_Voting_V1 {
         if(OngoingVote){
             require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.BeginNextVote: The current vote is not over");
             EndVoting(CurrentOngoingVote);
-            try Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID){
+            try Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID) returns (bool success){
             } catch {
-                //call execution failed on core
                 Winslow_Core_V1(DAO).ExecutionFailed(VotingInstances[CurrentOngoingVote].ProposalID);
             }
         }
