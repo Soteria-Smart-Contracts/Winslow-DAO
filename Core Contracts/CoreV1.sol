@@ -104,8 +104,8 @@ contract Winslow_Core_V1 {
 
     event FallbackToTreasury(uint256 amount);
     event NewTreasurySet(address NewTreasury);
-    event ExecutionSuccess(uint256 ProposalID);
-    event ExecutionFailed(uint256 ProposalID);
+    event SucceededExecution(uint256 ProposalID);
+    event FailedExecution(uint256 ProposalID);
 
 
     constructor(){
