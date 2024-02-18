@@ -695,7 +695,7 @@ contract Winslow_Voting_V1 {
             EndVoting(CurrentOngoingVote);
             try Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID);{
             } catch {
-                //execute failed 
+                //call exe
             }
         }
 
