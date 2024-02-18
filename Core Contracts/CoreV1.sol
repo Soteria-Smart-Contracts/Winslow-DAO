@@ -558,6 +558,7 @@ contract Winslow_Voting_V1 {
     }
 
     function IncentivizeProposal(uint256 VotingInstance, uint256 amount) public returns(bool success){
+        require(VotingInstances[VotingInstance].VoteStarts != 0, "VotingSystemV1.IncentivizeProposal: This proposal does not exist");
         require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal or you may not have given this contract enough allowance");
         require(VotingInstances[VotingInstance].Status == VoteStatus(0) || VotingInstances[VotingInstance].Status == VoteStatus(1), 'VotingSystemV1.IncentivizeProposal: This proposal has ended');
         require(VotingInstances[VotingInstance].Status != VoteStatus(2), "VotingSystemV1.IncentivizeProposal: The Winslow_Voting_V1 period has ended, save for the next proposal!");
