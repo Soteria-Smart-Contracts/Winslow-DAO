@@ -229,7 +229,7 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    
+    //create a function that allows voting to set 
 
     //  Simple Executionting
 
