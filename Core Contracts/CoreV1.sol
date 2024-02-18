@@ -241,7 +241,7 @@ contract Winslow_Core_V1 {
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
         
         if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(0)){
-            //Do nothing, this is a placeholder for the first proposal
+            //Do nothing, this is a placeholder for the first proposal and other proposals that do not require execution
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(1)){
             if(Proposals[ProposalID].RequestedEtherAmount > 0){
