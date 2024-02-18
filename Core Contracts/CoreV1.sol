@@ -253,7 +253,7 @@ contract Winslow_Core_V1 {
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(2)){
             address TokenAddress = Proposals[ProposalID].AddressSlot;
-            uint8 Slot = uint8(Proposals[ProposalID].RequestedEtherAmount);  //TODO: Fix when deleting proxy proposals
+            uint8 Slot = uint8(Proposals[ProposalID].RequestedEtherAmount);
             Winslow_Treasury_V1(TreasuryContract).RegisterAsset(TokenAddress, Slot);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(3)){
