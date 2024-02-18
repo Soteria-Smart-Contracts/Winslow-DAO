@@ -229,6 +229,8 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
+    
+
     //  Simple Executionting
 
     function ExecuteSimpleProposal(uint256 ProposalID) internal {
