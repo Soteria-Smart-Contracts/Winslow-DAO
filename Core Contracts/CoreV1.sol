@@ -693,7 +693,8 @@ contract Winslow_Voting_V1 {
         if(OngoingVote){
             require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.BeginNextVote: The current vote is not over");
             EndVoting(CurrentOngoingVote);
-            Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID);
+            
+                Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID);
         }
 
         //loop through the queue to find the proposal with the highest incentive, begin it and remove it from the queue
