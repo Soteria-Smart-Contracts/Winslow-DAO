@@ -127,7 +127,6 @@ contract Winslow_Core_V1 {
         InitializeSimpleProposal(Memo, AddressSlot, UintSlot, SimpleType, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
         return(success);
-
     }
 
     function SubmitErosProposal(address ProposalAddress) public returns(bool success){
@@ -137,7 +136,6 @@ contract Winslow_Core_V1 {
         InitializeErosProposal(ProposalAddress);
         
         return(success);
-
     }
 
     //  Public view functions
