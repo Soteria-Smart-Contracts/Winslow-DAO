@@ -229,7 +229,8 @@ contract Winslow_Core_V1 {
         return(success);
     }
 
-    //create a function that allows voting to set 
+    //create a function that allows voting to set a proposal satus to failed in case the execution fails
+    
 
     //  Simple Executionting
 
