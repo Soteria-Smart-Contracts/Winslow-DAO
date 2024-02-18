@@ -726,7 +726,7 @@ contract Winslow_Voting_V1 {
         VotingQueue.pop();
         VotingQueueIndex[CurrentOngoingVote] = 0;
 
-        //Set
+        Winslow_Core_V1(DAO).SetProposalVoting(VotingInstances[CurrentOngoingVote].ProposalID);
         VotingInstances[CurrentOngoingVote].VoteStarts = (block.timestamp + 300); //TODO: Set to 43200 for 12 hours debate period
         VotingInstances[CurrentOngoingVote].VoteEnds = block.timestamp + Winslow_Core_V1(DAO).VoteLength();
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
