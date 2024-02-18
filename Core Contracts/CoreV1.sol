@@ -504,6 +504,7 @@ contract Winslow_Voting_V1 {
         VotingInstances[VotingInstance].Voters.push(msg.sender);
         UserUnreturnedVotes[msg.sender].push(VotingInstance);
         UserUnreturnedVotesIndex[msg.sender][VotingInstance] = UserUnreturnedVotes[msg.sender].length - 1;
+        TotalCLDVoted += amount;
         
         return(success);
     }
