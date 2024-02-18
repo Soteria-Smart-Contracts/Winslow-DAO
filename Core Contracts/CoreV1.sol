@@ -35,8 +35,8 @@ contract Winslow_Core_V1 {
     uint256 public LatestSale;
 
     enum ProposalStatus{
-        PreVoting,
-        Voting,
+        Pre_Voting,
+        Winslow_Voting_V1,
         Executed,
         Rejected
     }
@@ -96,7 +96,7 @@ contract Winslow_Core_V1 {
     }
 
     struct Sale{
-        address SaleV2;
+        address Winslow_Sale_V2;
         uint256 CLDSaleAmount;
         uint256 StartTime;
         uint256 EndTime;
@@ -112,7 +112,7 @@ contract Winslow_Core_V1 {
 
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = address(new SaleFactoryV2());
+        SaleFactoryContract = address(new Winslow_SaleFactory_V2());
 
         IsActiveContract = true;
     }
@@ -281,31 +281,31 @@ contract Winslow_Core_V1 {
             uint256 CLDtoSell = Proposals[ProposalID].RequestedAssetAmount;
             LatestSale++;
 
-            address NewSaleAddress = SaleFactoryV2(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
-            Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, SaleV2(NewSaleAddress).StartTime(), SaleV2(NewSaleAddress).EndTime());
+            address NewSaleAddress = Winslow_SaleFactory_V2(SaleFactoryContract).CreateNewSale(LatestSale, CLDtoSell);
+            Sales[LatestSale] = Sale(NewSaleAddress,CLDtoSell, Winslow_Sale_V2(NewSaleAddress).StartTime(), Winslow_Sale_V2(NewSaleAddress).EndTime());
 
             Winslow_Treasury_V1(TreasuryContract).TransferERC20(0, CLDtoSell, NewSaleAddress);
 
-            require(SaleV2(NewSaleAddress).VerifyReadyForSale(), 'The sale contract has not be able to confirm a receipt of CLD to sell');
+            require(Winslow_Sale_V2(NewSaleAddress).VerifyReadyForSale(), "The sale contract has not be able to confirm a receipt of CLD to sell");
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(9)){
             ProposalCost = Proposals[ProposalID].RequestedEtherAmount;
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
-            SaleFactoryV2(SaleFactoryContract).ChangeFoundationFee(Proposals[ProposalID].RequestedEtherAmount);
+            Winslow_SaleFactory_V2(SaleFactoryContract).ChangeFoundationFee(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
-            SaleFactoryV2(SaleFactoryContract).ChangeRetractFee(Proposals[ProposalID].RequestedEtherAmount);
+            Winslow_SaleFactory_V2(SaleFactoryContract).ChangeRetractFee(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
-            SaleFactoryV2(SaleFactoryContract).ChangeMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
+            Winslow_SaleFactory_V2(SaleFactoryContract).ChangeMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
-            SaleFactoryV2(SaleFactoryContract).ChangeDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount);
+            Winslow_SaleFactory_V2(SaleFactoryContract).ChangeDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
             //Value is stored in RequestedEtherAmount in basis points
-            SaleFactoryV2(SaleFactoryContract).ChangeMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
+            Winslow_SaleFactory_V2(SaleFactoryContract).ChangeMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
             //Value is stored in RequestedEtherAmount in basis points
@@ -323,18 +323,16 @@ contract Winslow_Core_V1 {
     //  Eros Executionting
 
     function ExecuteErosProposal(uint256 ProposalID, uint8 Multi) internal {
-        // Send requested assets out to the eros address
+        //TODO: Set up try catch, if execution fails no big deal 
         if(Proposals[ProposalID].RequestedEtherAmount > 0){
             Winslow_Treasury_V1(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, payable(Proposals[ProposalID].AddressSlot));
         }
         if(Proposals[ProposalID].RequestedAssetAmount > 0){
             Winslow_Treasury_V1(TreasuryContract).TransferERC20(Proposals[ProposalID].RequestedAssetID, Proposals[ProposalID].RequestedAssetAmount, Proposals[ProposalID].AddressSlot);
         }
-
         if(Proposals[ProposalID].Multi == true){
             EROS(Proposals[ProposalID].AddressSlot).ExecuteMulti(Multi);
         }
-
         else{
             EROS(Proposals[ProposalID].AddressSlot).Execute();
         }
@@ -404,7 +402,7 @@ contract Winslow_Voting_V1 {
         VoteStatus Status;       //Using VoteStatus enum
         address[] Voters;        //List of users that have voted that also can be called for total number of voters
         uint256 TotalCLDVoted;   //Total of CLD used in this instance for Winslow_Voting_V1
-        uint8 MaxMulti;      //Max number of options for multivote
+        uint8 MaxMulti;          //Max number of options for multivote
         uint256 YEAvotes;        //Votes to approve
         uint256 NAYvotes;        //Votes to refuse
         uint256 TotalIncentive;  //Total amount of CLD donated to this proposal for Winslow_Voting_V1 incentives, burning and execution reward
@@ -552,13 +550,13 @@ contract Winslow_Voting_V1 {
     function IncentivizeProposal(uint256 VotingInstance, uint256 amount) public returns(bool success){
         require(ERC20(CLDAddress()).transferFrom(msg.sender, address(this), amount), "VotingSystemV1.IncentivizeProposal: You do not have enough CLD to incentivize this proposal or you may not have given this contract enough allowance");
         require(VotingInstances[VotingInstance].Status == VoteStatus(0) || VotingInstances[VotingInstance].Status == VoteStatus(1), 'VotingSystemV1.IncentivizeProposal: This proposal has ended');
-        require(block.timestamp <= VotingInstances[VotingInstance].VoteEnds, "VotingSystemV1.IncentivizeProposal: The Winslow_Voting_V1 period has ended, save for the next proposal!");
+        require(VotingInstances[VotingInstance].Status != VoteStatus(2), "VotingSystemV1.IncentivizeProposal: The Winslow_Voting_V1 period has ended, save for the next proposal!");
 
         VotingInstances[VotingInstance].TotalIncentive += amount;
 
         _updateTaxesAndIndIncentive(VotingInstance);
         emit ProposalIncentivized(msg.sender, VotingInstance, VotingInstances[VotingInstance].TotalIncentive);
-        
+
         return(success);
     }
 
@@ -687,7 +685,6 @@ contract Winslow_Voting_V1 {
         if(OngoingVote){
             require(block.timestamp >= VotingInstances[CurrentOngoingVote].VoteEnds, "VotingSystemV1.BeginNextVote: The current vote is not over");
             EndVoting(CurrentOngoingVote);
-            VotingInstances[CurrentOngoingVote].Status = VoteStatus(2);
             Winslow_Core_V1(DAO).HandleEndedProposal(VotingInstances[CurrentOngoingVote].ProposalID);
         }
 
@@ -695,13 +692,12 @@ contract Winslow_Voting_V1 {
         uint256 HighestIncentive = 0;
         uint256 HighestIncentiveProposal;
         for(uint256 i = 0; i < VotingQueue.length; i++){ //we check vote starts here because we want to ensure that the debate period is over
-            if(VotingInstances[VotingQueue[i]].TotalIncentive >= HighestIncentive && VotingInstances[VotingQueue[i]].VoteStarts > block.timestamp){
+            if(VotingInstances[VotingQueue[i]].TotalIncentive >= HighestIncentive && VotingInstances[VotingQueue[i]].VoteStarts <= block.timestamp){
                 HighestIncentive = VotingInstances[VotingQueue[i]].TotalIncentive;
                 HighestIncentiveProposal = VotingQueue[i];
             }
         }
-        require(HighestIncentiveProposal != 0, "");
-        require(VotingInstances[HighestIncentiveProposal].VoteStarts <= block.timestamp, "VotingSystemV1.BeginNextVote: The next proposal is not ready to be voted on");
+        require(HighestIncentiveProposal != 0, "No proposals available!");
 
         CurrentOngoingVote = HighestIncentiveProposal;
 
@@ -712,7 +708,7 @@ contract Winslow_Voting_V1 {
         VotingQueue.pop();
         VotingQueueIndex[CurrentOngoingVote] = 0;
 
-        VotingInstances[CurrentOngoingVote].VoteStarts = block.timestamp;
+        VotingInstances[CurrentOngoingVote].VoteStarts = (block.timestamp + 300); //TODO: Set to 43200 for 12 hours debate period
         VotingInstances[CurrentOngoingVote].VoteEnds = block.timestamp + Winslow_Core_V1(DAO).VoteLength();
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
         OngoingVote = true;
@@ -757,7 +753,7 @@ contract Winslow_Voting_V1 {
 
 }
 
-contract SaleFactoryV2 {
+contract Winslow_SaleFactory_V2 {
     string public Version = "V1";
     address payable public DAO;
     uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
@@ -792,7 +788,7 @@ contract SaleFactoryV2 {
     function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
         uint256 TreasuryCLDBalance = ERC20(Winslow_Core_V1(DAO).CLDAddress()).balanceOf(Winslow_Core_V1(DAO).TreasuryContract());
         require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Winslow_Core_V1(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
-        address NewSaleAddress = address(new SaleV2(DAO, SaleID, CLDtoSell, DefaultSaleLength, FoundationFee, RetractFee, MinimumDeposit));
+        address NewSaleAddress = address(new Winslow_Sale_V2(DAO, SaleID, CLDtoSell, DefaultSaleLength, FoundationFee, RetractFee, MinimumDeposit));
         
         emit NewSaleCreated(SaleID, CLDtoSell, NewSaleAddress);
         return(NewSaleAddress);
@@ -849,7 +845,7 @@ contract SaleFactoryV2 {
 
 }
 
-contract SaleV2 {
+contract Winslow_Sale_V2 {
     //  Variable, struct, mapping and other Declarations
     //  Winslow_Core_V1
     address payable public DAO;
