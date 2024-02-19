@@ -615,7 +615,11 @@ contract Winslow_Voting_V1 {
         return(VotingInstances[_VoteInstance]);
     }
 
-    //
+    //get the proposal queue
+
+    function GetVotingQueue() public view returns(uint256[] memory){
+        return(VotingQueue);
+    }
 
     function GetVoteResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
         require(block.timestamp >= VotingInstances[_VoteInstance].VoteEnds, "VotingSystemV1.GetVotingResult: The current vote is not over");
