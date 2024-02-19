@@ -615,8 +615,6 @@ contract Winslow_Voting_V1 {
         return(VotingInstances[_VoteInstance]);
     }
 
-    //get the proposal queue
-
     function GetVotingQueue() public view returns(uint256[] memory){
         return(VotingQueue);
     }
