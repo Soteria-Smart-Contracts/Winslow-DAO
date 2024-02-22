@@ -654,7 +654,6 @@ contract Winslow_Voting_V1 {
             }
         }
 
-
         return(Result, Multi);
     }
 
@@ -1047,7 +1046,7 @@ contract Winslow_Treasury_V1 {
     event AssetLimitChange(uint256 NewLimit);
     event NewDAOAddress(address NewAddress);
     event EtherReceived(uint256 Amount, address Sender, address TxOrigin);
-    event EtherSent(uint256 Amount, address Receiver, address TxOrigin);
+    event EtherSent(uint256 Amount, address Receiver, bytes data, bool sent, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receiver, address TxOrigin);
     event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
 
@@ -1094,9 +1093,9 @@ contract Winslow_Treasury_V1 {
 
     //DAO and Eros Proposal only access functions
     function TransferETH(uint256 amount, address payable receiver) external OnlyDAO { 
-        receiver.transfer(amount);
+        (bool sent, bytes memory data) = receiver.call{value: amount}("");
 
-        emit EtherSent(amount, receiver, tx.origin);
+        emit EtherSent(amount, receiver, data, sent, tx.origin);
     }
 
     function TransferERC20(uint8 AssetID, uint256 amount, address receiver) external OnlyDAO { 
