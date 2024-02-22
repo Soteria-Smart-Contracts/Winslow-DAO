@@ -736,6 +736,7 @@ contract Winslow_Voting_V1 {
         VotingInstances[CurrentOngoingVote].Status = VoteStatus(1);
         OngoingVote = true;
 
+        emit VotingStarted(CurrentOngoingVote, VotingInstances[CurrentOngoingVote].VoteStarts);
         return(CurrentOngoingVote);
     }
 
