@@ -3,17 +3,15 @@ pragma solidity ^0.8.17;
 
 
 contract ErosProposal {
-    address public DAO = 0x0000000000000000000000000000000000000000;
+    address public DAO = 0x1627c59D74963386C14b6943ebf103CC126A9FbD;
     bool public Executed;
     bool public Multi = false; //Must Exist or will be rejected by Core
 
-
     //Fund request/s for the proposal, can only receive one asset per proposal, may receive both ERC20 and Ether
     string public ProposalMemo = "This is an example proposal";
-    uint256 public RequestEther = 0 ether; //Optional, can be ommited
+    uint256 public RequestEther = 1; //Optional, can be ommited (sending a wei to test)
     uint256 public RequestTokens = 0; //Optional, can be 0 but must exist to function properly
     uint8 public TokenIdentifier = 0; //Optional, can be 0 but must exist to function properly
-
 
     //Events
     event ContractExecuted(uint256 time);
@@ -28,22 +26,21 @@ contract ErosProposal {
         _;
     }
 
-
     function Execute() external OnlyDAO returns(bool success){
         Executed = true; //Updates first to avoid recursive calling
-        address TokenAddress = TreasuryV1(HarmoniaDAO(DAO).Treasury()).RegisteredAssets(TokenIdentifier);
+        // address TokenAddress = TreasuryV1(HarmoniaDAO(DAO).Treasury()).RegisteredAssets(TokenIdentifier);
 
         //External or internal code to execute
-        ExtCon(ExternalContract).Update("This value was updated by the DAO!");
+        // ExtCon(ExternalContract).Update("This value was updated by the DAO!");
         //External or internal code to execute
 
         //Send back excess funds
         if(address(this).balance > 0){ //Must be the last state changing part of this function
             payable(DAO).transfer(address(this).balance);
         }
-        if((TokenAddress != address(0)) && (ERC20(TokenAddress).balanceOf(address(this)) < 0)){
-            ERC20(TokenAddress).transfer(DAO, ERC20(TokenAddress).balanceOf(address(this)));
-        }
+        // if((TokenAddress != address(0)) && (ERC20(TokenAddress).balanceOf(address(this)) < 0)){
+        //     ERC20(TokenAddress).transfer(DAO, ERC20(TokenAddress).balanceOf(address(this)));
+        // } not needed on this test
         emit ContractExecuted(block.timestamp);
         return(success);
     }
@@ -52,7 +49,7 @@ contract ErosProposal {
 
 }
 
-interface HarmoniaDAO{
+interface WinslowDAO{
     function Treasury() external view returns(address);
 }
 
