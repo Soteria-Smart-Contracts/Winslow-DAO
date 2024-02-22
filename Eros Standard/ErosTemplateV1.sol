@@ -22,7 +22,7 @@ contract ErosProposal {
     //Additional variables can be added here
 
     modifier OnlyDAO{ //This same modifier must be used on external contracts called by this contract
-        require(msg.sender == DAO || );
+        require(msg.sender == DAO || WinslowDAO(DAO));
         _;
     }
 
