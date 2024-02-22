@@ -472,9 +472,6 @@ contract Winslow_Voting_V1 {
         DAO = payable(msg.sender);
     }
 
-    //Pre-Vote Functions (Incentivize is available pre and during vote)
-    
-
     //Active Vote Functions
 
     function CastVote(uint256 amount, Vote VoteChoice) external returns(bool success){
