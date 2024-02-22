@@ -459,6 +459,7 @@ contract Winslow_Voting_V1 {
     event ProposalIncentivized(address donator, uint256 VotingInstance, uint256 amountDonated);
     event TokensReturned(address Voter, uint256 TotalSent, uint256 IncentiveShare);
     event NewDAOAddress(address NewAddress);
+    event VotingStarted(uint256 VotingInstance, uint256 StartTime);
     event VotingEnded(uint256 VotingInstance, bool Result, uint8 Multi);
  
     modifier OnlyDAO{ 
