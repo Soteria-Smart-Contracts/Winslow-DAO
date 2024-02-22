@@ -332,7 +332,6 @@ contract Winslow_Core_V1 {
     //  Eros Executionting
 
     function ExecuteErosProposal(uint256 ProposalID, uint8 Multi) internal {
-        //TODO: Set up try catch, if execution fails no big deal 
         if(Proposals[ProposalID].RequestedEtherAmount > 0){
             Winslow_Treasury_V1(TreasuryContract).TransferETH(Proposals[ProposalID].RequestedEtherAmount, payable(Proposals[ProposalID].AddressSlot));
         }
