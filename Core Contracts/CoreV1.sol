@@ -664,10 +664,9 @@ contract Winslow_Voting_V1 {
     //OnlyDAO functions
 
     function InitializeVoteInstance(uint256 ProposalID, uint8 MaxMulti) external OnlyDAO returns(uint256 VoteInstanceID){
-        MRInstance++;
         ActiveInstances++;
 
-        uint256 NewInstanceID = MRInstance;
+        uint256 NewInstanceID = ProposalID;
         uint256 EarliestStartTime = block.timestamp + 600; //TODO: Return to 24 hours or (amount in seconds here: 86400)
         address[] memory Empty;
         uint256 InititalRewardPool = (Winslow_Core_V1(DAO).ProposalCost() / 2);
