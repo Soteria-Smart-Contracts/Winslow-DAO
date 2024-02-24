@@ -30,7 +30,7 @@ contract Winslow_Core_V1 {
     //Token Sales
     mapping(uint256 => Sale) public Sales;
     function SaleActive() public view returns(bool){
-        if(block.timestamp >= Sales[LatestSale].EndTime){return true;}else{return false;}
+        if(block.timestamp <= Sales[LatestSale].EndTime){return true;}else{return false;}
     }
     uint256 public LatestSale;
 
