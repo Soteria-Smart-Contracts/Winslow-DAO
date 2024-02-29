@@ -318,6 +318,7 @@ contract Winslow_Core_V1 {
             VoteLength = Proposals[ProposalID].RequestedEtherAmount;
         }
 
+
     }
 
     //  Eros Executionting
