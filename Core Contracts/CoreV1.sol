@@ -62,7 +62,6 @@ contract Winslow_Core_V1 {
         ChangeSaleDefaultSaleLength,
         ChangeSaleMaxSalePercent,
         ChangeDefaultQuorum,
-        ChangeFoundationAddress,
         ChangeVotingLength
     }
 
@@ -107,8 +106,6 @@ contract Winslow_Core_V1 {
 
 
     constructor(){
-        FoundationAddress = payable(0xc932b3a342658A2d3dF79E4661f29DfF6D7e93Ce); //TODO: Change this to the community agreed foundation address
-
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
         SaleFactoryContract = address(new Winslow_SaleFactory_V2());
@@ -320,7 +317,7 @@ contract Winslow_Core_V1 {
             //Value is stored in RequestedEtherAmount in seconds
             VoteLength = Proposals[ProposalID].RequestedEtherAmount;
         }
-        
+
     }
 
     //  Eros Executionting
