@@ -316,7 +316,7 @@ contract Winslow_Core_V1 {
             //Value is stored in RequestedEtherAmount in basis points
             Winslow_Voting_V1(VotingContract).ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(16)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
             //Value is stored in RequestedEtherAmount in seconds
             VoteLength = Proposals[ProposalID].RequestedEtherAmount;
         }
