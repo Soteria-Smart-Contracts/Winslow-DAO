@@ -787,7 +787,6 @@ contract Winslow_SaleFactory_V2 {
 
     //Events
     event NewSaleCreated(uint256 SaleID, uint256 SaleAmount, address NewSaleContract);
-    event NewFoundationFee(uint256 NewFeePercentBP);
     event NewDepositRetractFee(uint256 NewFeePercentBP);
     event NewMinimumDeposit(uint256 NewMinDeposit);
     event NewDefaultSaleLength(uint256 NewSaleLen);
@@ -806,14 +805,6 @@ contract Winslow_SaleFactory_V2 {
         
         emit NewSaleCreated(SaleID, CLDtoSell, NewSaleAddress);
         return(NewSaleAddress);
-    }
-
-    function ChangeFoundationFee(uint256 NewFee) external OnlyDAO returns(bool success){
-        require(NewFee <= 10000);
-        FoundationFee = NewFee;
-
-        emit NewFoundationFee(NewFee);
-        return(success);
     }
 
     function ChangeRetractFee(uint256 NewRetractFee) external OnlyDAO returns(bool success){
