@@ -801,7 +801,7 @@ contract Winslow_SaleFactory_V2 {
     function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
         uint256 TreasuryCLDBalance = ERC20(Winslow_Core_V1(DAO).CLDAddress()).balanceOf(Winslow_Core_V1(DAO).TreasuryContract());
         require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Winslow_Core_V1(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
-        address NewSaleAddress = address(new Winslow_Sale_V2(DAO, SaleID, CLDtoSell, DefaultSaleLength, FoundationFee, RetractFee, MinimumDeposit));
+        address NewSaleAddress = address(new Winslow_Sale_V2(DAO, SaleID, CLDtoSell, DefaultSaleLength, RetractFee, MinimumDeposit));
         
         emit NewSaleCreated(SaleID, CLDtoSell, NewSaleAddress);
         return(NewSaleAddress);
