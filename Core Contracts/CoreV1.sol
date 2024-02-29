@@ -1079,9 +1079,8 @@ contract Winslow_Treasury_V1 {
             //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
             if(RegisteredAssets[CurrentID].Filled == true){
                 uint256 ToSend = GetAssetToSend(CLDamount, CurrentID, SupplyPreTransfer);
-                try ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend){
-                    
-                } catch {
+                try ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend){}
+                 catch {
                     emit ClaimTransferFailed(ToSend, To, tx.origin);
                 }
                 emit ERC20Sent(ToSend, To, tx.origin);
