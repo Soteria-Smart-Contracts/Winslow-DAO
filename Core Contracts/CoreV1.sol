@@ -861,7 +861,6 @@ contract Winslow_Sale_V2 {
     uint256 public CLDToBeSold; //Total Amount of CLD being offered for sale by the DAO
     //  Fees in basis points, chosen by proposer/al on deploy, so can be 0
     uint256 public MinimumDeposit; //Minimum Amount of Ether to be deposited when calling the deposit function
-    uint256 public DAOFoundationFee; //Fee that goes directly to the foundation for further development
     uint256 public RetractFee; //Fee that is charged when a user removes their ether from the pool, to count as totaletherpool
     // Details
     uint256 public TotalEtherPool; //Defines the total Amount of ether deposited by participators
