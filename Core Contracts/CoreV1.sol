@@ -1070,7 +1070,6 @@ contract Winslow_Treasury_V1 {
         return(success);
     }
 
-    //Finding #4 Addressed Here
     function AssetClaim(uint256 CLDamount, address payable To) public returns(bool success){
         uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this)));
         //Supply within the DAO does not count as backed
