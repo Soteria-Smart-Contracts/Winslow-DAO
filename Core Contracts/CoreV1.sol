@@ -321,7 +321,6 @@ contract Winslow_Core_V1 {
             //Value is stored in RequestedEtherAmount in basis points
             Winslow_Voting_V1(VotingContract).ChangeCuts(Proposals[ProposalID].RequestedEtherAmount);
         }
-
     }
 
     //  Eros Executionting
