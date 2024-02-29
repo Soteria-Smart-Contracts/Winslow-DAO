@@ -988,8 +988,9 @@ contract Winslow_Sale_V2 {
         ProceedsNotTransfered = false;
         uint256 ToFoundation = ((TotalEtherPool * DAOFoundationFee) / 10000); 
         uint256 ToTreasury = (TotalEtherPool - ToFoundation);
-        (Winslow_Core_V1(DAO).TreasuryContract()).transfer(ToTreasury);
-        (Winslow_Core_V1(DAO).FoundationAddress()).transfer(ToFoundation);
+        (bool success1, ) = (Winslow_Core_V1(DAO).TreasuryContract()).call{value: ToTreasury}("");
+        (bool success2, ) = (Winslow_Core_V1(DAO).FoundationAddress()).call{value: ToFoundation}("");
+        require(success1 && success2, "Transfer failed");
 
         emit ProceedsTransfered(ToFoundation, ToTreasury);
     }
