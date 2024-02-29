@@ -904,7 +904,6 @@ contract Winslow_Sale_V2 {
         CLDToBeSold = CLDtoSell; //Make sure CLD is transfered to contract by treasury, additional CLD sent to the sale contract will be lost
         StartTime = block.timestamp + 900; //TODO: Reset to 12 hours before deployment
         EndTime = StartTime + SaleLength;
-        DAOFoundationFee = FoundationFee;
         RetractFee = RetractionFee;
         MinimumDeposit = MinDeposit;
     }
