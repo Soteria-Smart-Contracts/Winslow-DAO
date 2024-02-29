@@ -772,7 +772,6 @@ contract Winslow_Voting_V1 {
 contract Winslow_SaleFactory_V2 {
     string public Version = "V1";
     address payable public DAO;
-    uint256 public FoundationFee; //Defaults to these values, these values must be changed by a proposal and cannot be included while creating a sale
     uint256 public RetractFee; //^
     uint256 public MinimumDeposit; //^
     uint256 public DefaultSaleLength; //^
@@ -781,7 +780,6 @@ contract Winslow_SaleFactory_V2 {
     constructor(){
         //TODO: Update Variables before deployment
         DAO = payable(msg.sender);
-        FoundationFee = 100; //1%
         RetractFee = 100; //1%
         MinimumDeposit = 10000000000000000; //0.001 ETC
         DefaultSaleLength = 7200;
