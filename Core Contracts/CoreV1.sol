@@ -318,7 +318,7 @@ contract Winslow_Core_V1 {
             VoteLength = Proposals[ProposalID].RequestedEtherAmount;
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(16)){
-            //Value is stored in RequestedEtherAmount in basis points
+            //Value is stored in RequestedEtherAmount and RequestedAssetAmount in basis points
             Winslow_Voting_V1(VotingContract).SetVotingCuts(Proposals[ProposalID].RequestedEtherAmount, Proposals[ProposalID].RequestedAssetAmount);
         }
     }
