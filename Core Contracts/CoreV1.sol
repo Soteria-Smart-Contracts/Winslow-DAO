@@ -1048,7 +1048,7 @@ contract Winslow_Treasury_V1 {
     event EtherSent(uint256 Amount, address Receiver, bytes data, bool sent, address TxOrigin);
     event ERC20Sent(uint256 Amount, address Receiver, address TxOrigin);
     event AssetsClaimedWithCLD(uint256 CLDin, uint256 EtherOut, address From, address OutTo, address TxOrigin);
-    event ClaimTransferFailed(uint256 Amount, address Receiver, address TxOrigin);
+    event ClaimTransferFailed(uint256 Amount, address Receiver, address Sender, address TokenAddress);
 
     //Code executed on deployment
     constructor(){
