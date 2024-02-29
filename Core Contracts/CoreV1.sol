@@ -320,6 +320,7 @@ contract Winslow_Core_V1 {
             //Value is stored in RequestedEtherAmount in seconds
             VoteLength = Proposals[ProposalID].RequestedEtherAmount;
         }
+        
     }
 
     //  Eros Executionting
