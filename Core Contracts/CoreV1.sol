@@ -300,9 +300,6 @@ contract Winslow_Core_V1 {
             ProposalCost = Proposals[ProposalID].RequestedEtherAmount;
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
-            Winslow_SaleFactory_V2(SaleFactoryContract).ChangeFoundationFee(Proposals[ProposalID].RequestedEtherAmount);
-        }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
             Winslow_SaleFactory_V2(SaleFactoryContract).ChangeRetractFee(Proposals[ProposalID].RequestedEtherAmount);
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
