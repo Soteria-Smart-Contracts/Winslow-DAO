@@ -971,7 +971,7 @@ contract Winslow_Sale_V2 {
         (bool success1, ) = (Winslow_Core_V1(DAO).TreasuryContract()).call{value: TotalEtherPool}("");
         require(success1);
 
-        emit ProceedsTransfered(ToFoundation, ToTreasury);
+        emit ProceedsTransfered(TotalEtherPool);
     }
 
     //DAO Only functions
