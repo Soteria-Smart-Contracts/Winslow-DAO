@@ -1070,6 +1070,7 @@ contract Winslow_Treasury_V1 {
         return(success);
     }
 
+    //Finding #4 Addressed Here
     function AssetClaim(uint256 CLDamount, address payable To) public returns(bool success){
         uint256 SupplyPreTransfer = (ERC20(RegisteredAssets[0].TokenAddress).totalSupply() - ERC20(RegisteredAssets[0].TokenAddress).balanceOf(address(this)));
         //Supply within the DAO does not count as backed
@@ -1079,7 +1080,7 @@ contract Winslow_Treasury_V1 {
         while(CurrentID <= RegisteredAssetLimit){
             //It is very important that ERC20 contracts are audited properly to ensure that no errors could occur here, as one failed transfer would revert the whole TX
             if(RegisteredAssets[CurrentID].Filled == true){
-                uint256 ToSend = GetAssetToSend(CLDamount, CurrentID, SupplyPreTransfer); //Finding #4 Addressed 
+                uint256 ToSend = GetAssetToSend(CLDamount, CurrentID, SupplyPreTransfer);
                 try ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend){}
                 catch {
                     emit ClaimTransferFailed(ToSend, To, msg.sender, RegisteredAssets[CurrentID].TokenAddress);
