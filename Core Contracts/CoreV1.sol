@@ -1064,7 +1064,7 @@ contract Winslow_Treasury_V1 {
 
         //CLD Claim
     function UserAssetClaim(uint256 CLDamount) public returns(bool success){
-        AssetClaim(CLDamount, msg.sender, payable(msg.sender));
+        AssetClaim(CLDamount, payable(msg.sender));
 
         return(success);
     }
