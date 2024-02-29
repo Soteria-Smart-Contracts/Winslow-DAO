@@ -888,7 +888,7 @@ contract Winslow_Sale_V2 {
     event EtherDeposited(uint256 Amount, address User);
     event EtherWithdrawn(uint256 Amount, uint256 Fee, address User);
     event CLDclaimed(uint256 Amount, address User);
-    event ProceedsTransfered(uint256 ToTreasury, uint256 ToFoundation);
+    event ProceedsTransfered(uint256 ToTreasury);
     
     //Mapping for participants
     mapping(address => Participant) public ParticipantDetails; 
