@@ -954,7 +954,7 @@ contract Winslow_Sale_V2 {
 
         TotalRetractionFeesAccrued += Fee;
         ParticipantDetails[msg.sender].EtherDeposited -= (Amount - Fee);
-        TotalEtherPool 
+        TotalEtherPool -= 
 
         payable(msg.sender).transfer(Amount - Fee);
 
