@@ -1080,7 +1080,7 @@ contract Winslow_Treasury_V1 {
             if(RegisteredAssets[CurrentID].Filled == true){
                 uint256 ToSend = GetAssetToSend(CLDamount, CurrentID, SupplyPreTransfer);
                 try ERC20(RegisteredAssets[CurrentID].TokenAddress).transfer(To, ToSend){}
-                 catch {
+                catch {
                     emit ClaimTransferFailed(ToSend, To, tx.origin);
                 }
                 emit ERC20Sent(ToSend, To, tx.origin);
