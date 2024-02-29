@@ -302,17 +302,17 @@ contract Winslow_Core_V1 {
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(10)){
             Winslow_SaleFactory_V2(SaleFactoryContract).ChangeRetractFee(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(11)){
             Winslow_SaleFactory_V2(SaleFactoryContract).ChangeMinimumDeposit(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(12)){
             Winslow_SaleFactory_V2(SaleFactoryContract).ChangeDefaultSaleLength(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(13)){
             //Value is stored in RequestedEtherAmount in basis points
             Winslow_SaleFactory_V2(SaleFactoryContract).ChangeMaxSalePercent(Proposals[ProposalID].RequestedEtherAmount);
         }
-        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(15)){
+        else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(14)){
             //Value is stored in RequestedEtherAmount in basis points
             Winslow_Voting_V1(VotingContract).ChangeQuorum(Proposals[ProposalID].RequestedEtherAmount);
         }
