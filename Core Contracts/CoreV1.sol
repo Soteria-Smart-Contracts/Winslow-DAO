@@ -319,7 +319,6 @@ contract Winslow_Core_V1 {
         }
         else if(ProposalInfos[ProposalID].SimpleType == SimpleProposalTypes(16)){
             //Value is stored in RequestedEtherAmount in basis points
-            //SetTaxAmount(Proposals[ProposalID].RequestedEtherAmount);
             Winslow_Voting_V1(VotingContract).SetVotingCuts(Proposals[ProposalID].RequestedEtherAmount, Proposals[ProposalID].RequestedAssetAmount);
         }
     }
