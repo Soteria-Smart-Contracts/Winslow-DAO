@@ -184,7 +184,8 @@ contract Winslow_Core_V1 {
             uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, EROS(ProposalAddress).OptionCount());
 
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(1), SimpleProposalTypes(0), ProposalStatus(0), VotingInstanceID);
-            Proposals[NewIdentifier] = Proposal(ProposalAddress, 0, 0, RequestedAssetID, EROS(ProposalAddress).OptionCount(), true, false, msg.sender);
+            //Requested
+            Proposals[NewIdentifier] = Proposal(ProposalAddress, RequestedEther, RequestedAssetAmount, RequestedAssetID, EROS(ProposalAddress).OptionCount(), true, false, msg.sender);
         }
         else{
             uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
