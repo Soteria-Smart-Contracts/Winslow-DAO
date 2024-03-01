@@ -146,7 +146,7 @@ contract Winslow_Core_V1 {
         require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
         //require that there are no more than 25 proposals in the voting queue on the voting contract, if there are, the DAO must execute some before more can be added, this is to prevent gas issues for beginnextvote
         require(Winslow_Voting_V1(VotingContract).GetVotingQueue().length < 25, "There are too many proposals in the queue, the DAO must execute some before more can be added");
-        
+
         MRIdentifier++;
         uint256 NewIdentifier = MRIdentifier;
 
@@ -609,6 +609,10 @@ contract Winslow_Voting_V1 {
 
     function GetVotingQueue() public view returns(uint256[] memory){
         return(VotingQueue);
+    }
+
+    function GetVotingQueueSize() public view returns(uint256){
+        return(VotingQueue.length);
     }
 
     function GetVoteResult(uint256 _VoteInstance) public view returns(bool Result, uint8 Multi){
