@@ -740,7 +740,7 @@ contract Winslow_Voting_V1 {
 
     function SetTaxAmount(uint256 NewExecCut, uint256 NewBurnCut) external OnlyDAO returns (bool success) {
         require(NewExecCut > 0 && NewExecCut <= 10000);
-        require(NewExecCut > 0 && NewExecCut <= 10000);
+        require(NewBurnCut > 0 && NewBurnCut <= 10000);
 
         ExecutorCut = NewExecCut;
         BurnCut = NewBurnCut;
