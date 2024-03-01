@@ -847,7 +847,9 @@ contract Winslow_SaleFactory_V2 {
     }
 
     function SetDAO(address DAOaddress) external returns(bool success){
-        requ
+        require(DAO == address(0), "VotingSystemV1.SetDAO: DAO address has already been set");
+
+        DAO = payable(DAOaddress);
     }
 
 }
