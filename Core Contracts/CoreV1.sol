@@ -115,11 +115,11 @@ contract Winslow_Core_V1 {
 
     //Public state-modifing functions
 
-    function SubmitSimpleProposal(string memory Memo, address AddressSlot, uint256 UintSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
+    function SubmitSimpleProposal(string memory Memo, address AddressSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) public returns(bool success){
 
         ReceiveProposalCost();
 
-        InitializeSimpleProposal(Memo, AddressSlot, UintSlot, SimpleType, RequestedEther, RequestedAssetAmount, RequestedAssetID);
+        InitializeSimpleProposal(Memo, AddressSlot, SimpleType, RequestedEther, RequestedAssetAmount, RequestedAssetID);
 
         return(success);
     }
