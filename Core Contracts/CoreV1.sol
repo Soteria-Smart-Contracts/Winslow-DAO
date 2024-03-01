@@ -17,7 +17,7 @@ contract Winslow_Core_V1 {
     address public SaleFactoryContract;
     uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
-    uint256 public VoteLength = 600; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met TODO: Change back to 172800 for production
+    uint256 public VoteLength = 172800; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met
 
     //Mapping, structs and other declarations
     
@@ -108,7 +108,7 @@ contract Winslow_Core_V1 {
     constructor(){
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = address(new Winslow_SaleFactory_V2());
+        SaleFactoryContract = address(0);
 
         IsActiveContract = true;
     }
@@ -144,8 +144,8 @@ contract Winslow_Core_V1 {
 
     function InitializeSimpleProposal(string memory Memo, address AddressSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
         require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
-        //require that there are no more than 25 proposals in the voting queue on the voting contract, if there are, the DAO must execute some before more can be added, this is to prevent gas issues for beginnextvote
-        require(Winslow_Voting_V1(VotingContract).GetVotingQueueSize() < 25, "There are too many proposals in the queue, the DAO must execute some before more can be added");
+        //require that there are no more than 100 proposals in the voting queue on the voting contract, if there are, the DAO must execute some before more can be added, this is to prevent gas issues for beginnextvote
+        require(Winslow_Voting_V1(VotingContract).GetVotingQueueSize() < 100, "There are too many proposals in the queue, the DAO must execute some before more can be added");
 
         MRIdentifier++;
         uint256 NewIdentifier = MRIdentifier;
@@ -169,6 +169,7 @@ contract Winslow_Core_V1 {
 
     function InitializeErosProposal(address ProposalAddress) internal returns(uint256 identifier){
         require(ProposalAddress != address(0), "ErosProposals must have a slotted contract");
+        require(Winslow_Voting_V1(VotingContract).GetVotingQueueSize() < 100, "There are too many proposals in the queue, the DAO must execute some before more can be added");
 
         MRIdentifier++;
         uint256 NewIdentifier = MRIdentifier;
@@ -776,10 +777,10 @@ contract Winslow_SaleFactory_V2 {
 
     constructor(){
         //TODO: Update Variables before deployment
-        DAO = payable(msg.sender);
         RetractFee = 100; //1%
-        MinimumDeposit = 10000000000000000; //0.001 ETC
-        DefaultSaleLength = 7200;
+        MinimumDeposit = 100000000000000000; //0.01 ETC
+        DefaultSaleLength = 7200; //TODO: Update to 5 days
+        MaximumSalePercentage = 1000;
     }
 
     //Events
@@ -797,7 +798,7 @@ contract Winslow_SaleFactory_V2 {
 
     function CreateNewSale(uint256 SaleID, uint256 CLDtoSell) external OnlyDAO returns(address _NewSaleAddress){
         uint256 TreasuryCLDBalance = ERC20(Winslow_Core_V1(DAO).CLDAddress()).balanceOf(Winslow_Core_V1(DAO).TreasuryContract());
-        require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Winslow_Core_V1(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000)); //TODO: Ensure the math here is right
+        require(TreasuryCLDBalance >= CLDtoSell && CLDtoSell <= (((ERC20(Winslow_Core_V1(DAO).CLDAddress()).totalSupply() - TreasuryCLDBalance) * MaximumSalePercentage) / 10000));
         address NewSaleAddress = address(new Winslow_Sale_V2(DAO, SaleID, CLDtoSell, DefaultSaleLength, RetractFee, MinimumDeposit));
         
         emit NewSaleCreated(SaleID, CLDtoSell, NewSaleAddress);
@@ -843,6 +844,10 @@ contract Winslow_SaleFactory_V2 {
 
         emit NewDAOAddress(newAddr);
         return(success);
+    }
+
+    function SetDAO(address DAOaddress) external returns(bool success){
+        requ
     }
 
 }
