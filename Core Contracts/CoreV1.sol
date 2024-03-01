@@ -108,7 +108,8 @@ contract Winslow_Core_V1 {
     constructor(address SaleFactory){
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = ;
+        SaleFactoryContract = SaleFactory;
+        Winslow_Core_V1
 
         IsActiveContract = true;
     }
