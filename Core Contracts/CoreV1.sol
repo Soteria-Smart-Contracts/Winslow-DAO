@@ -152,6 +152,7 @@ contract Winslow_Core_V1 {
         uint256 VotingInstanceID = Winslow_Voting_V1(VotingContract).InitializeVoteInstance(NewIdentifier, 0);
         if(SimpleType == SimpleProposalTypes(2)){
             require(RequestedAssetID > 0 && RequestedAssetID <= 255 && RequestedAssetID <= Winslow_Treasury_V1(TreasuryContract).RegisteredAssetLimit());
+            //Unused variables should remain as 0 for proposals of this type and others which do not require them. Regardless, even if they are set, they are not used in the execution of the proposal
             ProposalInfos[NewIdentifier] = ProposalInfo(Memo, ProposalTypes(0), SimpleType, ProposalStatus(0), VotingInstanceID);
             Proposals[NewIdentifier] = Proposal(AddressSlot, RequestedEther, RequestedAssetAmount, RequestedAssetID, 0, false, false, msg.sender);
         } 
