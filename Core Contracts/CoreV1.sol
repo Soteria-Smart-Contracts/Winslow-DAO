@@ -850,6 +850,7 @@ contract Winslow_SaleFactory_V2 {
         require(DAO == address(0), "VotingSystemV1.SetDAO: DAO address has already been set");
 
         DAO = payable(DAOaddress);
+        return(success);
     }
 
 }
