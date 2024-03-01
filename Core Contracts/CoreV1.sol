@@ -774,7 +774,6 @@ contract Winslow_SaleFactory_V2 {
     uint256 public MaximumSalePercentage; //^The maximum percentage of the supply that can be sold at once, to avoid flooding markets/heavy inflation, in Basis Points
 
     constructor(){
-        //TODO: Update Variables before deployment
         RetractFee = 100; //1%
         MinimumDeposit = 100000000000000000; //0.01 ETC
         DefaultSaleLength = 7200; //TODO: Update to 5 days
