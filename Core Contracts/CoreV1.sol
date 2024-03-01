@@ -105,10 +105,10 @@ contract Winslow_Core_V1 {
     event FailedExecution(uint256 ProposalID);
 
 
-    constructor(){
+    constructor(address SaleFactory){
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
-        SaleFactoryContract = address(0);
+        SaleFactoryContract = ;
 
         IsActiveContract = true;
     }
