@@ -144,7 +144,7 @@ contract Winslow_Core_V1 {
 
     function InitializeSimpleProposal(string memory Memo, address AddressSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
         require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
-        //require that there are no more than 25 proposals in the queue, if the
+        //require that there are no more than 25 proposals in the queue, if there are, the DAO must execute some before more can be added, this is to prevent gas issues for 
 
         MRIdentifier++;
         uint256 NewIdentifier = MRIdentifier;
