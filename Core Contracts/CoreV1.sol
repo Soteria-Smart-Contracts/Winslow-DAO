@@ -462,7 +462,7 @@ contract Winslow_Voting_V1 {
     } 
 
     constructor(){
-        ExecutorCut = 200; //TODO: Change this to the community agreed upon value for production
+        ExecutorCut = 200;
         BurnCut = 200;
         DAO = payable(msg.sender);
     }
