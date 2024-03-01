@@ -775,8 +775,8 @@ contract Winslow_SaleFactory_V2 {
 
     constructor(){
         RetractFee = 100; //1%
-        MinimumDeposit = 100000000000000000; //0.01 ETC
-        DefaultSaleLength = 7200; //TODO: Update to 5 days
+        MinimumDeposit = 100000000000000000;
+        DefaultSaleLength = 432000;
         MaximumSalePercentage = 1000;
     }
 
