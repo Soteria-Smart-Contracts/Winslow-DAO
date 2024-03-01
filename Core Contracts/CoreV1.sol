@@ -145,7 +145,7 @@ contract Winslow_Core_V1 {
     function InitializeSimpleProposal(string memory Memo, address AddressSlot, SimpleProposalTypes SimpleType, uint256 RequestedEther, uint256 RequestedAssetAmount, uint8 RequestedAssetID) internal returns(uint256 Identifier){
         require(SimpleType != SimpleProposalTypes(0), "Simple proposals cannot be of type 0");
         //require that there are no more than 25 proposals in the voting queue on the voting contract, if there are, the DAO must execute some before more can be added, this is to prevent gas issues for beginnextvote
-        require(Winslow_Voting_V1(VotingContract).GetVotingQueue().length < 25, "There are too many proposals in the queue, the DAO must execute some before more can be added");
+        require(Winslow_Voting_V1(VotingContract).GetVotingQueueSize() < 25, "There are too many proposals in the queue, the DAO must execute some before more can be added");
 
         MRIdentifier++;
         uint256 NewIdentifier = MRIdentifier;
