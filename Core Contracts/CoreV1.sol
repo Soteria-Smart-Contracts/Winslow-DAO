@@ -13,7 +13,7 @@ contract Winslow_Core_V1 {
     address payable public TreasuryContract;
     address public VotingContract; 
     address public SaleFactoryContract;
-    uint256 public ProposalCost = 100000000000000000000; //Initial cost, can be changed via proposals
+    uint256 public ProposalCost = 10000000000000000000; //Initial cost, can be changed via proposals
     uint256 public SaleCount;
     uint256 public VoteLength = 172800; //Default two days for an efficient DAO, but can be changed by proposals in case quorums are not being met
 
