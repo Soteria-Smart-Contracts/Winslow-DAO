@@ -109,7 +109,7 @@ contract Winslow_Core_V1 {
         TreasuryContract = payable(address(new Winslow_Treasury_V1()));
         VotingContract = address(new Winslow_Voting_V1());
         SaleFactoryContract = SaleFactory;
-        Winslow_Core_V1
+        Winslow_SaleFactory_V2(SaleFactory).SetDAO(DAOaddress);(address(this));
 
         IsActiveContract = true;
     }
